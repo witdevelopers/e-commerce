@@ -1,118 +1,105 @@
-<nav class="nav-main-container">
-  <div class="left dflex">
-    <a href="#"><img src="../assets/logo.png" alt="logo" class="logo" /></a>
-
-    <div class="item">
-      <p><i class="ri-map-pin-fill"></i> hello,</p>
-      <h5>enter your address</h5>
-    
-    </div>
-
-
-  </div>
-  <div class="searchBox dflex">
-    <div class="box">
-      <div class="dflex">
-        <button type="submit" class="all">
-          Search
-        </button>
-        <input type="text" />
-        <button type="submit" class="search">
-          <i class="ri-search-line"></i>
-        </button>
+<div class="nav">
+  <div class="sticky">
+      <div class="nav-left">
+          <div class="amazon hover">
+              <i class="fa-solid fa-bars menu"></i>
+              <a href="#"><img src="assets/Shopimg/amazoni1.png" alt="amazon.in"></a>
+              <div class="in">.in</div>
+          </div>
+          <div class="address hover">
+              <div class="small">Hello</div>
+              <div class="add">
+                  <i class="fa-solid fa-location-dot"></i>
+                  <b>Select your address</b>
+              </div>
+          </div>
       </div>
-    </div>
+
+      <div class="nav-search">
+          <label class="hidden">All
+              <i class="fa-solid fa-caret-down"></i>
+          </label>
+          <input type="search" name="search" id="search" placeholder=" Search Amazon.in">
+          <label for="search" class="sicon">
+              <i class="fa-solid fa-magnifying-glass"></i>
+          </label>
+      </div>
+      <div class="nav-right">
+          <div class="ind hover">
+              <img src="assets/Shopimg/india.png" alt="india">
+              <b class=" add">EN</b>
+              <i class="fa-solid fa-caret-down"></i>
+          </div>
+          <div class="sign hover">
+              <div class="small">
+                  <div class="hello">Hello, </div>
+                  <div class="signin">sign in</div>
+                  <i class="fa-solid fa-angle-right arrow"></i>
+                  <i class="fa-regular fa-user user"></i>
+              </div>
+              <div class="add">
+                  <b>Account & Lists</b>
+                  <i class="fa-solid fa-caret-down"></i>
+              </div>
+          </div>
+          <div class="return  hover">
+              <div class="small">Returns</div>
+              <div class="add">
+                  <b>& Orders</b>
+              </div>
+          </div>
+          <div class="card hover">
+              <span class="material-symbols-rounded">
+                  shopping_cart
+              </span>
+              <p class="cardCount">0</p>
+              <div class="add cardName">
+                  <b>Card</b>
+              </div>
+          </div>
+      </div>
   </div>
-  <div class="right dflex">
-  
-    <div class="item">
-      <p>Hello,</p>
-      <h5 routerLink="/auth/signin">Account & Lists<i class="ri-arrow-down-line"></i></h5>
-    </div>
-    <div class="item">
-      <p>Returns</p>
-      <h5>& Order</h5>
-    </div>
-    <div class="item"><i class="ri-shopping-cart-line"></i> Cart</div>
+  <div class="sticky_fixed"></div>
+  <div class="sticky_fixed1"></div>
+
+  <div class="nav-main">
+      <div class="nav-main-menu">
+          <div class="nav-menu">
+              <i class="fa-solid fa-bars menubar"></i>
+              <div><b>All</b></div>
+          </div>
+          <div class="shopCate">
+              <div class="small">Shop By</div>
+              <div class="add">
+                  <a href="#">Category</a>
+              </div>
+          </div>
+          <div class="xshop">
+              <a href="#">Amazon miniTV</a>
+              <a href="#">Sell</a>
+              <a href="#">Best Sellers</a>
+              <a href="#">Today's Deals</a>
+              <a href="#">Mobiles</a>
+              <a href="#">New Releases</a>
+              <a href="#">Customer Service</a>
+              <a href="#">Prime</a>
+              <a href="#">Electronics</a>
+              <a href="# ">Gift Ideas</a>
+              <a href="#">Home & Kitchen</a>
+              <a href="#">Amazon Pay</a>
+              <a href="#">Computer</a>
+              <a href="#">Fashion</a>
+              <a href="#">Books</a>
+              <a href="#">Coupons</a>
+              <a href="#">Beauty & Personal Care</a>
+              <a href="#">Toys & Game</a>
+              <a href="#">Car & Moterbike</a>
+          </div>
+      </div>
+      <!-- <div class="slot">
+          <img class="last" alt="Amazon App"
+              src="https://m.media-amazon.com/images/G/31/IN-hq/2021/img/Mobile_Traffic_/XCM_Manual_1321458_1651511_IN_3781247_400x39_en_IN._CB655944656_.jpg">
+      </div> -->
   </div>
-</nav>
-
-
-
-
-
-
-<nav class="subnavigation">
-  <ul class="submenu">
-    <li class="menu-item">
-      <a href="#">Bakery</a>
-      <ul class="dropdown">
-        <li><a href="#">Bread</a></li>
-        <li><a href="#">Cakes</a></li>
-        <li><a href="#">Pastries</a></li>
-        <li><a href="#">Cookies</a></li>
-      </ul>
-    </li>
-    <li class="menu-item">
-      <a href="#">Cosmetic Products</a>
-      <ul class="dropdown">
-        <li><a href="#">Lipstick</a></li>
-        <li><a href="#">Face Cream</a></li>
-        <li><a href="#">Perfumes</a></li>
-        <li><a href="#">Makeup Kits</a></li>
-      </ul>
-    </li>
-    <li class="menu-item">
-      <a href="#">Dried Fruits</a>
-      <ul class="dropdown">
-        <li><a href="#">Almonds</a></li>
-        <li><a href="#">Cashews</a></li>
-        <li><a href="#">Raisins</a></li>
-        <li><a href="#">Dates</a></li>
-      </ul>
-    </li>
-    <li class="menu-item">
-      <a href="#">Electronics</a>
-      <ul class="dropdown">
-        <li><a href="#">Mobiles</a></li>
-        <li><a href="#">Laptops</a></li>
-        <li><a href="#">Headphones</a></li>
-        <li><a href="#">Smartwatches</a></li>
-      </ul>
-    </li>
-    <li class="menu-item">
-      <a href="#">Grocery</a>
-      <ul class="dropdown">
-        <li><a href="#">Rice</a></li>
-        <li><a href="#">Pulses</a></li>
-        <li><a href="#">Vegetables</a></li>
-        <li><a href="#">Spices</a></li>
-      </ul>
-    </li>
-    <li class="menu-item">
-      <a href="#">Herbal Products</a>
-      <ul class="dropdown">
-        <li><a href="#">Herbal Creams</a></li>
-        <li><a href="#">Herbal Oils</a></li>
-        <li><a href="#">Herbal Soaps</a></li>
-      </ul>
-    </li>
-    <li class="menu-item">
-      <a href="#">Men's Fashion</a>
-      <ul class="dropdown">
-        <li><a href="#">Shirts</a></li>
-        <li><a href="#">Jeans</a></li>
-        <li><a href="#">Watches</a></li>
-      </ul>
-    </li>
-    <li class="menu-item">
-      <a href="#">Women's Fashion</a>
-      <ul class="dropdown">
-        <li><a href="#">Dresses</a></li>
-        <li><a href="#">Jewelry</a></li>
-        <li><a href="#">Handbags</a></li>
-      </ul>
-    </li>
-  </ul>
-</nav>
-<app-carousel></app-carousel>
+</div>
+<app-home></app-home>
