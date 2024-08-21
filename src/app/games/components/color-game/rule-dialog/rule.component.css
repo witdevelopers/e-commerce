@@ -1,0 +1,20 @@
+ol.list {
+    list-style-type: upper-roman;
+    font-weight: 900;
+}
+ol li {
+    border: 0px;
+    border-bottom: 2px solid rgb(0 102 92);
+    display: list-item;
+    font-weight: 600;
+    text-transform: uppercase;
+    margin-bottom: 0px;
+}
+
+.card{
+    border: none;
+}
+
+.mat-warning{
+  background-color:  #e40101b3
+}

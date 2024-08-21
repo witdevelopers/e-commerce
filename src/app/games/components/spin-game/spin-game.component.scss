@@ -1,0 +1,85 @@
+
+.color-circle{
+    display: inline-block;
+    border-radius: 20px;
+    width: 15px;
+    height: 15px;
+}
+
+.card-body {
+    flex: 1 1 auto;
+    min-height: 1px;
+    padding: 0;
+    margin-top: 0;
+}
+.ng-star-inserted h5 {
+    color: #fff;
+    margin-bottom: 0;
+}
+.card-header {
+    padding: 0.75rem 0;
+    margin-bottom: 0;
+    background-color: rgba(0,0,0,.03);
+    border-bottom: 1px solid rgba(0,0,0,.125);
+}
+
+.card-head header {
+    display: inline-block;
+    padding: 11px 20px;
+    vertical-align: middle;
+    line-height: 17px;
+    font-size: 16px;
+    color: #fff;
+    font-weight: normal;
+    letter-spacing: 0.5px;
+    text-transform: capitalize;
+    text-align: center;
+    line-height: 26px;
+    margin-top: -20px;
+}
+.number h1{
+    font-size: 18px;
+    margin-bottom: 20px;
+}
+.card-body[_ngcontent-jek-c228] {
+    flex: 1 1 auto;
+    min-height: 1px;
+    padding: 0;
+    margin-top: 26px;
+    padding: 0 10px 0 18px;
+}
+.form-group {
+    margin-bottom: 20px;
+    color: #fff;
+    margin-left: 20px;
+}
+
+.list-group-horizontal>.list-group-item+.list-group-item {
+    border-top-width: 1px;
+    border-left-width: 0;
+    color: #000;
+}
+.button-up::after,
+.button-down::after {
+  content: "";
+  position: absolute;
+  left: 17px;
+  z-index: 11;
+  display: block;
+  width: 25px;
+  height: 25px;
+  border-top: 2px solid #fff;
+  border-left: 2px solid #fff;
+}
+.button-up::after {
+  top: 20px;
+  transform: rotate(45deg);
+}
+.row .card {
+    margin: 0 15px;
+
+}
+.spinearrow img{
+    width: 70px;
+    position: absolute;
+}

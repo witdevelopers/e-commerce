@@ -1,0 +1,16 @@
+<mat-form-field>
+    <mat-label>Select Pools</mat-label>
+    
+    <mat-select (selectionChange)="GetBoardEntries()">
+        <mat-option *ngFor="let pool of BoardPools" [value]="pool.poolId">{{ pool.poolId }}</mat-option>
+    </mat-select>
+
+</mat-form-field>
+
+<mat-form-field>
+    <mat-label>Select Entry</mat-label>
+    
+    <mat-select [(ngModel)]="BoardEntries" >
+        <mat-option *ngFor="let poolEntry of BoardEntries" [value]="poolEntry.PoolId">{{ poolEntry.poolId }}</mat-option>
+    </mat-select>
+</mat-form-field>

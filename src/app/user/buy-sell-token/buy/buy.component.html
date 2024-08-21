@@ -1,0 +1,78 @@
+<!-- <div class="form-group text-center">
+    <b>Buy Price: 1 MATIC ~ {{maticToToken}} {{tokenSymbol}}</b>
+</div> -->
+<form #buyForm=ngForm>
+    <div class="form-group">
+        <div class="col-md-12 text-right">
+            Balance: <b>{{MaticBalance | number : "1.4"}} TRX</b>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-md-12">
+            <mat-form-field appearance="fill" class="font-size-16">
+                <mat-label>TRX Amount</mat-label>
+                <input matInput name="maticAmount" [(ngModel)]=maticAmount required #txtMaticAmount=ngModel disabled
+                    type="number" (input)=calculateTokens() [max]=MaticBalance class="width-100" />
+            </mat-form-field>
+            <app-validation-message [control]=txtMaticAmount></app-validation-message>
+        </div>
+    </div>
+    <!-- <div class="form-group">
+        <div class="row justify-content-center">
+            <div class="col-md-2 col-sm-2 col-2 p-2 m-1">
+                <button class="btn btn-warning" (click)=setAmount(25)>25%</button>
+            </div>
+            <div class="col-md-2 col-sm-2 col-2 p-2 m-1">
+                <button class="btn btn-warning" (click)=setAmount(50)>50%</button>
+            </div>
+            <div class="col-md-2 col-sm-2 col-2 p-2 m-1">
+                <button class="btn btn-warning" (click)=setAmount(75)>75%</button>
+            </div>
+            <div class="col-md-2 col-sm-2 col-2 p-2 m-1">
+                <button class="btn btn-warning" (click)=setAmount(100)>100%</button>
+            </div>
+        </div>
+    </div> -->
+    <div class="d-flex justify-content-around" *ngIf="SecondsRemainingForNextBoosterTopup<=0">
+        <button *ngFor="let pack of packages" class="btn btn-warning m-2"
+            (click)=buy(pack)>{{pack.description}}</button>
+    </div>
+    <div class="d-flex justify-content-center" *ngIf="SecondsRemainingForNextBoosterTopup>0">
+        <button class="btn btn-warning m-2">
+            Time remaining for next Booster Top-Up<br>
+            <span id="timer"></span>
+        </button>
+    </div>
+    <!-- <div class="form-group text-center">
+        <a routerLink="../sell"><img src="assets/exchange.png" width="20" class="rotate-90" /></a>
+    </div>
+    <div class="form-group">
+        <div class="col-md-12">
+            <mat-form-field appearance="fill" class="font-size-16">
+                <mat-label>{{tokenSymbol}} Amount</mat-label>
+                <input matInput name="tokenAmount_WithoutDeduction" [(ngModel)]=tokenAmount_WithoutDeduction
+                    #txtTokenAmount=ngModel disabled=true class="width-100 enabled" type="number" />
+            </mat-form-field>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-md-12 text-right">
+            Deduction: <b>40%</b>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-md-12">
+            <mat-form-field appearance="fill" class="font-size-16">
+                <mat-label>{{tokenSymbol}} Amount Received</mat-label>
+                <input matInput name="tokenAmount" [(ngModel)]=tokenAmount #txtTokenAmount=ngModel disabled=true
+                    class="width-100 enabled" type="number" />
+            </mat-form-field>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-md-12 text-center">
+            <button mat-raised-button color="primary" class="pl-4 pr-4 pt-1 pb-1" (click)=buy()
+                [disabled]=buyForm.invalid>BUY</button>
+        </div>
+    </div> -->
+</form>

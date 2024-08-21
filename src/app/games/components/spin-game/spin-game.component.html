@@ -1,0 +1,137 @@
+<div class="card w-100">
+    <div class="card-header">
+        <h5 class="card-title">Available balance: $ {{userInfo.walletBalance}}</h5>
+    </div>
+    <div class="card-body">
+        <div class="card-head">
+            <header *ngIf="!selectedItem">
+                Select a number from spin board to Place Order</header>
+            <header *ngIf="selectedItem" class="w-100">
+                <div class="row">
+                    <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xs-6">
+                        <div class="row bet-color" *ngIf="!isBetPlaced">
+                            <div class="col-md-6 col-12">
+                                <div class="number">
+                                    <h1>Selected Color :{{selectedItem.color}}</h1>
+                                </div>
+                            </div>
+                            <!-- <div class="col-md-3 col-6">
+                                <button class="w-100" mat-flat-button color="primary"
+                                    (click)="onAddOrder(selectedItem.number)">JOIN
+                                    {{selectedItem.number}}</button>
+                            </div> -->
+                            <div class="col-md-3 col-6">
+                                <button class="w-100" mat-flat-button color="primary"
+                                    (click)="onAddOrder(selectedItem.color)"
+                                    [style.background]="selectedItem.fillStyle">
+                                    JOIN {{selectedItem.color}}</button>
+                            </div>
+                        </div>
+                        <div class="row bet-color" *ngIf="isBetPlaced">
+                            <div class="col-md-4 col-6">
+                                Bet Placed On :{{betPlacedOn}}
+                            </div>
+                            <div class="col-md-4 col-6">
+                                Winner :{{spinCompleted?numberWon:'pending'}}
+                            </div>
+                            <div *ngIf="spinCompleted" class="col-md-4 col-12">
+                                <button class="w-100" mat-flat-button color="primary" (click)="resetWheel()">Start
+                                    Again</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                </header>
+            </div>
+            <div class="row text-center">
+                <div class="col-12">
+                    <div class="spinearrow"><img id="img_arrow" src="../assets/arrow-bottom.png"/></div>
+                    <canvas id="wheel_canvas" width="434" height="434" data-responsiveMinWidth="180"
+                        data-responsiveScaleHeight="true" data-responsiveMargin="50">
+                        <p style="color: white" align="center">Sorry, your browser doesn't support canvas. Please try
+                            another.</p>
+                    </canvas>
+                </div>
+            </div>
+
+    </div>
+    <div class="card-footer">
+
+        <!-- <div class="row footer-btn">
+                <div class="col-md-12 text-center">
+                    <button [disabled]="selectedNumber!=0 && !selectedNumber" mat-flat-button color="primary"
+                        (click)="onAddOrder()">Place Order</button>
+                </div>
+            </div> -->
+    </div>
+</div>
+
+
+<div class="card mt-2">
+    <div class="card-head">
+        <div class="row">
+            <div class="col-12">
+                <header>All Orders</header>
+            </div>
+        </div>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-bordered table-striped panel">
+                <thead>
+                    <tr>
+                        <th>Srno</th>
+                        <th>Bet On</th>
+                        
+                        <!-- <th>Deduction</th> -->
+                        <th>Bet Amount</th>
+                        <th>Win Amount</th>
+                        <th>Date</th>
+                        <th>Status</th>
+                        <th>Number Won</th>
+                        <th>Color Won</th>
+                    </tr>
+                </thead>
+                <tbody *ngIf="userInfo.orders && userInfo.orders.length>0">
+                    <tr *ngFor="let item  of userInfo.orders">
+                        <td>{{item.srno}}</td>
+                        <td>
+                            <span *ngIf="!isNumber(item.betOn)" class="mr-1 color-circle" [style.background]="item.betOn"></span>
+                            <span *ngIf="isNumber(item.betOn)">{{item.betOn}}</span>
+                        </td>
+                        <!-- <td>{{item.deduction}}</td> -->
+                        <td>{{item.betAmount}}</td>
+                        <td>{{item.amount}}</td>
+                        <td>{{item.onDate | date :'dd/MM/yyyy H:mm'}}</td>
+                        <td>{{item.winnerStatus}}</td>
+                        <td>{{item.won_Number}}</td>
+                        <td><span *ngIf="item.won_Color1" class="mr-1 color-circle"
+                                [style.background]="item.won_Color1"></span>
+                            <span *ngIf="item.won_Color2" class="mr-1 color-circle"
+                                [style.background]="item.won_Color2"></span>
+                        </td>
+                    </tr>
+                </tbody>
+                <tbody *ngIf="userInfo.orders && userInfo.orders.length==0">
+                    <tr>
+                        <td colspan="100%">
+                            <h5 style="font-weight: bold;">No records found</h5>
+                        </td>
+                    </tr>
+                </tbody>
+                <tbody *ngIf="!userInfo.orders">
+                    <tr>
+                        <td colspan="100%">
+                            <h5 style="font-weight: bold;">Fetching Records</h5>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <mat-paginator (page)="onPageChange($event)" [length]="userInfo.total" [pageSize]="pageSize"
+                [pageSizeOptions]="[10, 50, 100]" aria-label="Select page">
+            </mat-paginator>
+        </div>
+    </div>
+</div>

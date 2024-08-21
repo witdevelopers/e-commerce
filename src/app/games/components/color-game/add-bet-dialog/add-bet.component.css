@@ -1,0 +1,108 @@
+.close_btn{
+    position: relative;
+}
+
+.branch_conten{
+    padding: 10px;
+}
+
+.card-head header {
+    color: black;
+}
+
+.card{
+    border: none;
+}
+
+.mat-checkbox-label {
+    -webkit-user-select: auto;
+    -moz-user-select: auto;
+    user-select: auto;
+    color: white;
+}
+
+.bet-number-cnt input{
+    border: none;
+    font-size: 25px;
+}
+
+#increase{
+    float: right;
+}
+
+#number { 
+    text-align: center; 
+}
+
+
+#number:focus { 
+    outline: none;
+}
+
+.footer-btn button{
+    margin-left: 10px;
+}
+
+
+.footer-btn .mat-warning{
+    color: #333;
+    background-color: #e40101b3;
+ }
+
+.van-checkbox__label{
+    color: #fff;
+}
+.cdk-overlay-pane{
+    max-width: 100%;
+    width: 100%;
+    position: static;
+    margin: 0 12px;
+}
+
+.ng-star-inserted h5 {
+    color: #000;
+}
+table[_ngcontent-gff-c229] thead[_ngcontent-gff-c229] tr[_ngcontent-gff-c229] th[_ngcontent-gff-c229], table[_ngcontent-gff-c229] tbody[_ngcontent-gff-c229] tr[_ngcontent-gff-c229] td[_ngcontent-gff-c229] span[_ngcontent-gff-c229] {
+    font-size: 16px;
+}
+.card-body {
+    flex: 1 1 auto;
+    min-height: 1px;
+    padding: 0;
+    margin-top: 26px;
+    padding: 0 20px 0 14px;
+}
+.form-group {
+    margin-bottom: 20px;
+    color: #fff;
+    margin-left: 20px;
+}
+.mat-fab .mat-button-wrapper {
+    padding: 16px 0;
+    display: inline-block;
+    line-height: 15px;
+}
+.mat-fab {
+   
+    border-radius: 50%;
+    width: 46px;
+    height: 46px;
+    padding: 0;
+    flex-shrink: 0;
+    line-height: 42px;
+}
+.mat-fab .mat-button-wrapper {
+    padding: 16px 0;
+    display: inline-block;
+    line-height: 16px;
+}
+.list-group-horizontal>.list-group-item+.list-group-item{
+    color: #000;
+}
+.list-group-horizontal .list-group-item {
+    margin-bottom: 0;
+    margin-left: -4px;
+    margin-right: 0;
+    border-right-width: 0;
+    color: #000;
+}

@@ -1,0 +1,33 @@
+<!-- <p>mining-income works!</p> -->
+
+<div class="row">
+    <div class="col-md-10 offset-md-1">
+        <div class="card card-box">
+            <div class="card-head">
+                <header>Mining Income</header>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-bordered table-hover panel">
+                        <thead>
+                            <tr>
+                                <th>S.N</th>
+                                <th>User ID</th>
+                                <th>Income</th>
+                                <th>Amount</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let mine of MiningIncome">
+                                <td>{{mine.srno}}</td>
+                                <td>{{mine.userId}}</td>
+                                <td>{{mine.income}}</td>
+                                <td>{{mine.onAmount}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

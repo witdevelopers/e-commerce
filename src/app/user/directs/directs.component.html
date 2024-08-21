@@ -1,0 +1,45 @@
+<div class="row">
+    <div class="col-md-10 offset-md-1">
+        <div class="card card-box">
+            <div class="card-head">
+                <header>Directs Income</header>
+            </div>
+            <div class="card-body">
+                <!-- <div class="d-flex justify-content-center">
+                    <button mat-raised-button color="primary" [disabled]="pageNo==1"
+                        (click)="OnPreviousClick()">Prev</button>
+                    <label>
+                        &nbsp;&nbsp;
+                        Page
+                        <input type="number" min="1" [max]="pageCount" [(ngModel)]="pageNo" (change)="OnPageNoChange()">
+                        of {{pageCount}}
+                        &nbsp;&nbsp;
+                    </label>
+                    <button mat-raised-button color="primary" [disabled]="!hasNextPage"
+                        (click)="OnNextClick()">Next</button>
+                </div> -->
+                <div class="table-responsive">
+                    <table class="table table-bordered table-striped panel" *ngIf="directs.length>0">
+                        <thead>
+                            <tr>
+                                <th>S.N</th>
+                                <th>Address</th>                                                              
+                                <th>Income</th>
+                                <th>Date</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let user of directs">
+                                <td>{{user.srno}}</td>
+                                <td>{{user.userId}}</td>                               
+                                <td>{{user.yourIncome}} TRX</td>
+                                <td>{{user.topupDate}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <label *ngIf="directs.length==0">No directs income yet!</label>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

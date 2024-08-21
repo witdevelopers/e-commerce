@@ -1,0 +1,122 @@
+<div class="main-parent-div-signup">
+  <div class="main-signup-container">
+    <div class="signup-container">
+      <div class="signup-header">
+        <h2>Sign Up</h2>
+      </div>
+      <!-- <form [formGroup]="signupForm" (ngSubmit)="onSubmit()" class="signup-form">
+        <div class="form-group">
+          <label for="UserId">User ID</label>
+          <input
+            type="text"
+            id="UserId"
+            formControlName="UserId"
+            class="form-control"
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="Password">Password</label>
+          <input
+            type="Password"
+            id="Password"
+            formControlName="Password"
+            class="form-control"
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="name">Name</label>
+          <input
+            type="text"
+            id="name"
+            formControlName="name"
+            class="form-control"
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="mobileNumber">Mobile Number</label>
+          <input
+            type="text"
+            id="mobileNumber"
+            formControlName="mobileNumber"
+            class="form-control"
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="email">Gmail</label>
+          <input
+            type="email"
+            id="email"
+            formControlName="email"
+            class="form-control"
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="country">Country</label>
+          <input
+            type="text"
+            id="country"
+            formControlName="country"
+            class="form-control"
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="sponserId">Sponsor ID (Optional)</label>
+          <input
+            type="text"
+            id="sponserId"
+            formControlName="sponserId"
+            class="form-control"
+          />
+        </div>
+
+        <button type="submit" class="btn">Sign Up</button><br>
+        <button routerLink="/auth/signin" class="btn">Go To Sign In</button>
+      </form> -->
+
+      <!-- <form #usersForm="ngForm" (ngSubmit)="getUserFormData(usersForm.value)">
+        <input type="text" ngModel name="name" placeholder="Enter your name: ">
+        <br><br>
+        <input type="text" ngModel name="UserId" placeholder="Enter your UserID">
+        <br><br>
+        <input type="password" ngModel name="Password" placeholder="Enter your password">
+        <br><br>
+        <button>Submit</button>
+      </form> -->
+
+
+      <form (ngSubmit)="getUserFormData()" class="signin-form">
+        <div class="form-group">
+          <label for="userID">Username</label>
+          <input
+            type="text"
+            id="userID"
+            [(ngModel)]="userID"
+            name="userID"
+            class="form-control"
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input
+            type="password"
+            id="password"
+            [(ngModel)]="password"
+            name="password"
+            class="form-control"
+          />
+        </div>
+
+        <button type="submit" class="btn">Sign In</button><br>
+        <button routerLink="/auth/signin" class="btn">Go To SignIn</button>
+      </form>
+      
+    </div>
+  </div>
+</div>

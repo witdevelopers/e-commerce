@@ -1,0 +1,76 @@
+
+.h3 {
+    margin: 0 0 25px;
+    font-size: 26px;
+    padding-top: 14px;
+    text-transform: capitalize;
+    padding-bottom: 14px;
+    font-weight: bold;
+    font-family: 'Open Sans', sans-serif;
+    color: #000;
+}
+
+.btn-theme {
+    background-image: linear-gradient(to left, #c509eb 0%, #7d02ec 100%);
+    border: none;
+    color: #fff;
+}
+
+.btn-md {
+    cursor: pointer;
+    padding: 10px 50px 8px 50px !important;
+    letter-spacing: 1px !important;
+    font-size: 15px !important;
+    font-weight: 400 !important;
+    height: 45px !important;
+    font-family: 'Open Sans', sans-serif !important;
+    border-radius: 3px;
+    text-transform: uppercase !important;
+    line-height: 0px !important;
+    border-radius: 32px !important;
+}
+
+.btn-register{
+    background-image: linear-gradient(to left, #c509eb 0%, #7d02ec 100%);
+}
+
+.btn-block {
+    display: block;
+    width: 100%;
+}
+
+.btn-theme:hover{
+    background: #e5a81d;
+}
+
+.mat-input-element{
+    color: black !important;
+}
+
+mat-form-field{
+    width:100%;
+    background-color: aliceblue;
+}
+
+.ng-invalid h3{
+    margin: 0 0 14px;
+    font-size: 22px;
+    padding-top: 14px;
+    text-transform: capitalize;
+    padding-bottom: 14px;
+    font-weight: bold;
+    font-family: 'Open Sans', sans-serif;
+    color: #fff;
+}
+
+mat-label{
+    color:black;
+}
+
+.mat-form-field-wrapper{
+    margin-bottom: -1.26em;
+}
+
+.text-danger{
+    color:white !important;
+}

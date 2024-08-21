@@ -1,0 +1,49 @@
+<div class="row">
+    <div class="col-md-10 offset-md-1">
+        <div class="card card-box">
+            <div class="card-head">
+                <header>Team Details</header>
+            </div>
+            <div class="card-body">
+                <!-- <div class="d-flex justify-content-center">
+                    <button mat-raised-button color="primary" [disabled]="pageNo==1"
+                        (click)="OnPreviousClick()">Prev</button>
+                    <label>
+                        &nbsp;&nbsp;
+                        Page
+                        <input type="number" min="1" [max]="pageCount" [(ngModel)]="pageNo" (change)="OnPageNoChange()">
+                        of {{pageCount}}
+                        &nbsp;&nbsp;
+                    </label>
+                    <button mat-raised-button color="primary" [disabled]="!hasNextPage"
+                        (click)="OnNextClick()">Next</button>
+                </div> -->
+                <div class="table-responsive">
+                    <table class="table table-bordered table-striped panel" *ngIf="team.length>0">
+                        <thead>
+                            <tr>
+                                <th>S.N</th>
+                                <th>Address</th>
+                                <th>Deposit</th>
+                                 <th>Date</th>
+                              <!--  <th>Directs Count</th> -->
+                                <th>Level</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let user of team">
+                                <td>{{user.srno}}</td>
+                                <td>{{user.userId}}</td>
+                                <td>{{user.topupAmount}} TRX</td>
+                                <td>{{user.topupDate}} </td>
+                                <td>{{user.level}}</td>
+                               
+                            </tr>
+                        </tbody>
+                    </table>
+                    <label *ngIf="team.length==0">No team yet!</label>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,51 @@
+
+
+.disable-bet{
+    background: #dcdcdc!important;
+    color: #333!important;
+}
+
+
+
+.bet-color .mat-primary{
+    background-color: #4caf50;
+    /* float: left !important; */
+    
+}
+
+.bet-color .mat-accent{
+    background-color: #9c27b0;
+    /* position: relative; */
+}
+
+.bet-color .mat-warning{
+    background-color: #f44336;
+    /* float: right !important; */
+}
+
+.bet-color button{
+   cursor: pointer;
+}
+
+
+.bet-numbers button{
+    background-color: #2196f3;
+    cursor: pointer;
+}
+
+.btn-continue button{
+    float: right;
+}
+
+table[_ngcontent-dbq-c229] thead[_ngcontent-dbq-c229] tr[_ngcontent-dbq-c229] th[_ngcontent-dbq-c229], table[_ngcontent-dbq-c229] tbody[_ngcontent-dbq-c229] tr[_ngcontent-dbq-c229] td[_ngcontent-dbq-c229] span[_ngcontent-dbq-c229] {
+    font-size: 18px;
+}
+.ng-star-inserted h5 {
+    color: #fff;
+    font-size: 15px;
+}
+.card {
+    background: #000;
+    box-shadow: inset 1px 0px 15px 3px #ffffff96 !important;
+    padding: 0 20px 0 13px;
+}

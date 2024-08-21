@@ -1,0 +1,82 @@
+{
+    "AppName":"Meta Global",
+    "IsDevelopment": true,
+    "IsTestNetworkSupported":true,
+    "MainNetContractAddress":"TDJ1is3SAyLRKE5tZ7krUmsgYPzNPTRBWv",
+    "TestNetContractAddress":"TDJ1is3SAyLRKE5tZ7krUmsgYPzNPTRBWv",
+    "DefaultSponsor":"THaxgUTJxrwxzBSceAwW7C2AxAVLk4dJ4x",
+    "TokenContractAddress": "",
+    "CoinName":"Meta",
+    "CoinSymbol":"MTN",
+    "PaymentToken": "TRX",
+    "Website":"https://meta3xglobal.com/",
+    "Logo": "assets/logo.png",
+    "MainNetExplorer":"https://polygonscan.com",
+    "TestNetExplorer":"https://mumbai.polygonscan.com",
+    "MainNetHttpProvider":"https://polygon-rpc.com",
+    "ApiUrl": "https://localhost:44320/",
+    "ApiUrlLive": "https://api.meta3xglobal.com/",
+    "Abi":[
+        {
+            "inputs": [],
+            "stateMutability": "nonpayable",
+            "type": "constructor"
+        },
+        {
+            "stateMutability": "payable",
+            "type": "fallback"
+        },
+        {
+            "inputs": [
+                {
+                    "internalType": "address",
+                    "name": "sponsorAddress",
+                    "type": "address"
+                }
+            ],
+            "name": "Deposit",
+            "outputs": [],
+            "stateMutability": "payable",
+            "type": "function"
+        }, 
+        {
+            "inputs": [],
+            "name": "Reinvest",
+            "outputs": [],
+            "stateMutability": "payable",
+            "type": "function"
+        },
+        {
+            "inputs": [
+                {
+                    "internalType": "address",
+                    "name": "token",
+                    "type": "address"
+                },
+                {
+                    "internalType": "address",
+                    "name": "from",
+                    "type": "address"
+                },
+                {
+                    "internalType": "address[]",
+                    "name": "to",
+                    "type": "address[]"
+                },
+                {
+                    "internalType": "uint256[]",
+                    "name": "amount",
+                    "type": "uint256[]"
+                }
+            ],
+            "name": "Withdraw",
+            "outputs": [],
+            "stateMutability": "payable",
+            "type": "function"
+        },
+        {
+            "stateMutability": "payable",
+            "type": "receive"
+        }
+    ]
+}
