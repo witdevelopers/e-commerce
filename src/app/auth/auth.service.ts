@@ -33,7 +33,6 @@ export class AuthService {
     });
   }
 
-
   
   register(sponsorAddress, transactionHash) {
     return new Promise((resolve, reject) => {
@@ -76,11 +75,6 @@ export class AuthService {
   
 
 
-
-
-
-
-
   isSponsorValid(sponsorId) {
     return new Promise((resolve, reject) => {
       this.http.get(this.apiBaseUrl + 'IsSponsorValid?sponsorId=' + sponsorId).subscribe((res: any) => {
@@ -88,6 +82,7 @@ export class AuthService {
       });
     });
   }
+
 
   getPackages() {
     return new Promise((resolve, reject) => {

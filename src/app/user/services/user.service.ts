@@ -8,8 +8,17 @@ import { Settings } from '../../app-setting';
 })
 export class UserService {
 
+  // Shopping Url Link start here
+
+ bannerUrl = "https://localhost:44320/api/Shop/banners";
+ categoriesUrl = "https://localhost:44320/api/Shop/categories";
+ 
+ // Shopping Url Link end here
+
   private apiBaseUrl = Settings.apiUrl + 'UserHome/'
   
+
+
   
 
   constructor(private http: HttpClient) { }
@@ -114,6 +123,7 @@ export class UserService {
       });
     });
   }
+
   
   EORIncome(){
     return new Promise((resolve,rejects)=>{
@@ -181,6 +191,21 @@ export class UserService {
       });
     });
   }
+
+
+  // ~~~~~~~~~~~~~Shopping~~~~~~~~~~~~~
+
+  // ~~~~~~~~~~~~~~~~~~~Get Banners~~~~~~~~~~~~~~~~~~~~~~~
+  getBanners(){
+    return this.http.get(this.bannerUrl);
+  }
+
+  // ~~~~~~~~~~~~~~~~~~~Categories~~~~~~~~~~~~~~~~~~~~~~~
+  getCategories(){
+    return this.http.get(this.categoriesUrl);
+  } 
+
+  //~~~~~~~~~~~~~~~~~~~~Shop/Categories~~~~~~~~~~~~~~~~~~
 
   
 }
