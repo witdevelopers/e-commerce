@@ -34,8 +34,7 @@ import { HomeComponent } from './usershop/home/home.component';
 import { UsershopMasterComponent } from './usershop/usershop-master/usershop-master.component';
 import { FooterComponent } from './usershop/footer/footer.component';
 import { NavbarComponent } from './usershop/navbar/navbar.component';
-
-
+import { BannerComponent } from './usershop/banner/banner.component';
 
 const routes: Routes = [
   // {
@@ -47,218 +46,190 @@ const routes: Routes = [
   //   }]
   // },
 
+  {
+    path: 'auth',
+    component: AuthMasterComponent,
+    children: [
+      {
+        path: '',
+        component: SigninComponent,
+      },
+      {
+        path: 'signin',
+        component: SigninComponent,
+      },
+
+      {
+        path: 'signup',
+        component: SignupComponent,
+      },
+
+      {
+        path: 'login',
+        component: SigninComponent,
+      },
+
+      {
+        path: 'register',
+        component: RegisterComponent,
+      },
+
+      // {
+      //   path:'register/:id',
+      //   component:RegisterComponent
+      // }
+    ],
+  },
 
   {
-  path:'auth',
-  component:AuthMasterComponent,
-  children:[
-    {
-      path:'',
-      component:SigninComponent
-    },
-    {
-      path:'signin',
-      component:SigninComponent
-    },
+    path: 'user',
+    component: UserMasterComponent,
+    children: [
+      {
+        path: '',
+        component: DashboardComponent,
+      },
+      {
+        path: 'dashboard',
+        component: DashboardComponent,
+      },
+      {
+        path: 'directs',
+        component: DirectsComponent,
+      },
+      {
+        path: 'team',
+        component: TeamComponent,
+      },
+      {
+        path: 'royalty',
+        component: RankComponent,
+      },
+      {
+        path: 'boardIncome',
+        component: BoardBinaryIncomeComponent,
+      },
+      {
+        path: 'withdraw-mta',
+        component: WithdrawMtaComponent,
+      },
+      {
+        path: 'dailyeor',
+        component: DailyEORComponent,
+      },
+      {
+        path: 'miningIncome',
+        component: MiningIncomeComponent,
+      },
+      {
+        path: 'boardCount',
+        component: BoardCountComponent,
+      },
+      {
+        path: 'deposit',
+        component: DepositComponent,
+      },
 
-    {
-      path:'signup',
-      component:SignupComponent
-    },
+      {
+        path: 'token',
+        component: BuySellMasterComponent,
+        children: [
+          {
+            path: '',
+            component: BuyComponent,
+          },
+          {
+            path: 'buy',
+            component: BuyComponent,
+          },
+          {
+            path: 'sell',
+            component: SellComponent,
+          },
+        ],
+      },
+      {
+        path: 'withdraw-dividend',
+        component: WithdrawDividendComponent,
+      },
+      {
+        path: 'level-dividend',
+        component: LevelDividendComponent,
+      },
+      {
+        path: 'salary-income',
+        component: SalaryIncomeComponent,
+      },
+      {
+        path: 'apr-withdrawal-level',
+        component: WithdrawalLevelIncomeComponent,
+      },
+      {
+        path: 'dividend-income',
+        component: DividendIncomeComponent,
+      },
+      {
+        path: 'roi-dividend',
+        component: RoiDividendComponent,
+      },
+      {
+        path: 'transactions',
+        component: TransactionsComponent,
+      },
+      {
+        path: 'income-withdrawal-history',
+        component: IncomeWithdrawalHistoryComponent,
+      },
+      {
+        path: 'chart',
+        component: PriceChartComponent,
+      },
+      {
+        path: 'games',
+        children: [
+          {
+            path: '',
+            loadChildren: () =>
+              import('./games/games.module').then((u) => u.GamesModule),
+          },
+        ],
+      },
+      {
+        path: '**',
+        component: PageNotFoundComponent,
+      },
+    ],
+  },
 
-   
+  //User shop component Routing
+  {
+    path: '',
+    component: NavbarComponent,
+  },
 
-    {
-      path:'login',
-      component:SigninComponent
-    },
+  {
+    path: 'usershop-navbar',
+    component: NavbarComponent,
+  },
 
-
-    {
-      path:'register',
-      component:RegisterComponent
-    },
-
+  {
+    path: 'home',
+    component: HomeComponent,
+  },
+  {
+    path: 'banner',
+    component: BannerComponent,
+  },
 
   
-
-    // {
-    //   path:'register/:id',
-    //   component:RegisterComponent
-    // }
-
-    
-  ]
-},
-
-
-
-{
-  path:'user',
-  component:UserMasterComponent,
-  children:[
-    {
-      path:'',
-      component:DashboardComponent
-    },
-    {
-      path:'dashboard',
-      component:DashboardComponent
-    },
-    {
-      path:'directs',
-      component:DirectsComponent
-    },
-    {
-      path:'team',
-      component:TeamComponent
-    },
-    {
-      path:'royalty',
-      component:RankComponent
-    },
-    {
-      path:'boardIncome',
-      component:BoardBinaryIncomeComponent
-    },
-    {
-      path:'withdraw-mta',
-      component:WithdrawMtaComponent
-    },
-    {
-      path:'dailyeor',
-      component:DailyEORComponent
-    },
-    {
-      path:'miningIncome',
-      component:MiningIncomeComponent
-    },
-    {
-      path:'boardCount',
-      component:BoardCountComponent
-    },
-    {
-      path:'deposit',
-      component:DepositComponent
-    },
-
-    {
-      path:'token',
-      component:BuySellMasterComponent,
-      children:[
-        {
-          path:'',
-          component:BuyComponent
-        },
-        {
-          path:'buy',
-          component:BuyComponent
-        },
-        {
-          path:'sell',
-          component:SellComponent
-        }
-      ]
-    },
-    {
-      path:'withdraw-dividend',
-      component:WithdrawDividendComponent
-    },
-    {
-      path:'level-dividend',
-      component:LevelDividendComponent
-    },
-    {
-      path:'salary-income',
-      component:SalaryIncomeComponent
-    },
-    {
-      path: 'apr-withdrawal-level',
-      component: WithdrawalLevelIncomeComponent
-    },
-    {
-      path: 'dividend-income',
-      component: DividendIncomeComponent
-    },
-    {
-      path:'roi-dividend',
-      component:RoiDividendComponent
-    },
-    {
-      path:'transactions',
-      component:TransactionsComponent
-    },
-    {
-      path:'income-withdrawal-history',
-      component:IncomeWithdrawalHistoryComponent
-    },
-    {
-      path:'chart',
-      component:PriceChartComponent
-    },
-    {
-      path: "games",
-      children: [
-        {
-          path: "",
-          loadChildren: () => import("./games/games.module").then((u) => u.GamesModule),
-        },
-      ]
-    },
-    {
-      path:'**',
-      component:PageNotFoundComponent
-    }
-  ]
-},
-
-
-
-//User shop component Routing
-// {
-//   path:'usershop',
-//   component:NavbarComponent,
-//   children:[
-//     {
-//       path:'',
-//       component:HomeComponent
-//     },
-//     {
-//       path:'home',
-//       component:HomeComponent
-//     },
-
-//     {
-//       path:'footer',
-//       component:FooterComponent
-//     },
-    
-    
-//     {
-//       path:'**',
-//       component:PageNotFoundComponent
-//     }
-//   ]
-// },
-
-{
-  path:'',
-  component:NavbarComponent,
-  children:[{
-    path:'home',
-    component:HomeComponent
-  }]
-},
-
-
-{
-  path:'**',
-  component:PageNotFoundComponent
-}
+  {
+    path: '**',
+    component: PageNotFoundComponent,
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

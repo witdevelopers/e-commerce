@@ -2,38 +2,32 @@
     <div class="sticky">
         <div class="nav-left">
             <div class="amazon hover">
-                <i class="fa-solid fa-bars menu"></i>
+                
                 <a href="#"><img src="amazoni1.png" alt="amazon.in"></a>
                 <div class="in">.in</div>
             </div>
             <div class="address hover">
                 <div class="small">Hello</div>
                 <div class="add">
-                    <i class="fa-solid fa-location-dot"></i>
+                    <i class="ri-map-pin-fill"></i>
                     <b>Select your address</b>
                 </div>
             </div>
         </div>
 
         <div class="nav-search">
-            <label class="hidden">All
-                <i class="fa-solid fa-caret-down"></i>
-            </label>
-            <input type="search" name="search" id="search" placeholder=" Search Amazon.in">
+            
+            <input type="search" name="search" id="search" placeholder=" Search here">
             <label for="search" class="sicon">
-                <i class="fa-solid fa-magnifying-glass"></i>
+                <i class="ri-search-line"></i>
             </label>
         </div>
         <div class="nav-right">
-            <div class="ind hover">
-                <img src="india.png" alt="india">
-                <b class=" add">EN</b>
-                <i class="fa-solid fa-caret-down"></i>
-            </div>
+            
             <div class="sign hover">
-                <div class="small">
+                <div class="small" routerLink="/auth/signin">
                     <div class="hello">Hello, </div>
-                    <div class="signin">sign in</div>
+                    <div class="signin">{{user}}</div>
                     <i class="fa-solid fa-angle-right arrow"></i>
                     <i class="fa-regular fa-user user"></i>
                 </div>
@@ -64,10 +58,7 @@
 
     <div class="nav-main">
         <div class="nav-main-menu">
-            <div class="nav-menu">
-                <i class="fa-solid fa-bars menubar"></i>
-                <div><b>All</b></div>
-            </div>
+           
             <div class="shopCate">
                 <div class="small">Shop By</div>
                 <div class="add">
@@ -87,21 +78,15 @@
                 <a href="# ">Gift Ideas</a>
                 <a href="#">Home & Kitchen</a>
                 <a href="#">Amazon Pay</a>
-                <a href="#">Computer</a>
-                <a href="#">Fashion</a>
-                <a href="#">Books</a>
-                <a href="#">Coupons</a>
-                <a href="#">Beauty & Personal Care</a>
-                <a href="#">Toys & Game</a>
-                <a href="#">Car & Moterbike</a>
+                <a href="#">Amazon Pay</a>
+                <a href="#">Amazon Pay</a>              
             </div>
         </div>
-        <div class="slot">
-            <img class="last" alt="Amazon App"
-                src="https://m.media-amazon.com/images/G/31/IN-hq/2021/img/Mobile_Traffic_/XCM_Manual_1321458_1651511_IN_3781247_400x39_en_IN._CB655944656_.jpg">
-        </div>
+       
     </div>
 </div>
-<div style="display: flex; justify-content: center; align-items: center;">
+<!-- <div style="display: flex; justify-content: center; align-items: center;"> -->
     <app-home></app-home>
-</div>
+<!-- </div> -->
+
+<router-outlet></router-outlet>

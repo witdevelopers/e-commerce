@@ -57,7 +57,7 @@ export class SigninComponent {
 
         this.spinnerService.hide();
         
-        this.router.navigate(['usershop/home']);
+        this.router.navigate(['/usershop-navbar']);
       } else {
         this.spinnerService.hide();
         Swal.fire(res.message, '', 'error');

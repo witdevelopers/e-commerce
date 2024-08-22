@@ -197,7 +197,7 @@ export class UserService {
 
   // ~~~~~~~~~~~~~~~~~~~Get Banners~~~~~~~~~~~~~~~~~~~~~~~
   getBanners(){
-    return this.http.get(this.bannerUrl);
+    return this.http.get(this.bannerUrl,);
   }
 
   // ~~~~~~~~~~~~~~~~~~~Categories~~~~~~~~~~~~~~~~~~~~~~~
@@ -205,7 +205,11 @@ export class UserService {
     return this.http.get(this.categoriesUrl);
   } 
 
-  //~~~~~~~~~~~~~~~~~~~~Shop/Categories~~~~~~~~~~~~~~~~~~
+  //~~~~~~~~~~~~~~~~~~~~Get User Data~~~~~~~~~~~~~~~~~~
+
+  getUserData(){
+    return this.http.get(this.categoriesUrl);
+  } 
 
   
 }

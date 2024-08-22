@@ -48,7 +48,4 @@ export class BannerComponent implements OnInit {
   //     console.log(data);
   //     this.categories = data;
   //     } );
-  // }
-
-
-
+  // }s

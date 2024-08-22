@@ -1,0 +1,283 @@
+
+.footer {
+    width: 100%;
+    max-height: 825px;
+
+}
+
+.back-to-top {
+    color: white;
+    width: 100%;
+    font-size: .90em;
+    height: 3.5em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #222f3ddc;
+}
+
+.back-to-topHidden2 {
+    margin-bottom: -1.2em;
+}
+
+.back-to-topHidden2 div {
+    color: white;
+}
+
+.back-to-top i {
+    position: relative;
+    left: 45px;
+    bottom: 15px;
+    color: white;
+}
+
+.footer > a {
+    text-decoration: none;
+}
+
+@media (max-width: 1024px) {
+    .footer .back-to-topHidden1 {
+        display: none;
+    }
+
+    .footer {
+        height: 510px;
+    }
+
+    .footer-main-hidden-one {
+        display: none;
+    }
+
+    div.footer-link {
+        display: none;
+    }
+
+    .footer-copy-link {
+        padding-top: 1.35em;
+    }
+
+    .footer-copy-link .link-tag a,
+    .footer-copy-link span {
+        font-size: 11px;
+        padding: 0em;
+        margin: 0;
+    }
+}
+
+
+@media (min-width:1025px) {
+    .footer .back-to-topHidden2 {
+        display: none;
+    }
+
+    .footer .footer-main-hidden-two {
+        display: none;
+    }
+
+    .footer .lang-singin {
+        display: none;
+    }
+}
+
+.footer-main {
+    width: 100%;
+    height: 520px;
+    background-color: black;
+}
+
+.footer-main-hidden-two {
+    background-color: #222f3d;
+    padding: 1em 2em 1em 0;
+    margin-top: 1em;
+    display: flex;
+    justify-content: flex-start;
+}
+
+.footer-main-hidden-two div {
+    width: 50%;
+}
+
+.footer-main-hidden-two ul {
+    list-style: none;
+    padding: .16em;
+    margin: 0em 0 .5em 1em;
+}
+
+.footer-main-hidden-two a {
+    color: white;
+    text-decoration: none;
+}
+
+.footer-main-hidden-two a:hover {
+    text-decoration: underline;
+}
+
+.footer-col {
+    display: flex;
+    justify-content: center;
+}
+
+.footer-col-acc {
+    height: 240px;
+    margin: 30px 0px;
+    padding: 20px 0;
+}
+
+.footer-col-accs {
+    width: 7em;
+}
+
+.footer-col-acc span a {
+    color: white;
+    text-decoration: none;
+    opacity: .8;
+}
+
+.footer-col-acc a:hover {
+    text-decoration: underline;
+}
+
+hr.line {
+    opacity: .1;
+}
+
+.photo-lag {
+    width: 100%;
+    height: 2.75em;
+    padding: 1.1em 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.photo-lag img {
+    width: 6.5em;
+    margin: 0 0 -1.7em 0;
+}
+
+.photo-lag i {
+    font-size: 1em;
+    position: relative;
+    left: 60px;
+    top: 1px;
+    color: white;
+}
+
+.photo-lag select {
+    width: 10em;
+    height: 2.6em;
+    color: white;
+    background-color: transparent;
+    padding: 0 1em;
+    margin: 0 2.5em;
+    border: 1px solid rgba(255, 255, 255, 0.464);
+    border-radius: 5px;
+}
+
+.photo-lag option {
+    background-color: grey;
+    ;
+}
+
+.country {
+    width: 100%;
+    height: 2.75em;
+    padding: 1.1em 0;
+    text-align: center;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+}
+
+.country a {
+    color: white;
+    text-decoration: none;
+    padding: 0 .35em;
+}
+
+.country a:hover {
+    text-decoration: underline;
+}
+
+.footer-copyright {
+    width: 100%;
+    height: 14em;
+    background-color: #010d21;
+}
+
+.lang-singin {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0;
+}
+
+.lang-singin .lang {
+    margin: 1.75em;
+    opacity: .75;
+}
+
+.already div b {
+    margin: 1em;
+}
+
+.already div b a {
+    color: white;
+    text-decoration: none;
+}
+
+.already div b a:hover {
+    text-decoration: underline;
+}
+
+.footer-link {
+    width: 100%;
+    padding: 30px 0;
+    display: grid;
+    grid-template-columns: auto auto auto;
+    grid-template-rows: auto auto;
+    justify-content: center;
+    position: relative;
+}
+
+table {
+    padding-left: 1em;
+}
+
+tr td {
+    line-height: 1;
+    width: 150px;
+    font-size: .85em;
+    padding: .25em .5em;
+    margin: 0 1em;
+}
+
+tr td:hover {
+    text-decoration: underline;
+}
+
+tr td a {
+    color: white;
+    text-decoration: none;
+}
+
+tr td span {
+    opacity: .5;
+}
+
+.footer-copy-link {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    font-size: .85em;
+    line-height: 1.5em;
+    margin: -21px 0 0 0;
+}
+
+.footer-copy-link .link-tag a {
+    color: white;
+    text-decoration: none;
+    margin: 0 1em;
+}
