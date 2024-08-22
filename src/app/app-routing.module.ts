@@ -47,15 +47,6 @@ const routes: Routes = [
   //   }]
   // },
 
-  {
-    path:'',
-    component:NavbarComponent,
-    children:[{
-      path:'',
-      component:HomeComponent
-    }]
-  },
-
 
   {
   path:'auth',
@@ -224,70 +215,40 @@ const routes: Routes = [
 
 
 //User shop component Routing
+// {
+//   path:'usershop',
+//   component:NavbarComponent,
+//   children:[
+//     {
+//       path:'',
+//       component:HomeComponent
+//     },
+//     {
+//       path:'home',
+//       component:HomeComponent
+//     },
+
+//     {
+//       path:'footer',
+//       component:FooterComponent
+//     },
+    
+    
+//     {
+//       path:'**',
+//       component:PageNotFoundComponent
+//     }
+//   ]
+// },
+
 {
-  path:'usershop',
-  component:UsershopMasterComponent,
-  children:[
-    {
-      path:'',
-      component:HomeComponent
-    },
-    {
-      path:'home',
-      component:HomeComponent
-    },
-
-    {
-      path:'footer',
-      component:FooterComponent
-    },
-    
-    
-
-    
-    
-
-
-
-    {
-      path:'token',
-      component:BuySellMasterComponent,
-      children:[
-        {
-          path:'',
-          component:BuyComponent
-        },
-        {
-          path:'buy',
-          component:BuyComponent
-        },
-        {
-          path:'sell',
-          component:SellComponent
-        }
-      ]
-    },
-    
-
-
-    {
-      path: "games",
-      children: [
-        {
-          path: "",
-          loadChildren: () => import("./games/games.module").then((u) => u.GamesModule),
-        },
-      ]
-    },
-    {
-      path:'**',
-      component:PageNotFoundComponent
-    }
-  ]
+  path:'',
+  component:NavbarComponent,
+  children:[{
+    path:'home',
+    component:HomeComponent
+  }]
 },
-
-
-
 
 
 {

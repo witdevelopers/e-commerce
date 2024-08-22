@@ -32,6 +32,7 @@
     "crypto-browserify": "^3.12.0",
     "font-awesome": "^4.7.0",
     "https-browserify": "^1.0.0",
+    "jquery": "^3.7.1",
     "memfs": "^4.6.0",
     "ngx-countdown": "^13.0.0",
     "ngx-spinner": "^13.1.1",
