@@ -33,9 +33,9 @@ export class HomeComponent implements OnInit {
       });
     });
 
-  this.Categories();
-  this.getProduct();
-  this.getProductDetails(7);
+    this.Categories();
+    this.getProduct();
+    this.getProductDetails(7);
 
   }
   currentSlide = 0;
@@ -48,15 +48,15 @@ export class HomeComponent implements OnInit {
     this.currentSlide = (this.currentSlide - 1 + this.banners.length) % this.banners.length;
   }
 
-  Categories(){
-    this.userservice.getCategories().subscribe((data)=> {
+  Categories() {
+    this.userservice.getCategories().subscribe((data) => {
       console.log(data);
       this.categories = data;
-      } );
+    });
   }
 
-  getProduct(){
-    this.userservice.getProducts().subscribe((data)=>{
+  getProduct() {
+    this.userservice.getProducts().subscribe((data) => {
       this.products = data;
       console.log(data);
     })
@@ -74,5 +74,5 @@ export class HomeComponent implements OnInit {
       }
     );
   }
-  
+
 }
