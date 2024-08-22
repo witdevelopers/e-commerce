@@ -10,8 +10,8 @@ export class HomeComponent implements OnInit {
   banners: any[] = [];
   baseUrl: string = 'https://www.mbp18k.com';
   categories: any;
-  product: any;
-
+  products: any;
+  productById: any;
 
 
 
@@ -35,7 +35,17 @@ export class HomeComponent implements OnInit {
 
   this.Categories();
   this.getProduct();
+  this.getProductDetails(7);
 
+  }
+  currentSlide = 0;
+  nextSlide(): void {
+    this.currentSlide = (this.currentSlide + 1) % this.banners.length;
+  }
+
+
+  prevSlide(): void {
+    this.currentSlide = (this.currentSlide - 1 + this.banners.length) % this.banners.length;
   }
 
   Categories(){
@@ -47,8 +57,22 @@ export class HomeComponent implements OnInit {
 
   getProduct(){
     this.userservice.getProducts().subscribe((data)=>{
-      this.product = data;
+      this.products = data;
       console.log(data);
     })
   }
+
+  getProductDetails(productId: number): void {
+    this.userservice.getProductDetails(productId).subscribe(
+      (response) => {
+        this.productById = response;
+        console.log(response);
+        console.log(response);
+      },
+      (error) => {
+        console.error('Error fetching product details:', error);
+      }
+    );
+  }
+  
 }

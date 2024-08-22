@@ -61,20 +61,6 @@ export class AuthService {
     });
   }
 
-
-
-  // saveUsers(UserID: string, password: string): Promise<any> {
-  //   return new Promise((resolve, reject) => {
-  //     const body = { userId: UserID, password: password };
-  
-  //     this.http.post(this.apiBaseUrl + "registerMLM", body).subscribe((res: any) => {
-  //       resolve(res);
-  //     });
-  //   });
-  // }
-  
-
-
   isSponsorValid(sponsorId) {
     return new Promise((resolve, reject) => {
       this.http.get(this.apiBaseUrl + 'IsSponsorValid?sponsorId=' + sponsorId).subscribe((res: any) => {
