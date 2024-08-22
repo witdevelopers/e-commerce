@@ -9,6 +9,15 @@ import { UserService } from 'src/app/user/services/user.service';
 export class HomeComponent implements OnInit {
   banners: any[] = [];
   baseUrl: string = 'https://www.mbp18k.com';
+  categories: any;
+  product: any;
+
+
+
+
+
+
+
 
   constructor(private userservice: UserService) { }
 
@@ -23,6 +32,23 @@ export class HomeComponent implements OnInit {
         return banner;
       });
     });
+
+  this.Categories();
+  this.getProduct();
+
   }
 
+  Categories(){
+    this.userservice.getCategories().subscribe((data)=> {
+      console.log(data);
+      this.categories = data;
+      } );
+  }
+
+  getProduct(){
+    this.userservice.getProducts().subscribe((data)=>{
+      this.product = data;
+      console.log(data);
+    })
+  }
 }

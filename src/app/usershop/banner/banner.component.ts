@@ -43,9 +43,4 @@ export class BannerComponent implements OnInit {
 
 
   // ~~~~~~~~~~~~~~~Categories~~~~~~~~~~~~~~~~~~~~~~~~
-  // Categories(){
-  //   this.userservice.getCategories().subscribe((data)=> {
-  //     console.log(data);
-  //     this.categories = data;
-  //     } );
-  // }s
+  

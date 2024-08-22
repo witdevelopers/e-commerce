@@ -1,6 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Settings } from '../../app-setting';
+import { Observable } from 'rxjs';
+import { Categories } from 'src/app/usershop/interface';
 
 
 @Injectable({
@@ -12,6 +14,7 @@ export class UserService {
 
  bannerUrl = "https://localhost:44320/api/Shop/banners";
  categoriesUrl = "https://localhost:44320/api/Shop/categories";
+ productUrl = "https://localhost:44320/api/Shop/home-page/products";
  
  // Shopping Url Link end here
 
@@ -201,14 +204,13 @@ export class UserService {
   }
 
   // ~~~~~~~~~~~~~~~~~~~Categories~~~~~~~~~~~~~~~~~~~~~~~
-  getCategories(){
-    return this.http.get(this.categoriesUrl);
+  getCategories(): Observable<Categories>{
+    return this.http.get<Categories>(this.categoriesUrl);
   } 
 
-  //~~~~~~~~~~~~~~~~~~~~Get User Data~~~~~~~~~~~~~~~~~~
-
-  getUserData(){
-    return this.http.get(this.categoriesUrl);
+   //~~~~~~~~~~~~~~~~~~~~Get User Data~~~~~~~~~~~~~~~~~~
+   getProducts(){
+    return this.http.get(this.productUrl);
   } 
 
   
