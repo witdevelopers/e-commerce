@@ -35,7 +35,8 @@ export class HomeComponent implements OnInit {
 
     this.Categories();
     this.getProduct();
-    this.getProductDetails(7);
+    this.getProductDetailsById(8);
+    
 
   }
   currentSlide = 0;
@@ -50,7 +51,7 @@ export class HomeComponent implements OnInit {
 
   Categories() {
     this.userservice.getCategories().subscribe((data) => {
-      console.log(data);
+      console.log("Your Categories wala data" ,data);
       this.categories = data;
     });
   }
@@ -58,21 +59,24 @@ export class HomeComponent implements OnInit {
   getProduct() {
     this.userservice.getProducts().subscribe((data) => {
       this.products = data;
-      console.log(data);
+      console.log("Your get Product Home Section data" ,data);
     })
   }
 
-  getProductDetails(productId: number): void {
+  getProductDetailsById(productId: number): void {
     this.userservice.getProductDetails(productId).subscribe(
       (response) => {
         this.productById = response;
-        console.log(response);
-        console.log(response);
+        console.log("Your getProductDetails data" ,response);
+        
       },
       (error) => {
         console.error('Error fetching product details:', error);
       }
     );
   }
+
+
+
 
 }

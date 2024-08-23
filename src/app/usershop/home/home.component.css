@@ -51,20 +51,19 @@
     box-sizing: border-box;
 }
 
-:root {
-    --primary-text-color: #183b56;
-    --secondary-text-color: #577592;
-    --accent-color: #2294ed;
-    --accent-color-dark: #1d69a3;
+h3{
+    color: black;
 }
 
 body {
     font-family: "Poppins", sans-serif;
-    color: var(--primary-text-color);
+    
 }
-
+h6{
+    color: black;
+}
 p {
-    color: var(--secondary-text-color);
+   color: black;
     line-height: 1.4rem;
 }
 
@@ -141,7 +140,7 @@ nav {
 
 .search-button {
     background-color: var(--accent-color);
-    color: white;
+    /* color: white; */
     padding: 8px 24px;
     border: none;
     border-radius: 4px;
