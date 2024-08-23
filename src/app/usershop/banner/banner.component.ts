@@ -11,10 +11,17 @@ export class BannerComponent implements OnInit {
   categories: any;
   baseUrl: string = 'https://www.mbp18k.com';
 
+  productId: number;
+  productDetails: any;
+  errorMessage: string;
+  mainCategory: any;
+
   constructor(private userservice: UserService) {}
 
   ngOnInit(): void {
-    this.showDetails();
+    this.getProduct();
+    this.getMainCategory();
+
     this.userservice.getBanners().subscribe((res: any[]) => {
       this.banners = res.map((banner) => {
         // Check if the imageUrl is relative or absolute
@@ -30,7 +37,32 @@ export class BannerComponent implements OnInit {
     });
   }
 
-  showDetails() {
-    console.log("showDetails Cliked...");
+  getProduct() {
+    if (this.productId) {
+      this.userservice.getProductDetails(this.productId).subscribe(
+        (data) => {
+          if (data) {
+            this.productDetails = data;
+            this.errorMessage = ''; // Clear any previous error message
+            console.log(this.productDetails);
+          } else {
+            this.productDetails = null;
+            this.errorMessage = 'No product found for the given ID'; // Handle no data case
+          }
+        },
+        (error) => {
+          this.productDetails = null;
+          this.errorMessage = 'Product not found or API error'; // Handle errors
+        }
+      );
+    } else {
+      this.errorMessage = 'Please enter a valid product ID'; // Handle empty input
+    }
+  }
+
+  getMainCategory() {
+    this.userservice.getMainCategory().subscribe((res: any[]) => {
+      this.mainCategory = res;
+    });
   }
 }

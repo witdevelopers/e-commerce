@@ -35,7 +35,7 @@ export class HomeComponent implements OnInit {
 
     this.Categories();
     this.getProduct();
-    this.getProductDetailsById(8);
+    //this.getProductDetailsById(8);
     
 
   }
@@ -62,21 +62,4 @@ export class HomeComponent implements OnInit {
       console.log("Your get Product Home Section data" ,data);
     })
   }
-
-  getProductDetailsById(productId: number): void {
-    this.userservice.getProductDetails(productId).subscribe(
-      (response) => {
-        this.productById = response;
-        console.log("Your getProductDetails data" ,response);
-        
-      },
-      (error) => {
-        console.error('Error fetching product details:', error);
-      }
-    );
-  }
-
-
-
-
 }

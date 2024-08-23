@@ -16,6 +16,7 @@ export class UserService {
  categoriesUrl = "https://localhost:44320/api/Shop/categories";
  productUrl = "https://localhost:44320/api/Shop/home-page/products";
  productDetailsByIdUrl = 'https://localhost:44320/api/Shop/products-by-category';
+ mainCategoryUrl = "https://localhost:44320/api/Shop/allcategories_without_parentcategories";
  
  // Shopping Url Link end here
 
@@ -220,6 +221,8 @@ export class UserService {
     return this.http.get<any>(url);
   }
 
-  
-
+  //Main category fetched
+  getMainCategory(){
+    return this.http.get(this.mainCategoryUrl);
+  }
 }

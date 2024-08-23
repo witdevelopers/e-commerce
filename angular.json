@@ -51,8 +51,7 @@
             ],
             "scripts": [
               "src/assets/win-wheel/Winwheel.min.js",
-              "src/assets/win-wheel/win-wheel.js",
-              "src/assets/win-wheel/index.js"
+              "src/assets/win-wheel/win-wheel.js"
             ]
           },
           "configurations": {

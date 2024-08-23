@@ -1,6 +1,22 @@
-
-
-
 <div>
-    <button (click)="showDetails()">Click to Call showDetails</button>
-</div>
+    <label for="productId">Enter Product ID:</label>
+    <input type="number" [(ngModel)]="productId" id="productId" placeholder="Enter product ID">
+  
+    <button (click)="getProduct()">Get Product Details</button>
+  
+    <!-- Display error message if any -->
+    <p *ngIf="errorMessage" style="color:red">{{ errorMessage }}</p>
+  
+    <!-- Display product details -->
+    <div *ngFor="let productDetail of productDetails" style="background-color: red; color: black;">
+      <h3>Product Details:</h3>
+      <p><strong>ID:</strong> {{ productDetail.categoryName }}</p>
+      <p><strong>Name:</strong> {{ productDetail.productName }}</p>
+      <p><strong>Price:</strong> {{ productDetail.price }}</p>
+      <!-- Add more fields as per your product details -->
+    </div>
+  </div>
+  
+  <div *ngFor="let c of mainCategory">
+        {{c.categoryName}}
+  </div>
