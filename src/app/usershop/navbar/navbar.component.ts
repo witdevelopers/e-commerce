@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { UserService } from 'src/app/user/services/user.service';
 
 @Component({
   selector: 'app-navbar',
@@ -7,15 +8,59 @@ import { Component, OnInit } from '@angular/core';
 })
 export class NavbarComponent implements OnInit {
   user: string = 'Sign in';
-  constructor() {}
+  mainCategory: any[] = [];
+  subCategory: { [key: number]: any[] } = {};
+  isSubCategoryVisible: { [key: number]: boolean } = {};
+
+  constructor(private userService: UserService) {}
 
   ngOnInit(): void {
     this.userData();
+    this.getMainCategory();
   }
 
   userData() {
-    if (sessionStorage.getItem('address')) {
-      this.user = sessionStorage.getItem('address');
+    const address = sessionStorage.getItem('address');
+    if (address) {
+      this.user = address;
+    }
+  }
+
+  getMainCategory() {
+    this.userService.getMainCategory().subscribe(
+      (res: any[]) => {
+        this.mainCategory = res;
+        console.log("Get Main Category: ", this.mainCategory);
+      },
+      (error) => {
+        console.error('Error fetching main categories', error);
+      }
+    );
+  }
+
+  loadSubCategory(parentCategoryId: number) {
+    if (parentCategoryId === undefined || parentCategoryId === null) {
+      console.error('Invalid parentCategoryId:', parentCategoryId);
+      return;
+    }
+
+    if (!this.subCategory[parentCategoryId]) {
+      this.userService.getSubCategory(parentCategoryId).subscribe(
+        (res: any[]) => {
+          this.subCategory[parentCategoryId] = res;
+          console.log("Subcategories: ", this.subCategory);
+        },
+        (error) => {
+          console.error('Error fetching subcategories', error);
+        }
+      );
+    }
+    this.isSubCategoryVisible[parentCategoryId] = true;
+  }
+
+  hideSubCategory(parentCategoryId: number) {
+    if (parentCategoryId !== undefined && parentCategoryId !== null) {
+      this.isSubCategoryVisible[parentCategoryId] = false;
     }
   }
 }

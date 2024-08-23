@@ -13,12 +13,6 @@ export class HomeComponent implements OnInit {
   products: any;
   productById: any;
 
-
-
-
-
-
-
   constructor(private userservice: UserService) { }
 
   ngOnInit(): void {

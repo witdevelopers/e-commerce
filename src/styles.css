@@ -456,8 +456,7 @@ body {
     overflow: scroll;
     overflow-x: unset;
     scroll-behavior: smooth;
-    color: white;
-    background-color: rgb(234, 237, 237);
+    
 }
 
 body::-webkit-scrollbar {

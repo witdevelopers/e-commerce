@@ -20,7 +20,7 @@ export class BannerComponent implements OnInit {
 
   ngOnInit(): void {
     this.getProduct();
-    this.getMainCategory();
+    // this.getMainCategory();
 
     this.userservice.getBanners().subscribe((res: any[]) => {
       this.banners = res.map((banner) => {
@@ -60,9 +60,9 @@ export class BannerComponent implements OnInit {
     }
   }
 
-  getMainCategory() {
-    this.userservice.getMainCategory().subscribe((res: any[]) => {
-      this.mainCategory = res;
-    });
-  }
+  // getMainCategory() {
+  //   this.userservice.getMainCategory().subscribe((res: any[]) => {
+  //     this.mainCategory = res;
+  //   });
+  // }
 }

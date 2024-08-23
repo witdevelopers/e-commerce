@@ -11,16 +11,15 @@ import { Categories } from 'src/app/usershop/interface';
 export class UserService {
 
   // Shopping Url Link start here
-
- bannerUrl = "https://localhost:44320/api/Shop/banners";
+ //bannerUrl = "https://localhost:44320/api/Shop/banners";
  categoriesUrl = "https://localhost:44320/api/Shop/categories";
  productUrl = "https://localhost:44320/api/Shop/home-page/products";
  productDetailsByIdUrl = 'https://localhost:44320/api/Shop/products-by-category';
- mainCategoryUrl = "https://localhost:44320/api/Shop/allcategories_without_parentcategories";
+ 
  
  // Shopping Url Link end here
 
-  private apiBaseUrl = Settings.apiUrl + 'UserHome/'
+  private apiBaseUrl = Settings.apiUrl;
   
 
 
@@ -202,7 +201,7 @@ export class UserService {
 
   // ~~~~~~~~~~~~~~~~~~~Get Banners~~~~~~~~~~~~~~~~~~~~~~~
   getBanners(){
-    return this.http.get(this.bannerUrl,);
+    return this.http.get(this.apiBaseUrl+"api/Shop/banners",);
   }
 
   // ~~~~~~~~~~~~~~~~~~~Categories~~~~~~~~~~~~~~~~~~~~~~~
@@ -223,6 +222,15 @@ export class UserService {
 
   //Main category fetched
   getMainCategory(){
-    return this.http.get(this.mainCategoryUrl);
+    return this.http.get(this.apiBaseUrl+"api/Shop/allparentcategories");
   }
+
+
+  //get Subcategory from parent category
+  getSubCategory(menuId: number): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiBaseUrl}api/Shop/categories/${menuId}`);
+  }
+  
+  
+
 }
