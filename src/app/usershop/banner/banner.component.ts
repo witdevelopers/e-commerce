@@ -31,6 +31,6 @@ export class BannerComponent implements OnInit {
   }
 
   showDetails() {
-
+    console.log("showDetails Cliked...");
   }
 }

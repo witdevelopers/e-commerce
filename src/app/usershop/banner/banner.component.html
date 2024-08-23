@@ -1,20 +1,6 @@
-<div style="color: black;">
-    <ul>
-        <div *ngFor="let banner of banners">
-            <img [src]="banner.imageUrl" alt="Banner Image">
-          </div>
-    </ul>
-</div>
 
-<div style="color: black;">
-    <ul>
-        <li *ngFor="let categorie of categories">
-            {{categorie.categoryID}}  ||  {{categorie.categoryName}}
-        </li>
-    </ul>
-</div>
 
 
 <div>
-    <button (click)="showDetails()">Show Details</button>
+    <button (click)="showDetails()">Click to Call showDetails</button>
 </div>

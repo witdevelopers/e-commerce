@@ -51,6 +51,7 @@ import { HomeComponent } from './usershop/home/home.component';
 import { UsershopMasterComponent } from './usershop/usershop-master/usershop-master.component';
 import { FooterComponent } from './usershop/footer/footer.component';
 import { NavbarComponent } from './usershop/navbar/navbar.component';
+import { BannerComponent } from './usershop/banner/banner.component';
 
 @NgModule({
   declarations: [
@@ -90,6 +91,7 @@ import { NavbarComponent } from './usershop/navbar/navbar.component';
     UsershopMasterComponent,
     FooterComponent,
     NavbarComponent,
+    BannerComponent
 
 
 
