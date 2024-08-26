@@ -14,7 +14,7 @@ export class UserService {
  //bannerUrl = "https://localhost:44320/api/Shop/banners";
  categoriesUrl = "https://localhost:44320/api/Shop/categories";
  productUrl = "https://localhost:44320/api/Shop/home-page/products";
- productDetailsByIdUrl = 'https://localhost:44320/api/Shop/products-by-category';
+//  productDetailsByIdUrl = 'https://localhost:44320/api/Shop/products-by-categoryid';
  
  
  // Shopping Url Link end here
@@ -215,10 +215,10 @@ export class UserService {
   } 
 
    // Method to fetch product details by ID
-   getProductDetails(productId: number): Observable<any> {
-    const url = `${this.productDetailsByIdUrl}/${productId}`;
-    return this.http.get<any>(url);
-  }
+  //  getProductDetails(productId: number): Observable<any> {
+  //   const url = `${this.productDetailsByIdUrl}/${productId}`;
+  //   return this.http.get<any>(url);
+  // }
 
   //Main category fetched
   getMainCategory(){
