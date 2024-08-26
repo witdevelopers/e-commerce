@@ -1,5 +1,8 @@
 <div class="carousel">
-  <div class="carousel-inner" [style.transform]="'translateX(-' + currentSlide * 100 + '%)'">
+  <div
+    class="carousel-inner"
+    [style.transform]="'translateX(-' + currentSlide * 100 + '%)'"
+  >
     <div class="carousel-item" *ngFor="let slide of banners">
       <img [src]="slide.imageUrl" [alt]="slide.alt" />
     </div>
@@ -11,7 +14,22 @@
 <app-banner></app-banner>
 
 
-<div *ngFor="let hp of homePageSectionProducts">
-  {{hp.sectionName}}
-  {{hp.productName}}
+<div style="display: flex; justify-content: space-evenly; align-items: center; flex-wrap: wrap;">
+  <div *ngFor="let hp of homePageSectionProducts"  class="card" style="margin-left: 30px; margin-bottom: 15px; margin-top: 15px;" id="template-news-card" >
+    <div class="card-header">
+        <img src="https://img.freepik.com/free-photo/delicious-burger-with-fresh-ingredients_23-2150857908.jpg?ga=GA1.1.2095310160.1724395768&semt=ais_hybrid" alt="sdsd" id="news-img">
+    </div>
+    <div class="card-content">
+        <h3 id="news-title">{{hp.productName}}</h3>
+        <!-- <h6 class="news-source" id="news-source">constGenius 02/02/2024</h6> -->
+        <button class="cart-button">
+          <span class="add-to-cart">Add to cart</span>
+          <span class="added">Added</span>
+          <i class="fas fa-shopping-cart"></i>
+          <i class="fas fa-box"></i>
+        </button>
+    </div>
+  </div>
 </div>
+
+
