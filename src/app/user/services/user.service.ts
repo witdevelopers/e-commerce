@@ -236,7 +236,8 @@ export class UserService {
     return this.http.get<any[]>(this.apiBaseUrl+"api/Shop/home-page/products");
   }
 
-
-  
+  getAllProductByCategoryId(categoryId: number): Observable<any[]>{
+    return this.http.get<any[]>(this.apiBaseUrl+"api/Shop/products-by-categoryid/"+categoryId);
+  }
 
 }

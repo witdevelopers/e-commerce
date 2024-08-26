@@ -35,6 +35,7 @@ import { UsershopMasterComponent } from './usershop/usershop-master/usershop-mas
 import { FooterComponent } from './usershop/footer/footer.component';
 import { NavbarComponent } from './usershop/navbar/navbar.component';
 import { BannerComponent } from './usershop/banner/banner.component';
+import { SubcategoryComponent } from './usershop/subcategory/subcategory.component';
 
 const routes: Routes = [
   // {
@@ -204,7 +205,7 @@ const routes: Routes = [
   //User shop component Routing
   {
     path: '',
-    component: NavbarComponent,
+    component: HomeComponent,
   },
 
   {
@@ -216,6 +217,8 @@ const routes: Routes = [
     path: 'home',
     component: HomeComponent,
   },
+
+  { path: 'subcategory/:id', component: SubcategoryComponent },
   {
     path: 'banner',
     component: BannerComponent,

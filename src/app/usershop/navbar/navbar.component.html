@@ -27,23 +27,7 @@
     </div>
 
     <div class="headerRight">
-        <div class="downloadContainer">
-            <div class="mobileIcon">
-                <img src="assets/img/mobile.png" />
-            </div>
-            <p>Download App</p>
-
-            <div class="downloadHoverBtnContainer">
-                <h3>Download From</h3>
-
-                <a href="" class="downloadBtn">
-                    <img src="https://images.meesho.com/images/pow/playstore-icon-big.webp" />
-                </a>
-                <a href="" class="downloadBtn">
-                    <img src="https://images.meesho.com/images/pow/appstore-icon-big.webp" />
-                </a>
-            </div>
-        </div>
+       
 
         <div class="becomeSupplierContainer">
             <p>Become a Supplier</p>
@@ -76,7 +60,8 @@
         {{ c.categoryName }}
         <div class="subMenu" *ngIf="subCategory[c.categoryID] && isSubCategoryVisible[c.categoryID]">
           <div class="submenuList" *ngFor="let subcat of subCategory[c.categoryID]">
-            <p>{{ subcat.categoryName }}</p>
+            <!-- Use routerLink to navigate to the respective subcategory page -->
+            <a [routerLink]="['/subcategory', subcat.categoryID]">{{ subcat.categoryName }}</a>
           </div>
         </div>
       </li>
@@ -86,9 +71,6 @@
   
   
   
-
-<!-- <div style="display: flex; justify-content: center; align-items: center;"> -->
-    <app-home></app-home>
-<!-- </div> -->
+  
 
 <router-outlet></router-outlet>

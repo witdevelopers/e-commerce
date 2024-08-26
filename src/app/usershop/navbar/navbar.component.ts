@@ -11,12 +11,15 @@ export class NavbarComponent implements OnInit {
   mainCategory: any[] = [];
   subCategory: { [key: number]: any[] } = {};
   isSubCategoryVisible: { [key: number]: boolean } = {};
+  AllProductByCategoryId:any [] = [];
+
 
   constructor(private userService: UserService) {}
 
   ngOnInit(): void {
     this.userData();
     this.getMainCategory();
+    this.getAllProductByCategoryId(7);
   }
 
   userData() {
@@ -62,5 +65,12 @@ export class NavbarComponent implements OnInit {
     if (parentCategoryId !== undefined && parentCategoryId !== null) {
       this.isSubCategoryVisible[parentCategoryId] = false;
     }
+  }
+
+
+  getAllProductByCategoryId(categoryId: number){
+    this.userService.getAllProductByCategoryId(categoryId).subscribe((data)=>{
+      this.AllProductByCategoryId = data;
+    })
   }
 }
