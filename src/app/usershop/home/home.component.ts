@@ -12,8 +12,15 @@ export class HomeComponent implements OnInit {
   categories: any;
   products: any;
   productById: any;
+  homeProducts: any[] = [];
 
-  constructor(private userservice: UserService) { }
+  constructor(private userservice: UserService) { 
+    this.getHomeProductsBySectionId(1);
+    this.getHomeProductsBySectionId(2);
+    this.getHomeProductsBySectionId(3);
+    this.getHomeProductsBySectionId(5);
+    this.getHomeProductsBySectionId(6);
+  }
 
   ngOnInit(): void {
     this.userservice.getBanners().subscribe((res: any[]) => {
@@ -29,6 +36,7 @@ export class HomeComponent implements OnInit {
 
     this.Categories();
     this.getProduct();
+    
     //this.getProductDetailsById(8);
     
 
@@ -56,4 +64,12 @@ export class HomeComponent implements OnInit {
       console.log("Your get Product Home Section data" ,data);
     })
   }
+
+
+  getHomeProductsBySectionId(sectionId: number){
+    this.userservice.getHomePageProductBySectionId(sectionId).subscribe((data) => {
+      this.homeProducts = data;
+      console.log("Your get Product Home Section data" ,data);
+  });
+}
 }

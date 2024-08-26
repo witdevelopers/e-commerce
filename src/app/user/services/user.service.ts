@@ -14,7 +14,7 @@ export class UserService {
  //bannerUrl = "https://localhost:44320/api/Shop/banners";
  categoriesUrl = "https://localhost:44320/api/Shop/categories";
  productUrl = "https://localhost:44320/api/Shop/home-page/products";
-//  productDetailsByIdUrl = 'https://localhost:44320/api/Shop/products-by-categoryid';
+
  
  
  // Shopping Url Link end here
@@ -231,6 +231,10 @@ export class UserService {
     return this.http.get<any[]>(`${this.apiBaseUrl}api/Shop/categories/${menuId}`);
   }
   
+
+  getHomePageProductBySectionId(sectionId: number): Observable<any[]>{
+    return this.http.get<any[]>(`${this.apiBaseUrl}api/Shop/home-page/products/${sectionId}`);
+  }
   
 
 }
