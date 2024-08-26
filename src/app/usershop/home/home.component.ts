@@ -14,6 +14,12 @@ export class HomeComponent implements OnInit, AfterViewInit {
   homePageSectionProducts: any[] = [];
   currentSlide = 0;
 
+  // Carousel properties
+  private leftValue = 0;
+  private totalMovementSize: number;
+  private carouselInner: HTMLElement | null = null;
+  private carouselVp: HTMLElement | null = null;
+
   constructor(private userservice: UserService) {}
 
   ngOnInit(): void {
@@ -24,14 +30,14 @@ export class HomeComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    this.initializeCartButtons();
+    this.initializeCartButtons(); // Initialize cart buttons
+    this.initializeCarousel(); // Initialize carousel
   }
 
   // Loading Banners
   loadBanners() {
     this.userservice.getBanners().subscribe((res: any[]) => {
       this.banners = res.map((banner) => {
-        // Prepend the base URL only if the imageUrl is relative
         if (!banner.imageUrl.startsWith('http') && !banner.imageUrl.startsWith('https')) {
           banner.imageUrl = `${this.baseUrl}${banner.imageUrl}`;
         }
@@ -86,5 +92,71 @@ export class HomeComponent implements OnInit, AfterViewInit {
     cartButtons.forEach((button) => {
       button.addEventListener('click', cartClick);
     });
+  }
+
+  // Initialize Carousel
+  private initializeCarousel(): void {
+    this.carouselInner = document.querySelector<HTMLElement>("#cCarousel-inner");
+    this.carouselVp = document.querySelector<HTMLElement>("#carousel-vp");
+    
+    if (this.carouselInner && this.carouselVp) {
+      const carouselItem = document.querySelector<HTMLElement>(".cCarousel-item");
+      
+      if (carouselItem) {
+        this.totalMovementSize = 
+          parseFloat(carouselItem.getBoundingClientRect().width.toFixed(2)) +
+          parseFloat(window.getComputedStyle(this.carouselInner).getPropertyValue("gap"));
+        
+        const prev = document.querySelector<HTMLButtonElement>("#prev");
+        const next = document.querySelector<HTMLButtonElement>("#next");
+        
+        if (prev && next) {
+          prev.addEventListener("click", () => this.moveCarousel(-1));
+          next.addEventListener("click", () => this.moveCarousel(1));
+        }
+
+        this.handleMediaQueries();
+      }
+    }
+  }
+
+  // Move Carousel
+  private moveCarousel(direction: number): void {
+    if (this.carouselInner && this.carouselVp) {
+      const carouselVpWidth = this.carouselVp.getBoundingClientRect().width;
+      const carouselInnerWidth = this.carouselInner.getBoundingClientRect().width;
+
+      if (direction === -1 && this.leftValue < 0) {
+        this.leftValue += this.totalMovementSize;
+        this.carouselInner.style.left = `${this.leftValue}px`;
+      } else if (direction === 1 && (carouselInnerWidth - Math.abs(this.leftValue)) > carouselVpWidth) {
+        this.leftValue -= this.totalMovementSize;
+        this.carouselInner.style.left = `${this.leftValue}px`;
+      }
+    }
+  }
+
+  // Handle Media Queries
+  private handleMediaQueries(): void {
+    const mediaQuery510 = window.matchMedia("(max-width: 510px)");
+    const mediaQuery770 = window.matchMedia("(max-width: 770px)");
+
+    mediaQuery510.addEventListener("change", this.mediaManagement.bind(this));
+    mediaQuery770.addEventListener("change", this.mediaManagement.bind(this));
+  }
+
+  // Media Management
+  private mediaManagement(event: MediaQueryListEvent): void {
+    if (this.carouselInner) {
+      const newViewportWidth = window.innerWidth;
+
+      if (this.leftValue <= -this.totalMovementSize && window.innerWidth < newViewportWidth) {
+        this.leftValue += this.totalMovementSize;
+        this.carouselInner.style.left = `${this.leftValue}px`;
+      } else if (this.leftValue <= -this.totalMovementSize && window.innerWidth > newViewportWidth) {
+        this.leftValue -= this.totalMovementSize;
+        this.carouselInner.style.left = `${this.leftValue}px`;
+      }
+    }
   }
 }

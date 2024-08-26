@@ -14,7 +14,7 @@
 <app-banner></app-banner>
 
 
-<div style="display: flex; justify-content: space-evenly; align-items: center; flex-wrap: wrap;">
+<!-- <div style="display: flex; justify-content: space-evenly; align-items: center; flex-wrap: wrap;">
   <div *ngFor="let hp of homePageSectionProducts"  class="card" style="margin-left: 30px; margin-bottom: 15px; margin-top: 15px;" id="template-news-card" >
     <div class="card-header">
         <img src="https://img.freepik.com/free-photo/delicious-burger-with-fresh-ingredients_23-2150857908.jpg?ga=GA1.1.2095310160.1724395768&semt=ais_hybrid" alt="sdsd" id="news-img">
@@ -22,7 +22,7 @@
     <div class="card-content">
         <h3 id="news-title">{{hp.productName}}</h3>
         <!-- <h6 class="news-source" id="news-source">constGenius 02/02/2024</h6> -->
-        <button class="cart-button">
+        <!-- <button class="cart-button">
           <span class="add-to-cart">Add to cart</span>
           <span class="added">Added</span>
           <i class="fas fa-shopping-cart"></i>
@@ -30,6 +30,58 @@
         </button>
     </div>
   </div>
-</div>
+</div> --> 
 
 
+<section>
+ 
+  <div id="cCarousel">
+    <h1 class="carousel-title">New Arrivals</h1>
+    <div class="arrow" id="prev"><i class="fa-solid fa-chevron-left"></i></div>
+    <div class="arrow" id="next"><i class="fa-solid fa-chevron-right"></i></div>
+
+    <div id="carousel-vp">
+      <div id="cCarousel-inner">
+
+        <article *ngFor="let hp of homePageSectionProducts" class="cCarousel-item">
+          <div class="badge-area-2">
+            <div class="badge-product-sale">
+              <span class="new">OFFER</span>
+              <span class="percent">-50%</span>
+            </div>
+          </div> 
+          <img src="https://img.freepik.com/free-photo/delicious-burger-with-fresh-ingredients_23-2150857908.jpg?ga=GA1.1.2095310160.1724395768&semt=ais_hybrid" alt="sdsd" id="news-img">
+          <div class="infos">
+            <h5>{{hp.productName}}</h5>
+            <h6>Rs.{{ hp.price }}</h6>
+            <button class="cart-button">
+              <span class="add-to-cart">Add to cart</span>
+              <span class="added">Added</span>
+              <i class="fas fa-shopping-cart"></i>
+              <i class="fas fa-box"></i>
+            </button>
+          </div>
+        </article>
+
+
+
+        <!-- =================================== -->
+
+        <article class="cCarousel-item">
+          <!-- <img src="https://img.freepik.com/free-photo/delicious-burger-with-fresh-ingredients_23-2150857908.jpg?ga=GA1.1.2095310160.1724395768&semt=ais_hybrid" alt="sdsd" id="news-img"> -->
+          <div class="infos">
+            <h3></h3>
+            <h3></h3>
+            <!-- <button class="cart-button">
+              <span class="add-to-cart">Add to cart</span>
+              <span class="added">Added</span>
+              <i class="fas fa-shopping-cart"></i>
+              <i class="fas fa-box"></i>
+            </button> -->
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </div>
+</section>
