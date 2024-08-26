@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { UserService } from 'src/app/user/services/user.service';
 
 @Component({
@@ -6,12 +6,14 @@ import { UserService } from 'src/app/user/services/user.service';
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css']
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent implements OnInit, AfterViewInit {
   banners: any[] = [];
   baseUrl: string = 'https://www.mbp18k.com';
   categories: any;
   products: any;
   productById: any;
+
+  currentSlide = 0;
 
   constructor(private userservice: UserService) { }
 
@@ -30,14 +32,15 @@ export class HomeComponent implements OnInit {
     this.Categories();
     this.getProduct();
     //this.getProductDetailsById(8);
-    
-
   }
-  currentSlide = 0;
+
+  ngAfterViewInit(): void {
+    this.initializeCartButtons();
+  }
+
   nextSlide(): void {
     this.currentSlide = (this.currentSlide + 1) % this.banners.length;
   }
-
 
   prevSlide(): void {
     this.currentSlide = (this.currentSlide - 1 + this.banners.length) % this.banners.length;
@@ -45,7 +48,7 @@ export class HomeComponent implements OnInit {
 
   Categories() {
     this.userservice.getCategories().subscribe((data) => {
-      console.log("Your Categories wala data" ,data);
+      console.log("Your Categories wala data", data);
       this.categories = data;
     });
   }
@@ -53,7 +56,22 @@ export class HomeComponent implements OnInit {
   getProduct() {
     this.userservice.getProducts().subscribe((data) => {
       this.products = data;
-      console.log("Your get Product Home Section data" ,data);
-    })
+      console.log("Your get Product Home Section data", data);
+    });
+  }
+
+  private initializeCartButtons(): void {
+    // Ensure this method runs after view initialization
+    const cartButtons = document.querySelectorAll<HTMLElement>('.cart-button');
+
+    // Define the click event handler function
+    function cartClick(this: HTMLElement): void {
+      this.classList.add('clicked');
+    }
+
+    // Add event listeners to each button
+    cartButtons.forEach(button => {
+      button.addEventListener('click', cartClick);
+    });
   }
 }

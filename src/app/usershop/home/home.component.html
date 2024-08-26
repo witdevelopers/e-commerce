@@ -17,14 +17,19 @@
 </div>  -->
 
 
-  <div *ngFor="let product of productById"  class="card" style="margin-left: 30px; margin-bottom: 15px;" id="template-news-card">
+  <div   class="card" style="margin-left: 30px; margin-bottom: 15px; margin-top: 15px;" id="template-news-card">
       <div class="card-header">
-          <img [src]="product.imageUrl" alt="sdsd" id="news-img">
+          <img src="https://img.freepik.com/free-photo/delicious-burger-with-fresh-ingredients_23-2150857908.jpg?ga=GA1.1.2095310160.1724395768&semt=ais_hybrid" alt="sdsd" id="news-img">
       </div>
       <div class="card-content">
-          <h3 id="news-title">{{product.productName}}</h3>
-          <h6 class="news-source" id="news-source">constGenius 02/02/2024</h6>
-          <button type="button" class="btn">Basic</button>
+          <h3 id="news-title">Burgar</h3>
+          <!-- <h6 class="news-source" id="news-source">constGenius 02/02/2024</h6> -->
+          <button class="cart-button">
+            <span class="add-to-cart">Add to cart</span>
+            <span class="added">Added</span>
+            <i class="fas fa-shopping-cart"></i>
+            <i class="fas fa-box"></i>
+          </button>
       </div>
   </div>
 
