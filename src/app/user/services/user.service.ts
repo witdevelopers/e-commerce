@@ -232,9 +232,11 @@ export class UserService {
   }
   
 
-  getHomePageProductBySectionId(sectionId: number): Observable<any[]>{
-    return this.http.get<any[]>(`${this.apiBaseUrl}api/Shop/home-page/products/${sectionId}`);
+  getHomePageSectionProduct(): Observable<any[]>{
+    return this.http.get<any[]>(this.apiBaseUrl+"api/Shop/home-page/products");
   }
+
+
   
 
 }
