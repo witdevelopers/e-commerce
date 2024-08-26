@@ -12,14 +12,16 @@ export class HomeComponent implements OnInit {
   categories: any;
   products: any;
   productById: any;
-  homeProducts: any[] = [];
+  homeNewArrivalsProducts: any[] = [];
+  homeGroceryProducts: any[] = [];
+  homeBakeryProducts: any[] = [];
+  homeHerbalProducts: any[] = [];
+  homeConstamticProducts: any[] = [];
+  
 
   constructor(private userservice: UserService) { 
-    this.getHomeProductsBySectionId(1);
-    this.getHomeProductsBySectionId(2);
-    this.getHomeProductsBySectionId(3);
-    this.getHomeProductsBySectionId(5);
-    this.getHomeProductsBySectionId(6);
+    this.getHomeProductsBySectionId();
+    
   }
 
   ngOnInit(): void {
@@ -66,10 +68,45 @@ export class HomeComponent implements OnInit {
   }
 
 
-  getHomeProductsBySectionId(sectionId: number){
-    this.userservice.getHomePageProductBySectionId(sectionId).subscribe((data) => {
-      this.homeProducts = data;
+
+  
+  getHomeProductsBySectionId(){
+    this.userservice.getHomePageProductBySectionId(1).subscribe((data) => {
+      this.homeNewArrivalsProducts = data;
       console.log("Your get Product Home Section data" ,data);
   });
+
+  this.userservice.getHomePageProductBySectionId(3).subscribe((data) => {
+    this.homeGroceryProducts = data;
+    console.log("Your get Product Home Section data" ,data);
+  });
+
+
+
+  this.userservice.getHomePageProductBySectionId(3).subscribe((data) => {
+    this.homeBakeryProducts = data;
+    console.log("Your get Product Home Section data" ,data);
+});
+
+this.userservice.getHomePageProductBySectionId(5).subscribe((data) => {
+  this.homeHerbalProducts = data;
+  console.log("Your get Product Home Section data" ,data);
+});
+
+this.userservice.getHomePageProductBySectionId(6).subscribe((data) => {
+  this.homeConstamticProducts = data;
+  console.log("Your get Product Home Section data" ,data);
+});
+
+
+
+
+
+
 }
+
+
+
+
+
 }

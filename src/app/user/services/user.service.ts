@@ -12,7 +12,7 @@ export class UserService {
 
   // Shopping Url Link start here
  //bannerUrl = "https://localhost:44320/api/Shop/banners";
- categoriesUrl = "https://localhost:44320/api/Shop/categories";
+ categoriesUrl = "https://localhost:44320/api/Shop/allcategories_without_parentcategories";
  productUrl = "https://localhost:44320/api/Shop/home-page/products";
 
  

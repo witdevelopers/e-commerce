@@ -11,7 +11,25 @@
 <app-banner></app-banner>
 
 
-<div *ngFor="let hp of homeProducts">
-  {{hp.productName
-    }}
+<div *ngFor="let hp of homeNewArrivalsProducts">
+  {{hp.sectionName}}
+  {{hp.productName}}
 </div>
+<br>
+<div *ngFor="let hp of homeBakeryProducts">
+  {{hp.productName}}
+</div>
+<br>
+<div *ngFor="let hp of homeGroceryProducts">
+  {{hp.productName}}
+</div>
+<br>
+<div *ngFor="let hp of homeHerbalProducts">
+  {{hp.productName}}
+</div>
+
+<br>
+<div *ngFor="let hp of homeConstamticProducts">
+  {{hp.productName}}
+</div>
+
