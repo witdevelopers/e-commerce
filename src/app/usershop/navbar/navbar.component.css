@@ -202,7 +202,7 @@ nav ul {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 0 10px;
+    padding: 0 10%;
     height: 100%;
     margin: 0;
     position: relative;
@@ -531,6 +531,7 @@ nav ul li:hover .subMenu {
     }   
     nav ul {
         font-size: 10px;
+        padding: 0 10px;
     }
 }
 
