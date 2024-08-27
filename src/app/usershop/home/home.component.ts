@@ -65,7 +65,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
   loadCategories() {
     this.userService.getCategories().subscribe((data) => {
       this.categories = data;
-      console.log("Loaded categories: ", data);
+      // console.log("Loaded categories: ", data);
     });
   }
 
@@ -73,7 +73,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
   loadProducts() {
     this.userService.getProducts().subscribe((data) => {
       this.products = data;
-      console.log("Loaded products: ", data);
+      // console.log("Loaded products: ", data);
     });
   }
 
@@ -95,9 +95,8 @@ export class HomeComponent implements OnInit, AfterViewInit {
             });
             return sections;
           }, {});
-
           this.homePageSectionProducts = groupedProducts;
-          console.log('Loaded home page section products:', this.homePageSectionProducts);
+          // console.log('Loaded home page section products:', this.homePageSectionProducts);
         },
         error: (err) => console.error('Failed to load home page section products:', err)
       });

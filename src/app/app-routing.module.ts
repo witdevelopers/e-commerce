@@ -218,7 +218,10 @@ const routes: Routes = [
     component: HomeComponent,
   },
 
-  { path: 'subcategory/:id', component: SubcategoryComponent },
+  { path: 'subcategory/:id', 
+    component: SubcategoryComponent 
+  },
+  
   {
     path: 'banner',
     component: BannerComponent,

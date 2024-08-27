@@ -1,5 +1,34 @@
 <app-navbar></app-navbar>
-<div  *ngFor="let scp of subcategoryDetails">
-    {{scp.productName}} || {{scp.discountPrice}}  ||  {{scp.discountPrice}}
-</div>
+
+<main>
+  <div *ngIf="subcategoryDetails && subcategoryDetails.length > 0; else noProducts" class="cards-container container flex" id="cardscontainer">
+    
+    <div *ngFor="let product of subcategoryDetails" class="card">
+      <div class="card-header">
+        <!-- Use the actual product image URL if available -->
+        <img [src]="product.imageUrl ? product.imageUrl : 'https://www.mbp18k.com/Shop//'" alt="{{ product.productName }}" id="news-img">
+      </div>
+      <div class="card-content">
+        <h3 id="news-title">{{ product.productName }}</h3>
+        <h6 class="news-source" id="news-source">Rs: {{ product.price }}  ||  <del style="color: red;">Discount Price: {{ product.discountPrice}}</del></h6>
+             <!-- <div style="display: flex; gap: 7px;">
+            <h6>Rs.{{ product.price }}</h6>
+             <del><h6 style="color: red;">Rs.{{ product.discountPrice }}</h6></del>
+          </div> -->
+        <button class="cart-button">
+          <span class="add-to-cart">Add to cart</span>
+          <span class="added">Added</span>
+          <i class="fas fa-shopping-cart"></i>
+          <i class="fas fa-box"></i>
+        </button>
+      </div>
+    </div>
+
+  </div>
+
+  <ng-template #noProducts>
+    <p>No products available for this subcategory.</p>
+  </ng-template>
+</main>
+
 <app-footer></app-footer>

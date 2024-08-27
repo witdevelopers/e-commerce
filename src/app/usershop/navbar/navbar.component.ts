@@ -33,7 +33,7 @@ export class NavbarComponent implements OnInit {
     this.userService.getMainCategory().subscribe(
       (res: any[]) => {
         this.mainCategory = res;
-        console.log("Get Main Category: ", this.mainCategory);
+        // console.log("Get Main Category: ", this.mainCategory);
       },
       (error) => {
         console.error('Error fetching main categories', error);
