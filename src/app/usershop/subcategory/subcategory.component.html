@@ -10,11 +10,8 @@
       </div>
       <div class="card-content">
         <h3 id="news-title">{{ product.productName }}</h3>
-        <h6 class="news-source" id="news-source">Rs: {{ product.price }}  ||  <del style="color: red;">Discount Price: {{ product.discountPrice}}</del></h6>
-             <!-- <div style="display: flex; gap: 7px;">
-            <h6>Rs.{{ product.price }}</h6>
-             <del><h6 style="color: red;">Rs.{{ product.discountPrice }}</h6></del>
-          </div> -->
+        
+        <h6 class="news-source" id="news-source">Rs: {{ product.discountPrice }}  <del style="color: red;">Rs. {{ product.price}}</del></h6>
         <button class="cart-button">
           <span class="add-to-cart">Add to cart</span>
           <span class="added">Added</span>
@@ -27,7 +24,7 @@
   </div>
 
   <ng-template #noProducts>
-    <p>No products available for this subcategory.</p>
+    <p>No products available.</p>
   </ng-template>
 </main>
 

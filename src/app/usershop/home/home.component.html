@@ -18,7 +18,7 @@
       <h1 class="carousel-title">{{ sectionName }}</h1>
       <div class="arrow" id="prev" ><i class="fa-solid fa-chevron-left" ></i></div>
       <div class="arrow" id="next"><i class="fa-solid fa-chevron-right"></i></div>
-
+      
       <div id="carousel-vp">
         <div id="cCarousel-inner">
           <article *ngFor="let product of homePageSectionProducts[sectionName]" class="cCarousel-item">
@@ -32,8 +32,8 @@
             <div class="infos">
               <h5>{{product.productName}}</h5>
               <div style="display: flex; gap: 7px;">
-                <h6>Rs.{{ product.price }}</h6>
-                 <del><h6 style="color: red;">Rs.{{ product.discountPrice }}</h6></del>
+                <h6>Rs.{{ product.discountPrice }}</h6>
+                 <del><h6 style="color: red;">Rs.{{ product.price }}</h6></del>
               </div>
               <button class="cart-button">
                 <span class="add-to-cart">Add to cart</span>
