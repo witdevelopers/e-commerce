@@ -54,6 +54,7 @@ import { NavbarComponent } from './usershop/navbar/navbar.component';
 import { BannerComponent } from './usershop/banner/banner.component';
 import { SubcategoryComponent } from './usershop/subcategory/subcategory.component';
 import { ProductDetailsComponent } from './usershop/product-details/product-details.component';
+import { ProductSliderComponent } from './usershop/product-slider/product-slider.component';
 
 @NgModule({
   declarations: [
@@ -96,6 +97,7 @@ import { ProductDetailsComponent } from './usershop/product-details/product-deta
     BannerComponent,
     SubcategoryComponent,
     ProductDetailsComponent,
+    ProductSliderComponent
 
 
 

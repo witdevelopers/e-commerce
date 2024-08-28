@@ -4,77 +4,31 @@ import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 
 @Component({
-  selector: 'app-home',
-  templateUrl: './home.component.html',
-  styleUrls: ['./home.component.css'],
+  selector: 'app-product-slider',
+  templateUrl: './product-slider.component.html',
+  styleUrls: ['./product-slider.component.css']
 })
-export class HomeComponent implements OnInit, AfterViewInit {
-
-  banners: any[] = [];
-  baseUrl: string = 'https://www.mbp18k.com';
+export class ProductSliderComponent implements OnInit, AfterViewInit {
   baseUrlProduct: string = 'https://www.mbp18k.com/Shop//';
-  categories: any;
-  products: any;
   homePageSectionProducts: any = {}; // Initialize as an object
-  currentSlide = 0;
-  image: any[] = [];
 
   private ngUnsubscribe: Subject<void> = new Subject<void>();
 
   // Carousel properties
   private leftValue = 0;
-  private totalMovementSize: number;
+  private totalMovementSize: number = 0;
   private carouselInner: HTMLElement | null = null;
   private carouselVp: HTMLElement | null = null;
 
   constructor(private userService: UserService) {}
 
   ngOnInit(): void {
-    this.loadBanners();
-    this.loadCategories();
-    this.loadProducts();
     this.loadHomeSectionProductsDetails();
   }
 
   ngAfterViewInit(): void {
-    this.initializeCartButtons(); // Initialize cart buttons
     this.initializeCarousel(); // Initialize carousel
-  }
-
-  // Loading Banners
-  loadBanners() {
-    this.userService.getBanners().subscribe((res: any[]) => {
-      this.banners = res.map((banner) => {
-        if (!banner.imageUrl.startsWith('http') && !banner.imageUrl.startsWith('https')) {
-          banner.imageUrl = `${this.baseUrl}${banner.imageUrl}`;
-        }
-        return banner;
-      });
-    });
-  }
-
-  // Slide navigation methods
-  nextSlide(): void {
-    this.currentSlide = (this.currentSlide + 1) % this.banners.length;
-  }
-
-  prevSlide(): void {
-    this.currentSlide = (this.currentSlide - 1 + this.banners.length) % this.banners.length;
-  }
-  
-
-  // Load Categories
-  loadCategories() {
-    this.userService.getCategories().subscribe((data) => {
-      this.categories = data;
-    });
-  }
-
-  // Load Products
-  loadProducts() {
-    this.userService.getProducts().subscribe((data) => {
-      this.products = data;
-    });
+    this.initializeCartButtons(); // Initialize cart buttons
   }
 
   // Load Home Page Section Products
@@ -101,9 +55,6 @@ export class HomeComponent implements OnInit, AfterViewInit {
       });
   }
 
-  // Helper method to get object keys
-  objectKeys = Object.keys;
-
   // Initialize Cart Buttons after view initialization
   private initializeCartButtons(): void {
     const cartButtons = document.querySelectorAll<HTMLElement>('.cart-button');
@@ -125,15 +76,15 @@ export class HomeComponent implements OnInit, AfterViewInit {
     this.carouselVp = document.querySelector<HTMLElement>("#carousel-vp");
 
     if (this.carouselInner && this.carouselVp) {
-      const carouselItem = document.querySelector<HTMLElement>(".cCarousel-item");
+      const carouselItems = document.querySelectorAll<HTMLElement>(".cCarousel-item");
 
-      if (carouselItem) {
-        this.totalMovementSize = 
-          parseFloat(carouselItem.getBoundingClientRect().width.toFixed(2)) +
+      if (carouselItems.length > 0) {
+        this.totalMovementSize =
+          parseFloat(carouselItems[0].getBoundingClientRect().width.toFixed(2)) +
           parseFloat(window.getComputedStyle(this.carouselInner).getPropertyValue("gap"));
 
-        const prev = document.querySelector<HTMLElement>("#prev");
-        const next = document.querySelector<HTMLElement>("#next");
+        const prev = document.querySelector<HTMLButtonElement>("#prev");
+        const next = document.querySelector<HTMLButtonElement>("#next");
 
         if (prev && next) {
           prev.addEventListener("click", () => this.moveCarousel(-1));
@@ -175,6 +126,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
     if (this.carouselInner) {
       const newViewportWidth = window.innerWidth;
 
+      // Adjust leftValue based on viewport width changes
       if (this.leftValue <= -this.totalMovementSize && window.innerWidth < newViewportWidth) {
         this.leftValue += this.totalMovementSize;
         this.carouselInner.style.left = `${this.leftValue}px`;
@@ -184,4 +136,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
       }
     }
   }
+
+  // Helper method to get object keys
+  objectKeys = Object.keys;
 }

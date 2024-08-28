@@ -4,8 +4,6 @@
 
   <div class="item-image-parent">
     <div class="item-list-vertical">
-      <!-- Display thumbnails of product images -->
-       
       <div class="thumb-box" *ngFor="let image of singleProductImages" (click)="changeMainImage(image.imageUrl)">
         <img [src]="getImageUrl(image.imageUrl)" alt="thumbnail" />
       </div>

@@ -82,7 +82,7 @@
 }
 
 .description ul {
-    list-style-type: disc;
+    list-style-type: none;
     padding-left: 20px;
 }
 
@@ -142,6 +142,9 @@
 
     .item-info-parent {
         width: 100%;
+
+        align-items: center;
+
     }
 }
 
