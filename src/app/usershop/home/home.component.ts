@@ -9,6 +9,7 @@ import { Subject } from 'rxjs';
   styleUrls: ['./home.component.css'],
 })
 export class HomeComponent implements OnInit, AfterViewInit {
+
   banners: any[] = [];
   baseUrl: string = 'https://www.mbp18k.com';
   baseUrlProduct: string = 'https://www.mbp18k.com/Shop//';
@@ -60,13 +61,32 @@ export class HomeComponent implements OnInit, AfterViewInit {
   prevSlide(): void {
     this.currentSlide = (this.currentSlide - 1 + this.banners.length) % this.banners.length;
   }
-  
+
+  nextSection(): void {
+    if (this.carouselInner && this.carouselVp) {
+      const carouselVpWidth = this.carouselVp.getBoundingClientRect().width;
+      const carouselInnerWidth = this.carouselInner.getBoundingClientRect().width;
+
+      if ((carouselInnerWidth - Math.abs(this.leftValue)) > carouselVpWidth) {
+        this.leftValue -= this.totalMovementSize;
+        this.carouselInner.style.left = `${this.leftValue}px`;
+      }
+    }
+  }
+
+  prevSection(): void {
+    if (this.carouselInner && this.carouselVp) {
+      if (this.leftValue < 0) {
+        this.leftValue += this.totalMovementSize;
+        this.carouselInner.style.left = `${this.leftValue}px`;
+      }
+    }
+  }
 
   // Load Categories
   loadCategories() {
     this.userService.getCategories().subscribe((data) => {
       this.categories = data;
-      // console.log("Loaded categories: ", data);
     });
   }
 
@@ -74,7 +94,6 @@ export class HomeComponent implements OnInit, AfterViewInit {
   loadProducts() {
     this.userService.getProducts().subscribe((data) => {
       this.products = data;
-      // console.log("Loaded products: ", data);
     });
   }
 
@@ -97,7 +116,6 @@ export class HomeComponent implements OnInit, AfterViewInit {
             return sections;
           }, {});
           this.homePageSectionProducts = groupedProducts;
-          // console.log('Loaded home page section products:', this.homePageSectionProducts);
         },
         error: (err) => console.error('Failed to load home page section products:', err)
       });
@@ -105,7 +123,6 @@ export class HomeComponent implements OnInit, AfterViewInit {
 
   // Helper method to get object keys
   objectKeys = Object.keys;
-  
 
   // Initialize Cart Buttons after view initialization
   private initializeCartButtons(): void {
@@ -122,24 +139,22 @@ export class HomeComponent implements OnInit, AfterViewInit {
     });
   }
 
-  
-
   // Initialize Carousel
   private initializeCarousel(): void {
     this.carouselInner = document.querySelector<HTMLElement>("#cCarousel-inner");
     this.carouselVp = document.querySelector<HTMLElement>("#carousel-vp");
-    
+
     if (this.carouselInner && this.carouselVp) {
       const carouselItem = document.querySelector<HTMLElement>(".cCarousel-item");
-      
+
       if (carouselItem) {
         this.totalMovementSize = 
           parseFloat(carouselItem.getBoundingClientRect().width.toFixed(2)) +
           parseFloat(window.getComputedStyle(this.carouselInner).getPropertyValue("gap"));
-        
-        const prev = document.querySelector<HTMLButtonElement>("#prev");
-        const next = document.querySelector<HTMLButtonElement>("#next");
-        
+
+        const prev = document.querySelector<HTMLElement>("#prev");
+        const next = document.querySelector<HTMLElement>("#next");
+
         if (prev && next) {
           prev.addEventListener("click", () => this.moveCarousel(-1));
           next.addEventListener("click", () => this.moveCarousel(1));

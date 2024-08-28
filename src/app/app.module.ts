@@ -95,8 +95,7 @@ import { ProductDetailsComponent } from './usershop/product-details/product-deta
     NavbarComponent,
     BannerComponent,
     SubcategoryComponent,
-    ProductDetailsComponent
-
+    ProductDetailsComponent,
 
 
 

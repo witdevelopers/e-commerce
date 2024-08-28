@@ -8,17 +8,14 @@ import { UserService } from 'src/app/user/services/user.service';
   styleUrls: ['./product-details.component.css']
 })
 export class ProductDetailsComponent implements OnInit {
-addToCart(arg0: any) {
-throw new Error('Method not implemented.');
-}
   singleProduct: any;
   singleProductDetails: any[] = [];
   singleProductImages: any[] = [];
   productId: number;
-  mainImageUrl: string = '';
+  mainImageUrl: string = 'assets/default-image.jpg'; // Default image URL
 
   constructor(private route: ActivatedRoute, private productService: UserService) {
-    this.productId = this.route.snapshot.params['id'];
+    this.productId = +this.route.snapshot.params['id'];
   }
 
   ngOnInit(): void {
@@ -30,14 +27,24 @@ throw new Error('Method not implemented.');
       this.singleProduct = response.singleProduct;
       this.singleProductDetails = response.singleProductDetails;
       this.singleProductImages = response.singleProductImages;
+      
+      // Set the main image URL to the first image if available
+      if (this.singleProductImages.length > 0) {
+        this.mainImageUrl = this.getImageUrl(this.singleProductImages[0].imageUrl);
+      }
     });
   }
 
   getImageUrl(imagePath: string): string {
-    return imagePath.replace('~', 'https://www.mbp18k.com'); // Update with your base URL for images
+    return imagePath ? imagePath.replace('~', 'https://www.mbp18k.com') : this.mainImageUrl;
   }
 
   changeMainImage(imageUrl: string): void {
     this.mainImageUrl = this.getImageUrl(imageUrl);
+  }
+
+  addToCart(product: any): void {
+    // Implement add to cart functionality
+    console.log('Added to cart:', product);
   }
 }

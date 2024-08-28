@@ -6,6 +6,7 @@
     <div *ngFor="let product of subcategoryDetails" class="card">
       <div class="card-header">
         <!-- Use the actual product image URL if available -->
+         
         <img [src]="product.imageUrl ? product.imageUrl : 'https://www.mbp18k.com/Shop//'" alt="{{ product.productName }}" id="news-img">
       </div>
       <div class="card-content">
