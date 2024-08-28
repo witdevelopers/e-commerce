@@ -12,7 +12,7 @@ export class NavbarComponent implements OnInit {
   subCategory: { [key: number]: any[] } = {};
   isSubCategoryVisible: { [key: number]: boolean } = {};
   AllProductByCategoryId:any [] = [];
-
+  productByKeyword: any [] = [];
 
   constructor(private userService: UserService) {}
 
@@ -71,6 +71,20 @@ export class NavbarComponent implements OnInit {
   getAllProductByCategoryId(categoryId: number){
     this.userService.getAllProductByCategoryId(categoryId).subscribe((data)=>{
       this.AllProductByCategoryId = data;
+    })
+  }
+
+  onSearch(event: any): void {
+    const keyword = event.target.value;
+
+    if (keyword.length > 2) { // Start searching after 3 characters
+      this.getProductByKeyword(keyword);
+    }
+  }
+  getProductByKeyword(keyword: string){
+    this.userService.SearchProductByKeyword(keyword).subscribe((data)=>{
+      this.productByKeyword = data.slice(0, 5);
+      console.log("Raw data of search by keyword: ", this.productByKeyword);
     })
   }
 }

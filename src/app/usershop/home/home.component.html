@@ -16,32 +16,33 @@
   <section>
     <div id="cCarousel">
       <h1 class="carousel-title">{{ sectionName }}</h1>
-      <div class="arrow" id="prev" ><i class="fa-solid fa-chevron-left" ></i></div>
+      <div class="arrow" id="prev" ><i class="fa-solid fa-chevron-left"></i></div>
       <div class="arrow" id="next"><i class="fa-solid fa-chevron-right"></i></div>
-      
       <div id="carousel-vp">
         <div id="cCarousel-inner">
-          <article *ngFor="let product of homePageSectionProducts[sectionName]" class="cCarousel-item">
-            <div class="badge-area-2">
-              <div class="badge-product-sale">
-                <span class="new">OFFER</span>
-                <span class="percent">-50%</span>
+          <article *ngFor="let product of homePageSectionProducts[sectionName]" class="cCarousel-item" >            
+              <div class="badge-area-2">
+                <div class="badge-product-sale">
+                  <span class="new">OFFER</span>
+                  <span class="percent">- {{product.discountPercentage}} %</span>
+                </div>
               </div>
-            </div>
-            <img [src]="product.imageUrl" alt="{{product.productName}}" id="news-img">
-            <div class="infos">
-              <h5>{{product.productName}}</h5>
-              <div style="display: flex; gap: 7px;">
-                <h6>Rs.{{ product.discountPrice }}</h6>
-                 <del><h6 style="color: red;">Rs.{{ product.price }}</h6></del>
+              <img [src]="product.imageUrl" alt="{{product.productName}}" id="news-img" [routerLink]="['/product', product.productId]">
+              <div class="infos">
+                <h5>{{product.productName}}</h5>
+                <div style="display: flex; gap: 7px;">
+                  <h6>Rs.{{ product.discountPrice }}</h6>
+                   <del><h6 style="color: red;">Rs.{{ product.price }}</h6></del>
+                </div>
+                <button class="cart-button">
+                  <span class="add-to-cart">Add to cart</span>
+                  <span class="added">Added</span>
+                  <i class="fas fa-shopping-cart"></i>
+                  <i class="fas fa-box"></i>
+                </button>
               </div>
-              <button class="cart-button">
-                <span class="add-to-cart">Add to cart</span>
-                <span class="added">Added</span>
-                <i class="fas fa-shopping-cart"></i>
-                <i class="fas fa-box"></i>
-              </button>
-            </div>
+     
+            
           </article>
         </div>
       </div>

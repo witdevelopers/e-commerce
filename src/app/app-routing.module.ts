@@ -36,6 +36,7 @@ import { FooterComponent } from './usershop/footer/footer.component';
 import { NavbarComponent } from './usershop/navbar/navbar.component';
 import { BannerComponent } from './usershop/banner/banner.component';
 import { SubcategoryComponent } from './usershop/subcategory/subcategory.component';
+import { ProductDetailsComponent } from './usershop/product-details/product-details.component';
 
 const routes: Routes = [
   // {
@@ -221,7 +222,7 @@ const routes: Routes = [
   { path: 'subcategory/:id', 
     component: SubcategoryComponent 
   },
-  
+  { path: 'product/:id', component: ProductDetailsComponent },
   {
     path: 'banner',
     component: BannerComponent,

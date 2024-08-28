@@ -60,6 +60,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
   prevSlide(): void {
     this.currentSlide = (this.currentSlide - 1 + this.banners.length) % this.banners.length;
   }
+  
 
   // Load Categories
   loadCategories() {

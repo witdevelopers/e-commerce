@@ -11,16 +11,21 @@
                 <img src="assets/img/search.png" />
             </div>
             <form action="" id="inputForm">
-                <input type="text" placeholder="Try Saree, Kurti or Search by Product Code" class="inputSearch" />
+                <input 
+                    type="text" 
+                    placeholder="Try Saree, Kurti or Search by Product Code" 
+                    class="inputSearch"
+                    (input)="onSearch($event)" 
+                />
+
             </form>
             <div class="inputCloseSearch">
                 <i class="fa-solid fa-xmark" id="closeSearch"></i>
             </div>
 
-            <div class="searchRecentModal">
-                <h3>Recent Searches</h3>
-                <div class="listofRecent">
-
+            <div class="searchRecentModal">                
+                <div class="listofRecent" *ngFor="let pbk of productByKeyword">
+                    <h3>{{pbk.productName}}</h3>
                 </div>
             </div>
         </div>

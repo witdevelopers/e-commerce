@@ -240,6 +240,12 @@ export class UserService {
     return this.http.get<any[]>(this.apiBaseUrl+"api/Shop/products-by-categoryid/"+categoryId);
   }
 
-  
+  getProductById(productId: number): Observable<any> {
+    return this.http.get<any>(`${this.apiBaseUrl}api/Shop/getproductbyid/${productId}`);
+  }
 
+
+  SearchProductByKeyword(keyword: string): Observable<any>{
+    return this.http.get<any>(this.apiBaseUrl+"api/Shop/searchbyKeyword?keyword="+keyword);
+  }
 }

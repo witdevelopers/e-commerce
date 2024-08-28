@@ -1,0 +1,42 @@
+<app-navbar></app-navbar>
+
+<section id="product-info" *ngIf="singleProduct">
+
+  <div class="item-image-parent">
+    <div class="item-list-vertical">
+      <div class="thumb-box" *ngFor="let image of singleProductImages" (click)="changeMainImage(image.imageUrl)">
+        <img [src]="getImageUrl(image.imageUrl)" alt="thumbnail" />
+      </div>
+    </div>
+
+    <div class="item-image-main">
+      <img [src]="mainImageUrl" alt="{{ singleProduct.productName }}" />
+    </div>
+  </div>
+
+  <div class="item-info-parent">
+    <!-- Main Info -->
+    <div class="main-info">
+      <h4>{{ singleProduct.productName }}</h4>
+      <p>Price: <span id="price">₹ {{ singleProductDetails[0]?.price }}</span></p>
+      
+      <!-- Add to Cart Button -->
+      <button class="add-to-cart-btn" (click)="addToCart(singleProduct)">
+        Add to Cart
+      </button>
+    </div>
+
+    <!-- Choose -->
+    <div class="select-items">
+      <div class="description">
+        <ul>
+          <li [innerHTML]="singleProduct.description"></li>
+        </ul>
+      </div>
+    </div>
+   
+  </div>
+
+</section>
+
+<app-footer></app-footer>
