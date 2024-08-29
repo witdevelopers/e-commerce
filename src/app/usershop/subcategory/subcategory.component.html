@@ -1,18 +1,18 @@
 <app-navbar></app-navbar>
 
 <main>
-  <div *ngIf="subcategoryDetails && subcategoryDetails.length > 0; else noProducts" class="cards-container container flex" id="cardscontainer">
+  <div *ngIf="subcategoryDetails && subcategoryDetails.length > 0;" class="cards-container container flex" id="cardscontainer">
     
-<<<<<<< HEAD
+
     <div *ngFor="let product of subcategoryDetails" class="card">
       
-=======
-    <div *ngFor="let product of subcategoryDetails" class="card" [routerLink]="['/product', product.productId]">
->>>>>>> 3d0b0104a4833204073b242e29c5a17f4f8b65b6
+
+    <div [routerLink]="['/product', product.productId]">
+
       <div class="card-header">
         
         <!-- Use the actual product image URL if available -->
-<<<<<<< HEAD
+
         <img [src]="product.imageUrl ? product.imageUrl : 'https://www.mbp18k.com/Shop//'" alt="{{ product.productName }}" id="news-img">
         <div class="badge-area-2">
           <div class="badge-product-sale">
@@ -20,10 +20,10 @@
             <span class="percent">- 50%</span>
           </div>
         </div>
-=======
+
          
-        <img [src]="product.imageUrl ? product.imageUrl : 'https://www.mbp18k.com/Shop//'" alt="{{ product.productName }}" id="news-img" >
->>>>>>> 3d0b0104a4833204073b242e29c5a17f4f8b65b6
+
+
       </div>
       <div class="card-content">
         <h3 id="news-title">{{ product.productName }}</h3>
@@ -40,9 +40,7 @@
 
   </div>
 
-  <ng-template #noProducts>
-    <p>No products available.</p>
-  </ng-template>
-</main>
+
+</div>
 
 <app-footer></app-footer>
