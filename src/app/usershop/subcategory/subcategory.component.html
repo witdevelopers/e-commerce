@@ -4,9 +4,17 @@
   <div *ngIf="subcategoryDetails && subcategoryDetails.length > 0; else noProducts" class="cards-container container flex" id="cardscontainer">
     
     <div *ngFor="let product of subcategoryDetails" class="card">
+      
       <div class="card-header">
+        
         <!-- Use the actual product image URL if available -->
         <img [src]="product.imageUrl ? product.imageUrl : 'https://www.mbp18k.com/Shop//'" alt="{{ product.productName }}" id="news-img">
+        <div class="badge-area-2">
+          <div class="badge-product-sale">
+            <span class="new">OFFER</span>
+            <span class="percent">- 50%</span>
+          </div>
+        </div>
       </div>
       <div class="card-content">
         <h3 id="news-title">{{ product.productName }}</h3>

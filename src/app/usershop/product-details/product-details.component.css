@@ -169,3 +169,29 @@
         font-size: 0.9rem;
     }
 }
+/* Badge styles */
+.badge-area-2 {
+    position: absolute;
+    /* top: 10px;
+    left: 10px; */
+    background: #000;
+    color: #fff;
+    padding: 5px 10px;
+    border-radius: 5px;
+    z-index: 10;
+}
+
+.badge-product-sale {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.badge-product-sale .new {
+    font-size: 14px;
+}
+
+.badge-product-sale .percent {
+    font-size: 18px;
+    font-weight: bold;
+}
