@@ -13,7 +13,7 @@ export class ProductDetailsComponent implements OnInit {
   singleProductImages: any[] = [];
   productId: number;
   mainImageUrl: string = 'assets/default-image.jpg'; // Default image URL
-
+ 
   constructor(private route: ActivatedRoute, private userService: UserService) {
     this.productId = +this.route.snapshot.params['id'];
   }
@@ -33,6 +33,7 @@ export class ProductDetailsComponent implements OnInit {
         this.mainImageUrl = this.getImageUrl(this.singleProductImages[0].imageUrl);
       }
     });
+    console.log("single Product: ", this.singleProduct);
   }
 
   getImageUrl(imagePath: string): string {
