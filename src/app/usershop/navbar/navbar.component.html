@@ -9,19 +9,20 @@
       <div class="searchIcon">
         <img src="assets/img/search.png" />
       </div>
-      <form action="" id="inputForm">
+      <form id="inputForm">
         <input
           type="text"
           placeholder="Search here..."
           class="inputSearch"
           (input)="onSearch($event)"
+          aria-label="Search"
         />
       </form>
-      <div class="inputCloseSearch">
-        <i class="fa-solid fa-xmark" id="closeSearch"></i>
+      <div class="inputCloseSearch" (click)="clearSearch()">
+        <i class="fa-solid fa-xmark" id="closeSearch" aria-label="Close Search"></i>
       </div>
 
-      <div class="searchRecentModal">
+      <div class="searchRecentModal" *ngIf="productByKeyword.length > 0">
         <div class="listofRecent" *ngFor="let pbk of productByKeyword">
           <h3 routerLink="/product/{{ pbk.productId }}">
             {{ pbk.productName }}
@@ -37,19 +38,41 @@
     </div>
 
     <div class="profileAndCart">
-      <div class="profileContainer">
+      <!-- <div class="profileContainer">
         <div class="profileIcon">
           <img src="assets/img/user.png" />
         </div>
         <p>Profile</p>
-      </div>
-
-      <div class="CartContainer">
-        <div class="CartIcon">
-          <img src="assets/img/cart.png" />
+      </div> -->
+      <div class="downloadContainer">
+        <div class="mobileIcon">
+            <img src="assets/img/user.png" />
         </div>
-        <p>Cart</p>
+        <p>Profile</p>
+
+        <div class="downloadHoverBtnContainer">
+            <p>{{user}}</p>
+            <p style="font-size: 13px;">To access your account</p>
+                        
+            <a routerLink="/auth/signin" >
+                <button class="downloadBtn" >Sign In</button>
+            </a>
+            <hr>
+            <a href="" >
+              <button class="downloadBtn">My Order</button>
+          </a>
+          <a class="delAcc">
+           Delete Account
+        </a>
+        </div>
+    </div>
+      
+    </div>
+    <div class="CartContainer">
+      <div class="CartIcon">
+        <img src="assets/img/cart.png" />
       </div>
+      <p>Cart</p>
     </div>
   </div>
 </header>

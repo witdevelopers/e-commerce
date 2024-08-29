@@ -2,6 +2,7 @@ import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { UserService } from 'src/app/user/services/user.service';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
+import { EncryptionService } from '../encryption.service';
 
 @Component({
   selector: 'app-product-slider',
@@ -20,7 +21,7 @@ export class ProductSliderComponent implements OnInit, AfterViewInit {
   private carouselInner: HTMLElement | null = null;
   private carouselVp: HTMLElement | null = null;
 
-  constructor(private userService: UserService) {}
+  constructor(private userService: UserService, private encryptionService: EncryptionService) {}
 
   ngOnInit(): void {
     this.loadHomeSectionProductsDetails();
@@ -160,4 +161,10 @@ export class ProductSliderComponent implements OnInit, AfterViewInit {
 
   // Helper method to get object keys
   objectKeys = Object.keys;
+
+  getEncryptedProductId(productId: string): string {
+    return this.encryptionService.encrypt(productId);
+  }
 }
+
+

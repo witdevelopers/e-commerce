@@ -4,10 +4,10 @@
   <div *ngIf="subcategoryDetails && subcategoryDetails.length > 0;" class="cards-container container flex" id="cardscontainer">
     
 
-    <div *ngFor="let product of subcategoryDetails" class="card">
+    <div *ngFor="let product of subcategoryDetails" class="card" [routerLink]="['/product', product.productId]">
       
 
-    <div [routerLink]="['/product', product.productId]">
+    <div >
 
       <div class="card-header">
         

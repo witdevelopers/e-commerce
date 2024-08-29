@@ -24,24 +24,9 @@ export class SigninComponent {
     private router: Router,
     private api: AuthService,
     private spinnerService: NgxSpinnerService
-  ) {
-    // this.getAddress();
-  }
+  ) {}
 
-  // onSubmit() {
-  //   debugger
-  //   this.authService.loginMLM(this.userID, this.password).then(
-  //     response => {
-  //       window.alert("Login Succesfully");
-        
-  //       // Handle successful login, such as navigating to the dashboard
-  //     },
-  //     error => {
-  //       console.error('Login failed', error);
-  //       // Handle login failure, such as showing an error message
-  //     }
-  //   );
-  // }
+ 
 
   async onSubmit() {
     this.spinnerService.show();
@@ -53,11 +38,13 @@ export class SigninComponent {
       if (res.status) {
         sessionStorage.setItem('address', this.userID);
         sessionStorage.setItem('token', res.data.token);
-        console.log(res.data.token);
+        localStorage.setItem('address', this.userID);
+        localStorage.setItem('token', res.data.token);
+        console.log("Token Data: ", res);
 
         this.spinnerService.hide();
         
-        this.router.navigate(['/usershop-navbar']);
+        this.router.navigate(['/home']);
       } else {
         this.spinnerService.hide();
         Swal.fire(res.message, '', 'error');

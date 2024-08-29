@@ -7,6 +7,9 @@ import { UserService } from 'src/app/user/services/user.service';
   styleUrls: ['./navbar.component.css'],
 })
 export class NavbarComponent implements OnInit {
+clearSearch() {
+throw new Error('Method not implemented.');
+}
   user: string = 'Sign in';
   mainCategory: any[] = [];
   subCategory: { [key: number]: any[] } = {};
@@ -84,7 +87,7 @@ export class NavbarComponent implements OnInit {
   }
   getProductByKeyword(keyword: string) {
     this.userService.SearchProductByKeyword(keyword).subscribe((data) => {
-      this.productByKeyword = data.slice(0, 5);
+      this.productByKeyword = data;
       console.log('Raw data of search by keyword: ', this.productByKeyword);
     });
   }

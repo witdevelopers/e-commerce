@@ -37,6 +37,7 @@ import { NavbarComponent } from './usershop/navbar/navbar.component';
 import { BannerComponent } from './usershop/banner/banner.component';
 import { SubcategoryComponent } from './usershop/subcategory/subcategory.component';
 import { ProductDetailsComponent } from './usershop/product-details/product-details.component';
+import { AuthGuard } from './usershop/auth.guard';
 
 const routes: Routes = [
   // {

@@ -27,7 +27,7 @@ export class AuthService {
     return new Promise((resolve, reject) => {
       this.http.get(this.apiBaseUrl + "loginMLM?UserID=" + UserID + "&password=" + password).subscribe((res: any) => {
         resolve(res);
-        console.log(res);
+        console.log("Login MLM Details: ",res);
         
       });
     });
