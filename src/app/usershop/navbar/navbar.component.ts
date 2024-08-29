@@ -11,8 +11,9 @@ export class NavbarComponent implements OnInit {
   mainCategory: any[] = [];
   subCategory: { [key: number]: any[] } = {};
   isSubCategoryVisible: { [key: number]: boolean } = {};
-  AllProductByCategoryId:any [] = [];
-  productByKeyword: any [] = [];
+  AllProductByCategoryId: any[] = [];
+  productByKeyword: any[] = [];
+  router: any;
 
   constructor(private userService: UserService) {}
 
@@ -51,7 +52,7 @@ export class NavbarComponent implements OnInit {
       this.userService.getSubCategory(parentCategoryId).subscribe(
         (res: any[]) => {
           this.subCategory[parentCategoryId] = res;
-          console.log("Subcategories: ", this.subCategory);
+          console.log('Subcategories: ', this.subCategory);
         },
         (error) => {
           console.error('Error fetching subcategories', error);
@@ -67,24 +68,28 @@ export class NavbarComponent implements OnInit {
     }
   }
 
-
-  getAllProductByCategoryId(categoryId: number){
-    this.userService.getAllProductByCategoryId(categoryId).subscribe((data)=>{
+  getAllProductByCategoryId(categoryId: number) {
+    this.userService.getAllProductByCategoryId(categoryId).subscribe((data) => {
       this.AllProductByCategoryId = data;
-    })
+    });
   }
 
   onSearch(event: any): void {
     const keyword = event.target.value;
 
-    if (keyword.length > 2) { // Start searching after 3 characters
+    if (keyword.length > 2) {
+      // Start searching after 3 characters
       this.getProductByKeyword(keyword);
     }
   }
-  getProductByKeyword(keyword: string){
-    this.userService.SearchProductByKeyword(keyword).subscribe((data)=>{
+  getProductByKeyword(keyword: string) {
+    this.userService.SearchProductByKeyword(keyword).subscribe((data) => {
       this.productByKeyword = data.slice(0, 5);
-      console.log("Raw data of search by keyword: ", this.productByKeyword);
-    })
+      console.log('Raw data of search by keyword: ', this.productByKeyword);
+    });
+  }
+
+  navigateToProduct(productId: string): void {
+    this.router.navigate([`/product/${productId}`]);
   }
 }

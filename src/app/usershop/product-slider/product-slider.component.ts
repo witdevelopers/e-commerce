@@ -6,7 +6,7 @@ import { Subject } from 'rxjs';
 @Component({
   selector: 'app-product-slider',
   templateUrl: './product-slider.component.html',
-  styleUrls: ['./product-slider.component.css']
+  styleUrls: ['./product-slider.component.css'],
 })
 export class ProductSliderComponent implements OnInit, AfterViewInit {
   baseUrlProduct: string = 'https://www.mbp18k.com/Shop//';
@@ -33,7 +33,8 @@ export class ProductSliderComponent implements OnInit, AfterViewInit {
 
   // Load Home Page Section Products
   loadHomeSectionProductsDetails(): void {
-    this.userService.getHomePageSectionProduct()
+    this.userService
+      .getHomePageSectionProduct()
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe({
         next: (data) => {
@@ -45,13 +46,17 @@ export class ProductSliderComponent implements OnInit, AfterViewInit {
             }
             sections[section].push({
               ...product,
-              imageUrl: product.imageUrl.startsWith('http') ? product.imageUrl : `${this.baseUrlProduct}${product.imageUrl}`
+              imageUrl: product.imageUrl.startsWith('http')
+                ? product.imageUrl
+                : `${this.baseUrlProduct}${product.imageUrl}`,
             });
             return sections;
           }, {});
           this.homePageSectionProducts = groupedProducts;
+          // console.log("home page wala section product::::===", this.homePageSectionProducts);
         },
-        error: (err) => console.error('Failed to load home page section products:', err)
+        error: (err) =>
+          console.error('Failed to load home page section products:', err),
       });
   }
 
@@ -72,23 +77,29 @@ export class ProductSliderComponent implements OnInit, AfterViewInit {
 
   // Initialize Carousel
   private initializeCarousel(): void {
-    this.carouselInner = document.querySelector<HTMLElement>("#cCarousel-inner");
-    this.carouselVp = document.querySelector<HTMLElement>("#carousel-vp");
+    this.carouselInner =
+      document.querySelector<HTMLElement>('#cCarousel-inner');
+    this.carouselVp = document.querySelector<HTMLElement>('#carousel-vp');
 
     if (this.carouselInner && this.carouselVp) {
-      const carouselItems = document.querySelectorAll<HTMLElement>(".cCarousel-item");
+      const carouselItems =
+        document.querySelectorAll<HTMLElement>('.cCarousel-item');
 
       if (carouselItems.length > 0) {
         this.totalMovementSize =
-          parseFloat(carouselItems[0].getBoundingClientRect().width.toFixed(2)) +
-          parseFloat(window.getComputedStyle(this.carouselInner).getPropertyValue("gap"));
+          parseFloat(
+            carouselItems[0].getBoundingClientRect().width.toFixed(2)
+          ) +
+          parseFloat(
+            window.getComputedStyle(this.carouselInner).getPropertyValue('gap')
+          );
 
-        const prev = document.querySelector<HTMLButtonElement>("#prev");
-        const next = document.querySelector<HTMLButtonElement>("#next");
+        const prev = document.querySelector<HTMLButtonElement>('#prev');
+        const next = document.querySelector<HTMLButtonElement>('#next');
 
         if (prev && next) {
-          prev.addEventListener("click", () => this.moveCarousel(-1));
-          next.addEventListener("click", () => this.moveCarousel(1));
+          prev.addEventListener('click', () => this.moveCarousel(-1));
+          next.addEventListener('click', () => this.moveCarousel(1));
         }
 
         this.handleMediaQueries();
@@ -100,12 +111,16 @@ export class ProductSliderComponent implements OnInit, AfterViewInit {
   private moveCarousel(direction: number): void {
     if (this.carouselInner && this.carouselVp) {
       const carouselVpWidth = this.carouselVp.getBoundingClientRect().width;
-      const carouselInnerWidth = this.carouselInner.getBoundingClientRect().width;
+      const carouselInnerWidth =
+        this.carouselInner.getBoundingClientRect().width;
 
       if (direction === -1 && this.leftValue < 0) {
         this.leftValue += this.totalMovementSize;
         this.carouselInner.style.left = `${this.leftValue}px`;
-      } else if (direction === 1 && (carouselInnerWidth - Math.abs(this.leftValue)) > carouselVpWidth) {
+      } else if (
+        direction === 1 &&
+        carouselInnerWidth - Math.abs(this.leftValue) > carouselVpWidth
+      ) {
         this.leftValue -= this.totalMovementSize;
         this.carouselInner.style.left = `${this.leftValue}px`;
       }
@@ -114,11 +129,11 @@ export class ProductSliderComponent implements OnInit, AfterViewInit {
 
   // Handle Media Queries
   private handleMediaQueries(): void {
-    const mediaQuery510 = window.matchMedia("(max-width: 510px)");
-    const mediaQuery770 = window.matchMedia("(max-width: 770px)");
+    const mediaQuery510 = window.matchMedia('(max-width: 510px)');
+    const mediaQuery770 = window.matchMedia('(max-width: 770px)');
 
-    mediaQuery510.addEventListener("change", this.mediaManagement.bind(this));
-    mediaQuery770.addEventListener("change", this.mediaManagement.bind(this));
+    mediaQuery510.addEventListener('change', this.mediaManagement.bind(this));
+    mediaQuery770.addEventListener('change', this.mediaManagement.bind(this));
   }
 
   // Media Management
@@ -127,10 +142,16 @@ export class ProductSliderComponent implements OnInit, AfterViewInit {
       const newViewportWidth = window.innerWidth;
 
       // Adjust leftValue based on viewport width changes
-      if (this.leftValue <= -this.totalMovementSize && window.innerWidth < newViewportWidth) {
+      if (
+        this.leftValue <= -this.totalMovementSize &&
+        window.innerWidth < newViewportWidth
+      ) {
         this.leftValue += this.totalMovementSize;
         this.carouselInner.style.left = `${this.leftValue}px`;
-      } else if (this.leftValue <= -this.totalMovementSize && window.innerWidth > newViewportWidth) {
+      } else if (
+        this.leftValue <= -this.totalMovementSize &&
+        window.innerWidth > newViewportWidth
+      ) {
         this.leftValue -= this.totalMovementSize;
         this.carouselInner.style.left = `${this.leftValue}px`;
       }

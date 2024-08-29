@@ -1,7 +1,7 @@
 import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { UserService } from 'src/app/user/services/user.service';
-import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'app-home',
@@ -9,11 +9,15 @@ import { takeUntil } from 'rxjs/operators';
   styleUrls: ['./home.component.css'],
 })
 export class HomeComponent implements OnInit, AfterViewInit {
+
   banners: any[] = [];
   baseUrl: string = 'https://www.mbp18k.com';
   baseUrlProduct: string = 'https://www.mbp18k.com/Shop//';
+  categories: any;
+  products: any;
   homePageSectionProducts: any = {}; // Initialize as an object
   currentSlide = 0;
+  image: any[] = [];
 
   private ngUnsubscribe: Subject<void> = new Subject<void>();
 
@@ -27,10 +31,13 @@ export class HomeComponent implements OnInit, AfterViewInit {
 
   ngOnInit(): void {
     this.loadBanners();
+    this.loadCategories();
+    this.loadProducts();
     this.loadHomeSectionProductsDetails();
   }
 
   ngAfterViewInit(): void {
+    this.initializeCartButtons(); // Initialize cart buttons
     this.initializeCarousel(); // Initialize carousel
   }
 
@@ -54,6 +61,21 @@ export class HomeComponent implements OnInit, AfterViewInit {
   prevSlide(): void {
     this.currentSlide = (this.currentSlide - 1 + this.banners.length) % this.banners.length;
   }
+  
+
+  // Load Categories
+  loadCategories() {
+    this.userService.getCategories().subscribe((data) => {
+      this.categories = data;
+    });
+  }
+
+  // Load Products
+  loadProducts() {
+    this.userService.getProducts().subscribe((data) => {
+      this.products = data;
+    });
+  }
 
   // Load Home Page Section Products
   loadHomeSectionProductsDetails(): void {
@@ -61,6 +83,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe({
         next: (data) => {
+          // Group products by sectionName
           const groupedProducts = data.reduce((sections, product) => {
             const section = product.sectionName || 'Others'; // Fallback for products without a section
             if (!sections[section]) {
@@ -81,6 +104,21 @@ export class HomeComponent implements OnInit, AfterViewInit {
   // Helper method to get object keys
   objectKeys = Object.keys;
 
+  // Initialize Cart Buttons after view initialization
+  private initializeCartButtons(): void {
+    const cartButtons = document.querySelectorAll<HTMLElement>('.cart-button');
+
+    // Define the click event handler function
+    function cartClick(this: HTMLElement): void {
+      this.classList.add('clicked');
+    }
+
+    // Add event listeners to each button
+    cartButtons.forEach((button) => {
+      button.addEventListener('click', cartClick);
+    });
+  }
+
   // Initialize Carousel
   private initializeCarousel(): void {
     this.carouselInner = document.querySelector<HTMLElement>("#cCarousel-inner");
@@ -94,13 +132,15 @@ export class HomeComponent implements OnInit, AfterViewInit {
           parseFloat(carouselItem.getBoundingClientRect().width.toFixed(2)) +
           parseFloat(window.getComputedStyle(this.carouselInner).getPropertyValue("gap"));
 
-        const prev = document.querySelector<HTMLButtonElement>("#prev");
-        const next = document.querySelector<HTMLButtonElement>("#next");
+        const prev = document.querySelector<HTMLElement>("#prev");
+        const next = document.querySelector<HTMLElement>("#next");
 
         if (prev && next) {
           prev.addEventListener("click", () => this.moveCarousel(-1));
           next.addEventListener("click", () => this.moveCarousel(1));
         }
+
+        this.handleMediaQueries();
       }
     }
   }
@@ -115,6 +155,30 @@ export class HomeComponent implements OnInit, AfterViewInit {
         this.leftValue += this.totalMovementSize;
         this.carouselInner.style.left = `${this.leftValue}px`;
       } else if (direction === 1 && (carouselInnerWidth - Math.abs(this.leftValue)) > carouselVpWidth) {
+        this.leftValue -= this.totalMovementSize;
+        this.carouselInner.style.left = `${this.leftValue}px`;
+      }
+    }
+  }
+
+  // Handle Media Queries
+  private handleMediaQueries(): void {
+    const mediaQuery510 = window.matchMedia("(max-width: 510px)");
+    const mediaQuery770 = window.matchMedia("(max-width: 770px)");
+
+    mediaQuery510.addEventListener("change", this.mediaManagement.bind(this));
+    mediaQuery770.addEventListener("change", this.mediaManagement.bind(this));
+  }
+
+  // Media Management
+  private mediaManagement(event: MediaQueryListEvent): void {
+    if (this.carouselInner) {
+      const newViewportWidth = window.innerWidth;
+
+      if (this.leftValue <= -this.totalMovementSize && window.innerWidth < newViewportWidth) {
+        this.leftValue += this.totalMovementSize;
+        this.carouselInner.style.left = `${this.leftValue}px`;
+      } else if (this.leftValue <= -this.totalMovementSize && window.innerWidth > newViewportWidth) {
         this.leftValue -= this.totalMovementSize;
         this.carouselInner.style.left = `${this.leftValue}px`;
       }
