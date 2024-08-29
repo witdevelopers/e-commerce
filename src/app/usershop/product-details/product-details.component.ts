@@ -14,7 +14,7 @@ export class ProductDetailsComponent implements OnInit {
   productId: number;
   mainImageUrl: string = 'assets/default-image.jpg'; // Default image URL
 
-  constructor(private route: ActivatedRoute, private productService: UserService) {
+  constructor(private route: ActivatedRoute, private userService: UserService) {
     this.productId = +this.route.snapshot.params['id'];
   }
 
@@ -23,7 +23,7 @@ export class ProductDetailsComponent implements OnInit {
   }
 
   loadProductDetails(id: number): void {
-    this.productService.getProductById(id).subscribe((response: any) => {
+    this.userService.getProductById(id).subscribe((response: any) => {
       this.singleProduct = response.singleProduct;
       this.singleProductDetails = response.singleProductDetails;
       this.singleProductImages = response.singleProductImages;
