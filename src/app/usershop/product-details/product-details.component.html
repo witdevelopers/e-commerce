@@ -11,14 +11,13 @@
 
     <div class="item-image-main">
       <!-- Display the main image -->
-       <div class="badge-area-2">
+      <div class="badge-area-2">
         <div class="badge-product-sale">
           <span class="new">OFFER</span>
           <span class="percent">- {{singleProduct.discountPercentage}}%</span>
         </div>
       </div>
       <img [src]="mainImageUrl" alt="{{ singleProduct.productName }}" />
-      
     </div>
   </div>
 
@@ -28,9 +27,9 @@
       <h4>{{ singleProduct.productName }}</h4>
       <p>Price: <span id="price">₹ {{ singleProductDetails[0]?.discountPrice }}</span></p>
       <del><p>Price: <span id="price">₹ {{ singleProductDetails[0]?.price }}</span></p></del>
-      
+
       <!-- Add to Cart Button -->
-      <button class="add-to-cart-btn" (click)="addToCart(singleProduct)">
+      <button class="add-to-cart-btn" (click)="addToCart()">
         Add to Cart
       </button>
     </div>
@@ -43,10 +42,8 @@
         </ul>
       </div>
     </div>
-   
   </div>
 
 </section>
 
 <app-footer></app-footer>
-

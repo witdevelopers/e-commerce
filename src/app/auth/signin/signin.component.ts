@@ -36,11 +36,14 @@ export class SigninComponent {
       var res: any = await this.api.loginMLM(this.userID, this.password);
       console.log(res);
       if (res.status) {
-        sessionStorage.setItem('address', this.userID);
-        sessionStorage.setItem('token', res.data.token);
-        localStorage.setItem('address', this.userID);
-        localStorage.setItem('token', res.data.token);
-        console.log("Token Data: ", res);
+        sessionStorage.setItem('userId', this.userID);
+        sessionStorage.setItem('memberId', res.data.table[0].memberId.toString());
+        sessionStorage.setItem('token', res.token);
+        
+        localStorage.setItem('userId', this.userID);
+        localStorage.setItem('memberId', res.data.table[0].memberId.toString());
+        localStorage.setItem('token', res.token);
+       
 
         this.spinnerService.hide();
         

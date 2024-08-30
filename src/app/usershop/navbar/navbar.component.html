@@ -4,7 +4,7 @@
       <img src="assets/img/meesho.png" />
     </div>
 
-    <!--seach box-->
+    <!--search box-->
     <div class="searchInputContainer">
       <div class="searchIcon">
         <img src="assets/img/search.png" />
@@ -38,34 +38,28 @@
     </div>
 
     <div class="profileAndCart">
-      <!-- <div class="profileContainer">
-        <div class="profileIcon">
-          <img src="assets/img/user.png" />
-        </div>
-        <p>Profile</p>
-      </div> -->
       <div class="downloadContainer">
         <div class="mobileIcon top">
             <img src="assets/img/user.png" />
         </div>
-        <p>Profile</p>
+        <p>{{ isLoggedIn ? userName : 'Profile' }}</p>
 
         <div class="downloadHoverBtnContainer">
-            <p>{{user}}</p>
-            <p style="font-size: 13px;">To access your account</p>
+          <p *ngIf="isLoggedIn">{{userName}}</p>
+          <p *ngIf="!isLoggedIn" style="font-size: 13px;">To access your account</p>
                         
-            <a routerLink="/auth/signin" >
-                <button class="downloadBtn" >Sign In</button>
-            </a>
-            <hr>
-            <a href="" >
-              <button class="downloadBtn">My Order</button>
+          <a *ngIf="!isLoggedIn" routerLink="/auth/signin">
+              <button class="downloadBtn">Sign In</button>
           </a>
-          <a class="delAcc">
-           Delete Account
-        </a>
+          <a *ngIf="isLoggedIn" (click)="signOut()">
+              <button class="downloadBtn">Sign Out</button>
+          </a>
+          <hr>
+          <a href="" >
+            <button class="downloadBtn">My Order</button>
+          </a>       
         </div>
-    </div>
+      </div>
       
     </div>
     <div class="CartContainer">
@@ -95,9 +89,7 @@
           *ngFor="let subcat of subCategory[c.categoryID]"
         >
           <!-- Use routerLink to navigate to the respective subcategory page -->
-          <a [routerLink]="['/subcategory', subcat.categoryID]">{{
-            subcat.categoryName
-          }}</a>
+          <a [routerLink]="['/subcategory', subcat.categoryID]">{{ subcat.categoryName }}</a>
         </div>
       </div>
     </li>

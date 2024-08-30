@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { UserService } from 'src/app/user/services/user.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-subcategory',
@@ -44,5 +45,42 @@ export class SubcategoryComponent implements OnInit {
     error => {
       console.error('Error fetching subcategory details:', error);
     });
+  }
+
+  // Method to add a product to the cart
+  addToCart(productDtId: number, quantity: number): void {
+    let customerId = sessionStorage.getItem('memberId') || localStorage.getItem('memberId');
+
+    if (!customerId) {
+      alert('Customer ID is missing. Please log in again.');
+      return;
+    }
+
+    if (!productDtId || isNaN(productDtId)) {
+      alert('Invalid Product ID.');
+      return;
+    }
+
+    if (!quantity || isNaN(quantity)) {
+      alert('Invalid quantity.');
+      return;
+    }
+
+    this.subcategoryService.addToCart(+customerId, productDtId, quantity).subscribe(
+      (response) => {
+        Swal.fire({
+          icon: 'success',
+          title: 'Product added to cart successfully.',
+        });
+        console.log('Product added to cart successfully.', response);
+      },
+      (error) => {
+        Swal.fire({
+          icon: 'error',
+          title: 'Product already added.',
+        });
+        console.error('Error adding product to cart:', error);
+      }
+    );
   }
 }

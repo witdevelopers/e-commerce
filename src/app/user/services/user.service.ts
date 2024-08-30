@@ -248,4 +248,10 @@ export class UserService {
   SearchProductByKeyword(keyword: string): Observable<any>{
     return this.http.get<any>(this.apiBaseUrl+"api/Shop/searchbyKeyword?keyword="+keyword);
   }
+
+  addToCart(customerId: number, productDtId: number, quantity: number): Observable<any> {
+    const apiUrl = `${this.apiBaseUrl}api/Shop/shopping-cart/add?customerId=${customerId}&productDtId=${productDtId}&quantity=${quantity}`;
+    
+    return this.http.post<any>(apiUrl, {});  // Sending an empty body with the POST request
+  }
 }

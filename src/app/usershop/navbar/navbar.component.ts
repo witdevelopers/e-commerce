@@ -10,7 +10,9 @@ export class NavbarComponent implements OnInit {
 clearSearch() {
 throw new Error('Method not implemented.');
 }
-  user: string = 'Sign in';
+  isLoggedIn: boolean = false;
+  userName: string = '';
+  
   mainCategory: any[] = [];
   subCategory: { [key: number]: any[] } = {};
   isSubCategoryVisible: { [key: number]: boolean } = {};
@@ -21,16 +23,20 @@ throw new Error('Method not implemented.');
   constructor(private userService: UserService) {}
 
   ngOnInit(): void {
-    this.userData();
+    
     this.getMainCategory();
     this.getAllProductByCategoryId(7);
+    const userId = sessionStorage.getItem('userId');
+    if (userId) {
+      this.isLoggedIn = true;
+      this.userName = sessionStorage.getItem('userName') || 'Profile';
+    }
   }
 
-  userData() {
-    const address = sessionStorage.getItem('address');
-    if (address) {
-      this.user = address;
-    }
+  signOut(): void {
+    sessionStorage.clear(); // Clear all session storage
+    this.isLoggedIn = false;
+    this.router.navigate(['/auth/signin']); // Redirect to the sign-in page
   }
 
   getMainCategory() {

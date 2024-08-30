@@ -2,45 +2,30 @@
 
 <main>
   <div *ngIf="subcategoryDetails && subcategoryDetails.length > 0;" class="cards-container container flex" id="cardscontainer">
-    
-
-    <div *ngFor="let product of subcategoryDetails" class="card" [routerLink]="['/product', product.productId]">
-      
-
-    <div >
-
-      <div class="card-header">
-        
-        <!-- Use the actual product image URL if available -->
-
-        <img [src]="product.imageUrl ? product.imageUrl : 'https://www.mbp18k.com/Shop//'" alt="{{ product.productName }}" id="news-img">
-        <div class="badge-area-2">
-          <div class="badge-product-sale">
-            <span class="new">OFFER</span>
-            <span class="percent">- 50%</span>
+    <div *ngFor="let product of subcategoryDetails" class="card">
+      <div>
+        <div class="card-header">
+          <img [src]="product.imageUrl ? product.imageUrl : 'https://www.mbp18k.com/Shop//'" alt="{{ product.productName }}" id="news-img">
+          <div class="badge-area-2">
+            <div class="badge-product-sale">
+              <span class="new">OFFER</span>
+              <span class="percent">- 50%</span>
+            </div>
           </div>
         </div>
-
-         
-
-
-      </div>
-      <div class="card-content">
-        <h3 id="news-title">{{ product.productName }}</h3>
-        
-        <h6 class="news-source" id="news-source">Rs: {{ product.discountPrice }}  <del style="color: red;">Rs. {{ product.price}}</del></h6>
-        <button class="cart-button">
-          <span class="add-to-cart">Add to cart</span>
-          <span class="added">Added</span>
-          <i class="fas fa-shopping-cart"></i>
-          <i class="fas fa-box"></i>
-        </button>
+        <div class="card-content">
+          <h3 id="news-title">{{ product.productName }}</h3>
+          <h6 class="news-source" id="news-source">Rs: {{ product.discountPrice }}  <del style="color: red;">Rs. {{ product.price}}</del></h6>
+          <button class="cart-button" (click)="addToCart(product.productId, 1)">
+            <span class="add-to-cart">Add to cart</span>
+            <span class="added">Added</span>
+            <i class="fas fa-shopping-cart"></i>
+            <i class="fas fa-box"></i>
+          </button>
+        </div>
       </div>
     </div>
-
   </div>
-
-
-</div>
+</main>
 
 <app-footer></app-footer>
