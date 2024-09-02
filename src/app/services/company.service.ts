@@ -23,11 +23,11 @@ export class CompanyService {
       let url = this.apiBaseUrl + 'CompanyDetails';
       // console.log(url)
       let result = await firstValueFrom(this.http.get(url));
-      console.log(result)
+      // console.log(result)
       this.companyDetails = result["data"]["table"][0];
       this.packages = result["data"]["table1"];
       this.topupPackages = result["data"]["table2"];
-      console.log(this.companyDetails)
+      // console.log(this.companyDetails)
     }
     return this.companyDetails;
   }

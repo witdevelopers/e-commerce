@@ -9,47 +9,44 @@ import Swal from 'sweetalert2';
   styleUrls: ['./signup.component.css']
 })
 export class SignupComponent {
-  userID: any = '';
-  password: any = '';
+  fullName: string = '';
+  email: string = '';
+  password: string = '';
+  confirmPassword: string = '';
 
+  constructor(private authService: AuthService, private router: Router) {}
 
+  async getUserFormData() {
+    if (this.isValidForm()) {
+      try {
+        const res: any = await this.authService.saveUsers(this.email, this.password);
 
-  constructor(private authService: AuthService, private router: Router) {
-  
-  }
-
-  // getUserFormData(data:any): void {
-  //   if (this.signupForm.valid) {
-  //     const userData = this.signupForm.value;
-  //     console.log(userData);
-  //     // Subscribe to the Observable returned by the service
-  //     this.authService.saveUsers(data).subscribe((result)=>{
-  //       console.log(result);
-  //     })
-  //   } else {
-  //     window.alert('Please fill out the form correctly.');
-  //   }
-  // }
- 
-
-  async getUserFormData(){
-    
-    if (this.userID != "" && this.password != "") {
-      var res: any = await this.authService.saveUsers(this.userID, this.password);
-      
-      if (res.status) {
-      
-        console.log("Registered");
-
-        Swal.fire("Registered Succesfull");
-      } else {
-       
-        Swal.fire(res.message, '', 'error');
+        if (res.status) {
+          console.log("Registered");
+          Swal.fire("Registration Successful", '', 'success').then(() => {
+            this.router.navigate(['/login']); // Navigate to login page after successful registration
+          });
+        } else {
+          Swal.fire(res.message || "Registration failed", '', 'error');
+        }
+      } catch (error) {
+        Swal.fire("An error occurred", '', 'error');
+        console.error(error);
       }
+    } else {
+      Swal.fire("Please fill out the form correctly.", '', 'warning');
     }
   }
 
+  private isValidForm(): boolean {
+    return this.fullName.trim() !== '' &&
+           this.isValidEmail(this.email) &&
+           this.password.trim() !== '' &&
+           this.password === this.confirmPassword;
+  }
 
-  
-
+  private isValidEmail(email: string): boolean {
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailPattern.test(email);
+  }
 }

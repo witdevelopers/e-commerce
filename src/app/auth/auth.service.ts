@@ -8,6 +8,9 @@ import { Settings } from '../app-setting';
   providedIn: 'root'
 })
 export class AuthService {
+  signUp(userID: string, password: string): any {
+    throw new Error('Method not implemented.');
+  }
 
   private apiBaseUrl = Settings.apiUrl + 'Account/';
 
@@ -27,7 +30,7 @@ export class AuthService {
     return new Promise((resolve, reject) => {
       this.http.get(this.apiBaseUrl + "loginMLM?UserID=" + UserID + "&password=" + password).subscribe((res: any) => {
         resolve(res);
-        console.log("Login MLM Details: ",res);
+        // console.log("Login Details: ",res);
         
       });
     });
@@ -52,7 +55,7 @@ export class AuthService {
   // }
 
   saveUsers(UserID, password){
-    
+
     return new Promise((resolve, reject) => {
       const body = { userId: UserID, password: password };
       this.http.get(this.apiBaseUrl + "registerMLM?UserID=" + UserID + "&password=" + password).subscribe((res: any) => {
