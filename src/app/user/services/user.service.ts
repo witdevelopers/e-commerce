@@ -263,6 +263,14 @@ export class UserService {
 
       // Update the cart
   updateCart(cartData: { customerId: number; productDtId: number; quantity: number }): Observable<any> {
-    return this.http.put(`${this.apiBaseUrl}/update`, cartData);
+    return this.http.put(`${this.apiBaseUrl}api/Shop/shopping-cart/update`, cartData);
   }
+  
+  removeCartItem(customerId: number, productDtId: number, removeAll: boolean): Observable<any> {
+    const url = `${this.apiBaseUrl}api/Shop/shopping-cart/remove?customerId=${customerId}&productDtId=${productDtId}&removeAll=${removeAll}`;
+    return this.http.delete(url);
+  }
+  
+
+
 }
