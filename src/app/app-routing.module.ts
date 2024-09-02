@@ -38,6 +38,7 @@ import { BannerComponent } from './usershop/banner/banner.component';
 import { SubcategoryComponent } from './usershop/subcategory/subcategory.component';
 import { ProductDetailsComponent } from './usershop/product-details/product-details.component';
 import { AuthGuard } from './usershop/auth.guard';
+import { ShoppingCartComponent } from './usershop/shopping-cart/shopping-cart.component';
 
 const routes: Routes = [
   // {
@@ -222,6 +223,7 @@ const routes: Routes = [
 
   { path: 'subcategory/:id', component: SubcategoryComponent },
   { path: 'product/:id', component: ProductDetailsComponent },
+  { path: 'shopping-cart', component: ShoppingCartComponent },
   
   {
     path: 'banner',

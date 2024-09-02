@@ -254,4 +254,15 @@ export class UserService {
     
     return this.http.post<any>(apiUrl, {});  // Sending an empty body with the POST request
   }
+
+    // Fetch the cart details for a customer
+    getCart(customerId: number): Observable<any> {
+      return this.http.get(`${this.apiBaseUrl}api/Shop/Getshopping-cartDetails/${customerId}`);
+    }
+    
+
+      // Update the cart
+  updateCart(cartData: { customerId: number; productDtId: number; quantity: number }): Observable<any> {
+    return this.http.put(`${this.apiBaseUrl}/update`, cartData);
+  }
 }

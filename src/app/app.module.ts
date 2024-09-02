@@ -55,6 +55,8 @@ import { BannerComponent } from './usershop/banner/banner.component';
 import { SubcategoryComponent } from './usershop/subcategory/subcategory.component';
 import { ProductDetailsComponent } from './usershop/product-details/product-details.component';
 import { ProductSliderComponent } from './usershop/product-slider/product-slider.component';
+import { ShoppingCartComponent } from './usershop/shopping-cart/shopping-cart.component';
+
 
 @NgModule({
   declarations: [
@@ -97,7 +99,8 @@ import { ProductSliderComponent } from './usershop/product-slider/product-slider
     BannerComponent,
     SubcategoryComponent,
     ProductDetailsComponent,
-    ProductSliderComponent
+    ProductSliderComponent,
+    ShoppingCartComponent
 
 
 

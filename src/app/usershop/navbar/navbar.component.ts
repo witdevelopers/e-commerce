@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router'; // Import Router
 import { UserService } from 'src/app/user/services/user.service';
 
 @Component({
@@ -18,12 +19,13 @@ throw new Error('Method not implemented.');
   isSubCategoryVisible: { [key: number]: boolean } = {};
   AllProductByCategoryId: any[] = [];
   productByKeyword: any[] = [];
-  router: any;
 
-  constructor(private userService: UserService) {}
+  constructor(
+    private userService: UserService,
+    private router: Router // Inject Router here
+  ) {}
 
   ngOnInit(): void {
-    
     this.getMainCategory();
     this.getAllProductByCategoryId(7);
     const userId = sessionStorage.getItem('userId');
@@ -43,7 +45,6 @@ throw new Error('Method not implemented.');
     this.userService.getMainCategory().subscribe(
       (res: any[]) => {
         this.mainCategory = res;
-        // console.log("Get Main Category: ", this.mainCategory);
       },
       (error) => {
         console.error('Error fetching main categories', error);
@@ -61,7 +62,6 @@ throw new Error('Method not implemented.');
       this.userService.getSubCategory(parentCategoryId).subscribe(
         (res: any[]) => {
           this.subCategory[parentCategoryId] = res;
-          console.log('Subcategories: ', this.subCategory);
         },
         (error) => {
           console.error('Error fetching subcategories', error);
@@ -91,14 +91,18 @@ throw new Error('Method not implemented.');
       this.getProductByKeyword(keyword);
     }
   }
+
   getProductByKeyword(keyword: string) {
     this.userService.SearchProductByKeyword(keyword).subscribe((data) => {
       this.productByKeyword = data;
-      console.log('Raw data of search by keyword: ', this.productByKeyword);
     });
   }
 
   navigateToProduct(productId: string): void {
     this.router.navigate([`/product/${productId}`]);
+  }
+
+  onAddToCart(): void {
+    this.router.navigate(['/shopping-cart']);
   }
 }
