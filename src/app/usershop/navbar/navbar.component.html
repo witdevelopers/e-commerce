@@ -1,7 +1,7 @@
 <header class="header">
   <div class="headerLeft">
     <div class="logoContainer" routerLink="/home">
-      <img src="assets/img/meesho.png" />
+      <img src="assets/Shopimg/wit.png" />
     </div>
 
     <!--search box-->
@@ -40,33 +40,33 @@
     <div class="profileAndCart">
       <div class="downloadContainer">
         <div class="mobileIcon top">
-            <img src="assets/img/user.png" />
+          <img src="assets/img/user.png" />
         </div>
         <p>{{ isLoggedIn ? userName : 'Profile' }}</p>
-
+    
         <div class="downloadHoverBtnContainer">
           <p *ngIf="isLoggedIn">{{userName}}</p>
           <p *ngIf="!isLoggedIn" style="font-size: 13px;">To access your account</p>
                         
           <a *ngIf="!isLoggedIn" routerLink="/auth/signin">
-              <button class="downloadBtn">Sign In</button>
+            <button class="downloadBtn">Sign In</button>
           </a>
           <a *ngIf="isLoggedIn" (click)="signOut()">
-              <button class="downloadBtn">Sign Out</button>
+            <button class="downloadBtn">Sign Out</button>
           </a>
           <hr>
-          <a href="" >
+          <a href="">
             <button class="downloadBtn">My Order</button>
-          </a>       
+          </a>
         </div>
       </div>
-      
     </div>
     <div class="CartContainer" (click)="onAddToCart()" style="cursor: pointer;">
       <div class="CartIcon top">
         <img src="assets/img/cart.png" />
       </div>
       <p>Cart</p>
+    
     </div>    
   </div>
 </header>

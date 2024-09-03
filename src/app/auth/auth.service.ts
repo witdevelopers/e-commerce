@@ -53,7 +53,7 @@ export class AuthService {
 
   registerMLM(userData: any): Promise<any> {
     const body = {
-      txtUserId: userData.userId,
+     
       txtPassword: userData.password,
       txtName: userData.name,
       txtEmail: userData.email

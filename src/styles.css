@@ -3,17 +3,19 @@
 @import url('https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap');
 @import url('https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css');
 :root{
-    --hoverTextColor:rgb(244, 51, 151);
+    --hoverTextColor:rgb(60, 126, 170);
     --textColor : rgb(87, 85, 85);
 }
 
 
 body{
-    margin: 0;
-    padding: 0;
-    width: 100%;
-    font-family: 'Roboto', sans-serif;
-    color:var(--textColor);
+    color:var(--hoverTextColor);
+}
+h1, h2, h3, h4, h5, h6 {
+    color: var(--textColor);
+}
+a {
+    color: var(--TextColor);
 }
 
 /*.nav-link {

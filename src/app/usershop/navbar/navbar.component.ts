@@ -70,6 +70,7 @@ throw new Error('Method not implemented.');
     }
     this.isSubCategoryVisible[parentCategoryId] = true;
   }
+  
 
   hideSubCategory(parentCategoryId: number) {
     if (parentCategoryId !== undefined && parentCategoryId !== null) {

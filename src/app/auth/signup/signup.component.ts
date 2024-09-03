@@ -20,7 +20,7 @@ export class SignupComponent implements OnInit {
 
   ngOnInit(): void {
     this.signupForm = this.fb.group({
-      userId: ['', Validators.required],
+      // userId: ['', Validators.required],
       name: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
       password: ['', Validators.required],
@@ -36,10 +36,10 @@ export class SignupComponent implements OnInit {
 
   async onSubmit() {
     if (this.signupForm.valid) {
-      const { userId, password, name, email } = this.signupForm.value;
+      const { password, name, email } = this.signupForm.value;
 
       try {
-        const res: any = await this.authService.registerMLM({ userId, password, name, email });
+        const res: any = await this.authService.registerMLM({  password, name, email });
 
         if (res && res.status) {
           console.log("Registered");
