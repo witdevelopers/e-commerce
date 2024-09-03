@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Settings } from '../../app-setting';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { Categories } from 'src/app/usershop/interface';
 
 
@@ -9,6 +9,9 @@ import { Categories } from 'src/app/usershop/interface';
   providedIn: 'root'
 })
 export class UserService {
+
+  private cartSubject = new BehaviorSubject<number>(0);
+  cartQuantity$ = this.cartSubject.asObservable();
 
   // Shopping Url Link start here
  //bannerUrl = "https://localhost:44320/api/Shop/banners";
@@ -269,6 +272,19 @@ export class UserService {
   removeCartItem(customerId: number, productDtId: number, removeAll: boolean): Observable<any> {
     const url = `${this.apiBaseUrl}api/Shop/shopping-cart/remove?customerId=${customerId}&productDtId=${productDtId}&removeAll=${removeAll}`;
     return this.http.delete(url);
+  }
+
+  updateCartQuantity(customerId: number): void {
+    this.getCart(customerId).subscribe(
+      (data: any) => {
+        // Calculate total quantity
+        const totalQuantity = data.items.reduce((total: number, item: any) => total + item.quantity, 0);
+        this.cartSubject.next(totalQuantity); // Emit the new cart quantity
+      },
+      (error) => {
+        console.error('Error fetching cart details', error);
+      }
+    );
   }
   
 

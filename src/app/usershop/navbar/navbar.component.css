@@ -1,204 +1,175 @@
+
+/* General Styles */
 img {
     width: 100%;
-}
-
-.header {
+    margin-top: 7px;
+  }
+  
+  .header {
     height: 72px;
-    outline: 1px solid #ccc;
     padding: 0 10px;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    font-weight: 400;
-}
-
-.headerLeft,
-.headerRight {
+  }
+  
+  .headerLeft,
+  .headerRight {
     display: flex;
     align-items: center;
-}
-
-.logoContainer {
+  }
+  
+  .logoContainer {
     width: 155px;
-}
-
-.searchInputContainer {
+  }
+  .inputCloseSearch{
+    margin-right: 13px;
+  }
+  .searchInputContainer {
     width: 100%;
     max-width: 400px;
     height: 45px;
-    outline: 1px solid rgb(126, 126, 126);
     display: flex;
     margin-left: 25px;
     border-radius: 3px;
     align-items: center;
-    /* padding: 10px; */
     position: relative;
-}
-
-.searchIcon {
+    border: 1px solid;
+  }
+  
+  .searchIcon {
     width: 20px;
     margin: 6px;
-}
-
-form {
+  }
+  
+  form {
     width: 100%;
-}
-
-.inputSearch {
+  }
+  
+  .inputSearch {
     width: 100%;
     border: none;
     outline: none;
     font-size: 16px;
-}
-
-#closeSearch {
-    display: none;
-}
-
-.searchRecentModal {
+  }
+  
+  .searchRecentModal {
     position: absolute;
-    bottom: 0;
+    top: 100%;
     left: 0;
-    top: 45px;
+    right: 0;
     background-color: white;
-    height: 400px;
-    width: 100%;
+    max-height: 300px;
+    overflow-y: auto;
+    border-radius: 4px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    z-index: 10;
     display: none;
-    padding: 15px;
-    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);
-    z-index: 3;
-}
-
-.searchInputContainer:focus-within .searchRecentModal {
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+  }
+  
+  .searchInputContainer:focus-within .searchRecentModal,
+  .searchInputContainer .searchRecentModal {
     display: block;
-    /* position: relative; */
-    background-color: white;
-    /* height: auto; */
-}
-
-.recentIcon {
-    width: 20px;
-    margin-right: 10px;
-}
-
-.recentItem {
-    display: flex;
-    align-items: center;
-    background-color: white;
-}
-
-/***right***/
-.mobileIcon {
+  }
+  
+  .listofRecent {
+    padding: 10px;
+    cursor: pointer;
+    border-bottom: 1px solid #eee;
+  }
+  
+  .listofRecent h3 {
+    margin: 0;
+    font-size: 16px;
+    font-weight: 100;
+    text-transform: lowercase;
+  }
+  
+  .listofRecent:hover {
+    background-color: #f0f0f0;
+  }
+  
+  /* Profile and Cart Section */
+  .mobileIcon {
     width: 15px;
     margin: 5px;
-}
-
-.downloadContainer {
-    align-items: center;
+  }
+  
+  .downloadContainer {
     height: 100%;
     position: relative;
     padding: 0 20px;
     display: flex;
     justify-content: center;
     align-items: center;
-    /* flex-direction: column; */
-}
-
-.downloadContainer:hover {
-    color: var(--hoverTextColor);
-    cursor: pointer;
-}
-
-.downloadBtn {
+  }
+  
+  .downloadBtn {
     margin-top: 5px;
     cursor: pointer;
-    font-style: normal;
-    text-align: center;
-    letter-spacing: 0.0015em;
     font-size: 15px;
     line-height: 20px;
     border-radius: 4px;
-    color: rgb(255, 255, 255);
-    background: rgb(159, 32, 137);
+    color: #fff;
+    background: var(--hoverTextColor);
     border: none;
     padding: 12px;
     display: block;
     width: 100%;
-}
-a{
-    text-decoration: none;
-}
-.downloadHoverBtnContainer {
+  }
+  
+  .downloadHoverBtnContainer {
     position: absolute;
-    bottom: 0;
     top: 40px;
     width: 200px;
     display: none;
-    height: 150px;
+    height: 170px;
     padding: 10px;
-    margin-left: -30px;
     color: var(--textColor);
     background: white;
     z-index: 2;
-}
-
-.downloadContainer:hover .downloadHoverBtnContainer,
-.downloadContainer:focus .downloadHoverBtnContainer {
+  }
+  
+  .downloadContainer:hover .downloadHoverBtnContainer {
     display: block !important;
     z-index: 10;
-}
-
-.downloadContainer p {
-    margin: 0;
-    padding: 0;
-    font-size: 17px;
-}
-
-.profileAndCart {
+  }
+  
+  .profileAndCart {
     display: flex;
     align-items: center;
-}
-
-.profileAndCart:hover,
-.profileAndCart:focus {
-    color: var(--hoverTextColor);
-}
-
-.profileIcon,
-.CartIcon {
+  }
+  
+  .profileIcon,
+  .CartIcon {
     width: 20px;
-}
-
-.profileAndCart p {
-    margin: 0;
-    padding: 0;
-}
-
-.profileContainer,
-.CartContainer {
+  }
+  
+  .profileContainer,
+  .CartContainer {
     padding: 0 20px;
     display: flex;
     justify-content: center;
     align-items: center;
     gap: 4px;
-    /* flex-direction: column; */
-}
-
-.becomeSupplierContainer {
+  }
+  
+  .becomeSupplierContainer {
     padding: 0 30px;
     border-left: 1.5px solid #ccc;
     border-right: 1.5px solid #ccc;
     font-size: 17px;
-}
-
-/**navigation css ***/
-nav {
+  }
+  
+  /* Navigation Styles */
+  nav {
     width: 100%;
     border-bottom: 1px solid #ccc;
     height: 54px;
-}
-
-nav ul {
+  }
+  
+  nav ul {
     color: black;
     padding: 0;
     list-style: none;
@@ -208,27 +179,25 @@ nav ul {
     padding: 0 10%;
     height: 100%;
     margin: 0;
-    position: relative;
-}
-
-nav ul li {
+  }
+  
+  nav ul li {
     height: 100%;
     display: flex;
     align-items: center;
     margin: 0;
     border-bottom: 2px solid transparent;
     cursor: pointer;
-}
-
-nav ul li:hover {
+  }
+  
+  nav ul li:hover {
     color: var(--hoverTextColor);
     border-bottom: 4px solid var(--hoverTextColor);
-}
-
-/**module box submenu***/
-.subMenu {
+  }
+  
+  .subMenu {
     position: absolute;
-    top: 51px;
+    top: 127px;
     left: 0;
     right: 0;
     background-color: white;
@@ -238,403 +207,84 @@ nav ul li:hover {
     box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
     padding: 20px;
     z-index: 999;
-}
-
-nav ul li:hover .subMenu {
+  }
+  
+  nav ul li:hover .subMenu {
     display: block;
-}
-
-.subMenu p {
-    color: var(--textColor);
-}
-
-/* .submenuList {
-    display: flex;
-} */
-
-.column {
-    margin-right: 40px;
-}
-
-/**********************lowest price*************************/
-.lowestpriceContainer {
-    display: flex;
-    margin: 50px auto;
-    max-width: 1100px;
-}
-
-.lowestpriceContainer h1 {
-    font-size: 40px;
-    margin: 0;
-    color: rgb(36, 31, 31);
-}
-
-.lowestPrice_text {
-    width: 50%;
-    padding: 25px 0 0 25px;
-}
-
-.lowestPrice_image {
-    width: 50%;
-}
-
-.lowestPrice_icon {
-    width: 30px;
-    border-radius: 40px;
-    background-color: rgb(238, 133, 187);
-}
-
-.lowestPriceWhay {
-    display: flex;
-    height: 50px;
-    margin: 20px 0;
-}
-
-.lowestPriceItem {
-    padding: 0 20px;
-    width: 100%;
-    display: flex;
-    align-items: center;
-    border-right: 2px solid #ccc;
-}
-
-.lowestPriceItem p {
-    padding-left: 10px;
-}
-
-.downloadApp_contianer {
-    display: flex;
-    align-items: center;
-    font-size: 20px;
-    height: 50px;
-    background-color: var(--hoverTextColor);
-    border: none;
-    outline: none;
-    padding: 0 10px;
-    border-radius: 5px;
-    color: white;
-}
-
-.downloadApp_contianer p {
-    padding: 0 20px;
-}
-
-/*topCategoriesFrom*/
-.topCategoriesFrom {
-    width: 1100px;
-    margin: auto;
-}
-
-.topCategoriesHeading {
-    display: flex;
-    align-items: center;
-}
-
-.horizontalLine {
-    padding: 1px;
-    background-color: var(--hoverTextColor);
-    width: 50%;
-}
-
-.topCategoriesHeading h1 {
-    color: rgb(8, 8, 8);
-    font-size: 38px;
-    margin: 0;
-    width: max-content;
-}
-
-.topCategoreisImage {
-    width: 100%;
-    height: 500px;
-    background-image: url("https://images.meesho.com/images/marketing/1649759774600.jpg");
-    background-repeat: no-repeat;
-    margin-top: 50px;
-    display: flex;
-    align-items: flex-end;
-}
-
-.topCategoreisImage img {
-    max-width: 300px;
-    margin: 10px;
-}
-
-.topCategoreisImage img:first-child {
-    max-width: 400px;
-}
-
-.essentialContaienr {
-    width: 100%;
-    height: 500px;
-    margin-top: 50px;
-    background-image: url("https://images.meesho.com/images/marketing/1664343269674.jpg");
-    background-repeat: no-repeat;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-}
-
-.essentialContaienr img {
-    max-width: 180px;
-}
-
-.essential_item {
-    max-width: 250px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-.essen-btn {
-    margin-left: 100px;
-    margin-top: 20px;
-}
-
-/********************************becomesellerBanner_Container*******************/
-.becomesellerBanner_Container {
-    margin: 50px 0;
-    position: relative;
-}
-
-.becomesellerBanner_Container img {
-    width: 100%;
-}
-
-.becomeSeller_Content {
-    position: absolute;
-    top: 0;
-    right: 0;
-    width: 100%;
-    padding: 40px 0;
-}
-
-.becomeSeller_content_content {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-}
-
-.becomeSeller_content_content h1 {
-    font-size: 40px;
-    color: rgb(241, 57, 144);
-    font-weight: 500;
-}
-
-.becomeSeller_content_content button {
-    border: none;
-    outline: none;
-    background-color: var(--hoverTextColor);
-    color: white;
-    font-size: 20px;
-    padding: 20px 30px;
-    border-radius: 5px;
-    margin: 20px 50px;
-}
-
-.becomeSellerContent_P {
-    font-size: 20px;
-}
-
-/********************Best Seller*********************/
-
-.bestseller_Container {
-    width: 1100px;
-    margin: 50px auto;
-}
-
-.bestseller_Content {
-    width: 100%;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    margin-top: 20px;
-}
-
-/********************Media Queries*********************/
-@media (max-width: 768px) {
+  }
+  
+  /* Responsive Styles */
+  @media (max-width: 768px) {
     .header {
-        flex-direction: row;
-        align-items: flex-start;
-        padding: 10px;
+      flex-direction: row;
     }
-
+  
     .logoContainer {
-        width: 120px;
+      width: 120px;
     }
-
+  
     .searchInputContainer {
-        width: 100%;
-        margin-left: 10px;
-        /* margin-top: 10px; */
+      width: 100%;
+      margin-left: 10px;
     }
-
+  
     .downloadContainer,
     .profileAndCart,
     .becomeSupplierContainer {
-        padding: 0;
-        /* margin-top: 10px; */
-        width: 100%;
-        justify-content: space-between;
+      padding: 0;
+      width: 100%;
+      justify-content: space-between;
     }
+  
     .downloadContainer:hover .downloadHoverBtnContainer,
     .downloadContainer:focus .downloadHoverBtnContainer {
-        display: block !important;
-        z-index: 10;
-        left: -100px;
+      left: -100px;
     }
-    .top{
-        margin-top: 10px;
-    }
-    
+  
     .profileAndCart {
-        justify-content: space-between;
+      justify-content: space-between;
     }
-
-    .lowestpriceContainer {
-        flex-direction: column;
-        align-items: center;
-        text-align: center;
+  
+    .headerRight p {
+      display: none;
     }
-
-    .lowestPrice_text,
-    .lowestPrice_image {
-        width: 100%;
-    }
-
-    .topCategoriesHeading {
-        flex-direction: column;
-        align-items: flex-start;
-    }
-
-    .horizontalLine {
-        width: 100%;
-        margin-top: 10px;
-    }
-
-    .topCategoreisImage img {
-        width: 100%;
-        margin: 10px 0;
-    }
-
-    .essentialContaienr {
-        flex-direction: column;
-        justify-content: center;
-        text-align: center;
-    }
-
-    .essential_item {
-        width: 100%;
-        margin-top: 20px;
-    }
-
-    .becomeSeller_content_content {
-        align-items: center;
-        text-align: center;
-    }
-
-    .becomeSeller_content_content h1 {
-        font-size: 30px;
-    }
-
-    .becomeSeller_content_content button {
-        margin: 20px auto;
-    }
-    .headerRight p{
-        display: none;
-    }   
+  
     nav ul {
-        font-size: 10px;
-        padding: 0 10px;
+      font-size: 10px;
+      padding: 0 10px;
     }
-}
-
-@media (max-width: 480px) {
-    .header {
-        height: auto;
-    }
-
+  }
+  
+  @media (max-width: 480px) {
     .searchInputContainer {
-        height: 35px;
-        padding: 5px;
+      height: 35px;
+      padding: 5px;
     }
-
+  
     .inputSearch {
-        font-size: 14px;
+      font-size: 14px;
     }
+  }
+  a{
+    text-decoration: none;
+  }
+  
 
-    .topCategoriesHeading h1 {
-        font-size: 28px;
-    }
-
-    .topCategoreisImage img {
-        max-width: 100%;
-    }
-
-    .bestseller_Content {
-        flex-direction: column;
-        align-items: center;
-    }
-
-    .lowestpriceContainer h1 {
-        font-size: 28px;
-    }
-
-    .becomeSeller_content_content h1 {
-        font-size: 24px;
-    }
-
-    .becomeSeller_content_content button {
-        padding: 10px 20px;
-        font-size: 16px;
-    }
-}
-.delAcc{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-/* Ensure full width for the search results dropdown */
-.searchInputContainer {
+.CartIcon {
     position: relative;
-    width: 100%;
-    max-width: 400px;
-}
-
-/* Style for search results dropdown */
-.searchRecentModal {
+  }
+  
+  .cart-quantity {
     position: absolute;
-    top: 100%;
-    left: 0;
-    right: 0;
-    background-color: white;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    max-height: 300px; /* Adjust as needed */
-    overflow-y: auto; /* Add vertical scrollbar if content overflows */
-    border-radius: 4px;
-    z-index: 10;
-    padding: 0;
-    display: none; /* Initially hidden */
-    transition: opacity 0.3s ease, visibility 0.3s ease; /* Smooth transition for visibility */
-}
+    top: -4px;
+    right: -14px;
+    background-color: red;
+    color: white;
+    border-radius: 50%;
+    padding: 2px;
+    font-size: 12px;
+    width: 20px;
+    height: 20px;
+    text-align: center;
+  }
 
-/* Show the dropdown when the input is focused or there are results */
-.searchInputContainer:focus-within .searchRecentModal,
-.searchInputContainer .searchRecentModal {
-    display: block;
-}
-
-/* Style each result item */
-.listofRecent {
-    padding: 10px;
-    cursor: pointer;
-    border-bottom: 1px solid #eee; /* Light border between items */
-}
-
-.listofRecent h3 {
-    margin: 0;
-    font-size: 16px;
-}
-
-/* Highlight result item on hover */
-.listofRecent:hover {
-    background-color: #f0f0f0;
-}

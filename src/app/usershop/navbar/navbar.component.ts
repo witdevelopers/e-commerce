@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router'; // Import Router
 import { UserService } from 'src/app/user/services/user.service';
 
+
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
@@ -13,7 +14,8 @@ throw new Error('Method not implemented.');
 }
   isLoggedIn: boolean = false;
   userName: string = '';
-  
+  cartQuantity: number = 0; // Property to hold cart quantity
+
   mainCategory: any[] = [];
   subCategory: { [key: number]: any[] } = {};
   isSubCategoryVisible: { [key: number]: boolean } = {};
@@ -22,17 +24,23 @@ throw new Error('Method not implemented.');
 
   constructor(
     private userService: UserService,
+    
     private router: Router // Inject Router here
   ) {}
 
   ngOnInit(): void {
     this.getMainCategory();
     this.getAllProductByCategoryId(7);
-    const userId = sessionStorage.getItem('userId');
+    const userId = sessionStorage.getItem('memberId');
     if (userId) {
       this.isLoggedIn = true;
-      this.userName = sessionStorage.getItem('userName') || 'Profile';
+      this.userName = sessionStorage.getItem('userId') || 'Profile';
+      this.userService.cartQuantity$.subscribe(quantity => {
+        this.cartQuantity = quantity; // Update cart quantity
+      });
+      this.userService.updateCartQuantity(Number(userId)); // Initial load
     }
+    
   }
 
   signOut(): void {
@@ -70,7 +78,6 @@ throw new Error('Method not implemented.');
     }
     this.isSubCategoryVisible[parentCategoryId] = true;
   }
-  
 
   hideSubCategory(parentCategoryId: number) {
     if (parentCategoryId !== undefined && parentCategoryId !== null) {
@@ -106,4 +113,6 @@ throw new Error('Method not implemented.');
   onAddToCart(): void {
     this.router.navigate(['/shopping-cart']);
   }
+
+
 }

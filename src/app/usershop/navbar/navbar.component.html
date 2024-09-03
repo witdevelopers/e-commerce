@@ -4,7 +4,7 @@
       <img src="assets/Shopimg/wit.png" />
     </div>
 
-    <!--search box-->
+    <!-- Search box -->
     <div class="searchInputContainer">
       <div class="searchIcon">
         <img src="assets/img/search.png" />
@@ -61,17 +61,17 @@
         </div>
       </div>
     </div>
+
     <div class="CartContainer" (click)="onAddToCart()" style="cursor: pointer;">
       <div class="CartIcon top">
         <img src="assets/img/cart.png" />
+        <div *ngIf="cartQuantity > 0" class="cart-quantity">{{ cartQuantity }}</div>
       </div>
-      <p>Cart</p>
-    
     </div>    
   </div>
 </header>
 
-<!--navigation-->
+<!-- Navigation -->
 <nav>
   <ul>
     <li

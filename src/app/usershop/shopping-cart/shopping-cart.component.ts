@@ -13,7 +13,7 @@ export class ShoppingCartComponent implements OnInit {
   summary: any = {}; // To hold the summary data
   customerId: number | null = null; // Initialized as null to handle cases where user is not logged in
   imageBaseUrl: string = 'https://www.mbp18k.com/'; // Base URL for images
-  quantities: number[] = [1, 2, 3, 4, 5]; // Example quantity options
+  quantities: number[] = [1, 2, 3, 4, 5, 6, 7, 8, 9]; // Example quantity options
 
   constructor(private userService: UserService, private router: Router) { } // Inject Router
 
