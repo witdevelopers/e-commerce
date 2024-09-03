@@ -10,7 +10,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
   styleUrls: ['./signin.component.css']
 })
 export class SigninComponent {
-  
+
   userID: string = '';
   password: string = '';
   isSignUp: boolean = false; // Flag to determine if the user is signing up
@@ -29,7 +29,7 @@ export class SigninComponent {
         let res: any;
         if (this.isSignUp) {
           // Handle sign-up
-          res = await this.api.signUp(this.userID, this.password); // Ensure your AuthService has a signUp method
+          // res = await this.api.signUp(this.email, this.password , ); // Ensure your AuthService has a signUp method
         } else {
           // Handle sign-in
           res = await this.api.loginMLM(this.userID, this.password);

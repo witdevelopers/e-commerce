@@ -9,44 +9,18 @@
         <h2>Create an Account</h2>
 
         <label for="fullName">Full Name</label>
-        <input
-          type="text"
-          id="fullName"
-          placeholder="Enter Full Name"
-          name="fullName"
-          [(ngModel)]="fullName"
-          required
-        />
+        <input type="text" id="fullName" placeholder="Enter Full Name" name="fullName" [(ngModel)]="Name" required />
 
         <label for="email">Email</label>
-        <input
-          type="text"
-          id="email"
-          placeholder="Enter Email"
-          name="email"
-          [(ngModel)]="email"
-          required
-        />
+        <input type="text" id="email" placeholder="Enter Email" name="email" [(ngModel)]="email" required />
 
         <label for="password">Password</label>
-        <input
-          type="password"
-          id="password"
-          placeholder="Enter Password"
-          name="password"
-          [(ngModel)]="password"
-          required
-        />
+        <input type="password" id="password" placeholder="Enter Password" name="password" [(ngModel)]="password"
+          required />
 
         <label for="confirmPassword">Confirm Password</label>
-        <input
-          type="password"
-          id="confirmPassword"
-          placeholder="Confirm Password"
-          name="confirmPassword"
-          [(ngModel)]="confirmPassword"
-          required
-        />
+        <input type="password" id="confirmPassword" placeholder="Confirm Password" name="confirmPassword"
+          [(ngModel)]="confirmPassword" required />
 
         <button type="submit" class="login-btn">
           Sign Up

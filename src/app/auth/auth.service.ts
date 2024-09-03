@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Settings } from '../app-setting';
+import { Observable } from 'rxjs';
 
 
 
@@ -8,9 +9,10 @@ import { Settings } from '../app-setting';
   providedIn: 'root'
 })
 export class AuthService {
-  signUp(userID: string, password: string): any {
-    throw new Error('Method not implemented.');
-  }
+  //  signUp(Name: string, email: string, password: string): Observable<any> {
+  //   const body = { Name, email, password };
+  //   return this.http.post(this.apiBaseUrl + 'registerMLM', body);
+  // }
 
   private apiBaseUrl = Settings.apiUrl + 'Account/';
 
@@ -46,13 +48,11 @@ export class AuthService {
     });
   }
 
-
-
-
-  // registerMLM(userData: any): Observable<any> {
-  //   // Directly return the observable from the HTTP request
-  //   return this.http.post<any>(this.apiBaseUrl + 'RegisterMLM', userData);
-  // }
+   // New sign-up method
+   registerMLM(fullName: string, email: string, password: string): Observable<any> {
+    const body = { fullName, email, password };
+    return this.http.post<any>(`${this.apiBaseUrl}RegisterMLM`, body);
+  }
 
   saveUsers(UserID, password){
 
