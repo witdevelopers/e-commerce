@@ -51,15 +51,28 @@ export class AuthService {
   //   return this.http.post<any>(this.apiBaseUrl + 'RegisterMLM', userData);
   // }
 
-  saveUsers(UserID, password){
-    
+  saveUsers(userData: any) {
     return new Promise((resolve, reject) => {
-      const body = { userId: UserID, password: password };
-      this.http.get(this.apiBaseUrl + "registerMLM?UserID=" + UserID + "&password=" + password).subscribe((res: any) => {
-               resolve(res);
-            });
+      const body = {
+        txtUserId: userData.userId,    // Ensure these names match backend requirements
+        txtPassword: userData.password,
+        txtName: userData.name,
+        txtEmail: userData.email
+      };
+
+      // Use POST request
+      this.http.post(this.apiBaseUrl + 'RegisterMLM', body).subscribe(
+        (res: any) => {
+          resolve(res);
+          console.log("RegisterMLM", res);
+        },
+        (error: any) => {
+          reject(error);
+        }
+      );
     });
   }
+  
 
   isSponsorValid(sponsorId) {
     return new Promise((resolve, reject) => {

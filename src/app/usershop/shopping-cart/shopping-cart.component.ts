@@ -11,6 +11,7 @@ export class ShoppingCartComponent implements OnInit {
   cartItems: any[] = [];
   summary: any = {}; // To hold the summary data
   customerId: number | null = null; // Initialized as null to handle cases where user is not logged in
+  imageBaseUrl: string = 'https://www.mbp18k.com/'; // Base URL for images
 
   constructor(private userService: UserService) { }
 
@@ -31,7 +32,11 @@ export class ShoppingCartComponent implements OnInit {
     if (this.customerId) {
       this.userService.getCart(this.customerId).subscribe(
         (data) => {
-          this.cartItems = data.items || []; // Extracting items array
+          console.log("Image wala data", data);
+          this.cartItems = data.items?.map((item: any) => ({
+            ...item,
+            imageUrl: this.imageBaseUrl + item.imageUrl.replace('~/', '') // Construct full image URL
+          })) || []; // Extracting items array and constructing image URLs
           this.summary = data.summary || {}; // Extracting summary object
         },
         (error) => {

@@ -1,31 +1,34 @@
 <app-navbar></app-navbar>
 <div class="cart-container">
-    <h2>Your Shopping Cart</h2>
-    <div *ngIf="cartItems.length > 0; else emptyCart">
-      <div *ngFor="let item of cartItems" class="cart-item">
-        <div class="item-details">
-          <p><strong>Product:</strong> {{ item.productName }}</p>
-          <p><strong>Price:</strong> ${{ item.price }}</p>
-          <p><strong>Quantity:</strong></p>
-          <input type="number" [(ngModel)]="item.quantity" />
-          <button (click)="updateCartItem(item.productDtId, item.quantity)">Update</button> <!-- Update button for each item -->
-          <button (click)="removeCartItem(item.productDtId)">Remove</button> <!-- Remove button for each item -->
-        </div>
+  <h2>Your Shopping Cart</h2>
+  <div *ngIf="cartItems.length > 0; else emptyCart">
+    <div *ngFor="let item of cartItems" class="cart-item">
+      <div class="item-image">
+        <img [src]="item.imageUrl" alt="{{ item.productName }}" />
       </div>
-      
-      <!-- Cart Summary -->
-      <div class="cart-summary">
-        <h3>Cart Summary</h3>
-        <p><strong>Total Price:</strong> ${{ summary.priceTotal }}</p>
-        <p><strong>Total Discount:</strong> ${{ summary.discountPriceTotal }}</p>
-        <p><strong>Total BV:</strong> {{ summary.bvTotal }}</p>
+      <div class="item-details">
+        <p><strong>Product:</strong> {{ item.productName }}</p>
+        <p><strong>Original Price:</strong> Rs {{ item.price }}</p>
+        <p><strong>Discount Price:</strong> Rs {{ item.discountPrice }}</p>
+        <p><strong>Quantity:</strong></p>
+        <input type="number" [(ngModel)]="item.quantity" />
+        <button (click)="updateCartItem(item.productDtId, item.quantity)">Update</button> <!-- Update button for each item -->
+        <button (click)="removeCartItem(item.productDtId)">Remove</button> <!-- Remove button for each item -->
       </div>
-  
-      <button (click)="removeAllCartItems()">Remove All Items</button> <!-- Remove All button -->
     </div>
-    <ng-template #emptyCart>
-      <p>Your cart is empty!</p>
-    </ng-template>
+    
+    <!-- Cart Summary -->
+    <div class="cart-summary">
+      <h3>Cart Summary</h3>
+      <p><strong>Total Price:</strong> Rs {{ summary.priceTotal }}</p>
+      <p><strong>Price After Discount:</strong> Rs {{ summary.discountPriceTotal }}</p>
+      <p><strong>Total BV:</strong> {{ summary.bvTotal }}</p>
+    </div>
+
+    <button (click)="removeAllCartItems()">Remove All Items</button> <!-- Remove All button -->
   </div>
-  
-<app-footer></app-footer>  
+  <ng-template #emptyCart>
+    <p>Your cart is empty!</p>
+  </ng-template>
+</div>
+<app-footer></app-footer>
