@@ -1,40 +1,36 @@
+<app-navbar></app-navbar>
+<body>
+  <div id="particles-js" class="snow"></div>
 
-<div class="main-parent-div-signup">
-  <div class="main-signup-container">
-    <div class="signup-container">
-      <div class="signup-header">
-        <h2>Sign Up</h2>
-      </div>
-      <form [formGroup]="signupForm" (ngSubmit)="onSubmit()" class="signup-form">
-        <div class="form-group">
-          <label for="userId">User ID</label>
-          <input type="text" id="userId" formControlName="userId" class="form-control" />
+  <main>
+    <div class="left-side"></div>
+
+    <div class="right-side">
+      <form [formGroup]="signupForm" (ngSubmit)="onSubmit()">
+        <h2>Create an Account</h2>
+
+        <label for="userId">User ID</label>
+        <input type="text" id="userId" placeholder="Enter User ID" formControlName="userId" class="form-control" />
+
+        <label for="name">Full Name</label>
+        <input type="text" id="name" placeholder="Enter Full Name" formControlName="name" class="form-control" />
+
+        <label for="email">Email</label>
+        <input type="email" id="email" placeholder="Enter Email" formControlName="email" class="form-control" />
+
+        <label for="password">Password</label>
+        <input type="password" id="password" placeholder="Enter Password" formControlName="password" class="form-control" />
+
+        <label for="confirmPassword">Confirm Password</label>
+        <input type="password" id="confirmPassword" placeholder="Confirm Password" formControlName="confirmPassword" class="form-control" />
+
+        <button type="submit" class="login-btn">Sign Up</button>
+
+        <div class="links">
+          <a routerLink="/auth/signin" class="login-link">Already have an account? Sign In</a>
         </div>
-      
-        <div class="form-group">
-          <label for="name">Name</label>
-          <input type="text" id="name" formControlName="name" class="form-control" />
-        </div>
-      
-        <div class="form-group">
-          <label for="email">Email</label>
-          <input type="email" id="email" formControlName="email" class="form-control" />
-        </div>
-      
-        <div class="form-group">
-          <label for="password">Password</label>
-          <input type="password" id="password" formControlName="password" class="form-control" />
-        </div>
-      
-        <div class="form-group">
-          <label for="confirmPassword">Confirm Password</label>
-          <input type="password" id="confirmPassword" formControlName="confirmPassword" class="form-control" />
-        </div>
-      
-        <button type="submit" class="btn">Sign Up</button>
       </form>
-      
-      
     </div>
-  </div>
-</div>
+  </main>
+</body>
+<app-footer></app-footer>

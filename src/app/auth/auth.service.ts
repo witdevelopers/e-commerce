@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Settings } from '../app-setting';
-
+import { Observable } from 'rxjs';
 
 
 @Injectable({
@@ -51,28 +51,31 @@ export class AuthService {
   //   return this.http.post<any>(this.apiBaseUrl + 'RegisterMLM', userData);
   // }
 
-  saveUsers(userData: any) {
-    return new Promise((resolve, reject) => {
-      const body = {
-        txtUserId: userData.userId,    // Ensure these names match backend requirements
-        txtPassword: userData.password,
-        txtName: userData.name,
-        txtEmail: userData.email
-      };
+  registerMLM(userData: any): Promise<any> {
+    const body = {
+      txtUserId: userData.userId,
+      txtPassword: userData.password,
+      txtName: userData.name,
+      txtEmail: userData.email
+    };
 
-      // Use POST request
-      this.http.post(this.apiBaseUrl + 'RegisterMLM', body).subscribe(
-        (res: any) => {
-          resolve(res);
-          console.log("RegisterMLM", res);
-        },
-        (error: any) => {
+    return new Promise((resolve, reject) => {
+      this.http.post<any>(`${this.apiBaseUrl}RegisterMLM`, body).toPromise()
+        .then(response => {
+          resolve(response);
+        })
+        .catch(error => {
           reject(error);
-        }
-      );
+        });
     });
   }
-  
+
+
+  // registerMLM(fullName: string, email: string, password: string): Observable<any> {
+  //   const body = { fullName, email, password };
+  //   return this.http.post<any>(`${this.apiBaseUrl}RegisterMLM`, body);
+  // }
+
 
   isSponsorValid(sponsorId) {
     return new Promise((resolve, reject) => {

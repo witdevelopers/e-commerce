@@ -59,7 +59,7 @@ export class ProductSliderComponent implements OnInit, AfterViewInit {
             return sections;
           }, {});
           this.homePageSectionProducts = groupedProducts;
-          console.log("Home page section products: ", this.homePageSectionProducts)
+          // console.log("Home page section products: ", this.homePageSectionProducts)
           // console.log("home page wala section product::::===", this.homePageSectionProducts);
         },
         error: (err) =>

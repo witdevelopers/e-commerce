@@ -1,10 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { AuthService } from '../auth.service';
 import Swal from 'sweetalert2';
 import { Router } from '@angular/router';
-import { ContractService } from 'src/app/services/contract.service';
 import { NgxSpinnerService } from 'ngx-spinner';
-
 
 @Component({
   selector: 'app-signin',
@@ -13,45 +11,57 @@ import { NgxSpinnerService } from 'ngx-spinner';
 })
 export class SigninComponent {
 
-  userID: any = '';
-  password: any = '';
-
-  // constructor(private authService: AuthService) { }
-
+  userID: string = '';
+  password: string = '';
+  isSignUp: boolean = false; // Flag to determine if the user is signing up
 
   constructor(
-    private contractService: ContractService,
-    private router: Router,
     private api: AuthService,
+    private router: Router,
     private spinnerService: NgxSpinnerService
   ) {}
 
- 
-
   async onSubmit() {
     this.spinnerService.show();
-   
     
-    if (this.userID != "" && this.password != "") {
-      var res: any = await this.api.loginMLM(this.userID, this.password);
-      console.log(res);
-      if (res.status) {
-        sessionStorage.setItem('userId', this.userID);
-        sessionStorage.setItem('memberId', res.data.table[0].memberId.toString());
-        sessionStorage.setItem('token', res.token);
+    if (this.userID && this.password) {
+      try {
+        let res: any;
+        if (this.isSignUp) {
+          // Handle sign-up
+          // res = await this.api.signUp(this.email, this.password , ); // Ensure your AuthService has a signUp method
+        } else {
+          // Handle sign-in
+          res = await this.api.loginMLM(this.userID, this.password);
+        }
         
-        localStorage.setItem('userId', this.userID);
-        localStorage.setItem('memberId', res.data.table[0].memberId.toString());
-        localStorage.setItem('token', res.token);
-       
-
+        console.log(res);
+        if (res.status) {
+          sessionStorage.setItem('userId', this.userID);
+          sessionStorage.setItem('memberId', res.data.table[0].memberId.toString());
+          sessionStorage.setItem('token', res.token);
+          
+          localStorage.setItem('userId', this.userID);
+          localStorage.setItem('memberId', res.data.table[0].memberId.toString());
+          localStorage.setItem('token', res.token);
+          
+          this.spinnerService.hide();
+          this.router.navigate(['/home']);
+        } else {
+          this.spinnerService.hide();
+          Swal.fire(res.message, '', 'error');
+        }
+      } catch (error) {
         this.spinnerService.hide();
-        
-        this.router.navigate(['/home']);
-      } else {
-        this.spinnerService.hide();
-        Swal.fire(res.message, '', 'error');
+        Swal.fire('An error occurred. Please try again later.', '', 'error');
       }
+    } else {
+      this.spinnerService.hide();
+      Swal.fire('Please fill in all fields.', '', 'warning');
     }
+  }
+
+  toggleSignUp() {
+    this.isSignUp = !this.isSignUp;
   }
 }

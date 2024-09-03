@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../auth.service';
 import { Router } from '@angular/router';
@@ -9,38 +9,44 @@ import Swal from 'sweetalert2';
   templateUrl: './signup.component.html',
   styleUrls: ['./signup.component.css']
 })
-export class SignupComponent {
+export class SignupComponent implements OnInit {
   signupForm: FormGroup;
 
-  constructor(private fb: FormBuilder, private authService: AuthService, private router: Router) {
+  constructor(
+    private fb: FormBuilder,
+    private authService: AuthService,
+    private router: Router
+  ) { }
+
+  ngOnInit(): void {
     this.signupForm = this.fb.group({
-      userId: ['', Validators.required],   
+      userId: ['', Validators.required],
       name: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.minLength(6)]],
+      password: ['', Validators.required],
       confirmPassword: ['', Validators.required]
     }, { validator: this.passwordMatchValidator });
   }
 
-  // Custom validator to check that password and confirmPassword fields match
-  passwordMatchValidator(form: FormGroup) {
-    return form.get('password')?.value === form.get('confirmPassword')?.value
-      ? null : { mismatch: true };
+  private passwordMatchValidator(form: FormGroup) {
+    const password = form.get('password')?.value;
+    const confirmPassword = form.get('confirmPassword')?.value;
+    return password === confirmPassword ? null : { mismatch: true };
   }
 
   async onSubmit() {
     if (this.signupForm.valid) {
       const { userId, password, name, email } = this.signupForm.value;
-  
+
       try {
-        const res: any = await this.authService.saveUsers({ userId, password, name, email });
-  
-        if (res.status) {
+        const res: any = await this.authService.registerMLM({ userId, password, name, email });
+
+        if (res && res.status) {
           console.log("Registered");
           Swal.fire("Registered Successfully", '', 'success');
           this.router.navigate(['/auth/signin']);
         } else {
-          Swal.fire(res.message, '', 'error');
+          Swal.fire(res.message || "Registration failed", '', 'error');
         }
       } catch (error) {
         console.error("Error during registration:", error);
@@ -50,4 +56,4 @@ export class SignupComponent {
       Swal.fire("Please fill out the form correctly.", '', 'warning');
     }
   }
-}  
+}
