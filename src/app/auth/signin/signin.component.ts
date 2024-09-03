@@ -47,6 +47,7 @@ export class SigninComponent {
           
           this.spinnerService.hide();
           this.router.navigate(['/home']);
+          Swal.fire("Login Successfully", '', 'success');
         } else {
           this.spinnerService.hide();
           Swal.fire(res.message, '', 'error');

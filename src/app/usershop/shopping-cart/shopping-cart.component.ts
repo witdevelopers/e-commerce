@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from 'src/app/user/services/user.service';
 import Swal from 'sweetalert2';
+import { Router } from '@angular/router'; // Import Router for navigation
 
 @Component({
   selector: 'app-shopping-cart',
@@ -12,8 +13,9 @@ export class ShoppingCartComponent implements OnInit {
   summary: any = {}; // To hold the summary data
   customerId: number | null = null; // Initialized as null to handle cases where user is not logged in
   imageBaseUrl: string = 'https://www.mbp18k.com/'; // Base URL for images
+  quantities: number[] = [1, 2, 3, 4, 5]; // Example quantity options
 
-  constructor(private userService: UserService) { }
+  constructor(private userService: UserService, private router: Router) { } // Inject Router
 
   ngOnInit(): void {
     this.customerId = Number(sessionStorage.getItem('memberId')); // Retrieve customerId from sessionStorage
@@ -32,15 +34,30 @@ export class ShoppingCartComponent implements OnInit {
     if (this.customerId) {
       this.userService.getCart(this.customerId).subscribe(
         (data) => {
-          console.log("Image wala data", data);
+          console.log('Cart Data:', data); // Debugging: Check if data is received correctly
+
           this.cartItems = data.items?.map((item: any) => ({
             ...item,
-            imageUrl: this.imageBaseUrl + item.imageUrl.replace('~/', '') // Construct full image URL
-          })) || []; // Extracting items array and constructing image URLs
-          this.summary = data.summary || {}; // Extracting summary object
+            imageUrl: this.imageBaseUrl + item.imageUrl.replace('~/', ''),
+            originalPrice: item.originalPrice || item.price // Assuming `originalPrice` is part of the data
+          })) || [];
+
+          // Map received properties to the expected ones
+          this.summary = {
+            subTotal: data.summary.bvTotal || 0, // Adjust property names based on actual data
+            total: data.summary.priceTotal || 0,
+            promoCode: data.summary.discountPriceTotal || '' // If promoCode is not required, you can set it as an empty string or remove it
+          };
+          
+          console.log('Summary Data:', this.summary); // Debugging: Verify mapping
         },
         (error) => {
           console.error('Error fetching cart data:', error);
+          Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: 'Failed to load cart data. Please try again later.',
+          });
         }
       );
     } else {
@@ -54,6 +71,15 @@ export class ShoppingCartComponent implements OnInit {
 
   updateCartItem(productDtId: number, quantity: number): void {
     if (this.customerId) {
+      if (quantity < 1) {
+        Swal.fire({
+          icon: 'warning',
+          title: 'Invalid Quantity',
+          text: 'Please enter a valid quantity.',
+        });
+        return;
+      }
+
       const cartData = {
         customerId: this.customerId,
         productDtId: productDtId,
@@ -142,6 +168,28 @@ export class ShoppingCartComponent implements OnInit {
         title: 'Error',
         text: 'Cannot remove items. No customer ID available.',
       });
+    }
+  }
+
+  proceedToCheckout(): void {
+    // Implement your checkout logic here. For example, navigate to the checkout page.
+    if (this.summary.total && this.summary.total > 0) {
+      this.router.navigate(['/checkout']); // Adjust the route as needed
+    } else {
+      Swal.fire({
+        icon: 'warning',
+        title: 'Empty Cart',
+        text: 'Your cart is empty. Please add items before proceeding to checkout.',
+      });
+    }
+  }
+
+  onQuantityChange(event: Event, productDtId: number): void {
+    const selectElement = event.target as HTMLSelectElement;
+    const selectedQuantity = Number(selectElement.value);
+
+    if (!isNaN(selectedQuantity) && selectedQuantity > 0) {
+      this.updateCartItem(productDtId, selectedQuantity);
     }
   }
 }
