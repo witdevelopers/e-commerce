@@ -39,6 +39,8 @@ import { SubcategoryComponent } from './usershop/subcategory/subcategory.compone
 import { ProductDetailsComponent } from './usershop/product-details/product-details.component';
 import { AuthGuard } from './usershop/auth.guard';
 import { ShoppingCartComponent } from './usershop/shopping-cart/shopping-cart.component';
+import { CheckoutComponent } from './usershop/checkout/checkout.component';
+import { OrderHistoryComponent } from './usershop/order-history/order-history.component';
 
 const routes: Routes = [
   // {
@@ -224,10 +226,11 @@ const routes: Routes = [
   { path: 'subcategory/:id', component: SubcategoryComponent },
   { path: 'product/:id', component: ProductDetailsComponent },
   { path: 'shopping-cart', component: ShoppingCartComponent },
+  { path: 'checkout', component: CheckoutComponent },
   
   {
-    path: 'banner',
-    component: BannerComponent,
+    path: 'order-history',
+    component: OrderHistoryComponent,
   },
 
   {

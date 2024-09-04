@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../auth.service';
 import Swal from 'sweetalert2';
 import { Router } from '@angular/router';
@@ -9,7 +9,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
   templateUrl: './signin.component.html',
   styleUrls: ['./signin.component.css']
 })
-export class SigninComponent {
+export class SigninComponent implements OnInit{
 
   userID: string = '';
   password: string = '';
@@ -20,6 +20,10 @@ export class SigninComponent {
     private router: Router,
     private spinnerService: NgxSpinnerService
   ) {}
+  
+  ngOnInit(): void {
+    throw new Error('Method not implemented.');
+  }
 
   async onSubmit() {
     this.spinnerService.show();

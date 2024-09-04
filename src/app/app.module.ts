@@ -56,6 +56,8 @@ import { SubcategoryComponent } from './usershop/subcategory/subcategory.compone
 import { ProductDetailsComponent } from './usershop/product-details/product-details.component';
 import { ProductSliderComponent } from './usershop/product-slider/product-slider.component';
 import { ShoppingCartComponent } from './usershop/shopping-cart/shopping-cart.component';
+import { CheckoutComponent } from './usershop/checkout/checkout.component';
+import { OrderHistoryComponent } from './usershop/order-history/order-history.component';
 
 
 @NgModule({
@@ -100,7 +102,9 @@ import { ShoppingCartComponent } from './usershop/shopping-cart/shopping-cart.co
     SubcategoryComponent,
     ProductDetailsComponent,
     ProductSliderComponent,
-    ShoppingCartComponent
+    ShoppingCartComponent,
+    CheckoutComponent,
+    OrderHistoryComponent
 
 
 

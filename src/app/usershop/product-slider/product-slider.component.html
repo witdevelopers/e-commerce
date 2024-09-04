@@ -13,7 +13,7 @@
                 <span class="percent">- {{product.discountPercentage}} %</span>
               </div>
             </div>
-            <img [src]="product.imageUrl" alt="{{product.productName}}" id="news-img">
+            <img [src]="product.imageUrl" alt="{{product.productName}}" id="news-img" [routerLink]="['/product', product.productId]">
             <div class="infos">
               <h5>{{product.productName}}</h5>
               <div style="display: flex; gap: 7px;">

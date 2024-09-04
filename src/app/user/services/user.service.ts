@@ -278,6 +278,7 @@ export class UserService {
     this.getCart(customerId).subscribe(
       (data: any) => {
         // Calculate total quantity
+        console.log("updateCartQuantity ",data);
         const totalQuantity = data.items.reduce((total: number, item: any) => total + item.quantity, 0);
         this.cartSubject.next(totalQuantity); // Emit the new cart quantity
       },
@@ -287,6 +288,20 @@ export class UserService {
     );
   }
   
+  getAddressesByCustomerId(customerId: number): Observable<any> {
+    const url = `${this.apiBaseUrl}api/Shop/GetCustomerId/addresses?customerId=${customerId}`;
+    return this.http.get<any>(url);
+  }
+
+
+
+  createAddress(address: any): Observable<any> {
+    return this.http.post(`${this.apiBaseUrl}CreateAddress`, address, {
+      headers: {
+        'Content-Type': 'application/json-patch+json'
+      }
+    });
+  }
 
 
 }

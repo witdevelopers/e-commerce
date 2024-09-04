@@ -1,0 +1,85 @@
+<div *ngIf="cartDetails?.items?.length > 0; else emptyCart" class="container">
+  <!-- Payment and shipping details -->
+  <div class="payment_details">
+    <h1>Payment Information</h1>
+    <div class="details_card">
+      <div class="name_address">
+        <div class="first_lastName">
+          <input type="text" [(ngModel)]="newAddress.firstName" placeholder="First Name" required />
+          <input type="text" [(ngModel)]="newAddress.lastName" placeholder="Last Name" required />
+        </div>
+        <div class="address">
+          <input type="text" [(ngModel)]="newAddress.address1" placeholder="Address" required />
+          <input type="number" [(ngModel)]="newAddress.postalCode" placeholder="Pincode" required />
+          <input type="text" [(ngModel)]="newAddress.countryName" placeholder="Country" required />
+        </div>
+      </div>
+      <h1>Shipping Details</h1>
+      <div class="shipping_card">
+        <div class="new_card">
+          <h4>Same as personal</h4>
+          <p>{{ selectedAddress?.address1 || 'No Address Selected' }}</p>
+          <p>{{ selectedAddress?.postalCode || '----' }}</p>
+        </div>
+        <div class="add_savedcard" *ngIf="addresses.length > 0">
+          <h4>Saved Address</h4>
+          <div *ngFor="let address of addresses" class="address-item">
+            <label>
+              {{ address.address1 }}, {{ address.address2 }}, {{ address.address3 }},
+              {{ address.cityName }}, {{ address.stateName }}, {{ address.postalCode }},
+              {{ address.countryName }}
+            </label>
+          </div>
+        </div>
+      </div>
+      <div class="proced_payment">
+        <button (click)="checkout()">Proceed to payment</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Order summary -->
+  <div class="order_summary">
+    <h1>Order Summary</h1>
+    <div class="summary_card">
+      <div *ngFor="let item of cartDetails.items" class="card_item">
+        <div class="product_img">
+          <img [src]="item.imageUrl" alt="{{ item.productName }}" />
+        </div>
+        <div class="product_info">
+          <h1>{{ item.productName }}</h1>
+          <p>{{ item.description || 'No description available.' }}</p>
+          <div class="close-btn">
+            <i class="fa fa-close"></i>
+          </div>
+          <div class="product_rate_info">
+            <h1>Rs. {{ item.discountPrice }}</h1>
+            <span class="pqt-minus" (click)="decreaseQuantity(item)">-</span>
+            <span class="pqt">{{ item.quantity }}</span>
+            <span class="pqt-plus" (click)="increaseQuantity(item)">+</span>
+          </div>
+        </div>
+      </div>
+      <hr />
+      <div class="order_price">
+        <p>Order summary</p>
+        <h4>Rs. {{ cartDetails.summary.priceTotal }}</h4>
+      </div>
+      <div class="order_service">
+        <p>Additional Service</p>
+        <h4>Rs. 10</h4>
+      </div>
+      <div class="order_total">
+        <p>Total Amount</p>
+        <h4>Rs. {{ cartDetails.summary.discountPriceTotal + 10 }}</h4>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Empty Cart Template -->
+<ng-template #emptyCart>
+  <div class="empty-cart">
+    <img style="margin: 0px 5px 0 26%;" width="50%" src="assets/Shopimg/cartempty.jpg" alt="Cart Empty">
+  </div>
+</ng-template>
