@@ -127,6 +127,7 @@ private initializeCartButtons(): void {
           title: 'Product added to cart successfully.',
         });
         console.log('Product added to cart successfully.', response);
+        
       },
       (error) => {
         Swal.fire({

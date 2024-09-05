@@ -1,6 +1,6 @@
 
 <!-- Banner Carousel -->
-<div class="carousel">
+<div class="carousel" >
   <div class="carousel-inner" [style.transform]="'translateX(-' + currentSlide * 100 + '%)'">
     <div class="carousel-item" *ngFor="let slide of banners">
       <img [src]="slide.imageUrl" [alt]="slide.alt" />

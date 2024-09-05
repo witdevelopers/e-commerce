@@ -46,7 +46,11 @@ throw new Error('Method not implemented.');
   signOut(): void {
     sessionStorage.clear(); // Clear all session storage
     this.isLoggedIn = false;
-    this.router.navigate(['/auth/signin']); // Redirect to the sign-in page
+    
+    this.router.navigate(['/auth/signin']).then(() => {
+      window.location.href = '/auth/signin';  // Forces a full page reload to the home page
+  });
+  
   }
 
   getMainCategory() {
@@ -107,7 +111,11 @@ throw new Error('Method not implemented.');
   }
 
   navigateToProduct(productId: string): void {
-    this.router.navigate([`/product/${productId}`]);
+    // this.router.navigate([`/product/${productId}`]);
+    this.router.navigate([`/product/${productId}`]).then(() => {
+      window.location.href = `/product/${productId}`;
+  });
+  
   }
 
   onAddToCart(): void {

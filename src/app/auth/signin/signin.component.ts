@@ -11,6 +11,8 @@ import { NgxSpinnerService } from 'ngx-spinner';
 })
 export class SigninComponent implements OnInit{
 
+
+
   userID: string = '';
   password: string = '';
   isSignUp: boolean = false; // Flag to determine if the user is signing up
@@ -50,7 +52,13 @@ export class SigninComponent implements OnInit{
           localStorage.setItem('token', res.token);
           
           this.spinnerService.hide();
-          this.router.navigate(['/home']);
+          
+          this.router.navigateByUrl('/auth/signin', { skipLocationChange: true }).then(() => {
+            this.router.navigate(['/home']).then(() => {
+              window.location.href = '/home';  // Forces a full page reload to the home page
+          });          
+        });
+        
           Swal.fire("Login Successfully", '', 'success');
         } else {
           this.spinnerService.hide();
