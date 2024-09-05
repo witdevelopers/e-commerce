@@ -119,7 +119,11 @@ throw new Error('Method not implemented.');
   }
 
   onAddToCart(): void {
-    this.router.navigate(['/shopping-cart']);
+    // this.router.navigate(['/shopping-cart']);
+    this.router.navigate(['/shopping-cart']).then(() => {
+      window.location.href = '/shopping-cart';  // Forces a full page reload to the home page
+  });
+  
   }
 
 

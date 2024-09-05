@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Settings } from '../../app-setting';
 import { BehaviorSubject, Observable } from 'rxjs';
@@ -295,13 +295,28 @@ export class UserService {
 
 
 
-  createAddress(address: any): Observable<any> {
-    return this.http.post(`${this.apiBaseUrl}CreateAddress`, address, {
+  createAddress(address: any): Observable<any[]> {
+    const url = `${this.apiBaseUrl}api/Shop/CreateAddress`;
+    return this.http.post<any>(url, address, {
       headers: {
+        'Accept': '*/*',
         'Content-Type': 'application/json-patch+json'
       }
     });
   }
 
+
+  // Method to delete an address by ID
+  deleteAddress(addressId: number, customerId: number): Observable<any> {
+    // Make the delete API call
+    return this.http.delete(`${this.apiBaseUrl}api/Shop/DeleteAddress?id=${addressId}&customerId=${customerId}`);
+  }
+
+
+   // Method to update an address
+   updateAddress(address: any): Observable<any> {
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json-patch+json' });
+    return this.http.put(`${this.apiBaseUrl}api/Shop/UpdateAddress`, address, { headers });
+  }
 
 }
