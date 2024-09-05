@@ -295,7 +295,7 @@ export class UserService {
 
 
 
-  createAddress(address: any): Observable<any[]> {
+  createAddress(address: any): Observable<any> {
     const url = `${this.apiBaseUrl}api/Shop/CreateAddress`;
     return this.http.post<any>(url, address, {
       headers: {
@@ -307,9 +307,10 @@ export class UserService {
 
 
   // Method to delete an address by ID
-  deleteAddress(addressId: number, customerId: number): Observable<any> {
+  deleteAddress( customerId: number, addressId: number): Observable<any> {
     // Make the delete API call
-    return this.http.delete(`${this.apiBaseUrl}api/Shop/DeleteAddress?id=${addressId}&customerId=${customerId}`);
+    return this.http.delete(`${this.apiBaseUrl}api/Shop/DeleteAddress?id=${customerId}&addressid=${addressId}`);
+   
   }
 
 
@@ -318,5 +319,15 @@ export class UserService {
     const headers = new HttpHeaders({ 'Content-Type': 'application/json-patch+json' });
     return this.http.put(`${this.apiBaseUrl}api/Shop/UpdateAddress`, address, { headers });
   }
+
+
+  getCountries(): Observable<any[]>{
+    return this.http.get<any[]>(this.apiBaseUrl+"api/Shop/countrylist");
+  }
+
+    // Method to fetch states by country ID
+    getStatesByCountry(countryId: number): Observable<any[]> {
+      return this.http.get<any[]>(`${this.apiBaseUrl}api/Shop/GetStatesByCountry/${countryId}`);
+    }
 
 }

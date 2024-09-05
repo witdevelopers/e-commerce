@@ -8,13 +8,16 @@ import { UserService } from 'src/app/user/services/user.service';
   styleUrls: ['./checkout.component.css']
 })
 export class CheckoutComponent implements OnInit {
+
   cartDetails: any = null;
+  totalCartPrice = 0;
+  totalDiscountPrice = 0;
+  totalQuantity = 0;
   addresses: any[] = [];
   selectedAddress: any = null;
   newAddress = {
     customerId: 0,
-    firstName: '',
-    lastName: '',
+    Name: '',
     address1: '',
     address2: '',
     address3: '',
@@ -30,13 +33,16 @@ export class CheckoutComponent implements OnInit {
   showAddressForm = false;
   isCartEmpty = true;
   isEditMode = false;
+  countries: any[] = [];
 
-  private imageBaseUrl = 'https://www.mbp18k.com/Shop//'; // Base URL for images
+  private imageBaseUrl = 'https://www.mbp18k.com/'; // Base URL for images
+  states: any[] = [];
 
   constructor(private userService: UserService, private router: Router) {}
 
   ngOnInit(): void {
     this.getCartDetails();
+    this.getCountries(); // Fetch country list on initialization
   }
 
   // Add new address or reset form
@@ -49,8 +55,7 @@ export class CheckoutComponent implements OnInit {
   resetNewAddress(): void {
     this.newAddress = {
       customerId: 0,
-      firstName: '',
-      lastName: '',
+      Name: '',    
       address1: '',
       address2: '',
       address3: '',
@@ -65,23 +70,46 @@ export class CheckoutComponent implements OnInit {
     };
   }
 
-  // Fetch cart details
+  // Method to fetch states based on selected country ID
+  onCountryChange(countryId: number): void {
+    if (countryId) {
+      this.userService.getStatesByCountry(countryId).subscribe(
+        (data) => {
+          this.states = data; // Bind fetched states
+        },
+        (error) => {
+          console.error('Error fetching states:', error);
+        }
+      );
+    } else {
+      this.states = [];
+    }
+  }
+
+  // Fetch cart details and update image URLs with base URL
   getCartDetails(): void {
     const customerId = +sessionStorage.getItem('memberId');
     if (customerId) {
       this.userService.getCart(customerId).subscribe(
         data => {
           this.cartDetails = data;
-          this.isCartEmpty = !this.cartDetails || this.cartDetails.length === 0;
-
-          this.cartDetails = this.cartDetails.map((item: any) => {
-            if (item.imageUrl) {
-              item.imageUrl = this.imageBaseUrl + item.imageUrl.replace('~/', '');
-            }
-            return item;
-          });
-
+          console.log("Rav data of cartDetails:", data);
+          this.isCartEmpty = !this.cartDetails || this.cartDetails.items.length === 0;
+  
           if (!this.isCartEmpty) {
+            // Fix image URLs to ensure correct base path
+            this.cartDetails.items = this.cartDetails.items.map((item: any) => {
+              if (item.imageUrl && item.imageUrl.startsWith('~/')) {
+                item.imageUrl = this.imageBaseUrl + item.imageUrl.replace('~/', '');
+              }
+              return item;
+            });
+  
+            // Calculate total price, discount price, and quantity
+            this.totalCartPrice = this.cartDetails.items.reduce((sum: number, item: any) => sum + item.price * item.quantity, 0);
+            this.totalDiscountPrice = this.cartDetails.items.reduce((sum: number, item: any) => sum + item.discountPrice * item.quantity, 0);
+            this.totalQuantity = this.cartDetails.items.reduce((sum: number, item: any) => sum + item.quantity, 0);
+  
             this.loadAddresses();
           }
         },
@@ -95,7 +123,7 @@ export class CheckoutComponent implements OnInit {
       alert('Customer ID is missing. Please log in and try again.');
     }
   }
-
+  
   // Fetch addresses
   loadAddresses(): void {
     const customerId = +sessionStorage.getItem('memberId');
@@ -103,14 +131,12 @@ export class CheckoutComponent implements OnInit {
       this.userService.getAddressesByCustomerId(customerId).subscribe(
         (data: any[]) => {
           this.addresses = data;
+          console.log("Rav data:", data);
           if (this.addresses.length > 0) {
             this.selectedAddress = this.addresses[0];
+           
           }
           this.showAddressForm = this.addresses.length === 0;
-        },
-        error => {
-          console.error('Error fetching addresses:', error);
-          alert('There was an error fetching addresses. Please try again later.');
         }
       );
     } else {
@@ -176,22 +202,23 @@ export class CheckoutComponent implements OnInit {
     }
   }
 
-  // Delete an address
-  deleteAddress(addressId: number): void {
-    const customerId = +sessionStorage.getItem('memberId');
-    if (confirm('Are you sure you want to delete this address?')) {
-      this.userService.deleteAddress(addressId, customerId).subscribe(
-        response => {
-          console.log('Address deleted successfully:', response);
-          this.loadAddresses();
-        },
-        error => {
-          console.error('Error deleting address:', error);
-          alert('There was an error deleting the address. Please try again later.');
-        }
-      );
-    }
+ // Delete an address
+deleteAddress(addressId: number): void {
+  const customerId = +sessionStorage.getItem('memberId'); // Get customer ID from session
+  if (confirm('Are you sure you want to delete this address?')) {
+    this.userService.deleteAddress(customerId, addressId).subscribe(
+      response => {
+        console.log('Address deleted successfully:', response);
+        this.loadAddresses(); // Refresh the address list after deletion
+      },
+      error => {
+        console.error('Error deleting address:', error);
+        alert('There was an error deleting the address. Please try again later.');
+      }
+    );
   }
+}
+
 
   // Proceed to checkout
   checkout(): void {
@@ -201,5 +228,19 @@ export class CheckoutComponent implements OnInit {
     } else {
       alert('Please select an address to proceed with checkout.');
     }
+  }
+
+  // Fetch list of countries
+  getCountries(): void {
+    this.userService.getCountries().subscribe(
+      (countries: any[]) => {
+        this.countries = countries;
+        console.log("Countries", this.countries);
+      },
+      error => {
+        console.error('Error fetching countries:', error);
+        alert('There was an error fetching the country list. Please try again later.');
+      }
+    );
   }
 }
