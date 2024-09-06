@@ -330,4 +330,9 @@ export class UserService {
       return this.http.get<any[]>(`${this.apiBaseUrl}api/Shop/GetStatesByCountry/${countryId}`);
     }
 
+
+     // Method to fetch payment methods from the API
+  getPaymentMethods(): Observable<any> {
+    return this.http.get(`${this.apiBaseUrl}api/Shop/GetPaymentMethod`);
+  }
 }

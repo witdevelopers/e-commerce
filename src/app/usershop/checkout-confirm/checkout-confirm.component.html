@@ -1,1 +1,69 @@
-<p>checkout-confirm works!</p>
+<div class="body">
+    <div class="order_summary">
+    
+    <div class="summary_card">
+     
+      <h1>Order Summary</h1>
+      <div class="cart_totals">
+        <div class="sumrytotal">
+          <p>items:</p> <p>{{ totalQuantity }}</p>
+        </div>
+        
+        <div class="sumrytotal">
+          <p>Total:</p> <p>Rs.{{ totalCartPrice }}</p>
+        </div>
+        <div class="sumrytotal">
+            <p>Discount:</p> <p>Rs.{{ totalCartPrice - totalDiscountPrice | number}} </p>
+        </div>
+        <br>
+        <hr>
+        <div class="sumrytotal">
+          <p>Order Total: </p>  <p> Rs.{{ totalDiscountPrice }}</p>
+        </div>
+       
+       
+        
+  
+      </div>
+    </div>
+  </div>
+    <div class="payment-container">
+      <form class="payment-form">
+        <div class="section">
+          <h2>Wallet</h2>
+          <label>
+            <input type="radio" name="payment-method" value="pay-later" />
+            Available Balance:
+            <span class="available-credit"> ₹25,000</span>
+          </label>
+        </div>
+        <hr />
+        <div class="section">
+          <h2>Payment Method</h2>
+          <label>
+            <input type="radio" name="payment-method" value="credit-card" />
+            Credit or debit card
+            <div class="card-logos">
+              <img src="assets/img/visa.png" alt="Visa" />
+              <img src="assets/img/mastercard.png" alt="MasterCard" />
+              <img src="assets/img/Rupay.png" alt="RuPay" />
+            </div>
+          </label>
+  
+          <br />
+          <hr />
+          <div class="section">
+            <h2>Cash on Delivery/Pay on Delivery</h2>
+            <label>
+              <input type="radio" name="payment-method" value="cod" />
+              Cash on Delivery/Pay on Delivery <br />
+            </label>
+          </div>
+        </div>
+        <button type="submit" class="submit-button">
+          Use this payment method
+        </button>
+      </form>
+    </div>
+  </div>
+  

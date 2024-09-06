@@ -224,7 +224,7 @@ deleteAddress(addressId: number): void {
   checkout(): void {
     if (this.selectedAddress) {
       console.log('Proceeding with checkout. Selected Address:', this.selectedAddress);
-      this.router.navigate(['/checkout/confirm']);
+      this.router.navigate(['/confirm']);
     } else {
       alert('Please select an address to proceed with checkout.');
     }
