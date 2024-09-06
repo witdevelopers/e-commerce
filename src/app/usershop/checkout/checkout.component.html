@@ -5,97 +5,77 @@
     <div class="details_card">
       <div class="name_address">
         <div class="first_lastName">
-          <input
-            type="text"
-            [(ngModel)]="newAddress.Name"
-            placeholder="Name"
-            required
-          />
-          <input
-            type="text"
-            [(ngModel)]="newAddress.phone"
-            placeholder="Phone Number"
-            required
-          />
+          <input type="text" [(ngModel)]="newAddress.Name" placeholder="Name" required />
+          <input type="text" [(ngModel)]="newAddress.phone" placeholder="Phone Number" required />
         </div>
 
         <div class="address">
-          <input
-            type="text"
-            [(ngModel)]="newAddress.address1"
-            placeholder="Address"
-            required
-          />
-          <input
-            type="number"
-            [(ngModel)]="newAddress.postalCode"
-            placeholder="Postal Code"
-            required
-          />
-          <input
-            type="text"
-            [(ngModel)]="newAddress.cityName"
-            placeholder="City"
-            required
-          />
+          <input type="text" [(ngModel)]="newAddress.address1" placeholder="Address" required />
+          <input type="number" [(ngModel)]="newAddress.postalCode" placeholder="Postal Code" required />
+          <input type="text" [(ngModel)]="newAddress.cityName" placeholder="City" required />
+        </div>
 
-          <select
-            [(ngModel)]="newAddress.countryId"
-            (change)="onCountryChange(newAddress.countryId)"
-            required
-          >
+        <div class="address_type">
+          <select class="slct" [(ngModel)]="newAddress.countryId" (change)="onCountryChange(newAddress.countryId)" required>
             <option value="" disabled>Select Country</option>
             <option *ngFor="let country of countries" [value]="country.id">
               {{ country.name }}
             </option>
           </select>
-
-          <select [(ngModel)]="newAddress.stateId" required>
+          
+          <!-- State dropdown only appears when a country is selected -->
+          <select *ngIf="states.length > 0" class="slct" [(ngModel)]="newAddress.stateId" required>
             <option value="" disabled>Select State</option>
             <option *ngFor="let state of states" [value]="state.id">
               {{ state.name }}
             </option>
           </select>
         </div>
-
-        <div class="address_type">
-          <select [(ngModel)]="newAddress.addressType">
-            <option value="1">Home</option>
-            <option value="2">Work</option>
-          </select>
-        </div>
       </div>
 
       <div class="address-actions">
-        <button *ngIf="!isEditMode" (click)="createAddress()">Add Address</button>
-        <button *ngIf="isEditMode" (click)="updateAddress()">Update Address</button>
+        <button class="edit1" *ngIf="!isEditMode" (click)="createAddress()">
+          Add Address
+        </button>
+        <button class="edit" *ngIf="isEditMode" (click)="updateAddress()">
+          Update Address
+        </button>
       </div>
-    </div>
 
-    <h1>Shipping Details</h1>
-    <div *ngIf="addresses.length > 0" class="address_cards">
-      <h4>Saved Addresses</h4>
-      <div
-        *ngFor="let address of addresses"
-        class="address-card"
-        [class.selected]="selectedAddress === address"
-      >
-        <div class="address-details">
-          <p>{{ address.fullName }}, {{ address.addressType }}, {{ address.postalCode }}</p>
-          <p>{{ address.address1 }}, {{ address.cityName }}, {{ address.phone }}</p>
-        </div>
+      <br />
+      <hr />
+      <h1>Shipping Details</h1>
+      <div *ngIf="addresses.length > 0" class="address_cards">
+        <div *ngFor="let address of addresses" class="address-card" [class.selected]="selectedAddress === address">
+          <div class="address-details">
+            <input type="radio" [checked]="selectedAddress === address" (change)="selectAddress(address)">
+            <h5 class="addr">Saved Addresses</h5>
+            <p class="addr">Name: {{ address.fullName }}</p>
+            <p class="addr">Address:
+              {{ address.addressType }},
+              {{ address.postalCode }},
+              {{ address.address1 }}, {{ address.cityName }}
+            </p>
+            <p class="addr">Phone No. {{ address.phone }}</p>
+          </div>
 
-        <div class="card-actions">
-          <button (click)="editAddress(address)">Edit</button>
-          <button (click)="deleteAddress(address.addressId)">Delete</button>
-          <button (click)="selectAddress(address)" *ngIf="selectedAddress !== address">Select</button>
-          <span *ngIf="selectedAddress === address" class="selected-btn">Selected</span>
+          <div class="card-actions">
+            <button class="edit" (click)="editAddress(address)">Edit</button>
+            <button class="delete" (click)="deleteAddress(address.addressId)">
+              Delete
+            </button>
+            <button class="select" (click)="selectAddress(address)" *ngIf="selectedAddress !== address">
+              Select
+            </button>
+          </div>
         </div>
       </div>
-    </div>
 
-    <div class="proced_payment">
-      <button (click)="checkout()" [disabled]="!selectedAddress">Proceed to Payment</button>
+      <div class="proced_payment">
+        <button class="proceed-payment" (click)="checkout()" [disabled]="!selectedAddress">
+          Proceed to Payment
+        </button>
+      </div>
     </div>
   </div>
 
@@ -108,7 +88,7 @@
         </div>
         <div class="product_info">
           <h1>{{ item.productName }}</h1>
-          <p>{{ item.description || 'No description available.' }}</p>
+          <p>{{ item.description || "No description available." }}</p>
           <div class="product_rate_info">
             <span class="product_price">
               <del>Rs. {{ item.price }}</del>
@@ -129,5 +109,8 @@
 </div>
 
 <ng-template #emptyCart>
-  <h2>Your cart is empty. Please add items to your cart before proceeding to checkout.</h2>
+  <h2>
+    Your cart is empty. Please add items to your cart before proceeding to
+    checkout.
+  </h2>
 </ng-template>

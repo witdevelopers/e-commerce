@@ -335,4 +335,18 @@ export class UserService {
   getPaymentMethods(): Observable<any> {
     return this.http.get(`${this.apiBaseUrl}api/Shop/GetPaymentMethod`);
   }
+
+    // Method to get wallet balance based on walletId
+    getWalletBalance(walletId: number): Observable<number> {
+      return this.http.get<number>(`${this.apiBaseUrl}Wallet/getBalance?walletId=${walletId}`);
+    }
+
+     // Create order API call
+  createOrder(orderPayload: any): Observable<any> {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': 'bearer YOUR_TOKEN_HERE'
+    });
+    return this.http.post<any>(`${this.apiBaseUrl}api/Shop/create-order`, orderPayload, { headers });
+  }
 }

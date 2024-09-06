@@ -134,7 +134,7 @@ export class CheckoutComponent implements OnInit {
           console.log("Rav data:", data);
           if (this.addresses.length > 0) {
             this.selectedAddress = this.addresses[0];
-           
+            this.isAddressSelected = true; // Address is selected if there are addresses
           }
           this.showAddressForm = this.addresses.length === 0;
         }
@@ -164,11 +164,6 @@ export class CheckoutComponent implements OnInit {
     } else {
       alert('Customer ID is missing. Please log in and try again.');
     }
-  }
-
-  // Select an address
-  selectAddress(address: any): void {
-    this.selectedAddress = address;
   }
 
   // Edit an address
@@ -202,25 +197,30 @@ export class CheckoutComponent implements OnInit {
     }
   }
 
- // Delete an address
-deleteAddress(addressId: number): void {
-  const customerId = +sessionStorage.getItem('memberId'); // Get customer ID from session
-  if (confirm('Are you sure you want to delete this address?')) {
-    this.userService.deleteAddress(customerId, addressId).subscribe(
-      response => {
-        console.log('Address deleted successfully:', response);
-        this.loadAddresses(); // Refresh the address list after deletion
-      },
-      error => {
-        console.error('Error deleting address:', error);
-        alert('There was an error deleting the address. Please try again later.');
-      }
-    );
+  // Delete an address
+  deleteAddress(addressId: number): void {
+    const customerId = +sessionStorage.getItem('memberId'); // Get customer ID from session
+    if (confirm('Are you sure you want to delete this address?')) {
+      this.userService.deleteAddress(customerId, addressId).subscribe(
+        response => {
+          console.log('Address deleted successfully:', response);
+          this.loadAddresses(); // Refresh the address list after deletion
+        },
+        error => {
+          console.error('Error deleting address:', error);
+          alert('There was an error deleting the address. Please try again later.');
+        }
+      );
+    }
   }
-}
-
 
   // Proceed to checkout
+  isAddressSelected: boolean = false;
+  selectAddress(address: any): void {
+    this.selectedAddress = address;
+    this.isAddressSelected = true;
+  }
+  
   checkout(): void {
     if (this.selectedAddress) {
       console.log('Proceeding with checkout. Selected Address:', this.selectedAddress);
