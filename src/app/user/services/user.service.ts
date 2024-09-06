@@ -342,11 +342,18 @@ export class UserService {
     }
 
      // Create order API call
-  createOrder(orderPayload: any): Observable<any> {
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'Authorization': 'bearer YOUR_TOKEN_HERE'
-    });
-    return this.http.post<any>(`${this.apiBaseUrl}api/Shop/create-order`, orderPayload, { headers });
-  }
+     createOrder(orderPayload: any): Observable<any> {
+      // Fetch the token from session storage
+      const token = sessionStorage.getItem('authToken');  // Replace 'authToken' with the actual key used in sessionStorage
+    
+      // Construct the headers with the token
+      const headers = new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`  // Use the fetched token here
+      });
+    
+      // Make the HTTP POST request with the order payload and headers
+      return this.http.post<any>(`${this.apiBaseUrl}api/Shop/create-order`, orderPayload, { headers });
+    }
+    
 }
