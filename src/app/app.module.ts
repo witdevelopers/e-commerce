@@ -58,6 +58,7 @@ import { ProductSliderComponent } from './usershop/product-slider/product-slider
 import { ShoppingCartComponent } from './usershop/shopping-cart/shopping-cart.component';
 import { CheckoutComponent } from './usershop/checkout/checkout.component';
 import { OrderHistoryComponent } from './usershop/order-history/order-history.component';
+import { CheckoutConfirmComponent } from './usershop/checkout-confirm/checkout-confirm.component';
 
 
 @NgModule({
@@ -104,7 +105,8 @@ import { OrderHistoryComponent } from './usershop/order-history/order-history.co
     ProductSliderComponent,
     ShoppingCartComponent,
     CheckoutComponent,
-    OrderHistoryComponent
+    OrderHistoryComponent,
+    CheckoutConfirmComponent
 
 
 

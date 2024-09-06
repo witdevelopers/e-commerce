@@ -1,17 +1,16 @@
 <div *ngIf="!isCartEmpty; else emptyCart" class="container">
   <div class="payment_details">
     <h1>Payment Information</h1>
+    <!-- Address Form -->
     <div class="details_card">
       <div class="name_address">
         <div class="first_lastName">
-          <!-- Full Name fields -->
           <input
             type="text"
             [(ngModel)]="newAddress.Name"
             placeholder="Name"
             required
           />
-       
           <input
             type="text"
             [(ngModel)]="newAddress.phone"
@@ -21,14 +20,12 @@
         </div>
 
         <div class="address">
-          <!-- Address fields -->
           <input
             type="text"
             [(ngModel)]="newAddress.address1"
             placeholder="Address"
             required
           />
-
           <input
             type="number"
             [(ngModel)]="newAddress.postalCode"
@@ -42,7 +39,6 @@
             required
           />
 
-          <!-- Country dropdown -->
           <select
             [(ngModel)]="newAddress.countryId"
             (change)="onCountryChange(newAddress.countryId)"
@@ -54,7 +50,6 @@
             </option>
           </select>
 
-          <!-- State dropdown (dependent on selected country) -->
           <select [(ngModel)]="newAddress.stateId" required>
             <option value="" disabled>Select State</option>
             <option *ngFor="let state of states" [value]="state.id">
@@ -75,30 +70,32 @@
         <button *ngIf="!isEditMode" (click)="createAddress()">Add Address</button>
         <button *ngIf="isEditMode" (click)="updateAddress()">Update Address</button>
       </div>
+    </div>
 
-      <h1>Shipping Details</h1>
-      <div *ngIf="addresses.length > 0" class="address_cards">
-        <h4>Saved Addresses</h4>
-        <div
-          *ngFor="let address of addresses"
-          class="address-card"
-          (click)="selectAddress(address)"
-          [class.selected]="selectedAddress === address"
-        >
-          <div class="address-details">
-            <p>{{ address.fullName }}, {{ address.addressType }}, {{ address.postalCode }}</p>
-            <p>{{ address.address1 }}, {{ address.cityName }}, {{ address.phone }}</p>
-          </div>
-          <div class="card-actions">
-            <button (click)="editAddress(address)">Edit</button>
-            <button (click)="deleteAddress(address.addressId)"> Delete</button>
-          </div>
+    <h1>Shipping Details</h1>
+    <div *ngIf="addresses.length > 0" class="address_cards">
+      <h4>Saved Addresses</h4>
+      <div
+        *ngFor="let address of addresses"
+        class="address-card"
+        [class.selected]="selectedAddress === address"
+      >
+        <div class="address-details">
+          <p>{{ address.fullName }}, {{ address.addressType }}, {{ address.postalCode }}</p>
+          <p>{{ address.address1 }}, {{ address.cityName }}, {{ address.phone }}</p>
+        </div>
+
+        <div class="card-actions">
+          <button (click)="editAddress(address)">Edit</button>
+          <button (click)="deleteAddress(address.addressId)">Delete</button>
+          <button (click)="selectAddress(address)" *ngIf="selectedAddress !== address">Select</button>
+          <span *ngIf="selectedAddress === address" class="selected-btn">Selected</span>
         </div>
       </div>
+    </div>
 
-      <div class="proced_payment">
-        <button (click)="checkout()">Proceed to Payment</button>
-      </div>
+    <div class="proced_payment">
+      <button (click)="checkout()" [disabled]="!selectedAddress">Proceed to Payment</button>
     </div>
   </div>
 
@@ -121,6 +118,7 @@
           </div>
         </div>
       </div>
+
       <div class="cart_totals">
         <p>Total Price: Rs. {{ totalCartPrice }}</p>
         <p>Total Discount Price: Rs. {{ totalDiscountPrice }}</p>
@@ -128,7 +126,6 @@
       </div>
     </div>
   </div>
-  
 </div>
 
 <ng-template #emptyCart>
