@@ -17,7 +17,7 @@ export class CheckoutComponent implements OnInit {
   selectedAddress: any = null;
   newAddress = {
     customerId: 0,
-    Name: '',
+    name: '',
     address1: '',
     address2: '',
     address3: '',
@@ -25,7 +25,7 @@ export class CheckoutComponent implements OnInit {
     cityName: '',
     stateId: 0,
     countryId: 0,
-    addressType: 0,
+    addressType: 0, // Store integer for address type
     phone: '',
     isActive: true,
     createdOn: new Date().toISOString()
@@ -34,9 +34,17 @@ export class CheckoutComponent implements OnInit {
   isCartEmpty = true;
   isEditMode = false;
   countries: any[] = [];
-
-  private imageBaseUrl = 'https://www.mbp18k.com/'; // Base URL for images
   states: any[] = [];
+  
+  isAddressSelected = false; // To check if an address is selected
+  private imageBaseUrl = 'https://www.mbp18k.com/'; // Base URL for images
+  
+  // Mapping address types to integers
+  addressTypeMapping = {
+    Home: 1,
+    Office: 2,
+    Other: 3
+  };
 
   constructor(private userService: UserService, private router: Router) {}
 
@@ -55,7 +63,7 @@ export class CheckoutComponent implements OnInit {
   resetNewAddress(): void {
     this.newAddress = {
       customerId: 0,
-      Name: '',    
+      name: '',    
       address1: '',
       address2: '',
       address3: '',
@@ -63,7 +71,7 @@ export class CheckoutComponent implements OnInit {
       cityName: '',
       stateId: 0,
       countryId: 0,
-      addressType: 0,
+      addressType: 0, // Reset to default
       phone: '',
       isActive: true,
       createdOn: new Date().toISOString()
@@ -93,7 +101,6 @@ export class CheckoutComponent implements OnInit {
       this.userService.getCart(customerId).subscribe(
         data => {
           this.cartDetails = data;
-          console.log("Rav data of cartDetails:", data);
           this.isCartEmpty = !this.cartDetails || this.cartDetails.items.length === 0;
   
           if (!this.isCartEmpty) {
@@ -119,7 +126,6 @@ export class CheckoutComponent implements OnInit {
         }
       );
     } else {
-      console.error('Customer ID is not found in session storage.');
       alert('Customer ID is missing. Please log in and try again.');
     }
   }
@@ -131,7 +137,6 @@ export class CheckoutComponent implements OnInit {
       this.userService.getAddressesByCustomerId(customerId).subscribe(
         (data: any[]) => {
           this.addresses = data;
-          console.log("Rav data:", data);
           if (this.addresses.length > 0) {
             this.selectedAddress = this.addresses[0];
             this.isAddressSelected = true; // Address is selected if there are addresses
@@ -140,9 +145,14 @@ export class CheckoutComponent implements OnInit {
         }
       );
     } else {
-      console.error('Customer ID is not found in session storage.');
       alert('Customer ID is missing. Please log in and try again.');
     }
+  }
+
+  // Handle address type selection from dropdown and map to integer
+  onAddressTypeChange(event: any): void {
+    const addressType = event.target.value;
+    this.newAddress.addressType = this.addressTypeMapping[addressType] || 0; // Fallback to 0 if not mapped
   }
 
   // Create a new address
@@ -214,17 +224,17 @@ export class CheckoutComponent implements OnInit {
     }
   }
 
-  // Proceed to checkout
-  isAddressSelected: boolean = false;
   selectAddress(address: any): void {
     this.selectedAddress = address;
     this.isAddressSelected = true;
+    // Save the selected address ID in the service
+    this.userService.setSelectedAddressId(address.id);
   }
-  
+
   checkout(): void {
     if (this.selectedAddress) {
       console.log('Proceeding with checkout. Selected Address:', this.selectedAddress);
-      this.router.navigate(['/confirm']);
+      this.router.navigate(['/confirm']); // Navigate to the checkout confirm page
     } else {
       alert('Please select an address to proceed with checkout.');
     }
@@ -235,7 +245,6 @@ export class CheckoutComponent implements OnInit {
     this.userService.getCountries().subscribe(
       (countries: any[]) => {
         this.countries = countries;
-        console.log("Countries", this.countries);
       },
       error => {
         console.error('Error fetching countries:', error);

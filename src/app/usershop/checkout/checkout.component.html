@@ -5,7 +5,7 @@
     <div class="details_card">
       <div class="name_address">
         <div class="first_lastName">
-          <input type="text" [(ngModel)]="newAddress.Name" placeholder="Name" required />
+          <input type="text" [(ngModel)]="newAddress.name" placeholder="Name" required />
           <input type="text" [(ngModel)]="newAddress.phone" placeholder="Phone Number" required />
         </div>
 
@@ -31,6 +31,17 @@
             </option>
           </select>
         </div>
+
+        <!-- Address Type (Home, Office, Other) -->
+        <div class="address_type_select">
+          <label for="addressType">Address Type</label>
+          <select class="slct" [(ngModel)]="newAddress.addressType" required>
+            <option value="" disabled>Select Address Type</option>
+            <option value="1">Home</option>
+            <option value="2">Office</option>
+            <option value="3">Other</option>
+          </select>
+        </div>
       </div>
 
       <div class="address-actions">
@@ -48,15 +59,11 @@
       <div *ngIf="addresses.length > 0" class="address_cards">
         <div *ngFor="let address of addresses" class="address-card" [class.selected]="selectedAddress === address">
           <div class="address-details">
-            <input type="radio" [checked]="selectedAddress === address" (change)="selectAddress(address)">
+            <input type="radio" name="address" [checked]="selectedAddress === address" (change)="selectAddress(address.addressId)">
             <h5 class="addr">Saved Addresses</h5>
             <p class="addr">Name: {{ address.fullName }}</p>
-            <p class="addr">Address:
-              {{ address.addressType }},
-              {{ address.postalCode }},
-              {{ address.address1 }}, {{ address.cityName }}
-            </p>
-            <p class="addr">Phone No. {{ address.phone }}</p>
+            <p class="addr">Address: {{ address.addressType }}, {{ address.address1 }}, {{ address.cityName }}, {{ address.postalCode }}</p>
+            <p class="addr">Phone No.: {{ address.phone }}</p>
           </div>
 
           <div class="card-actions">
@@ -64,7 +71,7 @@
             <button class="delete" (click)="deleteAddress(address.addressId)">
               Delete
             </button>
-            <button class="select" (click)="selectAddress(address)" *ngIf="selectedAddress !== address">
+            <button class="select" name="address" (click)="selectAddress(address.addressId)" *ngIf="selectedAddress !== address">
               Select
             </button>
           </div>
@@ -88,7 +95,7 @@
         </div>
         <div class="product_info">
           <h1>{{ item.productName }}</h1>
-          <p>{{ item.description || "No description available." }}</p>
+          <p>{{ item.description || 'No description available.' }}</p>
           <div class="product_rate_info">
             <span class="product_price">
               <del>Rs. {{ item.price }}</del>
@@ -109,8 +116,5 @@
 </div>
 
 <ng-template #emptyCart>
-  <h2>
-    Your cart is empty. Please add items to your cart before proceeding to
-    checkout.
-  </h2>
+  <h2>Your cart is empty. Please add items to your cart before proceeding to checkout.</h2>
 </ng-template>

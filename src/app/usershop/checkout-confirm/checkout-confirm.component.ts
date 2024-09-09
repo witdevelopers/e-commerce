@@ -18,6 +18,7 @@ export class CheckoutConfirmComponent implements OnInit {
   walletBalance: number = 0; // To store wallet balance
   selectedPaymentMethod: string = '';  // Store the selected payment method
   memberId: number = 0; // User's memberId for API
+  selectedAddressId =  this.userService.getSelectedAddressId();
 
   constructor(private userService: UserService) {}
 
@@ -149,59 +150,61 @@ export class CheckoutConfirmComponent implements OnInit {
       }
     });
   }
-// Method to place the order dynamically
-placeOrder(paymentMethod: string) {
-  // Check if the cart is empty
-  if (this.isCartEmpty) {
-    Swal.fire('Error', 'Your cart is empty. Please add items to your cart before proceeding.', 'error');
-    return;
-  }
 
-  // Ensure the customer ID and other necessary data are available
-  if (!this.memberId) {
-    Swal.fire('Error', 'Member ID is missing. Please log in and try again.', 'error');
-    return;
-  }
-
-  // Create the dynamic order payload
-  const orderPayload = {
-    customerId: this.memberId,  // Dynamically retrieved from session or user data
-    addressId: this.getSelectedAddressId(),  // Dynamically selected by user
-    remarks: 'order',  // Optional remarks for the order
-    orderPayments: [
-      {
-        orderId: this.generateOrderId(),  // Dynamically generated Order ID
-        transactionId: new Date().getTime().toString(), // Dynamic transaction ID (current timestamp)
-        paymentMethodId: paymentMethod === 'Wallet' ? 1 : 2,  // Dynamic payment method based on selection
-        paymentStatus: 'Completed',  // Static for now, you can handle payment statuses differently
-        paymentStatusId: 3,  // Status ID (can be dynamic if needed)
-        amountPaid: this.totalDiscountPrice,  // Total amount dynamically fetched
-        onDate: new Date().toISOString()  // Dynamic timestamp
-      }
-    ]
-  };
-
-  // Send the order payload to the backend
-  this.userService.createOrder(orderPayload).subscribe(
-    (response: any) => {
-      Swal.fire('Order Placed', 'Your order has been placed successfully', 'success');
-      // Optionally, redirect or clear the cart
-    },
-    (error) => {
-      console.error('Error placing order:', error);
-      Swal.fire('Error', 'There was an error placing the order', 'error');
+  // Method to place the order dynamically
+  placeOrder(paymentMethod: string) {
+    // Check if the cart is empty
+    if (this.isCartEmpty) {
+      Swal.fire('Error', 'Your cart is empty. Please add items to your cart before proceeding.', 'error');
+      return;
     }
-  );
-}
-// Utility method to dynamically generate an order ID
-generateOrderId(): string {
-  return 'ORD-' + new Date().getTime();  // Example, you can improve the logic here
-}
 
-// Utility method to get the dynamically selected address ID
-getSelectedAddressId(): number {
-  // Fetch the selected address ID from the user's saved addresses or an address selection process
-  // Replace this with actual logic to select the address
-  return 12;  // Example: Replace with dynamic address fetching
-}
+    // Ensure the customer ID and other necessary data are available
+    if (!this.memberId) {
+      Swal.fire('Error', 'Member ID is missing. Please log in and try again.', 'error');
+      return;
+    }
+
+    // Create the dynamic order payload
+    const orderPayload = {
+      customerId: this.memberId,  // Dynamically retrieved from session or user data
+      addressId: this.selectedAddressId,  // Dynamically selected by user
+      remarks: 'order',  // Optional remarks for the order
+      orderPayments: [
+        {
+          orderId: this.generateOrderId(),  // Dynamically generated Order ID
+          transactionId: new Date().getTime().toString(), // Dynamic transaction ID (current timestamp)
+          paymentMethodId: paymentMethod === 'Wallet' ? 1 : 2,  // Dynamic payment method based on selection
+          paymentStatus: 'Completed',  // Static for now, you can handle payment statuses differently
+          paymentStatusId: 3,  // Status ID (can be dynamic if needed)
+          amountPaid: this.totalDiscountPrice,  // Total amount dynamically fetched
+          onDate: new Date().toISOString()  // Dynamic timestamp
+        }
+      ]
+    };
+
+    // Send the order payload to the backend
+    this.userService.createOrder(orderPayload).subscribe(
+      (response: any) => {
+        Swal.fire('Order Placed', 'Your order has been placed successfully', 'success');
+        // Optionally, redirect or clear the cart
+      },
+      (error) => {
+        console.error('Error placing order:', error);
+        Swal.fire('Error', 'There was an error placing the order', 'error');
+      }
+    );
+  }
+
+  // Utility method to dynamically generate an order ID
+  generateOrderId(): string {
+    return 'ORD-' + new Date().getTime();  // Example, you can improve the logic here
+  }
+
+  // Utility method to get the dynamically selected address ID
+  getSelectedAddressId(): number {
+    // Fetch the selected address ID from the user's saved addresses or an address selection process
+    // Replace this with actual logic to select the address
+    return 12;  // Example: Replace with dynamic address fetching
+  }
 }

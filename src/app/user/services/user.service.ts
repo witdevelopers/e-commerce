@@ -10,6 +10,9 @@ import { Categories } from 'src/app/usershop/interface';
 })
 export class UserService {
 
+  private selectedAddressIdSubject = new BehaviorSubject<number>(0); // Default to 0 or a placeholder
+  selectedAddressId$: Observable<number> = this.selectedAddressIdSubject.asObservable();
+
   private cartSubject = new BehaviorSubject<number>(0);
   cartQuantity$ = this.cartSubject.asObservable();
 
@@ -344,7 +347,7 @@ export class UserService {
      // Create order API call
      createOrder(orderPayload: any): Observable<any> {
       // Fetch the token from session storage
-      const token = sessionStorage.getItem('authToken');  // Replace 'authToken' with the actual key used in sessionStorage
+      const token = sessionStorage.getItem('token');  // Replace 'authToken' with the actual key used in sessionStorage
     
       // Construct the headers with the token
       const headers = new HttpHeaders({
@@ -353,7 +356,20 @@ export class UserService {
       });
     
       // Make the HTTP POST request with the order payload and headers
+      console.log('Sending request with headers:', headers);
+      console.log('Request payload:', orderPayload);
       return this.http.post<any>(`${this.apiBaseUrl}api/Shop/create-order`, orderPayload, { headers });
+      
     }
+
+     // Set the selected address ID
+  setSelectedAddressId(addressId: number) {
+    this.selectedAddressIdSubject.next(addressId);
+  }
+
+   // Get the selected address ID synchronously
+   getSelectedAddressId(): number {
+    return this.selectedAddressIdSubject.getValue();
+  }
     
 }
