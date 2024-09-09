@@ -10,8 +10,7 @@ import { Categories } from 'src/app/usershop/interface';
 })
 export class UserService {
 
-  private selectedAddressIdSubject = new BehaviorSubject<number>(0); // Default to 0 or a placeholder
-  selectedAddressId$: Observable<number> = this.selectedAddressIdSubject.asObservable();
+  private selectedAddressIdSubject = new BehaviorSubject<number | null>(null);
 
   private cartSubject = new BehaviorSubject<number>(0);
   cartQuantity$ = this.cartSubject.asObservable();
@@ -362,13 +361,13 @@ export class UserService {
       
     }
 
-     // Set the selected address ID
-  setSelectedAddressId(addressId: number) {
+  // Set the selected address ID
+  setSelectedAddressId(addressId: number): void {
     this.selectedAddressIdSubject.next(addressId);
   }
 
-   // Get the selected address ID synchronously
-   getSelectedAddressId(): number {
+  // Get the selected address ID synchronously
+  getSelectedAddressId(): number | null {
     return this.selectedAddressIdSubject.getValue();
   }
     

@@ -228,7 +228,7 @@ export class CheckoutComponent implements OnInit {
     this.selectedAddress = address;
     this.isAddressSelected = true;
     // Save the selected address ID in the service
-    this.userService.setSelectedAddressId(address.id);
+    this.userService.setSelectedAddressId(address);
   }
 
   checkout(): void {
