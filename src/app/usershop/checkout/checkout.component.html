@@ -1,4 +1,4 @@
-<div *ngIf="!isCartEmpty; else emptyCart" class="container">
+<div *ngIf="!isCartEmpty;" class="container">
   <div class="payment_details">
     <h1>Payment Information</h1>
     <!-- Address Form -->
@@ -115,6 +115,3 @@
   </div>
 </div>
 
-<ng-template #emptyCart>
-  <h2>Your cart is empty. Please add items to your cart before proceeding to checkout.</h2>
-</ng-template>

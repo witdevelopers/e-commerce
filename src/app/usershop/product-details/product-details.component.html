@@ -1,10 +1,11 @@
-
-
 <section id="product-info" *ngIf="singleProduct">
-
   <div class="item-image-parent">
     <div class="item-list-vertical">
-      <div class="thumb-box" *ngFor="let image of singleProductImages" (click)="changeMainImage(image.imageUrl)">
+      <div
+        class="thumb-box"
+        *ngFor="let image of singleProductImages"
+        (click)="changeMainImage(image.imageUrl)"
+      >
         <img [src]="getImageUrl(image.imageUrl)" alt="thumbnail" />
       </div>
     </div>
@@ -14,7 +15,7 @@
       <div class="badge-area-2">
         <div class="badge-product-sale">
           <span class="new">OFFER</span>
-          <span class="percent">- {{singleProduct.discountPercentage}}%</span>
+          <span class="percent">- {{ singleProduct.discountPercentage }}%</span>
         </div>
       </div>
       <img [src]="mainImageUrl" alt="{{ singleProduct.productName }}" />
@@ -25,24 +26,39 @@
     <!-- Main Info -->
     <div class="main-info">
       <h4>{{ singleProduct.productName }}</h4>
-      <p>Price: <span id="price">₹ {{ singleProductDetails[0]?.discountPrice }}</span></p>
-      <del><p>Price: <span id="price">₹ {{ singleProductDetails[0]?.price }}</span></p></del>
+      <div style="display: flex; gap: 10px">
+        <p>
+          Price:
+          <span id="price">₹ {{ singleProductDetails[0]?.discountPrice }}</span>
+        </p>
+        <del
+          ><p>
+            Price:
+            <span id="price">₹ {{ singleProductDetails[0]?.price }}</span>
+          </p></del
+        >
+      </div>
 
       <!-- Add to Cart Button -->
-      <button class="add-to-cart-btn" (click)="addToCart()">
-        Add to Cart
-      </button>
+      <div style="display: flex; gap: 10px">
+        <button class="add-to-cart-btn" (click)="addToCart()">
+          <i class="ri-shopping-cart-2-line"></i> Add to Cart
+        </button>
+
+        <button class="add-to-cart-btn">Buy Now</button>
+      </div>
     </div>
 
     <!-- Description -->
     <div class="select-items">
       <div class="description">
         <ul>
-          <li [innerHTML]="singleProduct.description"></li>
+          <li
+            [innerHTML]="singleProduct.description"
+            style="position: relative; right: 20px"
+          ></li>
         </ul>
       </div>
     </div>
   </div>
-
 </section>
-

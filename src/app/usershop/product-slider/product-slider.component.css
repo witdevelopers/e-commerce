@@ -231,7 +231,7 @@ ul {
 .cart-button {
     position: relative;
     padding: 10px;
-    width: 156px;
+    width: 170px;
     height: 40px;
     border: 0;
     border-radius: 10px;
@@ -281,6 +281,7 @@ ul {
 
 .cart-button span.add-to-cart {
     opacity: 1;
+    width: 136px;
 }
 
 .cart-button span.added {

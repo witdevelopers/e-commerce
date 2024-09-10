@@ -102,7 +102,7 @@ export class CheckoutConfirmComponent implements OnInit {
   confirmCheckout() {
     if (!this.selectedPaymentMethod) {
       Swal.fire('Error', 'Please select a payment method', 'error');
-      return;
+      return; 
     }
 
     switch (this.selectedPaymentMethod) {
@@ -185,7 +185,7 @@ placeOrder(paymentMethod: string) {
       {
         orderId: this.generateOrderId(),  // Dynamically generated Order ID
         transactionId: new Date().getTime().toString(), // Dynamic transaction ID (current timestamp)
-        paymentMethodId: paymentMethod === 'Wallet' ? 1 : 2,  // Dynamic payment method based on selection
+        paymentMethodId: paymentMethod === 'wallet' ? 1 : 2,  // Dynamic payment method based on selection
         paymentStatus: 'Completed',  // Static for now, you can handle payment statuses differently
         paymentStatusId: 3,  // Status ID (can be dynamic if needed)
         amountPaid: this.totalDiscountPrice,  // Total amount dynamically fetched
