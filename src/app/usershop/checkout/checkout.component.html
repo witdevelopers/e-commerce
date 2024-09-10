@@ -71,7 +71,7 @@
             <button class="delete" (click)="deleteAddress(address.addressId)">
               Delete
             </button>
-            <button class="select" name="address" (click)="selectAddress(address.addressId)" *ngIf="selectedAddress !== address">
+            <button class="select" name="address" (change)="selectAddress(address.addressId)" *ngIf="selectedAddress !== address">
               Select
             </button>
           </div>
@@ -79,7 +79,7 @@
       </div>
 
       <div class="proced_payment">
-        <button class="proceed-payment" (click)="checkout()" [disabled]="!selectedAddress">
+        <button class="proceed-payment" (click)="checkout()" [disabled]="!isAddressSelected">
           Proceed to Payment
         </button>
       </div>

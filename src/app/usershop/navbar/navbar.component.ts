@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router'; // Import Router
+import { Router } from '@angular/router';
 import { UserService } from 'src/app/user/services/user.service';
-
 
 @Component({
   selector: 'app-navbar',
@@ -9,51 +8,38 @@ import { UserService } from 'src/app/user/services/user.service';
   styleUrls: ['./navbar.component.css'],
 })
 export class NavbarComponent implements OnInit {
-clearSearch() {
-throw new Error('Method not implemented.');
-}
   isLoggedIn: boolean = false;
   userName: string = '';
-  cartQuantity: number = 0; // Property to hold cart quantity
-
+  cartQuantity: number = 0;
   mainCategory: any[] = [];
   subCategory: { [key: number]: any[] } = {};
   isSubCategoryVisible: { [key: number]: boolean } = {};
-  AllProductByCategoryId: any[] = [];
   productByKeyword: any[] = [];
 
-  constructor(
-    private userService: UserService,
-    
-    private router: Router // Inject Router here
-  ) {}
+  constructor(private userService: UserService, private router: Router) {}
 
   ngOnInit(): void {
     this.getMainCategory();
-    this.getAllProductByCategoryId(7);
     const userId = sessionStorage.getItem('memberId');
     if (userId) {
       this.isLoggedIn = true;
       this.userName = sessionStorage.getItem('userId') || 'Profile';
       this.userService.cartQuantity$.subscribe(quantity => {
-        this.cartQuantity = quantity; // Update cart quantity
+        this.cartQuantity = quantity;
       });
-      this.userService.updateCartQuantity(Number(userId)); // Initial load
+      this.userService.updateCartQuantity(Number(userId));
     }
-    
   }
 
   signOut(): void {
-    sessionStorage.clear(); // Clear all session storage
+    sessionStorage.clear();
     this.isLoggedIn = false;
-    
     this.router.navigate(['/auth/signin']).then(() => {
-      window.location.href = '/auth/signin';  // Forces a full page reload to the home page
-  });
-  
+      window.location.href = '/auth/signin';
+    });
   }
 
-  getMainCategory() {
+  getMainCategory(): void {
     this.userService.getMainCategory().subscribe(
       (res: any[]) => {
         this.mainCategory = res;
@@ -64,12 +50,7 @@ throw new Error('Method not implemented.');
     );
   }
 
-  loadSubCategory(parentCategoryId: number) {
-    if (parentCategoryId === undefined || parentCategoryId === null) {
-      console.error('Invalid parentCategoryId:', parentCategoryId);
-      return;
-    }
-
+  loadSubCategory(parentCategoryId: number): void {
     if (!this.subCategory[parentCategoryId]) {
       this.userService.getSubCategory(parentCategoryId).subscribe(
         (res: any[]) => {
@@ -83,48 +64,35 @@ throw new Error('Method not implemented.');
     this.isSubCategoryVisible[parentCategoryId] = true;
   }
 
-  hideSubCategory(parentCategoryId: number) {
-    if (parentCategoryId !== undefined && parentCategoryId !== null) {
-      this.isSubCategoryVisible[parentCategoryId] = false;
-    }
-  }
-
-  getAllProductByCategoryId(categoryId: number) {
-    this.userService.getAllProductByCategoryId(categoryId).subscribe((data) => {
-      this.AllProductByCategoryId = data;
-    });
+  hideSubCategory(parentCategoryId: number): void {
+    this.isSubCategoryVisible[parentCategoryId] = false;
   }
 
   onSearch(event: any): void {
     const keyword = event.target.value;
-
     if (keyword.length > 2) {
-      // Start searching after 3 characters
       this.getProductByKeyword(keyword);
     }
   }
 
-  getProductByKeyword(keyword: string) {
+  getProductByKeyword(keyword: string): void {
     this.userService.SearchProductByKeyword(keyword).subscribe((data) => {
       this.productByKeyword = data;
     });
   }
-
-  navigateToProduct(productId: string): void {
-    // this.router.navigate([`/product/${productId}`]);
-    this.router.navigate([`/product/${productId}`]).then(() => {
-      window.location.href = `/product/${productId}`;
-  });
   
+  navigateToProduct(productId: string): void {
+    // Use Angular Router to navigate to the product page
+    this.router.navigate([`/product/${productId}`]);
   }
+  
 
   onAddToCart(): void {
-    // this.router.navigate(['/shopping-cart']);
-    this.router.navigate(['/shopping-cart']).then(() => {
-      window.location.href = '/shopping-cart';  // Forces a full page reload to the home page
-  });
-  
+    this.router.navigate(['/shopping-cart']);
   }
+  
 
-
+  clearSearch(): void {
+    this.productByKeyword = [];
+  }
 }

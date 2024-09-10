@@ -45,6 +45,7 @@ export class CheckoutComponent implements OnInit {
     Office: 2,
     Other: 3
   };
+  selectedAddressId: null;
 
   constructor(private userService: UserService, private router: Router) {}
 
@@ -137,17 +138,19 @@ export class CheckoutComponent implements OnInit {
       this.userService.getAddressesByCustomerId(customerId).subscribe(
         (data: any[]) => {
           this.addresses = data;
-          if (this.addresses.length > 0) {
-            this.selectedAddress = this.addresses[0];
-            this.isAddressSelected = true; // Address is selected if there are addresses
-          }
+          this.selectedAddressId = null; // No address is selected initially
+          this.isAddressSelected = false; // Disable the "Proceed to Payment" button until an address is selected
           this.showAddressForm = this.addresses.length === 0;
+        },
+        (error) => {
+          console.error('Error loading addresses:', error);
         }
       );
     } else {
       alert('Customer ID is missing. Please log in and try again.');
     }
   }
+  
 
   // Handle address type selection from dropdown and map to integer
   onAddressTypeChange(event: any): void {
@@ -227,6 +230,7 @@ export class CheckoutComponent implements OnInit {
   selectAddress(address: any): void {
     this.selectedAddress = address;
     this.isAddressSelected = true;
+    console.log("Hello", address);
     // Save the selected address ID in the service
     this.userService.setSelectedAddressId(address);
   }

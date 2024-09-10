@@ -34,7 +34,7 @@
       <div class="section">
         <h2>Wallet</h2>
         <label>
-          <input type="radio" name="payment-method" [(ngModel)]="selectedPaymentMethod"
+          <input type="radio" name="payment-method" value="1" [(ngModel)]="selectedPaymentMethod"
           (change)="onPaymentMethodSelect('wallet')" />
           Available Balance: <span class="available-credit"> ₹{{ walletBalance | number: '1.2-2' }}</span>
         </label>
@@ -47,15 +47,15 @@
           <input
             type="radio"
             name="payment-method"
-            value="credit-card"
+            value="2"
             [(ngModel)]="selectedPaymentMethod"
             (change)="onPaymentMethodSelect('credit-card')"
           />
           Credit or debit card
           <div class="card-logos">
-            <img src="assets/img/visa.png" alt="Visa" />
-            <img src="assets/img/mastercard.png" alt="MasterCard" />
-            <img src="assets/img/Rupay.png" alt="RuPay" />
+            <img src="assets/img/visa.png" loading="lazy" alt="Visa" />
+            <img src="assets/img/mastercard.png" loading="lazy" alt="MasterCard" />
+            <img src="assets/img/Rupay.png" loading="lazy" alt="RuPay" />
           </div>
         </label>
         <br />
@@ -67,7 +67,7 @@
             <input
               type="radio"
               name="payment-method"
-              value="cod"
+              value="3"
               [(ngModel)]="selectedPaymentMethod"
               (change)="onPaymentMethodSelect('cod')"
             />

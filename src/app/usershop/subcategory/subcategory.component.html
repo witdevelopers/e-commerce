@@ -4,7 +4,7 @@
     <div *ngFor="let product of subcategoryDetails" class="card">
       <div>
         <div class="card-header">
-          <img [src]="product.imageUrl ? product.imageUrl : 'https://www.mbp18k.com/Shop//'" alt="{{ product.productName }}" id="news-img" [routerLink]="['/product', product.productId]">
+          <img [src]="product.imageUrl ? product.imageUrl : 'https://www.mbp18k.com/Shop//'" alt="{{ product.productName }}" id="news-img" loading="lazy" [routerLink]="['/product', product.productId]">
           <div class="badge-area-2">
             <div class="badge-product-sale">
               <span class="new">OFFER</span>
