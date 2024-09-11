@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { UserService } from 'src/app/user/services/user.service';
 import { HttpClient } from '@angular/common/http';
 import Swal from 'sweetalert2';
@@ -20,7 +20,8 @@ export class ProductDetailsComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private userService: UserService,
-    private http: HttpClient
+    private http: HttpClient,
+    private router: Router // Add Router for redirection
   ) {
     this.productId = +this.route.snapshot.params['id'];
   }
@@ -105,5 +106,60 @@ export class ProductDetailsComponent implements OnInit {
         console.log('Error adding product to cart:', error);
       }
     );
-  }  
+  } 
+  
+  buyNow(): void {
+    let customerId = sessionStorage.getItem('memberId'); // Try to retrieve customer ID from sessionStorage
+
+    if (!customerId) {
+      customerId = localStorage.getItem('memberId'); // Fall back to localStorage if sessionStorage is empty
+    }
+
+    const productDtId = this.productId;
+    const quantity = this.quantity;
+
+    if (!customerId) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Customer ID is missing. Please log in again.',
+      });
+      return;
+    }
+
+    if (!productDtId || isNaN(productDtId)) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Invalid Product ID.',
+      });
+      return;
+    }
+
+    if (!quantity || isNaN(quantity)) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Invalid quantity.',
+      });
+      return;
+    }
+
+    this.userService.addToCart(+customerId, productDtId, quantity).subscribe(
+      (response) => {
+        Swal.fire({
+          icon: 'success',
+          title: 'Product added to cart. Redirecting to checkout...',
+        });
+        // Redirect to checkout page after adding to cart
+        setTimeout(() => {
+          this.router.navigate(['/checkout']);
+        }, 1500); // Delay to let the user see the success message
+      },
+      (error) => {
+        Swal.fire({
+          icon: 'error',
+          title: 'Error adding product to cart.',
+        });
+        console.log('Error adding product to cart:', error);
+      }
+    );
+  }
 }

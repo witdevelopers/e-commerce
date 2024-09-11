@@ -281,4 +281,21 @@ export class UserService {
     getSelectedAddressId(): number | null {
       return this.selectedAddressIdSubject.getValue();
     }
+
+     // Method to call the invoice API using orderId from session storage
+  getInvoiceByOrderNo(): Observable<any> {
+    const orderId = sessionStorage.getItem('orderNo');  // Retrieve orderId from session storage
+    if (!orderId) {
+      throw new Error('Order ID not found in session storage.');
+    }
+    const url = `${this.apiBaseUrl}api/Shop/invoicebyorderno?orderId=${orderId}`;
+    return this.http.get<any>(url);
+  }
+
+  getOrderDetails(customerId: string): Observable<any> {
+    const url = `${this.apiBaseUrl}api/Shop/customer/${customerId}`;
+    return this.http.get<any>(url);
+  }
+
+
 }

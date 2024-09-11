@@ -1,0 +1,151 @@
+/* Container Styling */
+.invoice-container {
+    max-width: 800px;
+    margin: 40px auto;
+    padding: 20px;
+    border: 1px solid #e0e0e0;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    background-color: #ffffff;
+    border-radius: 8px;
+    font-family: 'Arial', sans-serif;
+    color: #333;
+  }
+  
+  /* Headings */
+  h2 {
+    font-size: 28px;
+    font-weight: bold;
+    color: #4CAF50;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+  
+  h3 {
+    font-size: 20px;
+    color: #333;
+    margin-bottom: 10px;
+    border-bottom: 2px solid #4CAF50;
+    padding-bottom: 8px;
+  }
+  
+  /* Order Information */
+  .order-info, .shipping-info, .order-items {
+    margin-bottom: 25px;
+  }
+  
+  .order-info p, .shipping-info p, .order-items ul {
+    margin: 5px 0;
+    font-size: 16px;
+    line-height: 1.6;
+  }
+  
+  .order-info p strong, .shipping-info p strong, .order-items span strong {
+    color: #4CAF50;
+  }
+  
+  /* Shipping Address */
+  .shipping-info {
+    background-color: #f9f9f9;
+    padding: 15px;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+  }
+  
+  /* Order Items */
+  .order-items ul {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .order-items li {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 0;
+    border-bottom: 1px solid #e0e0e0;
+  }
+  
+  .order-items li span {
+    font-size: 16px;
+  }
+  
+  .order-items li:last-child {
+    border-bottom: none;
+  }
+  
+  /* Button Container */
+  .button-container {
+    display: flex;
+    justify-content: space-around;
+    max-width: 400px;
+    margin: 30px auto;
+  }
+  
+  /* Download Button */
+  .download-btn {
+    padding: 12px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .download-btn:hover {
+    background-color: #45a049;
+  }
+  
+  /* Home Button */
+  .home-btn {
+    padding: 12px;
+    background-color: #2196F3;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .home-btn:hover {
+    background-color: #1976D2;
+  }
+  
+  /* No Invoice */
+  .no-invoice {
+    text-align: center;
+    color: #757575;
+    font-size: 18px;
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .invoice-container {
+      padding: 15px;
+    }
+  
+    h2 {
+      font-size: 24px;
+    }
+  
+    h3 {
+      font-size: 18px;
+    }
+  
+    .order-items li span {
+      font-size: 14px;
+    }
+  
+    .button-container {
+      flex-direction: column;
+    }
+  
+    .download-btn, .home-btn {
+      width: 100%;
+      margin-bottom: 10px;
+    }
+  }
+  

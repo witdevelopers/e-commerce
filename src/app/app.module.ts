@@ -59,6 +59,7 @@ import { ShoppingCartComponent } from './usershop/shopping-cart/shopping-cart.co
 import { CheckoutComponent } from './usershop/checkout/checkout.component';
 import { OrderHistoryComponent } from './usershop/order-history/order-history.component';
 import { CheckoutConfirmComponent } from './usershop/checkout-confirm/checkout-confirm.component';
+import { OrderInvoiceComponent } from './usershop/order-invoice/order-invoice.component';
 
 
 @NgModule({
@@ -106,7 +107,8 @@ import { CheckoutConfirmComponent } from './usershop/checkout-confirm/checkout-c
     ShoppingCartComponent,
     CheckoutComponent,
     OrderHistoryComponent,
-    CheckoutConfirmComponent
+    CheckoutConfirmComponent,
+    OrderInvoiceComponent
 
 
 

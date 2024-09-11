@@ -227,13 +227,13 @@ export class CheckoutComponent implements OnInit {
     }
   }
 
-  selectAddress(address: any): void {
-    this.selectedAddress = address;
-    this.isAddressSelected = true;
-    console.log("Hello", address);
-    // Save the selected address ID in the service
-    this.userService.setSelectedAddressId(address);
+
+  selectAddress(address: number): void {
+    this.selectedAddress = address; // Set the selected address ID
+    this.isAddressSelected = true; // Enable the "Proceed to Payment" button
+    this.userService.setSelectedAddressId(address); // Store the address ID if needed
   }
+  
 
   checkout(): void {
     if (this.selectedAddress) {

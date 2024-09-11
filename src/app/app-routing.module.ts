@@ -41,6 +41,7 @@ import { ShoppingCartComponent } from './usershop/shopping-cart/shopping-cart.co
 import { CheckoutComponent } from './usershop/checkout/checkout.component';
 import { OrderHistoryComponent } from './usershop/order-history/order-history.component';
 import { CheckoutConfirmComponent } from './usershop/checkout-confirm/checkout-confirm.component';
+import { OrderInvoiceComponent } from './usershop/order-invoice/order-invoice.component';
 
 const routes: Routes = [
   // {
@@ -228,6 +229,7 @@ const routes: Routes = [
   { path: 'shopping-cart', component: ShoppingCartComponent },
   { path: 'checkout', component: CheckoutComponent },
   { path: 'confirm', component: CheckoutConfirmComponent },
+  { path: 'order-invoice', component: OrderInvoiceComponent }, 
   
   {
     path: 'order-history',

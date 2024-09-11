@@ -7,20 +7,16 @@
           <p>Items:</p>
           <p>{{ totalQuantity }}</p>
         </div>
-        
         <div class="sumrytotal">
           <p>Total:</p>
           <p>Rs. {{ totalCartPrice | number: '1.2-2' }}</p>
         </div>
-        
         <div class="sumrytotal">
           <p>Discount:</p>
           <p>Rs. {{ (totalCartPrice - totalDiscountPrice) | number: '1.2-2' }}</p>
         </div>
-        
         <br>
         <hr>
-        
         <div class="sumrytotal">
           <p>Order Total:</p>
           <p>Rs. {{ totalDiscountPrice | number: '1.2-2' }}</p>
@@ -34,13 +30,18 @@
       <div class="section">
         <h2>Wallet</h2>
         <label>
-          <input type="radio" name="payment-method" value="1" [(ngModel)]="selectedPaymentMethod"
-          (change)="onPaymentMethodSelect('wallet')" />
+          <input
+            type="radio"
+            name="payment-method"
+            value="1"
+            [(ngModel)]="selectedPaymentMethod"
+            (change)="onPaymentMethodSelect('wallet')"
+          />
           Available Balance: <span class="available-credit"> ₹{{ walletBalance | number: '1.2-2' }}</span>
         </label>
       </div>
       <hr />
-      
+
       <div class="section">
         <h2>Payment Method</h2>
         <label>
@@ -60,7 +61,7 @@
         </label>
         <br />
         <hr />
-      
+
         <div class="section">
           <h2>Cash on Delivery/Pay on Delivery</h2>
           <label>
@@ -75,11 +76,10 @@
           </label>
         </div>
       </div>
-      
-      <button type="submit" class="submit-button" [disabled]="isCartEmpty" (click)="confirmCheckout()">
+
+      <button type="submit" class="submit-button" [disabled]="isCartEmpty || !selectedPaymentMethod" (click)="confirmCheckout()">
         Use this payment method
       </button>
     </form>
   </div>
-  
 </div>

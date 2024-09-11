@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { UserService } from 'src/app/user/services/user.service';
 import Swal from 'sweetalert2';
 
@@ -15,62 +16,51 @@ export class CheckoutConfirmComponent implements OnInit {
   totalQuantity = 0;
   isCartEmpty = true;
   private imageBaseUrl = 'https://www.mbp18k.com/'; // Base URL for images
-  walletBalance: number = 0; // To store wallet balance
-  selectedPaymentMethod: string = '';  // Store the selected payment method
+  walletBalance: number = 0; // Wallet balance
+  selectedPaymentMethod: string = '';  // Selected payment method
   memberId: number = 0; // User's memberId for API
   selectedAddressId: number | null = null;
-  constructor(private userService: UserService) {}
+  
+
+  constructor(private userService: UserService, private router: Router) {}
 
   ngOnInit(): void {
     this.retrieveAddressId();
     const memberId = sessionStorage.getItem('memberId'); // Retrieve memberId from sessionStorage
     if (memberId) {
       this.memberId = +memberId;
-      this.getWalletBalance(this.memberId); // Call the API with memberId as walletId
+      this.getWalletBalance(this.memberId); // Fetch wallet balance
       this.getCartDetails(); // Fetch cart details
     } else {
-      console.error('No memberId found in sessionStorage');
       Swal.fire('Error', 'No member ID found. Please log in again.', 'error');
     }
   }
 
   private retrieveAddressId(): void {
     this.selectedAddressId = this.userService.getSelectedAddressId();
-
-    if (this.selectedAddressId !== null) {
-      console.log('Selected Address ID:', this.selectedAddressId);
-      // Fetch the address details or use the address ID as needed
-      // For example, you can fetch address details from the server using this.selectedAddressId
-    } else {
-      console.error('No selected address ID found.');
-      // Handle the case where no address ID is available
+    if (!this.selectedAddressId) {
+      Swal.fire('Error', 'No selected address ID found.', 'error');
     }
   }
-  // Method to fetch wallet balance from the API
-  getWalletBalance(walletId: number) {
+
+  getWalletBalance(walletId: number): void {
     this.userService.getWalletBalance(walletId).subscribe(
-      (data: any) => {
-        this.walletBalance = data.balance; // Extracting balance from the response object
-      },
-      (error) => {
-        console.error('Error fetching wallet balance:', error);
-      }
+      (data: any) => this.walletBalance = data.balance,
+      (error) => console.error('Error fetching wallet balance:', error)
     );
   }
 
-  // Fetch cart details and calculate total prices, quantities
   getCartDetails(): void {
     if (this.memberId) {
       this.userService.getCart(this.memberId).subscribe(
         data => {
           this.cartDetails = data;
-          console.log("Cart details:", data);
-          this.isCartEmpty = !this.cartDetails || !this.cartDetails.items || this.cartDetails.items.length === 0;
+          this.isCartEmpty = !this.cartDetails?.items?.length;
 
           if (!this.isCartEmpty) {
             // Fix image URLs and calculate prices/quantities
             this.cartDetails.items = this.cartDetails.items.map((item: any) => {
-              if (item.imageUrl && item.imageUrl.startsWith('~/')) {
+              if (item.imageUrl?.startsWith('~/')) {
                 item.imageUrl = this.imageBaseUrl + item.imageUrl.replace('~/', '');
               }
               return item;
@@ -82,27 +72,21 @@ export class CheckoutConfirmComponent implements OnInit {
             this.totalQuantity = this.cartDetails.items.reduce((sum: number, item: any) => sum + item.quantity, 0);
           }
         },
-        error => {
-          console.error('Error fetching cart details:', error);
-          Swal.fire('Error', 'There was an error fetching cart details. Please try again later.', 'error');
-        }
+        error => Swal.fire('Error', 'There was an error fetching cart details. Please try again later.', 'error')
       );
     } else {
-      console.error('Customer ID is not found in session storage.');
       Swal.fire('Error', 'Customer ID is missing. Please log in and try again.', 'error');
     }
   }
 
-  // Capture the selected payment method
-  onPaymentMethodSelect(method: string) {
+  onPaymentMethodSelect(method: string): void {
     this.selectedPaymentMethod = method;
   }
 
-  // Confirm checkout based on the selected payment method
-  confirmCheckout() {
+  confirmCheckout(): void {
     if (!this.selectedPaymentMethod) {
       Swal.fire('Error', 'Please select a payment method', 'error');
-      return; 
+      return;
     }
 
     switch (this.selectedPaymentMethod) {
@@ -113,26 +97,22 @@ export class CheckoutConfirmComponent implements OnInit {
         this.handleCardPayment();
         break;
       case 'cod':
-        this.placeOrder('Cash on Delivery');
+        this.placeOrder(3);
         break;
       default:
         Swal.fire('Error', 'Invalid payment method selected', 'error');
-        break;
     }
   }
 
-  // Handle wallet payment
-  handleWalletPayment() {
+  handleWalletPayment(): void {
     if (this.walletBalance >= this.totalDiscountPrice) {
-      // Proceed with the order
-      this.placeOrder('Wallet');
+      this.placeOrder(1);
     } else {
       Swal.fire('Insufficient Balance', 'Your wallet balance is insufficient', 'error');
     }
   }
 
-  // Handle card payment (show a form or prompt to collect card details)
-  handleCardPayment() {
+  handleCardPayment(): void {
     Swal.fire({
       title: 'Enter Card Details',
       html: `
@@ -156,58 +136,52 @@ export class CheckoutConfirmComponent implements OnInit {
       }
     }).then((result) => {
       if (result.isConfirmed) {
-        // Handle the card payment here (using the entered card details)
-        // For now, just simulating card payment success
-        this.placeOrder('Credit Card');
+        this.placeOrder(2);
       }
     });
   }
-// Method to place the order dynamically
-placeOrder(paymentMethod: string) {
-  // Check if the cart is empty
-  if (this.isCartEmpty) {
-    Swal.fire('Error', 'Your cart is empty. Please add items to your cart before proceeding.', 'error');
-    return;
-  }
 
-  // Ensure the customer ID and other necessary data are available
-  if (!this.memberId) {
-    Swal.fire('Error', 'Member ID is missing. Please log in and try again.', 'error');
-    return;
-  }
-
-  // Create the dynamic order payload
-  const orderPayload = {
-    customerId: this.memberId,  // Dynamically retrieved from session or user data
-    addressId: this.selectedAddressId,  // Dynamically selected by user
-    remarks: 'order',  // Optional remarks for the order
-    orderPayments: [
-      {
-        orderId: this.generateOrderId(),  // Dynamically generated Order ID
-        transactionId: new Date().getTime().toString(), // Dynamic transaction ID (current timestamp)
-        paymentMethodId: paymentMethod === 'wallet' ? 1 : 2,  // Dynamic payment method based on selection
-        paymentStatus: 'Completed',  // Static for now, you can handle payment statuses differently
-        paymentStatusId: 3,  // Status ID (can be dynamic if needed)
-        amountPaid: this.totalDiscountPrice,  // Total amount dynamically fetched
-        onDate: new Date().toISOString()  // Dynamic timestamp
-      }
-    ]
-  };
-
-  // Send the order payload to the backend
-  this.userService.createOrder(orderPayload).subscribe(
-    (response: any) => {
-      Swal.fire('Order Placed', 'Your order has been placed successfully', 'success');
-      // Optionally, redirect or clear the cart
-    },
-    (error) => {
-      console.error('Error placing order:', error);
-      Swal.fire('Error', 'There was an error placing the order', 'error');
+  placeOrder(paymentMethod: number): void {
+    if (this.isCartEmpty) {
+      Swal.fire('Error', 'Your cart is empty. Please add items to your cart before proceeding.', 'error');
+      return;
     }
-  );
-}
-// Utility method to dynamically generate an order ID
-generateOrderId(): string {
-  return 'ORD-' + new Date().getTime();  // Example, you can improve the logic here
-}
+
+    if (!this.memberId) {
+      Swal.fire('Error', 'Member ID is missing. Please log in and try again.', 'error');
+      return;
+    }
+
+    const orderPayload = {
+      customerId: this.memberId,
+      addressId: this.selectedAddressId,
+      remarks: 'order',
+      orderPayments: [
+        {
+          orderNo: this.generateOrderId(),
+          transactionId: new Date().getTime().toString(),
+          paymentMethodId: paymentMethod,
+          amountPaid: this.totalDiscountPrice,
+          onDate: new Date().toISOString()
+        }
+      ]
+    };
+
+    this.userService.createOrder(orderPayload).subscribe(
+      (response: any) => {
+        Swal.fire('Order Placed', 'Your order has been placed successfully', 'success');
+        sessionStorage.setItem('orderNo', response.orderId);
+        this.router.navigate(['/order-invoice']);
+      },
+      (error) => {
+        console.error('Error placing order:', error);
+        Swal.fire('Error', 'There was an error placing the order', 'error');
+      }
+    );
+  }
+
+  generateOrderId(): string {
+    return Math.floor(1000000000 + Math.random() * 9000000000).toString(); // Generates a 10-digit random number
+  }
+  
 }
