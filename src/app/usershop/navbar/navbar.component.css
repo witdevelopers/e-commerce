@@ -288,3 +288,23 @@ img {
     text-align: center;
   }
 
+  input{
+    border: none !important;
+    width: 100%;
+    height: 38px;
+    display: flex;
+    border-radius: 3px;
+    align-items: center;
+    position: relative;
+  }
+  input:focus {
+    outline: none !important;
+    border: none !important; /* Optionally remove the border */
+  }
+  
+  /* Optional: Customize the border or shadow when focused */
+  input:focus {
+    outline: none !important; /* Hide the outline */
+    /* border: 1px solid transparent; */ /* Or transparent to prevent border */
+    box-shadow: none !important; /* If a shadow is applied */
+  }
