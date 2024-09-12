@@ -33,6 +33,7 @@ export class ProductSliderComponent implements OnInit, AfterViewInit, OnDestroy 
       .subscribe({
         next: (data) => {
           this.homePageSectionProducts = this.groupProductsBySection(data);
+          console.log("ye le homepage section ka ", this.homePageSectionProducts);
           setTimeout(() => this.initializeSwipers(), 0); // Initialize Swipers after data is loaded
         },
         error: (err) => console.error('Failed to load home page section products:', err),

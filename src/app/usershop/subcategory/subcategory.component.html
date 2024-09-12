@@ -1,9 +1,9 @@
-<div>
-  <label for="minPrice">Min Price:</label>
-  <input type="number" [(ngModel)]="minPrice" (input)="filterByPrice()" placeholder="Min Price">
+<div class="price-filter-container">
+  <label for="minPrice" class="price-label">Min Price:</label>
+  <input type="number" [(ngModel)]="minPrice" (input)="filterByPrice()" class="price-input" placeholder="Min Price">
   
-  <label for="maxPrice">Max Price:</label>
-  <input type="number" [(ngModel)]="maxPrice" (input)="filterByPrice()" placeholder="Max Price">
+  <label for="maxPrice" class="price-label">Max Price:</label>
+  <input type="number" [(ngModel)]="maxPrice" (input)="filterByPrice()" class="price-input" placeholder="Max Price">
 </div>
 
 <!-- Product List -->
@@ -28,7 +28,5 @@
       </div>
     </div>
   </div>
-  <div *ngIf="filteredSubcategoryDetails.length === 0">
-    <p>No products found in this price range.</p>
-  </div>
+ 
 </main>

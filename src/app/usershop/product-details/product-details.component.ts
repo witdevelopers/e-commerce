@@ -33,6 +33,7 @@ export class ProductDetailsComponent implements OnInit {
   loadProductDetails(id: number): void {
     this.userService.getProductById(id).subscribe((response: any) => {
       this.singleProduct = response.singleProduct;
+      console.log("Ye le single product", this.singleProduct);
       this.singleProductDetails = response.singleProductDetails;
       this.singleProductImages = response.singleProductImages;
 

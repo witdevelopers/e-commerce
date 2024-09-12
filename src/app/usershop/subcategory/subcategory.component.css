@@ -145,13 +145,74 @@ h6 del {
 }
 .card-header img {
   width: 100%;
-  height: 250px;
+  height: 300px;
   object-fit: cover;
   border-top-left-radius: 8px;
   border-top-right-radius: 8px;
   opacity: 0;
   animation: fadeIn 0.7s forwards;
 }
+
+/* Container for the price filter */
+.price-filter-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 20px;
+  margin: 20px 0;
+  padding: 10px;
+  border-radius: 8px;
+  background-color: #f4f4f4;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Labels */
+.price-label {
+  font-size: 16px;
+  font-weight: 600;
+  color: #333;
+  margin-right: 10px;
+}
+
+/* Inputs */
+.price-input {
+  width: 150px;
+  padding: 10px;
+  border: 2px solid #ccc;
+  border-radius: 4px;
+  font-size: 14px;
+  outline: none;
+  transition: border-color 0.3s ease;
+}
+
+.price-input:focus {
+  border-color: #007bff;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .price-filter-container {
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .price-input {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .price-label {
+    font-size: 14px;
+  }
+
+  .price-input {
+    font-size: 12px;
+    padding: 8px;
+  }
+}
+
 
 @keyframes fadeIn {
   from {
