@@ -10,8 +10,13 @@ import Swal from 'sweetalert2';
 })
 export class SubcategoryComponent implements OnInit {
   subcategoryDetails: any[] = [];
+  filteredSubcategoryDetails: any[] = [];  // Filtered products to display
   subcategoryId: number;
   imageBaseUrl: string = 'https://www.mbp18k.com/Shop/';  // Base URL for images
+
+  // Price filter properties
+  minPrice: number = 0;
+  maxPrice: number = 10000;
 
   constructor(
     private route: ActivatedRoute,
@@ -31,7 +36,7 @@ export class SubcategoryComponent implements OnInit {
     this.subcategoryService.getAllProductByCategoryId(id).subscribe(response => {
       // Assuming the API response has a `table` property which is an array
       this.subcategoryDetails = response.table ? response.table : [];
-      
+
       // Prepend base URL to image paths
       this.subcategoryDetails = this.subcategoryDetails.map(product => {
         return {
@@ -40,10 +45,20 @@ export class SubcategoryComponent implements OnInit {
         };
       });
 
+      // Initially, show all products
+      this.filteredSubcategoryDetails = [...this.subcategoryDetails];
+
       console.log('Processed Subcategory Details:', this.subcategoryDetails);
     },
     error => {
       console.error('Error fetching subcategory details:', error);
+    });
+  }
+
+  // Method to filter products by price
+  filterByPrice(): void {
+    this.filteredSubcategoryDetails = this.subcategoryDetails.filter(product => {
+      return product.discountPrice >= this.minPrice && product.discountPrice <= this.maxPrice;
     });
   }
 

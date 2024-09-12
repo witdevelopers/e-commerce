@@ -1,299 +1,314 @@
+/* General Reset */
 * {
-  padding: 0;
   margin: 0;
+  padding: 0;
   box-sizing: border-box;
-}
-
-:root {
-  --primary-text-color: #183b56;
-  --secondary-text-color: #577592;
-  --accent-color: #2294ed;
-  --accent-color-dark: #1d69a3;
 }
 
 body {
   font-family: "Poppins", sans-serif;
-  color: var(--primary-text-color);
-  background-color: #ebe8ff;
-  margin: 0;
-  padding: 0;
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
+  color: #183b56;
+  background-color: #f5f5f5;
 }
 
-/* Navbar */
-nav {
-  background-color: #f3faff;
-  box-shadow: 0 0 4px #bbd0e2;
-  position: fixed;
-  top: 0;
-  z-index: 99;
-  left: 0;
-  right: 0;
+/* Price Filter */
+div label {
+  font-weight: 600;
+  color: #183b56;
+  margin-right: 10px;
 }
 
-.main-nav {
-  justify-content: space-between;
-  padding-block: 8px;
+div input[type="number"] {
+  padding: 10px;
+  border: 1px solid #2294ed;
+  border-radius: 4px;
+  outline: none;
+  margin-right: 20px;
+  width: 150px;
+  transition: all 0.3s ease;
 }
 
-.company-logo img {
-  width: 120px;
-}
-
-.nav-links ul {
-  gap: 16px;
-}
-
-.hover-link {
-  cursor: pointer;
-}
-
-.hover-link:hover {
-  color: var(--secondary-text-color);
-}
-
-.hover-link:active {
-  color: red;
-}
-
-.nav-item.active {
-  color: var(--accent-color);
+div input[type="number"]:focus {
+  border-color: #1d69a3;
 }
 
 /* Main Content */
 main {
   padding: 20px;
-  margin-top: 80px; /* Ensure content isn't hidden behind fixed navbar */
+  margin-top: 20px;
 }
 
-/* Cards */
-.cards-container {
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.flex {
   display: flex;
-  justify-content: space-between;
   flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.cards-container {
   gap: 20px;
 }
 
 .card {
-  position: relative; /* Ensure the badge is positioned relative to the card */
   width: 100%;
-  max-width: 360px;
-  min-height: 400px;
-  box-shadow: 0 0 4px #d4ecff;
-  border-radius: 4px;
-  cursor: pointer;
+  max-width: 300px;
+  min-height: 450px;
   background-color: #fff;
-  overflow: hidden;
-  transition: all 0.3s ease;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
 }
 
 .card:hover {
-  box-shadow: 1px 1px 8px #d4ecff;
-  background-color: #f9fdff;
-  transform: translate(-2px);
+  transform: translateY(-5px);
 }
 
 .card-header img {
   width: 100%;
-  height: 280px;
+  height: 300px;
   object-fit: cover;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
 }
 
 .card-content {
-  padding: 12px;
+  padding: 15px;
   text-align: center;
 }
 
-.news-source {
-  margin-block: 12px;
+h3 {
+  color: #183b56;
+  font-size: 1.4em;
 }
 
-/* Badge styles */
-.badge-area-2 {
-  position: absolute;
-  top: 10px;
-  left: 10px;
-  background: #000;
+h6 {
+  margin-top: 10px;
+  color: #577592;
+  font-size: 1em;
+}
+
+h6 del {
+  color: red;
+}
+
+.card {
+  position: relative;
+  width: 100%;
+  max-width: 300px;
+  min-height: 450px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-10px); /* Slight lift on hover */
+  box-shadow: 0 8px 12px rgba(0, 0, 0, 0.15);
+}
+.cart-button {
+  position: relative;
+  width: 160px;
+  height: 50px;
+  background-color: #2294ed;
   color: #fff;
-  padding: 5px 10px;
+  border: none;
   border-radius: 5px;
-  z-index: 10; /* Ensure it's above other elements */
+  margin-top: 15px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.3s ease;
 }
 
-.badge-product-sale {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+.cart-button:hover {
+  background-color: #1d69a3;
+  transform: scale(1.05); /* Slight scaling */
+}
+@keyframes fadeInSlideUp {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.card-content h3,
+.card-content h6 {
+  animation: fadeInSlideUp 0.5s ease-in-out;
+}
+.card-header img {
+  width: 100%;
+  height: 250px;
+  object-fit: cover;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+  opacity: 0;
+  animation: fadeIn 0.7s forwards;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+.cart-button.clicked i.fa-shopping-cart {
+  animation: cartMove 0.5s ease forwards;
+}
+
+@keyframes cartMove {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(50px);
+  }
+}
+
+.cart-button.clicked i.fa-box {
+  animation: boxDrop 0.5s ease forwards;
+}
+
+@keyframes boxDrop {
+  0% {
+    top: -100%;
+  }
+  100% {
+    top: 50%;
+  }
+}
+@keyframes fadeInUp {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.cards-container {
+  animation: fadeInUp 1s ease-in-out;
 }
 
 .badge-product-sale .new {
-  font-size: 14px;
+  font-size: 12px;
 }
 
 .badge-product-sale .percent {
-  font-size: 18px;
+  font-size: 16px;
   font-weight: bold;
 }
 
 /* Cart Button */
 .cart-button {
   position: relative;
-  padding: 10px;
-  width: 200px;
-  height: 60px;
-  border: 0;
-  border-radius: 10px;
-  background-color: #4834d4;
-  outline: none;
-  cursor: pointer;
+  width: 160px;
+  height: 50px;
+  background-color: #2294ed;
   color: #fff;
-  transition: .3s ease-in-out;
+  border: none;
+  border-radius: 5px;
+  margin-top: 15px;
   overflow: hidden;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 
 .cart-button:hover {
-  background-color: #35269b;
-}
-
-.cart-button:active {
-  transform: scale(.9);
-}
-
-.cart-button .fa-shopping-cart {
-  position: absolute;
-  z-index: 2;
-  top: 50%;
-  left: -10%;
-  font-size: 2em;
-  transform: translate(-50%, -50%);
-}
-
-.cart-button .fa-box {
-  position: absolute;
-  z-index: 3;
-  top: -20%;
-  left: 52%;
-  font-size: 1.2em;
-  transform: translate(-50%, -50%);
+  background-color: #1d69a3;
 }
 
 .cart-button span {
   position: absolute;
-  z-index: 3;
-  left: 50%;
   top: 50%;
-  font-size: 1.2em;
-  color: #fff;
+  left: 50%;
   transform: translate(-50%, -50%);
 }
 
-.cart-button span.add-to-cart {
+.cart-button .add-to-cart {
   opacity: 1;
 }
 
-.cart-button span.added {
+.cart-button .added {
   opacity: 0;
 }
 
-.cart-button.clicked .fa-shopping-cart {
-  animation: cart 1.5s ease-in-out forwards;
+.cart-button.clicked .add-to-cart {
+  animation: fadeOut 1.5s forwards;
 }
 
-.cart-button.clicked .fa-box {
-  animation: box 1.5s ease-in-out forwards;
+.cart-button.clicked .added {
+  animation: fadeIn 1.5s forwards;
 }
 
-.cart-button.clicked span.add-to-cart {
-  animation: txt1 1.5s ease-in-out forwards;
+/* Shopping Cart Icon */
+.cart-button i.fa-shopping-cart {
+  position: absolute;
+  left: 10px;
+  top: 50%;
+  transform: translateY(-50%);
 }
 
-.cart-button.clicked span.added {
-  animation: txt2 1.5s ease-in-out forwards;
+.cart-button i.fa-box {
+  position: absolute;
+  right: 10px;
+  top: -100%;
+  transition: top 0.3s ease;
 }
 
-@keyframes cart {
+.cart-button.clicked i.fa-box {
+  top: 50%;
+}
+
+/* Animations */
+@keyframes fadeOut {
   0% {
-      left: -10%;
-  }
-  40%, 60% {
-      left: 50%;
+    opacity: 1;
   }
   100% {
-      left: 110%;
+    opacity: 0;
   }
 }
 
-@keyframes box {
-  0%, 40% {
-      top: -20%;
-  }
-  60% {
-      top: 40%;
-      left: 52%;
-  }
-  100% {
-      top: 40%;
-      left: 112%;
-  }
-}
-
-@keyframes txt1 {
+@keyframes fadeIn {
   0% {
-      opacity: 1;
-  }
-  20%, 100% {
-      opacity: 0;
-  }
-}
-
-@keyframes txt2 {
-  0%, 80% {
-      opacity: 0;
+    opacity: 0;
   }
   100% {
-      opacity: 1;
+    opacity: 1;
   }
 }
 
-/* Media Queries */
+/* Responsive Design */
 @media (max-width: 768px) {
+  .flex {
+    flex-direction: column;
+    align-items: center;
+  }
+
   .card {
-      width: 100%;
-      max-width: 100%;
-  }
-
-  .cards-container {
-      flex-direction: column;
-      align-items: center;
-  }
-
-  .cart-button {
-      width: 160px;
-      height: 50px;
+    max-width: 100%;
   }
 }
 
 @media (max-width: 480px) {
-  .company-logo img {
-      width: 100px;
-  }
-
-  .search-bar {
-      width: 150px;
-  }
-
-  .search-button {
-      padding: 6px 16px;
-  }
-
-  .card {
-      width: 100%;
+  div input[type="number"] {
+    width: 120px;
   }
 
   .cart-button {
-      width: 140px;
-      height: 45px;
+    width: 140px;
+    height: 45px;
   }
 }
