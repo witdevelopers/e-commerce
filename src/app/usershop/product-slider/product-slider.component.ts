@@ -77,6 +77,10 @@ export class ProductSliderComponent implements OnInit, AfterViewInit, OnDestroy 
       new Swiper(`#swiper-${sectionName}`, {
         loop: true,
         centeredSlides: true,
+        autoplay: {
+          delay: 3500,
+          disableOnInteraction: false,
+      },
         navigation: {
           nextEl: `.swiper-button-next[data-swiper-id="swiper-${sectionName}"]`,
           prevEl: `.swiper-button-prev[data-swiper-id="swiper-${sectionName}"]`,

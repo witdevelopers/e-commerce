@@ -15,6 +15,7 @@ export class NavbarComponent implements OnInit {
   subCategory: { [key: number]: any[] } = {};
   isSubCategoryVisible: { [key: number]: boolean } = {};
   productByKeyword: any[] = [];
+  searchTerm: string = ''; // Track search input
 
   constructor(private userService: UserService, private router: Router) {}
 
@@ -69,9 +70,11 @@ export class NavbarComponent implements OnInit {
   }
 
   onSearch(event: any): void {
-    const keyword = event.target.value;
-    if (keyword.length > 2) {
-      this.getProductByKeyword(keyword);
+    this.searchTerm = event.target.value; // Update search term
+    if (this.searchTerm.length > 2) {
+      this.getProductByKeyword(this.searchTerm);
+    } else {
+      this.clearSearch();
     }
   }
 
@@ -80,19 +83,17 @@ export class NavbarComponent implements OnInit {
       this.productByKeyword = data;
     });
   }
-  
+
   navigateToProduct(productId: string): void {
-    // Use Angular Router to navigate to the product page
     this.router.navigate([`/product/${productId}`]);
   }
-  
 
   onAddToCart(): void {
     this.router.navigate(['/shopping-cart']);
   }
-  
 
   clearSearch(): void {
-    this.productByKeyword = [];
+    this.searchTerm = ''; // Clear search term
+    this.productByKeyword = []; // Clear the search results
   }
 }
