@@ -27,7 +27,7 @@ export class OrderHistoryComponent implements OnInit {
         }
       );
     } else {
-      this.errorMessage = 'No customerId found in session storage.';
+      this.errorMessage = 'Please login to see your orders.';
     }
   }
 }

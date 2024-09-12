@@ -16,16 +16,16 @@ export class SignupComponent implements OnInit {
     private fb: FormBuilder,
     private authService: AuthService,
     private router: Router
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     this.signupForm = this.fb.group({
-      // userId: ['', Validators.required],
+      userId: ['', Validators.required],
       name: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
       password: ['', Validators.required],
       confirmPassword: ['', Validators.required]
-    }, { validator: this.passwordMatchValidator });
+    }, { validators: this.passwordMatchValidator }); // Correct usage of "validators"
   }
 
   private passwordMatchValidator(form: FormGroup) {
@@ -36,13 +36,13 @@ export class SignupComponent implements OnInit {
 
   async onSubmit() {
     if (this.signupForm.valid) {
-      const { password, name, email } = this.signupForm.value;
+      const { userId, password, name, email } = this.signupForm.value;
 
       try {
-        const res: any = await this.authService.registerMLM({  password, name, email });
+        // Correct way to pass the required parameters to the registerMLM method
+        const res: any = await this.authService.registerMLM(userId, password, name, email);
 
         if (res && res.status) {
-          console.log("Registered");
           Swal.fire("Registered Successfully", '', 'success');
           this.router.navigate(['/auth/signin']);
         } else {
