@@ -23,7 +23,8 @@ export class ProductSliderComponent implements OnInit, AfterViewInit, OnDestroy 
   }
 
   ngAfterViewInit(): void {
-    this.initializeSwipers(); // Initialize Swipers after view is fully initialized
+    // Initialize Swipers only after the view has been fully initialized and data is loaded
+    this.ngUnsubscribe.subscribe(() => this.initializeSwipers());
   }
 
   private loadHomeSectionProductsDetails(): void {
@@ -34,7 +35,8 @@ export class ProductSliderComponent implements OnInit, AfterViewInit, OnDestroy 
         next: (data) => {
           this.homePageSectionProducts = this.groupProductsBySection(data);
           console.log("Home Page Section Products:", this.homePageSectionProducts);
-          setTimeout(() => this.initializeSwipers(), 0); // Initialize Swipers after data is loaded
+          // Use setTimeout to ensure Swipers are initialized after data is available
+          setTimeout(() => this.initializeSwipers(), 0);
         },
         error: (err) => console.error('Failed to load home page section products:', err),
       });
@@ -43,16 +45,29 @@ export class ProductSliderComponent implements OnInit, AfterViewInit, OnDestroy 
   private groupProductsBySection(data: any[]): any {
     return data.reduce((sections, product) => {
       const section = product.sectionName || 'Others';
+  
+      // Initialize the section if not present
       if (!sections[section]) sections[section] = [];
+  
+      // Process the imageUrl by replacing tilde and handling relative paths
+      const processedImageUrl = product.imageUrl
+        ? product.imageUrl.includes('~/') 
+          ? product.imageUrl.replace('~/', Settings.imageBaseUrl) // Replace tilde with base URL
+          : product.imageUrl.startsWith('http') 
+            ? product.imageUrl 
+            : `${Settings.imageBaseUrl}${product.imageUrl}` // Prepend base URL for relative paths
+        : 'assets/default-image.jpg'; // Fallback to default image if imageUrl is missing
+  
+      // Add the product to the section with the processed imageUrl
       sections[section].push({
         ...product,
-        imageUrl: product.imageUrl.startsWith('http')
-          ? product.imageUrl
-          : `${Settings.isDevelopment ? Settings.apiUrl : Settings.ApiUrlLive}${product.imageUrl}`,
+        imageUrl: processedImageUrl,
       });
+  
       return sections;
     }, {});
   }
+  
 
   addToCart(productDtId: number): void {
     const customerId = sessionStorage.getItem('memberId') || localStorage.getItem('memberId');

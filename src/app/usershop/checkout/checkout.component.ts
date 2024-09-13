@@ -38,18 +38,17 @@ export class CheckoutComponent implements OnInit {
   states: any[] = [];
   
   isAddressSelected = false;
-  private imageBaseUrl: string; // Dynamic base URL for images
+  private imageBaseUrl: string = Settings.imageBaseUrl; // Dynamic base URL for images
   
   addressTypeMapping = {
     Home: 1,
     Office: 2,
     Other: 3
   };
-  selectedAddressId: null;
+  selectedAddressId: number | null = null;
 
   constructor(private userService: UserService, private router: Router) {
-    // Set the image base URL dynamically based on environment
-    this.imageBaseUrl = Settings.isDevelopment ? Settings.apiUrl : Settings.ApiUrlLive;
+    // No need to set imageBaseUrl in constructor as it's already set statically
   }
 
   ngOnInit(): void {
@@ -66,7 +65,7 @@ export class CheckoutComponent implements OnInit {
   resetNewAddress(): void {
     this.newAddress = {
       customerId: 0,
-      name: '',    
+      name: '',
       address1: '',
       address2: '',
       address3: '',
@@ -107,7 +106,7 @@ export class CheckoutComponent implements OnInit {
           if (!this.isCartEmpty) {
             this.cartDetails.items = this.cartDetails.items.map((item: any) => {
               if (item.imageUrl && item.imageUrl.startsWith('~/')) {
-                item.imageUrl = this.imageBaseUrl + item.imageUrl.replace('~/', '');
+                item.imageUrl = this.getImageUrl(item.imageUrl); // Dynamically construct image URL
               }
               return item;
             });
@@ -218,10 +217,10 @@ export class CheckoutComponent implements OnInit {
     }
   }
 
-  selectAddress(address: number): void {
-    this.selectedAddress = address;
+  selectAddress(addressId: number): void {
+    this.selectedAddress = addressId;
     this.isAddressSelected = true;
-    this.userService.setSelectedAddressId(address);
+    this.userService.setSelectedAddressId(addressId);
   }
 
   checkout(): void {
@@ -243,5 +242,12 @@ export class CheckoutComponent implements OnInit {
         alert('There was an error fetching the country list. Please try again later.');
       }
     );
+  }
+
+  // Method to construct the full image URL
+  private getImageUrl(imagePath: string): string {
+    return imagePath
+      ? `${this.imageBaseUrl}${imagePath.replace('~/', '')}`  // Construct full image URL using dynamic base URL
+      : 'assets/default-image.jpg';  // Fallback image URL
   }
 }

@@ -16,6 +16,7 @@
     "MainNetHttpProvider":"https://polygon-rpc.com",
     "ApiUrl": "https://localhost:44320/",
     "ApiUrlLive": "https://apishop.hiicall.com/",
+    "ImageUrl": "https://hiicall.com/mlm/website/",
     "Abi":[
         {
             "inputs": [],
