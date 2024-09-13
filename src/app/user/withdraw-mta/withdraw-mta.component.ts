@@ -72,7 +72,7 @@ export class WithdrawMtaComponent implements OnInit {
             icon: "success",
             title: result.message
           }).then(async () => {
-           // await this.company.getCompanyDetails();
+            await this.company.getCompanyDetails();
             this.initialize()
           });
         }

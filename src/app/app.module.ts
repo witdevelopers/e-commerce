@@ -131,7 +131,7 @@ import { OrderInvoiceComponent } from './usershop/order-invoice/order-invoice.co
   providers: [
     { provide: 'Window',  useValue: window },
     { provide: HTTP_INTERCEPTORS, useClass: HttpInterceptorService, multi: true },
-    // { provide: APP_INITIALIZER, useFactory: (config: CompanyService) => () => config.getCompanyDetails(), deps: [CompanyService], multi: true },
+     { provide: APP_INITIALIZER, useFactory: (config: CompanyService) => () => config.getCompanyDetails(), deps: [CompanyService], multi: true },
   ],
   bootstrap: [AppComponent]
 })

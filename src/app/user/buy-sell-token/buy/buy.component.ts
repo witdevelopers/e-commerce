@@ -80,7 +80,7 @@ export class BuyComponent implements OnInit {
               icon: "success",
               title: 'Deposit successful!'
             }).then(async () => {
-              //await this.company.getCompanyDetails();
+              await this.company.getCompanyDetails();
               this.initialize()
             });
           }
