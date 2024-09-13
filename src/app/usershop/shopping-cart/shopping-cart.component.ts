@@ -13,12 +13,11 @@ export class ShoppingCartComponent implements OnInit {
   cartItems: any[] = [];
   summary: any = {};
   customerId: number | null = null;
-  imageBaseUrl: string; // Dynamic base URL for images
+  imageBaseUrl: string = Settings.imageBaseUrl; // Use dynamic base URL from Settings
   quantities: number[] = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 
   constructor(private userService: UserService, private router: Router) {
-    // Set the image base URL based on the environment
-    this.imageBaseUrl = Settings.isDevelopment ? Settings.apiUrl : Settings.ApiUrlLive;
+    // No need to set imageBaseUrl in constructor, it's already set statically
   }
 
   ngOnInit(): void {
@@ -39,7 +38,7 @@ export class ShoppingCartComponent implements OnInit {
       (data) => {
         this.cartItems = data.items?.map((item: any) => ({
           ...item,
-          imageUrl: this.imageBaseUrl + item.imageUrl.replace('~/', ''),
+          imageUrl: this.getImageUrl(item.imageUrl), // Dynamically construct the image URL
         })) || [];
 
         this.summary = {
@@ -55,6 +54,12 @@ export class ShoppingCartComponent implements OnInit {
         });
       }
     );
+  }
+
+  getImageUrl(imagePath: string): string {
+    return imagePath
+      ? `${this.imageBaseUrl}${imagePath.replace('~/', '')}` // Construct the full URL using dynamic base URL
+      : 'assets/default-image.jpg'; // Fallback image URL
   }
 
   updateCartItem(productDtId: number, quantity: number): void {

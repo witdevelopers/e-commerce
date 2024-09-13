@@ -20,11 +20,10 @@ export class CheckoutConfirmComponent implements OnInit {
   selectedPaymentMethod: string = '';  // Selected payment method
   memberId: number = 0; // User's memberId for API
   selectedAddressId: number | null = null;
-  private imageBaseUrl: string; // Base URL for images from Settings
+  private imageBaseUrl: string = Settings.imageBaseUrl; // Dynamic base URL for images from Settings
 
   constructor(private userService: UserService, private router: Router) {
-    // Set the image base URL dynamically based on the environment
-    this.imageBaseUrl = Settings.isDevelopment ? Settings.apiUrl : Settings.ApiUrlLive;
+    // No need to set imageBaseUrl in constructor as it's already set statically
   }
 
   ngOnInit(): void {
@@ -64,7 +63,7 @@ export class CheckoutConfirmComponent implements OnInit {
             // Fix image URLs and calculate prices/quantities
             this.cartDetails.items = this.cartDetails.items.map((item: any) => {
               if (item.imageUrl?.startsWith('~/')) {
-                item.imageUrl = this.imageBaseUrl + item.imageUrl.replace('~/', '');
+                item.imageUrl = this.getImageUrl(item.imageUrl);  // Dynamically construct image URL
               }
               return item;
             });
@@ -80,6 +79,13 @@ export class CheckoutConfirmComponent implements OnInit {
     } else {
       Swal.fire('Error', 'Customer ID is missing. Please log in and try again.', 'error');
     }
+  }
+
+  // Method to construct the full image URL
+  private getImageUrl(imagePath: string): string {
+    return imagePath
+      ? `${this.imageBaseUrl}${imagePath.replace('~/', '')}`  // Construct full image URL using dynamic base URL
+      : 'assets/default-image.jpg';  // Fallback image URL
   }
 
   onPaymentMethodSelect(method: string): void {
@@ -186,5 +192,4 @@ export class CheckoutConfirmComponent implements OnInit {
   generateOrderId(): string {
     return Math.floor(1000000000 + Math.random() * 9000000000).toString(); // Generates a 10-digit random number
   }
-
 }

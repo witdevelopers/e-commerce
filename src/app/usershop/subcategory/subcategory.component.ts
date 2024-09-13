@@ -13,7 +13,7 @@ export class SubcategoryComponent implements OnInit {
   subcategoryDetails: any[] = [];
   filteredSubcategoryDetails: any[] = [];  // Filtered products to display
   subcategoryId: number;
-  imageBaseUrl: string;  // Base URL for images
+  imageBaseUrl: string = Settings.imageBaseUrl;  // Use the dynamic base URL from Settings
 
   // Price filter properties
   minPrice: number = 0;
@@ -23,8 +23,7 @@ export class SubcategoryComponent implements OnInit {
     private route: ActivatedRoute,
     private subcategoryService: UserService
   ) {
-    // Set the image base URL based on the environment
-    this.imageBaseUrl = Settings.isDevelopment ? Settings.apiUrl : Settings.ApiUrlLive;
+    // No need to set imageBaseUrl in constructor as it's already set statically
   }
 
   ngOnInit(): void {
@@ -45,7 +44,7 @@ export class SubcategoryComponent implements OnInit {
       this.subcategoryDetails = this.subcategoryDetails.map(product => {
         return {
           ...product,
-          imageUrl: this.imageBaseUrl + product.imageUrl  // Construct full image URL
+          imageUrl: this.getImageUrl(product.imageUrl)  // Dynamically construct full image URL
         };
         
       });
@@ -58,6 +57,13 @@ export class SubcategoryComponent implements OnInit {
     error => {
       console.error('Error fetching subcategory details:', error);
     });
+  }
+
+  // Method to construct the full image URL
+  getImageUrl(imagePath: string): string {
+    return imagePath
+      ? `${this.imageBaseUrl}${imagePath.replace('~/', '')}`  // Construct full image URL using dynamic base URL
+      : 'assets/default-image.jpg';  // Fallback image URL
   }
 
   // Method to filter products by price

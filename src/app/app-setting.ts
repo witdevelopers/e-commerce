@@ -26,6 +26,5 @@ export class Settings{
     static wsUrl: string = this.isDevelopment?x.ApiUrl:x.ApiUrlLive;
     static roiRecordsLimit: number = 10;
     static ApiUrlLive: string = this.isDevelopment?x.ApiUrl:x.ApiUrlLive;
-    static imageBaseUrl: string = Settings.isDevelopment ? Settings.apiUrl : Settings.ApiUrlLive;
-
+    static imageBaseUrl: string = x.ImageUrl;
 }

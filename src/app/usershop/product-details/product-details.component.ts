@@ -45,10 +45,21 @@ export class ProductDetailsComponent implements OnInit {
   }
 
   getImageUrl(imagePath: string): string {
-    return imagePath
-      ? imagePath.replace('~', Settings.imageBaseUrl) // Use dynamic imageBaseUrl
-      : this.mainImageUrl;
+    if (!imagePath) {
+      return 'assets/default-image.jpg'; // Fallback to default image if no image path is provided
+    }
+  
+    // Replace tilde with imageBaseUrl if present
+    if (imagePath.includes('~/')) {
+      imagePath = imagePath.replace('~/', Settings.imageBaseUrl);
+    }
+  
+    // If the path is relative and does not start with 'http', prepend imageBaseUrl
+    return !imagePath.startsWith('http')
+      ? `${Settings.imageBaseUrl}${imagePath}`
+      : imagePath;
   }
+  
 
   changeMainImage(imageUrl: string): void {
     this.mainImageUrl = this.getImageUrl(imageUrl);
