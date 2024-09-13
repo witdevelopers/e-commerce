@@ -1,7 +1,7 @@
 {
     "AppName":"Meta Global",
-    "IsDevelopment": true,
-    "IsTestNetworkSupported":true,
+    "IsDevelopment": false,
+    "IsTestNetworkSupported":false,
     "MainNetContractAddress":"TDJ1is3SAyLRKE5tZ7krUmsgYPzNPTRBWv",
     "TestNetContractAddress":"TDJ1is3SAyLRKE5tZ7krUmsgYPzNPTRBWv",
     "DefaultSponsor":"THaxgUTJxrwxzBSceAwW7C2AxAVLk4dJ4x",
@@ -9,13 +9,13 @@
     "CoinName":"Meta",
     "CoinSymbol":"MTN",
     "PaymentToken": "TRX",
-    "Website":"https://meta3xglobal.com/",
+    "Website":"https://shop.welsomeit.com/",
     "Logo": "assets/logo.png",
     "MainNetExplorer":"https://polygonscan.com",
     "TestNetExplorer":"https://mumbai.polygonscan.com",
     "MainNetHttpProvider":"https://polygon-rpc.com",
     "ApiUrl": "https://localhost:44320/",
-    "ApiUrlLive": "https://api.meta3xglobal.com/",
+    "ApiUrlLive": "https://apishop.hiicall.com/",
     "Abi":[
         {
             "inputs": [],

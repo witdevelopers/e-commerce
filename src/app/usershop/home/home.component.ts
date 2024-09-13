@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from 'src/app/user/services/user.service';
+import { Settings } from 'src/app/app-setting'; // Adjust the import path as needed
 
 @Component({
   selector: 'app-home',
@@ -13,23 +14,26 @@ export class HomeComponent implements OnInit {
     { imageUrl: 'assets/Shopimg/2.jpg', alt: 'Static Placeholder 2' },
     { imageUrl: 'assets/Shopimg/3.jpg', alt: 'Static Placeholder 3' }
   ];
-  baseUrl: string = 'https://www.mbp18k.com';
+  baseUrl: string;
   currentSlide = 0;
-  isDataFetched = false; // Start with false to indicate data is not yet fetched
+  isDataFetched = false;
 
-  constructor(private userService: UserService) {}
+  constructor(private userService: UserService) {
+    // Set the baseUrl based on the development mode
+    this.baseUrl = Settings.isDevelopment ? Settings.apiUrl : Settings.ApiUrlLive;
+  }
 
   ngOnInit(): void {
     this.loadBanners();
   }
 
   loadBanners() {
-    console.log('Starting to load banners...'); // Debug: Start of loading banners
+    console.log('Starting to load banners...');
 
     this.userService.getBanners().subscribe(
       (res: any[]) => {
-        console.log('Response received from server:', res); // Debug: Data received from server
-        
+        console.log('Response received from server:', res);
+
         if (res && res.length > 0) {
           this.banners = res.map((banner) => {
             if (!banner.imageUrl.startsWith('http')) {
@@ -37,32 +41,31 @@ export class HomeComponent implements OnInit {
             }
             return banner;
           });
-          this.isDataFetched = true; // Data is fetched and banners are available
-          console.log('Dynamic banners set:', this.banners); // Debug: Dynamic banners set
+          this.isDataFetched = true;
+          console.log('Dynamic banners set:', this.banners);
         } else {
-          this.isDataFetched = false; // No data, fallback to static images
-          console.log('No data found, falling back to static images.'); // Debug: No data
+          this.isDataFetched = false;
+          console.log('No data found, falling back to static images.');
         }
       },
       (error) => {
-        console.error('Error fetching banners:', error); // Debug: Error in fetching data
-        this.isDataFetched = false; // On error, fallback to static images
+        console.error('Error fetching banners:', error);
+        this.isDataFetched = false;
       }
     );
   }
 
-  // Slide navigation methods
   nextSlide(): void {
     const length = this.isDataFetched ? this.banners.length : this.staticBanners.length;
-    console.log('Current slide before next:', this.currentSlide); // Debug: Current slide before moving to the next
+    console.log('Current slide before next:', this.currentSlide);
     this.currentSlide = (this.currentSlide + 1) % length;
-    console.log('Next slide:', this.currentSlide); // Debug: Current slide after moving to the next
+    console.log('Next slide:', this.currentSlide);
   }
 
   prevSlide(): void {
     const length = this.isDataFetched ? this.banners.length : this.staticBanners.length;
-    console.log('Current slide before previous:', this.currentSlide); // Debug: Current slide before moving to the previous
+    console.log('Current slide before previous:', this.currentSlide);
     this.currentSlide = (this.currentSlide - 1 + length) % length;
-    console.log('Previous slide:', this.currentSlide); // Debug: Current slide after moving to the previous
+    console.log('Previous slide:', this.currentSlide);
   }
 }
