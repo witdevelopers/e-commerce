@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { UserService } from 'src/app/user/services/user.service';
 import { HttpClient } from '@angular/common/http';
 import Swal from 'sweetalert2';
+import { Settings } from 'src/app/app-setting'; // Adjust the import path as needed
 
 @Component({
   selector: 'app-product-details',
@@ -33,24 +34,19 @@ export class ProductDetailsComponent implements OnInit {
   loadProductDetails(id: number): void {
     this.userService.getProductById(id).subscribe((response: any) => {
       this.singleProduct = response.singleProduct;
-      
       this.singleProductDetails = response.singleProductDetails;
-      console.log("Ye le single product", this.singleProductDetails);
       this.singleProductImages = response.singleProductImages;
 
       // Set the main image URL to the first image if available
       if (this.singleProductImages.length > 0) {
-        this.mainImageUrl = this.getImageUrl(
-          this.singleProductImages[0].imageUrl
-        );
+        this.mainImageUrl = this.getImageUrl(this.singleProductImages[0].imageUrl);
       }
     });
-    console.log('single Product: ', this.singleProduct);
   }
 
   getImageUrl(imagePath: string): string {
     return imagePath
-      ? imagePath.replace('~', 'https://www.mbp18k.com')
+      ? imagePath.replace('~', Settings.imageBaseUrl) // Use dynamic imageBaseUrl
       : this.mainImageUrl;
   }
 
@@ -109,7 +105,7 @@ export class ProductDetailsComponent implements OnInit {
       }
     );
   } 
-  
+   
   buyNow(): void {
     let customerId = sessionStorage.getItem('memberId'); // Try to retrieve customer ID from sessionStorage
 

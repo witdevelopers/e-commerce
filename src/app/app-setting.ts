@@ -1,53 +1,31 @@
-import * as _settings from './settings.json';
 
-const settings = _settings as {
-  AppName: string;
-  IsDevelopment: boolean;
-  IsTestNetworkSupported: boolean;
-  MainNetContractAddress: string;
-  TestNetContractAddress: string;
-  DefaultSponsor: string;
-  TokenContractAddress: string;
-  CoinName: string;
-  CoinSymbol: string;
-  PaymentToken: string;
-  Website: string;
-  Logo: string;
-  MainNetExplorer: string;
-  TestNetExplorer: string;
-  MainNetHttpProvider: string;
-  ApiUrl: string;
-  ApiUrlLive: string;
-  Abi: any[];
-};
+import * as _setting from './settings.json';
 
-export class Settings {
-  static AppName: string = settings.AppName;
-  static isDevelopment: boolean = settings.IsDevelopment;
-  static IsTestNetworkSupported: boolean = settings.IsTestNetworkSupported;
+let x = _setting;
 
-  static contractAddress: string = Settings.IsTestNetworkSupported 
-    ? settings.TestNetContractAddress 
-    : settings.MainNetContractAddress;
+export class Settings{
+    static AppName:string = x.AppName
+    static isDevelopment: boolean = x.IsDevelopment;
+    static IsTestNetworkSupported:boolean = x.IsTestNetworkSupported;
 
-  static DefaultSponsor: string = settings.DefaultSponsor;
-  static abi: any[] = settings.Abi;
+    static contractAddress:string=this.IsTestNetworkSupported?x.TestNetContractAddress:x.MainNetContractAddress;
+    static DefaultSponsor: string = x.DefaultSponsor;
+    static abi:any = x.Abi
 
-  static tokenContractAddress: string = settings.TokenContractAddress;
-  static paymentToken: string = settings.PaymentToken;
-  static coinName: string = settings.CoinName;
-  static coinSymbol: string = settings.CoinSymbol;
-  static website: string = settings.Website;
-  static logo: string = settings.Logo;
-  
-  static explorer: string = Settings.IsTestNetworkSupported 
-    ? settings.TestNetExplorer 
-    : settings.MainNetExplorer;
+    static tokenContractAddress: string = x.TokenContractAddress;
 
-  static mainnetHttpProvider: string = settings.MainNetHttpProvider;
-  static apiUrl: string = Settings.isDevelopment ? settings.ApiUrl : settings.ApiUrlLive;
-  static wsUrl: string = Settings.isDevelopment ? settings.ApiUrl : settings.ApiUrlLive;
+    static paymentToken: string = x.PaymentToken;
 
-  static roiRecordsLimit: number = 10;
-  static ApiUrlLive: string;
+    static coinName:string = x.CoinName;
+    static coinSymbol:string = x.CoinSymbol;
+    static website:string = x.Website;
+    static logo:string = x.Logo;
+    static explorer:string = this.IsTestNetworkSupported?x.TestNetExplorer:x.MainNetExplorer;
+    static mainnetHttpProvider:string = x.MainNetHttpProvider;
+    static apiUrl: string = this.isDevelopment?x.ApiUrl:x.ApiUrlLive;
+    static wsUrl: string = this.isDevelopment?x.ApiUrl:x.ApiUrlLive;
+    static roiRecordsLimit: number = 10;
+    static ApiUrlLive: string = this.isDevelopment?x.ApiUrl:x.ApiUrlLive;
+    static imageBaseUrl: string = Settings.isDevelopment ? Settings.apiUrl : Settings.ApiUrlLive;
+
 }

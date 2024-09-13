@@ -51,7 +51,7 @@ import { HomeComponent } from './usershop/home/home.component';
 import { UsershopMasterComponent } from './usershop/usershop-master/usershop-master.component';
 import { FooterComponent } from './usershop/footer/footer.component';
 import { NavbarComponent } from './usershop/navbar/navbar.component';
-import { BannerComponent } from './usershop/banner/banner.component';
+
 import { SubcategoryComponent } from './usershop/subcategory/subcategory.component';
 import { ProductDetailsComponent } from './usershop/product-details/product-details.component';
 import { ProductSliderComponent } from './usershop/product-slider/product-slider.component';
@@ -100,7 +100,7 @@ import { OrderInvoiceComponent } from './usershop/order-invoice/order-invoice.co
     UsershopMasterComponent,
     FooterComponent,
     NavbarComponent,
-    BannerComponent,
+
     SubcategoryComponent,
     ProductDetailsComponent,
     ProductSliderComponent,

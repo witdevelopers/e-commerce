@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { mixinInitialized } from '@angular/material/core';
 import { Router } from '@angular/router';
 import { Settings } from 'src/app/app-setting';
 

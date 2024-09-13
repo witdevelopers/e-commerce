@@ -1,43 +1,43 @@
 <div *ngFor="let sectionName of objectKeys(homePageSectionProducts)">
   <section>
     <div id="cCarousel">
-    <h1 class="carousel-title">{{ sectionName }}</h1>
-    
-    <div class="swiper" [attr.id]="'swiper-' + sectionName">
-      <!-- Wrapper for Swiper -->
-      <div class="swiper-wrapper">
-        <!-- Product Slides -->
-        <div *ngFor="let product of homePageSectionProducts[sectionName]" class="swiper-slide">
-          <article class="cCarousel-item">
-            <div class="badge-area-2">
-              <div class="badge-product-sale">
-                <span class="new">OFFER</span>
-                <span class="percent">- {{ product.discountPercentage }} %</span>
+      <h1 class="carousel-title">{{ sectionName }}</h1>
+      
+      <div class="swiper" [attr.id]="'swiper-' + sectionName">
+        <!-- Wrapper for Swiper -->
+        <div class="swiper-wrapper">
+          <!-- Product Slides -->
+          <div *ngFor="let product of homePageSectionProducts[sectionName]" class="swiper-slide">
+            <article class="cCarousel-item">
+              <div class="badge-area-2">
+                <div class="badge-product-sale">
+                  <span class="new">OFFER</span>
+                  <span class="percent">- {{ product.discountPercentage }} %</span>
+                </div>
               </div>
-            </div>
-            <img [src]="product.imageUrl" alt="{{ product.productName }}" loading="lazy" [routerLink]="['/product', product.productId]">
-            <div class="infos">
-              <h5>{{ product.productName }}</h5>
-              <div style="display: flex; gap: 7px;">
-                <h6>Rs.{{ product.discountPrice }}</h6>
-                <del><h6 style="color: red;">Rs.{{ product.price }}</h6></del>
+              <img [src]="product.imageUrl" alt="{{ product.productName }}" loading="lazy" [routerLink]="['/product', product.productId]">
+              <div class="infos">
+                <h5>{{ product.productName }}</h5>
+                <div style="display: flex; gap: 7px;">
+                  <h6>Rs.{{ product.discountPrice }}</h6>
+                  <del><h6 style="color: red;">Rs.{{ product.price }}</h6></del>
+                </div>
+                <!-- Add to Cart Button -->
+                <button class="cart-button" (click)="addToCart(product.productId)">
+                  <span class="add-to-cart"> <i class="ri-shopping-cart-2-line"></i> Add to cart</span>
+                  <span class="added">Added</span>
+                  <i class="fas fa-shopping-cart"></i>
+                  <i class="fas fa-box"></i>
+                </button>
               </div>
-              <!-- Add to Cart Button -->
-              <button class="cart-button" (click)="addToCart(product.productId)">
-                <span class="add-to-cart"> <i class="ri-shopping-cart-2-line"></i> Add to cart</span>
-                <span class="added">Added</span>
-                <i class="fas fa-shopping-cart"></i>
-                <i class="fas fa-box"></i>
-              </button>
-            </div>
-          </article>
+            </article>
+          </div>
         </div>
-      </div>
 
-      <!-- Navigation Buttons for Swiper -->
-      <!-- <div class="swiper-button-next" [attr.data-swiper-id]="'swiper-' + sectionName"></div>
-      <div class="swiper-button-prev" [attr.data-swiper-id]="'swiper-' + sectionName"></div> -->
+        <!-- Navigation Buttons for Swiper -->
+        <div class="swiper-button-next" [attr.data-swiper-id]="'swiper-' + sectionName"></div>
+        <div class="swiper-button-prev" [attr.data-swiper-id]="'swiper-' + sectionName"></div>
+      </div>
     </div>
-  </div>
   </section>
 </div>

@@ -5,6 +5,7 @@ import { UserService } from 'src/app/user/services/user.service';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import Swal from 'sweetalert2';
+import { Settings } from 'src/app/app-setting'; // Import the Settings class
 
 @Component({
   selector: 'app-product-slider',
@@ -12,7 +13,6 @@ import Swal from 'sweetalert2';
   styleUrls: ['./product-slider.component.css']
 })
 export class ProductSliderComponent implements OnInit, AfterViewInit, OnDestroy {
-  baseUrlProduct: string = 'https://hiicall.com/Mlm/Website/Shop';
   homePageSectionProducts: any = {};
   private ngUnsubscribe = new Subject<void>();
 
@@ -33,7 +33,7 @@ export class ProductSliderComponent implements OnInit, AfterViewInit, OnDestroy 
       .subscribe({
         next: (data) => {
           this.homePageSectionProducts = this.groupProductsBySection(data);
-          console.log("ye le homepage section ka ", this.homePageSectionProducts);
+          console.log("Home Page Section Products:", this.homePageSectionProducts);
           setTimeout(() => this.initializeSwipers(), 0); // Initialize Swipers after data is loaded
         },
         error: (err) => console.error('Failed to load home page section products:', err),
@@ -48,7 +48,7 @@ export class ProductSliderComponent implements OnInit, AfterViewInit, OnDestroy 
         ...product,
         imageUrl: product.imageUrl.startsWith('http')
           ? product.imageUrl
-          : `${this.baseUrlProduct}${product.imageUrl}`,
+          : `${Settings.isDevelopment ? Settings.apiUrl : Settings.ApiUrlLive}${product.imageUrl}`,
       });
       return sections;
     }, {});
@@ -80,7 +80,7 @@ export class ProductSliderComponent implements OnInit, AfterViewInit, OnDestroy 
         autoplay: {
           delay: 3500,
           disableOnInteraction: false,
-      },
+        },
         navigation: {
           nextEl: `.swiper-button-next[data-swiper-id="swiper-${sectionName}"]`,
           prevEl: `.swiper-button-prev[data-swiper-id="swiper-${sectionName}"]`,

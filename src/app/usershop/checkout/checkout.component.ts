@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { UserService } from 'src/app/user/services/user.service';
+import { Settings } from 'src/app/app-setting'; // Import the Settings class
 
 @Component({
   selector: 'app-checkout',
@@ -25,7 +26,7 @@ export class CheckoutComponent implements OnInit {
     cityName: '',
     stateId: 0,
     countryId: 0,
-    addressType: 0, // Store integer for address type
+    addressType: 0,
     phone: '',
     isActive: true,
     createdOn: new Date().toISOString()
@@ -36,10 +37,9 @@ export class CheckoutComponent implements OnInit {
   countries: any[] = [];
   states: any[] = [];
   
-  isAddressSelected = false; // To check if an address is selected
-  private imageBaseUrl = 'https://www.mbp18k.com/'; // Base URL for images
+  isAddressSelected = false;
+  private imageBaseUrl: string; // Dynamic base URL for images
   
-  // Mapping address types to integers
   addressTypeMapping = {
     Home: 1,
     Office: 2,
@@ -47,14 +47,16 @@ export class CheckoutComponent implements OnInit {
   };
   selectedAddressId: null;
 
-  constructor(private userService: UserService, private router: Router) {}
+  constructor(private userService: UserService, private router: Router) {
+    // Set the image base URL dynamically based on environment
+    this.imageBaseUrl = Settings.isDevelopment ? Settings.apiUrl : Settings.ApiUrlLive;
+  }
 
   ngOnInit(): void {
     this.getCartDetails();
-    this.getCountries(); // Fetch country list on initialization
+    this.getCountries();
   }
 
-  // Add new address or reset form
   addAddress(): void {
     this.isEditMode = false;
     this.resetNewAddress();
@@ -72,19 +74,18 @@ export class CheckoutComponent implements OnInit {
       cityName: '',
       stateId: 0,
       countryId: 0,
-      addressType: 0, // Reset to default
+      addressType: 0,
       phone: '',
       isActive: true,
       createdOn: new Date().toISOString()
     };
   }
 
-  // Method to fetch states based on selected country ID
   onCountryChange(countryId: number): void {
     if (countryId) {
       this.userService.getStatesByCountry(countryId).subscribe(
         (data) => {
-          this.states = data; // Bind fetched states
+          this.states = data;
         },
         (error) => {
           console.error('Error fetching states:', error);
@@ -95,7 +96,6 @@ export class CheckoutComponent implements OnInit {
     }
   }
 
-  // Fetch cart details and update image URLs with base URL
   getCartDetails(): void {
     const customerId = +sessionStorage.getItem('memberId');
     if (customerId) {
@@ -105,7 +105,6 @@ export class CheckoutComponent implements OnInit {
           this.isCartEmpty = !this.cartDetails || this.cartDetails.items.length === 0;
   
           if (!this.isCartEmpty) {
-            // Fix image URLs to ensure correct base path
             this.cartDetails.items = this.cartDetails.items.map((item: any) => {
               if (item.imageUrl && item.imageUrl.startsWith('~/')) {
                 item.imageUrl = this.imageBaseUrl + item.imageUrl.replace('~/', '');
@@ -113,7 +112,6 @@ export class CheckoutComponent implements OnInit {
               return item;
             });
   
-            // Calculate total price, discount price, and quantity
             this.totalCartPrice = this.cartDetails.items.reduce((sum: number, item: any) => sum + item.price * item.quantity, 0);
             this.totalDiscountPrice = this.cartDetails.items.reduce((sum: number, item: any) => sum + item.discountPrice * item.quantity, 0);
             this.totalQuantity = this.cartDetails.items.reduce((sum: number, item: any) => sum + item.quantity, 0);
@@ -131,15 +129,14 @@ export class CheckoutComponent implements OnInit {
     }
   }
   
-  // Fetch addresses
   loadAddresses(): void {
     const customerId = +sessionStorage.getItem('memberId');
     if (customerId) {
       this.userService.getAddressesByCustomerId(customerId).subscribe(
         (data: any[]) => {
           this.addresses = data;
-          this.selectedAddressId = null; // No address is selected initially
-          this.isAddressSelected = false; // Disable the "Proceed to Payment" button until an address is selected
+          this.selectedAddressId = null;
+          this.isAddressSelected = false;
           this.showAddressForm = this.addresses.length === 0;
         },
         (error) => {
@@ -150,15 +147,12 @@ export class CheckoutComponent implements OnInit {
       alert('Customer ID is missing. Please log in and try again.');
     }
   }
-  
 
-  // Handle address type selection from dropdown and map to integer
   onAddressTypeChange(event: any): void {
     const addressType = event.target.value;
-    this.newAddress.addressType = this.addressTypeMapping[addressType] || 0; // Fallback to 0 if not mapped
+    this.newAddress.addressType = this.addressTypeMapping[addressType] || 0;
   }
 
-  // Create a new address
   createAddress(): void {
     const customerId = +sessionStorage.getItem('memberId');
     this.newAddress.customerId = customerId;
@@ -179,14 +173,12 @@ export class CheckoutComponent implements OnInit {
     }
   }
 
-  // Edit an address
   editAddress(address: any): void {
     this.newAddress = { ...address };
     this.isEditMode = true;
     this.showAddressForm = true;
   }
 
-  // Update address
   updateAddress(): void {
     const customerId = +sessionStorage.getItem('memberId');
     this.newAddress.customerId = customerId;
@@ -210,14 +202,13 @@ export class CheckoutComponent implements OnInit {
     }
   }
 
-  // Delete an address
   deleteAddress(addressId: number): void {
-    const customerId = +sessionStorage.getItem('memberId'); // Get customer ID from session
+    const customerId = +sessionStorage.getItem('memberId');
     if (confirm('Are you sure you want to delete this address?')) {
       this.userService.deleteAddress(customerId, addressId).subscribe(
         response => {
           console.log('Address deleted successfully:', response);
-          this.loadAddresses(); // Refresh the address list after deletion
+          this.loadAddresses();
         },
         error => {
           console.error('Error deleting address:', error);
@@ -227,24 +218,21 @@ export class CheckoutComponent implements OnInit {
     }
   }
 
-
   selectAddress(address: number): void {
-    this.selectedAddress = address; // Set the selected address ID
-    this.isAddressSelected = true; // Enable the "Proceed to Payment" button
-    this.userService.setSelectedAddressId(address); // Store the address ID if needed
+    this.selectedAddress = address;
+    this.isAddressSelected = true;
+    this.userService.setSelectedAddressId(address);
   }
-  
 
   checkout(): void {
     if (this.selectedAddress) {
       console.log('Proceeding with checkout. Selected Address:', this.selectedAddress);
-      this.router.navigate(['/confirm']); // Navigate to the checkout confirm page
+      this.router.navigate(['/confirm']);
     } else {
       alert('Please select an address to proceed with checkout.');
     }
   }
 
-  // Fetch list of countries
   getCountries(): void {
     this.userService.getCountries().subscribe(
       (countries: any[]) => {
