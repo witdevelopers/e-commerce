@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { UserService } from 'src/app/user/services/user.service';
 import Swal from 'sweetalert2';
 import { Router } from '@angular/router';
+import { Settings } from 'src/app/app-setting'; // Import the Settings class
 
 @Component({
   selector: 'app-shopping-cart',
@@ -12,10 +13,13 @@ export class ShoppingCartComponent implements OnInit {
   cartItems: any[] = [];
   summary: any = {};
   customerId: number | null = null;
-  imageBaseUrl: string = 'https://www.mbp18k.com/';
+  imageBaseUrl: string; // Dynamic base URL for images
   quantities: number[] = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 
-  constructor(private userService: UserService, private router: Router) {}
+  constructor(private userService: UserService, private router: Router) {
+    // Set the image base URL based on the environment
+    this.imageBaseUrl = Settings.isDevelopment ? Settings.apiUrl : Settings.ApiUrlLive;
+  }
 
   ngOnInit(): void {
     this.customerId = Number(sessionStorage.getItem('memberId'));

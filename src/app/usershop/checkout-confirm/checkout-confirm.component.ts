@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { UserService } from 'src/app/user/services/user.service';
 import Swal from 'sweetalert2';
+import { Settings } from 'src/app/app-setting'; // Import the Settings class
 
 @Component({
   selector: 'app-checkout-confirm',
@@ -15,14 +16,16 @@ export class CheckoutConfirmComponent implements OnInit {
   totalDiscountPrice = 0;
   totalQuantity = 0;
   isCartEmpty = true;
-  private imageBaseUrl = 'https://www.mbp18k.com/'; // Base URL for images
   walletBalance: number = 0; // Wallet balance
   selectedPaymentMethod: string = '';  // Selected payment method
   memberId: number = 0; // User's memberId for API
   selectedAddressId: number | null = null;
-  
+  private imageBaseUrl: string; // Base URL for images from Settings
 
-  constructor(private userService: UserService, private router: Router) {}
+  constructor(private userService: UserService, private router: Router) {
+    // Set the image base URL dynamically based on the environment
+    this.imageBaseUrl = Settings.isDevelopment ? Settings.apiUrl : Settings.ApiUrlLive;
+  }
 
   ngOnInit(): void {
     this.retrieveAddressId();
@@ -183,5 +186,5 @@ export class CheckoutConfirmComponent implements OnInit {
   generateOrderId(): string {
     return Math.floor(1000000000 + Math.random() * 9000000000).toString(); // Generates a 10-digit random number
   }
-  
+
 }

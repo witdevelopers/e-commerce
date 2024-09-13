@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { UserService } from 'src/app/user/services/user.service';
 import Swal from 'sweetalert2';
+import { Settings } from 'src/app/app-setting'; // Import the Settings class
 
 @Component({
   selector: 'app-subcategory',
@@ -12,7 +13,7 @@ export class SubcategoryComponent implements OnInit {
   subcategoryDetails: any[] = [];
   filteredSubcategoryDetails: any[] = [];  // Filtered products to display
   subcategoryId: number;
-  imageBaseUrl: string = 'https://www.mbp18k.com/Shop/';  // Base URL for images
+  imageBaseUrl: string;  // Base URL for images
 
   // Price filter properties
   minPrice: number = 0;
@@ -21,7 +22,10 @@ export class SubcategoryComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private subcategoryService: UserService
-  ) {}
+  ) {
+    // Set the image base URL based on the environment
+    this.imageBaseUrl = Settings.isDevelopment ? Settings.apiUrl : Settings.ApiUrlLive;
+  }
 
   ngOnInit(): void {
     // Get the subcategory ID from the route params
@@ -67,17 +71,26 @@ export class SubcategoryComponent implements OnInit {
     let customerId = sessionStorage.getItem('memberId') || localStorage.getItem('memberId');
 
     if (!customerId) {
-      alert('Customer ID is missing. Please log in again.');
+      Swal.fire({
+        icon: 'error',
+        title: 'Customer ID is missing. Please log in again.',
+      });
       return;
     }
 
     if (!productDtId || isNaN(productDtId)) {
-      alert('Invalid Product ID.');
+      Swal.fire({
+        icon: 'error',
+        title: 'Invalid Product ID.',
+      });
       return;
     }
 
     if (!quantity || isNaN(quantity)) {
-      alert('Invalid quantity.');
+      Swal.fire({
+        icon: 'error',
+        title: 'Invalid quantity.',
+      });
       return;
     }
 
@@ -92,7 +105,7 @@ export class SubcategoryComponent implements OnInit {
       (error) => {
         Swal.fire({
           icon: 'error',
-          title: 'Product already added.',
+          title: 'Error adding product to cart.',
         });
         console.error('Error adding product to cart:', error);
       }
