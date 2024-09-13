@@ -1,310 +1,312 @@
 
 /* General Styles */
 img {
-    width: 100%;
-    margin-top: 7px;
-  }
-  
+  width: 100%;
+  margin-top: 7px;
+}
+
+.header {
+  height: 72px;
+  padding: 0 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.headerLeft,
+.headerRight {
+  display: flex;
+  align-items: center;
+}
+
+.logoContainer {
+  width: 155px;
+}
+.inputCloseSearch{
+  margin-right: 13px;
+}
+.searchInputContainer {
+  width: 100%;
+  max-width: 400px;
+  height: 45px;
+  display: flex;
+  margin-left: 25px;
+  border-radius: 3px;
+  align-items: center;
+  position: relative;
+  border: 1px solid;
+}
+
+.searchIcon {
+  width: 20px;
+  margin: 6px;
+}
+
+form {
+  width: 100%;
+}
+
+.inputSearch {
+  width: 100%;
+  border: none;
+  outline: none;
+  font-size: 16px;
+}
+
+.searchRecentModal {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background-color: white;
+  max-height: 300px;
+  overflow-y: auto;
+  border-radius: 4px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  z-index: 10;
+  display: none;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.searchInputContainer:focus-within .searchRecentModal,
+.searchInputContainer .searchRecentModal {
+  display: block;
+}
+
+.listofRecent {
+  padding: 10px;
+  cursor: pointer;
+  border-bottom: 1px solid #eee;
+}
+
+.listofRecent h3 {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 100;
+  text-transform: lowercase;
+}
+
+.listofRecent:hover {
+  background-color: #f0f0f0;
+}
+
+/* Profile and Cart Section */
+.mobileIcon {
+  width: 15px;
+  margin: 5px;
+}
+
+.downloadContainer {
+  height: 100%;
+  position: relative;
+  padding: 0 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.downloadBtn {
+  margin-top: 5px;
+  cursor: pointer;
+  font-size: 15px;
+  line-height: 20px;
+  border-radius: 4px;
+  color: #fff;
+  background: var(--hoverTextColor);
+  border: none;
+  padding: 12px;
+  display: block;
+  width: 100%;
+}
+
+.downloadHoverBtnContainer {
+  position: absolute;
+  top: 40px;
+  width: 200px;
+  display: none;
+  height: 170px;
+  padding: 10px;
+  color: var(--textColor);
+  background: white;
+  z-index: 2;
+}
+
+.downloadContainer:hover .downloadHoverBtnContainer {
+  display: block !important;
+  z-index: 10;
+}
+
+.profileAndCart {
+  display: flex;
+  align-items: center;
+}
+
+.profileIcon,
+.CartIcon {
+  width: 20px;
+}
+
+.profileContainer,
+.CartContainer {
+  padding: 0 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 4px;
+}
+
+.becomeSupplierContainer {
+  padding: 0 30px;
+  border-left: 1.5px solid #ccc;
+  border-right: 1.5px solid #ccc;
+  font-size: 17px;
+}
+
+/* Navigation Styles */
+nav {
+  width: 100%;
+  border-bottom: 1px solid #ccc;
+  height: 54px;
+}
+
+nav ul {
+  color: black;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 10%;
+  height: 100%;
+  margin: 0;
+}
+
+nav ul li {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  margin: 0;
+  border-bottom: 2px solid transparent;
+  cursor: pointer;
+}
+
+nav ul li:hover {
+  color: var(--hoverTextColor);
+  border-bottom: 4px solid var(--hoverTextColor);
+}
+
+.subMenu {
+  position: absolute;
+  top: 127px;
+  left: 0;
+  right: 0;
+  background-color: white;
+  border: 1px solid #ccc;
+  display: none;
+  margin: 0 10px;
+  box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+  padding: 20px;
+  z-index: 999;
+}
+
+nav ul li:hover .subMenu {
+  display: block;
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
   .header {
-    height: 72px;
-    padding: 0 10px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+    flex-direction: row;
   }
-  
-  .headerLeft,
-  .headerRight {
-    display: flex;
-    align-items: center;
-  }
-  
+
   .logoContainer {
-    width: 155px;
+    width: 120px;
   }
-  .inputCloseSearch{
-    margin-right: 13px;
-  }
+
   .searchInputContainer {
     width: 100%;
-    max-width: 400px;
-    height: 45px;
-    display: flex;
-    margin-left: 25px;
-    border-radius: 3px;
-    align-items: center;
-    position: relative;
-    border: 1px solid;
+    margin-left: 10px;
   }
-  
-  .searchIcon {
-    width: 20px;
-    margin: 6px;
-  }
-  
-  form {
-    width: 100%;
-  }
-  
-  .inputSearch {
-    width: 100%;
-    border: none;
-    outline: none;
-    font-size: 16px;
-  }
-  
-  .searchRecentModal {
-    position: absolute;
-    top: 100%;
-    left: 0;
-    right: 0;
-    background-color: white;
-    max-height: 300px;
-    overflow-y: auto;
-    border-radius: 4px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    z-index: 10;
-    display: none;
-    transition: opacity 0.3s ease, visibility 0.3s ease;
-  }
-  
-  .searchInputContainer:focus-within .searchRecentModal,
-  .searchInputContainer .searchRecentModal {
-    display: block;
-  }
-  
-  .listofRecent {
-    padding: 10px;
-    cursor: pointer;
-    border-bottom: 1px solid #eee;
-  }
-  
-  .listofRecent h3 {
-    margin: 0;
-    font-size: 16px;
-    font-weight: 100;
-    text-transform: lowercase;
-  }
-  
-  .listofRecent:hover {
-    background-color: #f0f0f0;
-  }
-  
-  /* Profile and Cart Section */
-  .mobileIcon {
-    width: 15px;
-    margin: 5px;
-  }
-  
-  .downloadContainer {
-    height: 100%;
-    position: relative;
-    padding: 0 20px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  
-  .downloadBtn {
-    margin-top: 5px;
-    cursor: pointer;
-    font-size: 15px;
-    line-height: 20px;
-    border-radius: 4px;
-    color: #fff;
-    background: var(--hoverTextColor);
-    border: none;
-    padding: 12px;
-    display: block;
-    width: 100%;
-  }
-  
-  .downloadHoverBtnContainer {
-    position: absolute;
-    top: 40px;
-    width: 200px;
-    display: none;
-    height: 170px;
-    padding: 10px;
-    color: var(--textColor);
-    background: white;
-    z-index: 2;
-  }
-  
-  .downloadContainer:hover .downloadHoverBtnContainer {
-    display: block !important;
-    z-index: 10;
-  }
-  
-  .profileAndCart {
-    display: flex;
-    align-items: center;
-  }
-  
-  .profileIcon,
-  .CartIcon {
-    width: 20px;
-  }
-  
-  .profileContainer,
-  .CartContainer {
-    padding: 0 20px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 4px;
-  }
-  
+
+  .downloadContainer,
+  .profileAndCart,
   .becomeSupplierContainer {
-    padding: 0 30px;
-    border-left: 1.5px solid #ccc;
-    border-right: 1.5px solid #ccc;
-    font-size: 17px;
-  }
-  
-  /* Navigation Styles */
-  nav {
-    width: 100%;
-    border-bottom: 1px solid #ccc;
-    height: 54px;
-  }
-  
-  nav ul {
-    color: black;
     padding: 0;
-    list-style: none;
-    display: flex;
+    width: 100%;
     justify-content: space-between;
-    align-items: center;
-    padding: 0 10%;
-    height: 100%;
-    margin: 0;
   }
-  
-  nav ul li {
-    height: 100%;
-    display: flex;
-    align-items: center;
-    margin: 0;
-    border-bottom: 2px solid transparent;
-    cursor: pointer;
+
+  .downloadContainer:hover .downloadHoverBtnContainer,
+  .downloadContainer:focus .downloadHoverBtnContainer {
+    left: -100px;
   }
-  
-  nav ul li:hover {
-    color: var(--hoverTextColor);
-    border-bottom: 4px solid var(--hoverTextColor);
+
+  .profileAndCart {
+    justify-content: space-between;
   }
-  
-  .subMenu {
-    position: absolute;
-    top: 127px;
-    left: 0;
-    right: 0;
-    background-color: white;
-    border: 1px solid #ccc;
+
+  .headerRight p {
     display: none;
-    margin: 0 10px;
-    box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
-    padding: 20px;
-    z-index: 999;
   }
-  
-  nav ul li:hover .subMenu {
-    display: block;
+
+  nav ul {
+    font-size: 8px;
+    gap: 8px;
+    text-align: center;
+    margin: 0 0 0 -30px;
   }
-  
-  /* Responsive Styles */
-  @media (max-width: 768px) {
-    .header {
-      flex-direction: row;
-    }
-  
-    .logoContainer {
-      width: 120px;
-    }
-  
-    .searchInputContainer {
-      width: 100%;
-      margin-left: 10px;
-    }
-  
-    .downloadContainer,
-    .profileAndCart,
-    .becomeSupplierContainer {
-      padding: 0;
-      width: 100%;
-      justify-content: space-between;
-    }
-  
-    .downloadContainer:hover .downloadHoverBtnContainer,
-    .downloadContainer:focus .downloadHoverBtnContainer {
-      left: -100px;
-    }
-  
-    .profileAndCart {
-      justify-content: space-between;
-    }
-  
-    .headerRight p {
-      display: none;
-    }
-  
-    nav ul {
-      font-size: 10px;
-      padding: 0 10px;
-    }
+}
+
+@media (max-width: 480px) {
+  .searchInputContainer {
+    height: 35px;
+    padding: 5px;
   }
-  
-  @media (max-width: 480px) {
-    .searchInputContainer {
-      height: 35px;
-      padding: 5px;
-    }
-  
-    .inputSearch {
-      font-size: 14px;
-    }
+
+  .inputSearch {
+    font-size: 14px;
   }
-  a{
-    text-decoration: none;
-  }
-  
+}
+a{
+  text-decoration: none;
+}
+
 
 .CartIcon {
-    position: relative;
-  }
-  
-  .cart-quantity {
-    position: absolute;
-    top: -4px;
-    right: -14px;
-    background-color: red;
-    color: white;
-    border-radius: 50%;
-    padding: 2px;
-    font-size: 12px;
-    width: 20px;
-    height: 20px;
-    text-align: center;
-  }
+  position: relative;
+}
 
-  input{
-    border: none !important;
-    width: 100%;
-    height: 38px;
-    display: flex;
-    border-radius: 3px;
-    align-items: center;
-    position: relative;
-  }
-  input:focus {
-    outline: none !important;
-    border: none !important; /* Optionally remove the border */
-  }
-  
-  /* Optional: Customize the border or shadow when focused */
-  input:focus {
-    outline: none !important; /* Hide the outline */
-    /* border: 1px solid transparent; */ /* Or transparent to prevent border */
-    box-shadow: none !important; /* If a shadow is applied */
-  }
+.cart-quantity {
+  position: absolute;
+  top: -4px;
+  right: -14px;
+  background-color: red;
+  color: white;
+  border-radius: 50%;
+  padding: 2px;
+  font-size: 12px;
+  width: 20px;
+  height: 20px;
+  text-align: center;
+}
+
+input{
+  border: none !important;
+  width: 100%;
+  height: 38px;
+  display: flex;
+  border-radius: 3px;
+  align-items: center;
+  position: relative;
+}
+input:focus {
+  outline: none !important;
+  border: none !important; /* Optionally remove the border */
+}
+
+/* Optional: Customize the border or shadow when focused */
+input:focus {
+  outline: none !important; /* Hide the outline */
+  /* border: 1px solid transparent; */ /* Or transparent to prevent border */
+  box-shadow: none !important; /* If a shadow is applied */
+}

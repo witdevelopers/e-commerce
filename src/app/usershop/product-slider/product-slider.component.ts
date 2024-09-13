@@ -12,7 +12,7 @@ import Swal from 'sweetalert2';
   styleUrls: ['./product-slider.component.css']
 })
 export class ProductSliderComponent implements OnInit, AfterViewInit, OnDestroy {
-  baseUrlProduct: string = 'https://www.mbp18k.com/Shop//';
+  baseUrlProduct: string = 'https://hiicall.com/Mlm/Website/Shop';
   homePageSectionProducts: any = {};
   private ngUnsubscribe = new Subject<void>();
 

@@ -33,8 +33,9 @@ export class ProductDetailsComponent implements OnInit {
   loadProductDetails(id: number): void {
     this.userService.getProductById(id).subscribe((response: any) => {
       this.singleProduct = response.singleProduct;
-      console.log("Ye le single product", this.singleProduct);
+      
       this.singleProductDetails = response.singleProductDetails;
+      console.log("Ye le single product", this.singleProductDetails);
       this.singleProductImages = response.singleProductImages;
 
       // Set the main image URL to the first image if available

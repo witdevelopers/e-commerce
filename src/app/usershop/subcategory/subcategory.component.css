@@ -226,6 +226,7 @@ h6 del {
   animation: cartMove 0.5s ease forwards;
 }
 
+
 @keyframes cartMove {
   0% {
     transform: translateX(0);

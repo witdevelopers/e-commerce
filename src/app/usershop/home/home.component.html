@@ -1,17 +1,100 @@
-
 <!-- Banner Carousel -->
-<div class="carousel" >
+<div class="carousel">
   <div class="carousel-inner" [style.transform]="'translateX(-' + currentSlide * 100 + '%)'">
-    <div class="carousel-item" *ngFor="let slide of banners">
-      <img [src]="slide.imageUrl" [alt]="slide.alt" loading="lazy"/>
-    </div>
+    <!-- Show dynamic banners if data is fetched -->
+    <ng-container *ngIf="isDataFetched; else staticContent">
+      <div class="carousel-item" *ngFor="let slide of banners">
+        <img [src]="slide.imageUrl" [alt]="slide.alt || 'Dynamic Banner'" loading="lazy"/>
+      </div>
+    </ng-container>
+
+    <!-- Template for static images -->
+    <ng-template #staticContent>
+      <div class="carousel-item" *ngFor="let staticSlide of staticBanners">
+        <img [src]="staticSlide.imageUrl" [alt]="staticSlide.alt || 'Static Placeholder'" loading="lazy"/>
+      </div>
+    </ng-template>
   </div>
+  
   <button class="carousel-control prev" (click)="prevSlide()">&#10094;</button>
   <button class="carousel-control next" (click)="nextSlide()">&#10095;</button>
 </div>
 
+
+
+
+    <!--=========================lowest prices===============================================-->
+    <div class="lowestpriceContainer">
+      <div class="lowestPrice_text">
+          <h1>Lowest Prices </h1>
+          <h1>Best Quality Shopping</h1>
+          <div class="lowestPriceWhay">
+              <div class="lowestPriceItem">
+                  <div class="lowestPrice_icon">
+                      <img src="https://images.meesho.com/images/pow/freeDelivery.svg" />
+                  </div>
+                  <p>Free Delivery</p>
+              </div>
+
+              <div class="lowestPriceItem">
+                  <div class="lowestPrice_icon">
+                      <img src="https://images.meesho.com/images/pow/cod.svg" />
+                  </div>
+                  <p>Cash on Delivery</p>
+              </div>
+              <div class="lowestPriceItem">
+                  <div class="lowestPrice_icon">
+                      <img src="https://images.meesho.com/images/pow/easyReturns.svg" />
+                  </div>
+                  <p>Easy Returns</p>
+              </div>
+          </div>
+
+      </div>
+      <div class="lowestPrice_image">
+          <img src="https://images.meesho.com/images/marketing/1631722939962.webp" />
+      </div>
+  </div>
+
+
+  <!--Top Categories to choose from-->
+  <div class="topCategoriesFrom container">
+      <div class="topCategoriesHeading">
+          <span class="horizontalLine"></span>
+          <h1>Top Categories to choose from</h1>
+          <span class="horizontalLine"></span>
+      </div>
+      <div class="topCategoreisImage">
+          <img src="https://images.meesho.com/images/marketing/1649760442043.webp" />
+           <img src="https://images.meesho.com/images/marketing/1649760423313.webp" />
+          <img src="https://images.meesho.com/images/marketing/1649759799809.webp" />
+      </div>
+
+      <div class="essentialContaienr">
+        
+          <img src="https://images.meesho.com/images/marketing/1664368165450.webp" class="essen-btn" />
+          <div class="flex">
+          <div class="essential_item">
+              <img src="https://images.meesho.com/images/marketing/1649760808952.webp" />
+              <img src="https://images.meesho.com/images/marketing/1664364866805.webp" />
+          </div>
+
+          <div class="essential_item">
+              <img src="https://images.meesho.com/images/marketing/1649760703179.webp" />
+              <img src="https://images.meesho.com/images/marketing/1664364917657.webp" />
+          </div>
+
+          <div class="essential_item">
+              <img src="https://images.meesho.com/images/marketing/1649760786763.webp" />
+              <img src="https://images.meesho.com/images/marketing/1664364898513.webp" />
+          </div>
+        </div>
+          
+
+      </div>
+
+      <br>
+
+
 <!-- Home Page Sections -->
-
 <app-product-slider></app-product-slider>
-
-

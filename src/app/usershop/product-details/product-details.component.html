@@ -15,7 +15,7 @@
       <div class="badge-area-2">
         <div class="badge-product-sale">
           <span class="new">OFFER</span>
-          <span class="percent">- {{ singleProduct.discountPercentage }}%</span>
+          <span class="percent">- {{ singleProductDetails[0]?.discountPercentage }}%</span>
         </div>
       </div>
       <img [src]="mainImageUrl" alt="{{ singleProduct.productName }}" />

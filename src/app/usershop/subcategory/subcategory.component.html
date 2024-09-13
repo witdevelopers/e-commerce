@@ -13,7 +13,12 @@
       <div>
         <div class="card-header">
           <img [src]="product.imageUrl ? product.imageUrl : 'https://www.mbp18k.com/Shop//'" alt="{{ product.productName }}" id="news-img" loading="lazy" [routerLink]="['/product', product.productId]">
-          
+           <!-- <div class="badge-area-2">
+            <div class="badge-product-sale">
+              <span class="new">OFFER</span>
+              <span class="percent">- 50%</span>
+            </div>
+          </div> -->
         </div>
         <div class="card-content">
           <h3 id="news-title">{{ product.productName }}</h3>
