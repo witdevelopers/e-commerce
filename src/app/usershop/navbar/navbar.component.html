@@ -43,7 +43,7 @@
             <p *ngIf="isLoggedIn">{{userName}}</p>
             <p *ngIf="!isLoggedIn" style="font-size: 13px;">To access your account</p>
 
-            <a *ngIf="!isLoggedIn" routerLink="/auth/signin">
+            <a *ngIf="!isLoggedIn" routerLink="/signin">
               <button class="downloadBtn">Sign In</button>
             </a>
             <a *ngIf="isLoggedIn" (click)="signOut()">

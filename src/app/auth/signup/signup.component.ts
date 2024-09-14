@@ -44,7 +44,7 @@ export class SignupComponent implements OnInit {
 
         if (res && res.status) {
           Swal.fire("Registered Successfully", '', 'success');
-          this.router.navigate(['/auth/signin']);
+          this.router.navigate(['/signin']);
         } else {
           Swal.fire(res.message || "Registration failed", '', 'error');
         }

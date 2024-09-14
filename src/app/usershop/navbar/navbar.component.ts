@@ -35,8 +35,8 @@ export class NavbarComponent implements OnInit {
   signOut(): void {
     sessionStorage.clear();
     this.isLoggedIn = false;
-    this.router.navigate(['/auth/signin']).then(() => {
-      window.location.href = '/auth/signin';
+    this.router.navigate(['/home']).then(() => {
+      window.location.href = '/home';
     });
   }
 

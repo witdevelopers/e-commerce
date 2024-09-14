@@ -54,8 +54,8 @@ export class SigninComponent implements OnInit{
           this.spinnerService.hide();
           
           this.router.navigateByUrl('/auth/signin', { skipLocationChange: true }).then(() => {
-            this.router.navigate(['/home']).then(() => {
-              window.location.href = '/home';  // Forces a full page reload to the home page
+            this.router.navigate(['']).then(() => {
+              window.location.href = '';  // Forces a full page reload to the home page
           });          
         });
         

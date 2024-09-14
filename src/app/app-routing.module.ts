@@ -1,8 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { AppComponent } from './app.component';
 import { AuthMasterComponent } from './auth/auth-master/auth-master.component';
-import { LoginComponent } from './auth/login/login.component';
 import { RegisterComponent } from './auth/register/register.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { PriceChartComponent } from './price-chart/price-chart.component';
@@ -31,8 +29,6 @@ import { IncomeWithdrawalHistoryComponent } from './user/income-withdrawal-histo
 import { SigninComponent } from './auth/signin/signin.component';
 import { SignupComponent } from './auth/signup/signup.component';
 import { HomeComponent } from './usershop/home/home.component';
-import { UsershopMasterComponent } from './usershop/usershop-master/usershop-master.component';
-import { FooterComponent } from './usershop/footer/footer.component';
 import { NavbarComponent } from './usershop/navbar/navbar.component';
 import { SubcategoryComponent } from './usershop/subcategory/subcategory.component';
 import { ProductDetailsComponent } from './usershop/product-details/product-details.component';
@@ -60,15 +56,9 @@ const routes: Routes = [
         path: '',
         component: SigninComponent,
       },
-      {
-        path: 'signin',
-        component: SigninComponent,
-      },
+     
 
-      {
-        path: 'signup',
-        component: SignupComponent,
-      },
+      
 
       {
         path: 'login',
@@ -79,11 +69,6 @@ const routes: Routes = [
         path: 'register',
         component: RegisterComponent,
       },
-
-      // {
-      //   path:'register/:id',
-      //   component:RegisterComponent
-      // }
     ],
   },
 
@@ -222,6 +207,10 @@ const routes: Routes = [
     path: 'home',
     component: HomeComponent,
   },
+  {
+    path: 'signin',
+    component: SigninComponent,
+  },
 
   { path: 'subcategory/:id', component: SubcategoryComponent },
   { path: 'product/:id', component: ProductDetailsComponent },
@@ -233,6 +222,10 @@ const routes: Routes = [
   {
     path: 'order-history',
     component: OrderHistoryComponent,
+  },
+  {
+    path: 'signup',
+    component: SignupComponent,
   },
 
   {
