@@ -81,10 +81,12 @@
 
 /* Card Image */
 .card-image {
-    width: 100%;
-    height: 300px; /* Smaller height for images */
+    text-align: center;
+    width: 60%;
+    height: 200px;
     object-fit: cover;
     transition: transform 0.3s ease;
+    margin: 0 0 0 60px;
 }
 
 /* Image zoom on hover */
@@ -104,20 +106,22 @@
 
 /* Product Name */
 .product-name {
-    font-size: 1rem; /* Reduced font size */
+   /* Reduced font size */
     font-weight: 500;
-    margin-bottom: 8px;
+    /* margin-bottom: 8px; */
     color: #333;
-    transition: color 0.3s ease; /* Transition effect for color change */
+    transition: color 0.3s ease;
+    margin: 0; /* Transition effect for color change */
 }
-
+p{
+    margin: 0;
+}
 /* Price Info */
 .price-info {
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 10px;
-    margin-bottom: 10px; /* Reduced margin */
+    gap: 10px; /* Reduced margin */
 }
 
 /* Discount Price */
@@ -186,6 +190,7 @@
     position: absolute;
     top: 10px; /* Adjusted position */
     left: 10px;
+    z-index: 10;
     background: #000;
     color: #fff;
     padding: 5px 10px; /* Reduced padding */

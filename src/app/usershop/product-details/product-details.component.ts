@@ -14,6 +14,7 @@ export class ProductDetailsComponent implements OnInit {
   singleProduct: any;
   singleProductDetails: any[] = [];
   singleProductImages: any[] = [];
+  relatedProducts: any[] = []; // For storing related products
   productId: number;
   mainImageUrl: string = 'assets/default-image.jpg'; // Default image URL
   quantity: number = 1; // Default quantity
@@ -31,6 +32,7 @@ export class ProductDetailsComponent implements OnInit {
     this.loadProductDetails(this.productId);
   }
 
+  // Load product details by product ID
   loadProductDetails(id: number): void {
     this.userService.getProductById(id).subscribe((response: any) => {
       this.singleProduct = response.singleProduct;
@@ -41,40 +43,53 @@ export class ProductDetailsComponent implements OnInit {
       if (this.singleProductImages.length > 0) {
         this.mainImageUrl = this.getImageUrl(this.singleProductImages[0].imageUrl);
       }
+
+      // Fetch related products by category ID
+      this.loadRelatedProducts(this.singleProduct.categoryId);
     });
   }
 
+  // Load related products based on category ID
+  loadRelatedProducts(categoryId: number): void {
+    this.userService.getAllProductByCategoryId(categoryId).subscribe((response: any) => {
+      if (response && response.table) {
+        this.relatedProducts = response.table; // Assign the table array to relatedProducts
+      } else {
+        this.relatedProducts = [];
+      }
+      console.log("Related products:", this.relatedProducts);
+    });
+  }
+
+  // Convert image path to a usable URL
   getImageUrl(imagePath: string): string {
     if (!imagePath) {
       return 'assets/default-image.jpg'; // Fallback to default image if no image path is provided
     }
-  
-    // Replace tilde with imageBaseUrl if present
+
+    // Replace tilde with base URL if present
     if (imagePath.includes('~/')) {
       imagePath = imagePath.replace('~/', Settings.imageBaseUrl);
     }
-  
-    // If the path is relative and does not start with 'http', prepend imageBaseUrl
-    return !imagePath.startsWith('http')
-      ? `${Settings.imageBaseUrl}${imagePath}`
-      : imagePath;
-  }
-  
 
+    return !imagePath.startsWith('http') ? `${Settings.imageBaseUrl}${imagePath}` : imagePath;
+  }
+
+  // Change main image when selecting a different one
   changeMainImage(imageUrl: string): void {
     this.mainImageUrl = this.getImageUrl(imageUrl);
   }
 
+  // Add product to cart
   addToCart(): void {
     let customerId = sessionStorage.getItem('memberId'); // Try to retrieve customer ID from sessionStorage
-  
     if (!customerId) {
       customerId = localStorage.getItem('memberId'); // Fall back to localStorage if sessionStorage is empty
     }
-  
+
     const productDtId = this.productId;
     const quantity = this.quantity;
-  
+
     if (!customerId) {
       Swal.fire({
         icon: 'error',
@@ -82,7 +97,7 @@ export class ProductDetailsComponent implements OnInit {
       });
       return;
     }
-  
+
     if (!productDtId || isNaN(productDtId)) {
       Swal.fire({
         icon: 'error',
@@ -90,7 +105,7 @@ export class ProductDetailsComponent implements OnInit {
       });
       return;
     }
-  
+
     if (!quantity || isNaN(quantity)) {
       Swal.fire({
         icon: 'error',
@@ -98,7 +113,7 @@ export class ProductDetailsComponent implements OnInit {
       });
       return;
     }
-  
+
     this.userService.addToCart(+customerId, productDtId, quantity).subscribe(
       (response) => {
         Swal.fire({
@@ -110,18 +125,18 @@ export class ProductDetailsComponent implements OnInit {
       (error) => {
         Swal.fire({
           icon: 'error',
-          title: 'Product already added.',
+          title: 'Error adding product to cart.',
         });
         console.log('Error adding product to cart:', error);
       }
     );
-  } 
-   
-  buyNow(): void {
-    let customerId = sessionStorage.getItem('memberId'); // Try to retrieve customer ID from sessionStorage
+  }
 
+  // Buy now functionality
+  buyNow(): void {
+    let customerId = sessionStorage.getItem('memberId');
     if (!customerId) {
-      customerId = localStorage.getItem('memberId'); // Fall back to localStorage if sessionStorage is empty
+      customerId = localStorage.getItem('memberId');
     }
 
     const productDtId = this.productId;
@@ -157,10 +172,9 @@ export class ProductDetailsComponent implements OnInit {
           icon: 'success',
           title: 'Product added to cart. Redirecting to checkout...',
         });
-        // Redirect to checkout page after adding to cart
         setTimeout(() => {
           this.router.navigate(['/usershop/checkout']);
-        }, 1500); // Delay to let the user see the success message
+        }, 1500);
       },
       (error) => {
         Swal.fire({
@@ -171,4 +185,15 @@ export class ProductDetailsComponent implements OnInit {
       }
     );
   }
+
+  // View related product's details
+  viewProduct(productId: number): void {
+    // Navigate to the product details route
+    this.router.navigate(['/product', productId]).then(() => {
+        // Use `navigateByUrl` to force a reload
+        this.router.navigateByUrl('/product', { skipLocationChange: true }).then(() => {
+            this.router.navigate(['/product', productId]);
+        });
+    });
+}
 }

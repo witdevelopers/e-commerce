@@ -11,35 +11,30 @@
     </div>
 
     <div class="item-image-main">
-      <!-- Display the main image -->
       <div class="badge-area-2" *ngIf="singleProductDetails[0]?.discountPercentage">
         <div class="badge-product-sale">
           <span class="new">OFFER</span>
           <span class="percent">- {{ singleProductDetails[0]?.discountPercentage }}%</span>
         </div>
       </div>
-      <img [src]="mainImageUrl" alt="{{ singleProduct?.productName }}" />
+      <img class="zoom-image" [src]="mainImageUrl" alt="{{ singleProduct?.productName }}" />
     </div>
   </div>
 
   <div class="item-info-parent">
-    <!-- Main Info -->
     <div class="main-info">
       <h4>{{ singleProduct?.productName }}</h4>
       <div style="display: flex; gap: 10px">
         <p>
-          Price:
-          <span id="price">₹ {{ singleProductDetails[0]?.discountPrice }}</span>
+          Price: <span id="price">₹ {{ singleProductDetails[0]?.discountPrice }}</span>
         </p>
         <del *ngIf="singleProductDetails[0]?.price">
           <p>
-            Price:
-            <span id="price">₹ {{ singleProductDetails[0]?.price }}</span>
+            Original Price: <span id="price">₹ {{ singleProductDetails[0]?.price }}</span>
           </p>
         </del>
       </div>
 
-      <!-- Add to Cart Button -->
       <div style="display: flex; gap: 10px">
         <button class="add-to-cart-btn" (click)="addToCart()">
           <i class="ri-shopping-cart-2-line"></i> Add to Cart
@@ -48,16 +43,34 @@
       </div>
     </div>
 
-    <!-- Description -->
     <div class="select-items">
       <div class="description">
         <ul>
-          <li
-            [innerHTML]="singleProduct?.description"
-            style="position: relative; right: 20px"
-          ></li>
+          <li [innerHTML]="singleProduct?.description" style="position: relative; right: 20px"></li>
         </ul>
       </div>
     </div>
   </div>
+</section>
+
+<!-- Related Products Section -->
+<section id="related-products" *ngIf="relatedProducts.length > 0">
+  <h3>Related Products</h3>
+  <div class="related-products-container">
+    <div class="related-product-item" *ngFor="let product of relatedProducts" (click)="viewProduct(product.productId)">
+      <div class="related-product-image">
+        <img [src]="getImageUrl(product.imageUrl)" alt="{{ product.productName }}" />
+      </div>
+      <div class="related-product-info">
+        <h4>{{ product.productName }}</h4>
+        <p>Price: ₹{{ product.discountPrice }}</p>
+        <p>Original Price: ₹{{ product.price }}</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- If no related products are available -->
+<section *ngIf="relatedProducts.length === 0">
+  <p>No related products available.</p>
 </section>

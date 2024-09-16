@@ -18,16 +18,12 @@
             <div class="card-content">
               <h5 class="product-name">{{ product.productName }}</h5>
               <div class="price-info">
-                <h6 class="discount-price">Rs.{{ product.discountPrice }}</h6>
-                <del class="original-price">Rs.{{ product.price }}</del>
+                <P>Rs.{{ product.discountPrice }}</P> <del>Rs.{{ product.price }}</del>
               </div>
               <button #cartButton class="cart-button clicked" (click)="addToCart(product.productId, cartButton)">
                 <span class="add-to-cart" *ngIf="!isProductAdded(product.productId)">
-                  <i class="ri-shopping-cart-2-line"></i> Add to cart
-                </span>
-                <span class="added" *ngIf="isProductAdded(product.productId)">
-                  Added
-                </span>
+                  <i class="ri-shopping-cart-2-line"></i> Add to cart</span>
+                <span class="added" *ngIf="isProductAdded(product.productId)">Added</span>
               </button>
             </div>
           </article>
