@@ -46,7 +46,6 @@ export class SubcategoryComponent implements OnInit {
           ...product,
           imageUrl: this.getImageUrl(product.imageUrl)  // Dynamically construct full image URL
         };
-        
       });
 
       // Initially, show all products

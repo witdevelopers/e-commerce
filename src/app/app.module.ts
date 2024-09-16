@@ -51,7 +51,7 @@ import { HomeComponent } from './usershop/home/home.component';
 import { UsershopMasterComponent } from './usershop/usershop-master/usershop-master.component';
 import { FooterComponent } from './usershop/footer/footer.component';
 import { NavbarComponent } from './usershop/navbar/navbar.component';
-
+import { LocationStrategy, HashLocationStrategy } from '@angular/common';
 import { SubcategoryComponent } from './usershop/subcategory/subcategory.component';
 import { ProductDetailsComponent } from './usershop/product-details/product-details.component';
 import { ProductSliderComponent } from './usershop/product-slider/product-slider.component';
@@ -130,6 +130,7 @@ import { OrderInvoiceComponent } from './usershop/order-invoice/order-invoice.co
   ],
   providers: [
     { provide: 'Window',  useValue: window },
+    { provide: LocationStrategy, useClass: HashLocationStrategy },
     { provide: HTTP_INTERCEPTORS, useClass: HttpInterceptorService, multi: true },
      { provide: APP_INITIALIZER, useFactory: (config: CompanyService) => () => config.getCompanyDetails(), deps: [CompanyService], multi: true },
   ],

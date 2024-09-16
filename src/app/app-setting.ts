@@ -18,11 +18,11 @@ export class Settings{
 
     static coinName:string = x.CoinName;
     static coinSymbol:string = x.CoinSymbol;
-    // static website:string = x.Website;
+    static website:string = x.Website;
     static logo:string = x.Logo;
     static explorer:string = this.IsTestNetworkSupported?x.TestNetExplorer:x.MainNetExplorer;
     static mainnetHttpProvider:string = x.MainNetHttpProvider;
-    static apiUrl: string = this.isDevelopment?x.ApiUrl:x.ApiUrlLive; // --> getting from this
+    static apiUrl: string = this.isDevelopment?x.ApiUrl:x.ApiUrlLive;
     static wsUrl: string = this.isDevelopment?x.ApiUrl:x.ApiUrlLive;
     static roiRecordsLimit: number = 10;
     static ApiUrlLive: string = this.isDevelopment?x.ApiUrl:x.ApiUrlLive;

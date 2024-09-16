@@ -18,7 +18,7 @@ export class OrderHistoryComponent implements OnInit {
     if (customerId) {
       this.userService.getOrderDetails(customerId).subscribe(
         (data) => {
-          console.log("order data", data);
+          console.log(data);
           this.orderHistory = data; // Bind the order history data
         },
         (error) => {

@@ -76,7 +76,7 @@ export class DashboardComponent implements OnInit {
     this.userAddress = sessionStorage.getItem("address")!;
     
 
-    //this.website = Settings.website;
+    this.website = Settings.website;
     this.blockchainExplorer = Settings.explorer;
     this.contractAddress = Settings.contractAddress;
     this.coinName = Settings.coinName;

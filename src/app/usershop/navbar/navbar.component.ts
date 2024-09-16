@@ -35,9 +35,7 @@ export class NavbarComponent implements OnInit {
   signOut(): void {
     sessionStorage.clear();
     this.isLoggedIn = false;
-    this.router.navigate(['/home']).then(() => {
-      window.location.href = '/home';
-    });
+    this.router.navigate(['/auth/signin']);
   }
 
   getMainCategory(): void {
@@ -89,7 +87,7 @@ export class NavbarComponent implements OnInit {
   }
 
   onAddToCart(): void {
-    this.router.navigate(['/usershop/shopping-cart']);
+    this.router.navigate(['/shopping-cart']);
   }
 
   clearSearch(): void {
