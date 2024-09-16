@@ -1,6 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { AppComponent } from './app.component';
 import { AuthMasterComponent } from './auth/auth-master/auth-master.component';
+import { LoginComponent } from './auth/login/login.component';
 import { RegisterComponent } from './auth/register/register.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { PriceChartComponent } from './price-chart/price-chart.component';
@@ -29,6 +31,8 @@ import { IncomeWithdrawalHistoryComponent } from './user/income-withdrawal-histo
 import { SigninComponent } from './auth/signin/signin.component';
 import { SignupComponent } from './auth/signup/signup.component';
 import { HomeComponent } from './usershop/home/home.component';
+import { UsershopMasterComponent } from './usershop/usershop-master/usershop-master.component';
+import { FooterComponent } from './usershop/footer/footer.component';
 import { NavbarComponent } from './usershop/navbar/navbar.component';
 import { SubcategoryComponent } from './usershop/subcategory/subcategory.component';
 import { ProductDetailsComponent } from './usershop/product-details/product-details.component';
@@ -37,6 +41,7 @@ import { CheckoutComponent } from './usershop/checkout/checkout.component';
 import { OrderHistoryComponent } from './usershop/order-history/order-history.component';
 import { CheckoutConfirmComponent } from './usershop/checkout-confirm/checkout-confirm.component';
 import { OrderInvoiceComponent } from './usershop/order-invoice/order-invoice.component';
+import { AuthGuard } from './usershop/auth.guard';
 
 const routes: Routes = [
   // {
@@ -48,186 +53,201 @@ const routes: Routes = [
   //   }]
   // },
 
-  {
-    path: 'auth',
-    component: AuthMasterComponent,
-    children: [
-      {
-        path: '',
-        component: SigninComponent,
-      },
-     
+  // {
+  //   path: 'auth',
+  //   component: AuthMasterComponent,
+  //   children: [  
+  //     {
+  //       path: '',
+  //       component: SigninComponent,
+  //     },
+  //     {
+  //       path: 'signin',
+  //       component: SigninComponent,
+  //     },
 
-      
+  //     {
+  //       path: 'signup',
+  //       component: SignupComponent,
+  //     },
 
-      {
-        path: 'login',
-        component: SigninComponent,
-      },
+  //     {
+  //       path: 'login',
+  //       component: SigninComponent,
+  //     },
 
-      {
-        path: 'register',
-        component: RegisterComponent,
-      },
-    ],
-  },
+  //     {
+  //       path: 'register',
+  //       component: RegisterComponent,
+  //     },
 
-  {
-    path: 'user',
-    component: UserMasterComponent,
-    children: [
-      {
-        path: '',
-        component: DashboardComponent,
-      },
-      {
-        path: 'dashboard',
-        component: DashboardComponent,
-      },
-      {
-        path: 'directs',
-        component: DirectsComponent,
-      },
-      {
-        path: 'team',
-        component: TeamComponent,
-      },
-      {
-        path: 'royalty',
-        component: RankComponent,
-      },
-      {
-        path: 'boardIncome',
-        component: BoardBinaryIncomeComponent,
-      },
-      {
-        path: 'withdraw-mta',
-        component: WithdrawMtaComponent,
-      },
-      {
-        path: 'dailyeor',
-        component: DailyEORComponent,
-      },
-      {
-        path: 'miningIncome',
-        component: MiningIncomeComponent,
-      },
-      {
-        path: 'boardCount',
-        component: BoardCountComponent,
-      },
-      {
-        path: 'deposit',
-        component: DepositComponent,
-      },
+  //     // {
+  //     //   path:'register/:id',
+  //     //   component:RegisterComponent
+  //     // }
+  //   ],
+  // },
 
-      {
-        path: 'token',
-        component: BuySellMasterComponent,
-        children: [
-          {
-            path: '',
-            component: BuyComponent,
-          },
-          {
-            path: 'buy',
-            component: BuyComponent,
-          },
-          {
-            path: 'sell',
-            component: SellComponent,
-          },
-        ],
-      },
-      {
-        path: 'withdraw-dividend',
-        component: WithdrawDividendComponent,
-      },
-      {
-        path: 'level-dividend',
-        component: LevelDividendComponent,
-      },
-      {
-        path: 'salary-income',
-        component: SalaryIncomeComponent,
-      },
-      {
-        path: 'apr-withdrawal-level',
-        component: WithdrawalLevelIncomeComponent,
-      },
-      {
-        path: 'dividend-income',
-        component: DividendIncomeComponent,
-      },
-      {
-        path: 'roi-dividend',
-        component: RoiDividendComponent,
-      },
-      {
-        path: 'transactions',
-        component: TransactionsComponent,
-      },
-      {
-        path: 'income-withdrawal-history',
-        component: IncomeWithdrawalHistoryComponent,
-      },
-      {
-        path: 'chart',
-        component: PriceChartComponent,
-      },
-      {
-        path: 'games',
-        children: [
-          {
-            path: '',
-            loadChildren: () =>
-              import('./games/games.module').then((u) => u.GamesModule),
-          },
-        ],
-      },
-      {
-        path: '**',
-        component: PageNotFoundComponent,
-      },
-    ],
-  },
+  // {
+  //   path: 'user',
+  //   component: UserMasterComponent,
+  //   children: [
+  //     {
+  //       path: '',
+  //       component: DashboardComponent,
+  //     },
+  //     {
+  //       path: 'dashboard',
+  //       component: DashboardComponent,
+  //     },
+  //     {
+  //       path: 'directs',
+  //       component: DirectsComponent,
+  //     },
+  //     {
+  //       path: 'team',
+  //       component: TeamComponent,
+  //     },
+  //     {
+  //       path: 'royalty',
+  //       component: RankComponent,
+  //     },
+  //     {
+  //       path: 'boardIncome',
+  //       component: BoardBinaryIncomeComponent,
+  //     },
+  //     {
+  //       path: 'withdraw-mta',
+  //       component: WithdrawMtaComponent,
+  //     },
+  //     {
+  //       path: 'dailyeor',
+  //       component: DailyEORComponent,
+  //     },
+  //     {
+  //       path: 'miningIncome',
+  //       component: MiningIncomeComponent,
+  //     },
+  //     {
+  //       path: 'boardCount',
+  //       component: BoardCountComponent,
+  //     },
+  //     {
+  //       path: 'deposit',
+  //       component: DepositComponent,
+  //     },
+
+  //     {
+  //       path: 'token',
+  //       component: BuySellMasterComponent,
+  //       children: [
+  //         {
+  //           path: '',
+  //           component: BuyComponent,
+  //         },
+  //         {
+  //           path: 'buy',
+  //           component: BuyComponent,
+  //         },
+  //         {
+  //           path: 'sell',
+  //           component: SellComponent,
+  //         },
+  //       ],
+  //     },
+  //     {
+  //       path: 'withdraw-dividend',
+  //       component: WithdrawDividendComponent,
+  //     },
+  //     {
+  //       path: 'level-dividend',
+  //       component: LevelDividendComponent,
+  //     },
+  //     {
+  //       path: 'salary-income',
+  //       component: SalaryIncomeComponent,
+  //     },
+  //     {
+  //       path: 'apr-withdrawal-level',
+  //       component: WithdrawalLevelIncomeComponent,
+  //     },
+  //     {
+  //       path: 'dividend-income',
+  //       component: DividendIncomeComponent,
+  //     },
+  //     {
+  //       path: 'roi-dividend',
+  //       component: RoiDividendComponent,
+  //     },
+  //     {
+  //       path: 'transactions',
+  //       component: TransactionsComponent,
+  //     },
+  //     {
+  //       path: 'income-withdrawal-history',
+  //       component: IncomeWithdrawalHistoryComponent,
+  //     },
+  //     {
+  //       path: 'chart',
+  //       component: PriceChartComponent,
+  //     },
+  //     {
+  //       path: 'games',
+  //       children: [
+  //         {
+  //           path: '',
+  //           loadChildren: () =>
+  //             import('./games/games.module').then((u) => u.GamesModule),
+  //         },
+  //       ],
+  //     },
+  //     {
+  //       path: '**',
+  //       component: PageNotFoundComponent,
+  //     },
+  //   ],
+  // },
 
   //User shop component Routing
   {
     path: '',
-    component: HomeComponent,
+    redirectTo: 'home',
+    pathMatch: 'full',
   },
-
-  {
-    path: 'usershop-navbar',
-    component: NavbarComponent,
-  },
-
   {
     path: 'home',
     component: HomeComponent,
   },
   {
-    path: 'signin',
-    component: SigninComponent,
+    path: 'usershop-navbar',
+    component: NavbarComponent,
   },
-
   { path: 'subcategory/:id', component: SubcategoryComponent },
   { path: 'product/:id', component: ProductDetailsComponent },
-  { path: 'shopping-cart', component: ShoppingCartComponent },
-  { path: 'checkout', component: CheckoutComponent },
-  { path: 'confirm', component: CheckoutConfirmComponent },
-  { path: 'order-invoice', component: OrderInvoiceComponent }, 
-  
+
+  // Secure the shop routes with Auth Guard
   {
-    path: 'order-history',
-    component: OrderHistoryComponent,
-  },
-  {
-    path: 'signup',
-    component: SignupComponent,
+    path: 'usershop',
+    canActivate: [AuthGuard],  // Protect the parent route
+    children: [
+      { path: 'shopping-cart', component: ShoppingCartComponent },
+      { path: 'checkout', component: CheckoutComponent },
+      { path: 'confirm', component: CheckoutConfirmComponent },
+      { path: 'order-invoice', component: OrderInvoiceComponent },
+      { path: 'order-history', component: OrderHistoryComponent },
+    ],
   },
 
+  {
+    path: 'auth',
+    component: AuthMasterComponent,
+    children: [
+      { path: 'signin', component: SigninComponent },
+      { path: 'signup', component: SignupComponent },
+    ],
+  },
+
+  // Fallback route
   {
     path: '**',
     component: PageNotFoundComponent,
