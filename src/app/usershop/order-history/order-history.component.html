@@ -18,12 +18,12 @@
                     <img src="path-to-item-image.jpg" alt="Item">
                     <div class="item-info">
                         <h3>Product Name</h3>
-                        <p>Price: {{ order.orderAmount | currency }}</p>
+                        <p>Price: Rs. {{ order.orderAmount }}</p>
                     </div>
                 </div>
             </div>
             <div class="order-total">
-                <span>Total: {{ order.orderAmount | currency }}</span>
+                <span>Total: Rs. {{ order.orderAmount}}</span>
             </div>
         </div>
     </div>

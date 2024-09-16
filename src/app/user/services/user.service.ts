@@ -12,7 +12,8 @@ export class UserService {
   private selectedAddressIdSubject = new BehaviorSubject<number | null>(null);
   private cartSubject = new BehaviorSubject<number>(0);
   cartQuantity$ = this.cartSubject.asObservable();
-  private apiBaseUrl = Settings.apiUrl;
+  // private apiBaseUrl = Settings.apiUrl;
+  private apiBaseUrl = 'https://apishop.hiicall.com/';
 
   constructor(private http: HttpClient) { }
 
@@ -183,9 +184,9 @@ export class UserService {
   getHomePageSectionProduct(): Observable<any[]>{
     return this.http.get<any[]>(this.apiBaseUrl+"api/Shop/home-page/products");
   }
-
+// https://apishop.hiicall.com/api/Shop/products-by-categoryid/2
   getAllProductByCategoryId(categoryId: number): Observable<any>{
-    return this.http.get<any[]>(this.apiBaseUrl+"api/Shop/products-by-categoryid/"+categoryId);
+    return this.http.get<any[]>(`${this.apiBaseUrl}api/Shop/products-by-categoryid/${categoryId}`);
   }
 
   getProductById(productId: number): Observable<any> {

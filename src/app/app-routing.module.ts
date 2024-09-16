@@ -56,10 +56,6 @@ const routes: Routes = [
         path: '',
         component: SigninComponent,
       },
-     
-
-      
-
       {
         path: 'login',
         component: SigninComponent,

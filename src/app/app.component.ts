@@ -9,6 +9,9 @@ import { LoaderService } from './services/loader.service';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent{
+  title(title: any) {
+    throw new Error('Method not implemented.');
+  }
 
   constructor(public loader:LoaderService,public spinner:NgxSpinnerService) {
   }
