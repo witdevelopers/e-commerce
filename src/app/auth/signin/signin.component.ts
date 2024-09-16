@@ -9,9 +9,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
   templateUrl: './signin.component.html',
   styleUrls: ['./signin.component.css']
 })
-export class SigninComponent implements OnInit{
-
-
+export class SigninComponent implements OnInit {
 
   userID: string = '';
   password: string = '';
@@ -22,9 +20,9 @@ export class SigninComponent implements OnInit{
     private router: Router,
     private spinnerService: NgxSpinnerService
   ) {}
-  
+
   ngOnInit(): void {
-    throw new Error('Method not implemented.');
+    // Initialization logic, if needed
   }
 
   async onSubmit() {
@@ -34,14 +32,13 @@ export class SigninComponent implements OnInit{
       try {
         let res: any;
         if (this.isSignUp) {
-          // Handle sign-up
-          // res = await this.api.signUp(this.email, this.password , ); // Ensure your AuthService has a signUp method
+          // Handle sign-up (implement the signUp method in AuthService if needed)
+          // res = await this.api.signUp(this.userID, this.password);
         } else {
           // Handle sign-in
           res = await this.api.loginMLM(this.userID, this.password);
         }
         
-        console.log(res);
         if (res.status) {
           sessionStorage.setItem('userId', this.userID);
           sessionStorage.setItem('memberId', res.data.table[0].memberId.toString());
@@ -53,13 +50,9 @@ export class SigninComponent implements OnInit{
           
           this.spinnerService.hide();
           
-          this.router.navigateByUrl('/auth/signin', { skipLocationChange: true }).then(() => {
-            this.router.navigate(['']).then(() => {
-              window.location.href = '';  // Forces a full page reload to the home page
-          });          
-        });
-        
-          Swal.fire("Login Successfully", '', 'success');
+          Swal.fire("Login Successfully", '', 'success').then(() => {
+            this.router.navigate(['/home']);  // Redirect to home page
+          });
         } else {
           this.spinnerService.hide();
           Swal.fire(res.message, '', 'error');

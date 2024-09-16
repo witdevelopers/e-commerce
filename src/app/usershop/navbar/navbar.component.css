@@ -251,7 +251,7 @@ nav ul li:hover .subMenu {
 
   nav ul {
     font-size: 8px;
-    gap: 8px;
+    gap: 18px;
     text-align: center;
     margin: 0 0 0 -30px;
   }
