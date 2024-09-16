@@ -41,6 +41,7 @@ import { CheckoutComponent } from './usershop/checkout/checkout.component';
 import { OrderHistoryComponent } from './usershop/order-history/order-history.component';
 import { CheckoutConfirmComponent } from './usershop/checkout-confirm/checkout-confirm.component';
 import { OrderInvoiceComponent } from './usershop/order-invoice/order-invoice.component';
+import { AuthGuard } from './usershop/auth.guard';
 
 const routes: Routes = [
   // {
@@ -210,31 +211,43 @@ const routes: Routes = [
   //User shop component Routing
   {
     path: '',
-    component: HomeComponent,
+    redirectTo: 'home',
+    pathMatch: 'full',
   },
-
-  {
-    path: 'usershop-navbar',
-    component: NavbarComponent,
-  },
-
   {
     path: 'home',
     component: HomeComponent,
   },
-
+  {
+    path: 'usershop-navbar',
+    component: NavbarComponent,
+  },
   { path: 'subcategory/:id', component: SubcategoryComponent },
   { path: 'product/:id', component: ProductDetailsComponent },
-  { path: 'shopping-cart', component: ShoppingCartComponent },
-  { path: 'checkout', component: CheckoutComponent },
-  { path: 'confirm', component: CheckoutConfirmComponent },
-  { path: 'order-invoice', component: OrderInvoiceComponent }, 
-  
+
+  // Secure the shop routes with Auth Guard
   {
-    path: 'order-history',
-    component: OrderHistoryComponent,
+    path: 'usershop',
+    canActivate: [AuthGuard],  // Protect the parent route
+    children: [
+      { path: 'shopping-cart', component: ShoppingCartComponent },
+      { path: 'checkout', component: CheckoutComponent },
+      { path: 'confirm', component: CheckoutConfirmComponent },
+      { path: 'order-invoice', component: OrderInvoiceComponent },
+      { path: 'order-history', component: OrderHistoryComponent },
+    ],
   },
 
+  {
+    path: 'auth',
+    component: AuthMasterComponent,
+    children: [
+      { path: 'signin', component: SigninComponent },
+      { path: 'signup', component: SignupComponent },
+    ],
+  },
+
+  // Fallback route
   {
     path: '**',
     component: PageNotFoundComponent,

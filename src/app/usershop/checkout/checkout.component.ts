@@ -226,7 +226,7 @@ export class CheckoutComponent implements OnInit {
   checkout(): void {
     if (this.selectedAddress) {
       console.log('Proceeding with checkout. Selected Address:', this.selectedAddress);
-      this.router.navigate(['/confirm']);
+      this.router.navigate(['/usershop/confirm']);
     } else {
       alert('Please select an address to proceed with checkout.');
     }

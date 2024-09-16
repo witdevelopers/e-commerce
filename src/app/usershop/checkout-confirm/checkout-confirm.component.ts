@@ -22,9 +22,7 @@ export class CheckoutConfirmComponent implements OnInit {
   selectedAddressId: number | null = null;
   private imageBaseUrl: string = Settings.imageBaseUrl; // Dynamic base URL for images from Settings
 
-  constructor(private userService: UserService, private router: Router) {
-    // No need to set imageBaseUrl in constructor as it's already set statically
-  }
+  constructor(private userService: UserService, private router: Router) {}
 
   ngOnInit(): void {
     this.retrieveAddressId();
@@ -48,7 +46,10 @@ export class CheckoutConfirmComponent implements OnInit {
   getWalletBalance(walletId: number): void {
     this.userService.getWalletBalance(walletId).subscribe(
       (data: any) => this.walletBalance = data.balance,
-      (error) => console.error('Error fetching wallet balance:', error)
+      (error) => {
+        console.error('Error fetching wallet balance:', error);
+        Swal.fire('Error', 'There was an error fetching wallet balance. Please try again later.', 'error');
+      }
     );
   }
 
@@ -74,7 +75,10 @@ export class CheckoutConfirmComponent implements OnInit {
             this.totalQuantity = this.cartDetails.items.reduce((sum: number, item: any) => sum + item.quantity, 0);
           }
         },
-        error => Swal.fire('Error', 'There was an error fetching cart details. Please try again later.', 'error')
+        error => {
+          console.error('Error fetching cart details:', error);
+          Swal.fire('Error', 'There was an error fetching cart details. Please try again later.', 'error');
+        }
       );
     } else {
       Swal.fire('Error', 'Customer ID is missing. Please log in and try again.', 'error');
@@ -180,11 +184,11 @@ export class CheckoutConfirmComponent implements OnInit {
       (response: any) => {
         Swal.fire('Order Placed', 'Your order has been placed successfully', 'success');
         sessionStorage.setItem('orderNo', response.orderId);
-        this.router.navigate(['/order-invoice']);
+        this.router.navigate(['/usershop/order-invoice']);
       },
       (error) => {
         console.error('Error placing order:', error);
-        Swal.fire('Error', 'There was an error placing the order', 'error');
+        Swal.fire('Error', 'There was an error placing the order. Please try again later.', 'error');
       }
     );
   }

@@ -85,11 +85,11 @@ export class NavbarComponent implements OnInit {
   }
 
   navigateToProduct(productId: string): void {
-    this.router.navigate([`/product/${productId}`]);
+    this.router.navigate([`/usershop/product/${productId}`]);
   }
 
   onAddToCart(): void {
-    this.router.navigate(['/shopping-cart']);
+    this.router.navigate(['/usershop/shopping-cart']);
   }
 
   clearSearch(): void {

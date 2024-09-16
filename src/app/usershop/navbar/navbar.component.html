@@ -1,69 +1,72 @@
 <header class="header">
   <div class="headerLeft">
-    <div class="logoContainer" routerLink="/home">
-      <img src="assets/Shopimg/wit.png" />
+    <div class="logoContainer" [routerLink]="'/home'">
+      <img src="assets/Shopimg/wit.png" alt="Logo" />
     </div>
 
     <!-- Search box -->
     <div class="searchInputContainer">
       <div class="searchIcon">
-        <img src="assets/img/search.png" />
+        <img src="assets/img/search.png" alt="Search Icon" />
       </div>
-        <!-- <form id="inputForm" class="searchContainer"> -->
-          <input type="text" [(ngModel)]="searchTerm" (input)="onSearch($event)" placeholder="Search..."
-          aria-label="Search" />
-        <!-- </form> -->
-        <div class="inputCloseSearch" *ngIf="searchTerm" (click)="clearSearch()">
-          <i class="fa-solid fa-xmark" id="closeSearch" aria-label="Close Search"></i>
-        </div>
+      <input 
+        type="text" 
+        [(ngModel)]="searchTerm" 
+        (input)="onSearch($event)" 
+        placeholder="Search..."
+        aria-label="Search" 
+      />
+      <div class="inputCloseSearch" *ngIf="searchTerm" (click)="clearSearch()">
+        <i class="fa-solid fa-xmark" id="closeSearch" aria-label="Close Search"></i>
+      </div>
 
-        <div class="searchRecentModal" *ngIf="productByKeyword.length > 0">
-          <div class="listofRecent" *ngFor="let pbk of productByKeyword">
-            <h3 routerLink="/product/{{ pbk.productId }}">
-              {{ pbk.productName }}
-            </h3>
-          </div>
+      <div class="searchRecentModal" *ngIf="productByKeyword.length > 0">
+        <div class="listofRecent" *ngFor="let pbk of productByKeyword">
+          <h3 [routerLink]="['/usershop/product', pbk.productId]">
+            {{ pbk.productName }}
+          </h3>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="headerRight">
+    <div class="becomeSupplierContainer">
+      <p>Profile</p>
+    </div>
+
+    <div class="profileAndCart">
+      <div class="downloadContainer">
+        <div class="mobileIcon top">
+          <img src="assets/img/user.png" alt="User Icon" />
+        </div>
+        <p>{{ isLoggedIn ? userName : 'Profile' }}</p>
+
+        <div class="downloadHoverBtnContainer">
+          <p *ngIf="isLoggedIn">{{ userName }}</p>
+          <p *ngIf="!isLoggedIn" style="font-size: 13px;">To access your account</p>
+
+          <a *ngIf="!isLoggedIn" [routerLink]="'/auth/signin'">
+            <button class="downloadBtn">Sign In</button>
+          </a>
+          <a *ngIf="isLoggedIn" (click)="signOut()">
+            <button class="downloadBtn">Sign Out</button>
+          </a>
+          <hr>
+          <a [routerLink]="'/usershop/order-history'">
+            <button class="downloadBtn">My Order</button>
+          </a>
         </div>
       </div>
     </div>
 
-    <div class="headerRight">
-      <div class="becomeSupplierContainer">
-        <p>Profile</p>
-      </div>
-
-      <div class="profileAndCart">
-        <div class="downloadContainer">
-          <div class="mobileIcon top">
-            <img src="assets/img/user.png" />
-          </div>
-          <p>{{ isLoggedIn ? userName : 'Profile' }}</p>
-
-          <div class="downloadHoverBtnContainer">
-            <p *ngIf="isLoggedIn">{{userName}}</p>
-            <p *ngIf="!isLoggedIn" style="font-size: 13px;">To access your account</p>
-
-            <a *ngIf="!isLoggedIn" routerLink="/auth/signin">
-              <button class="downloadBtn">Sign In</button>
-            </a>
-            <a *ngIf="isLoggedIn" (click)="signOut()">
-              <button class="downloadBtn">Sign Out</button>
-            </a>
-            <hr>
-            <a routerLink="/order-history">
-              <button class="downloadBtn">My Order</button>
-            </a>
-          </div>
-        </div>
-      </div>
-
-      <div class="CartContainer" (click)="onAddToCart()" style="cursor: pointer;">
-        <div class="CartIcon top">
-          <img src="assets/img/cart.png" />
-          <div *ngIf="cartQuantity > 0" class="cart-quantity">{{ cartQuantity }}</div>
-        </div>
+    <div class="CartContainer" (click)="onAddToCart()" style="cursor: pointer;">
+      <div class="CartIcon top">
+        <img src="assets/img/cart.png" alt="Cart Icon" />
+        <div *ngIf="cartQuantity > 0" class="cart-quantity">{{ cartQuantity }}</div>
       </div>
     </div>
+  </div>
 </header>
 
 <!-- Navigation -->
@@ -74,7 +77,6 @@
       {{ c.categoryName }}
       <div class="subMenu" *ngIf="subCategory[c.categoryID] && isSubCategoryVisible[c.categoryID]">
         <div class="submenuList" *ngFor="let subcat of subCategory[c.categoryID]">
-          <!-- Use routerLink to navigate to the respective subcategory page -->
           <a [routerLink]="['/subcategory', subcat.categoryID]">{{ subcat.categoryName }}</a>
         </div>
       </div>

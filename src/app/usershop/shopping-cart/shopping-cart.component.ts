@@ -27,8 +27,7 @@ export class ShoppingCartComponent implements OnInit {
     } else {
       Swal.fire({
         icon: 'error',
-        title: 'No customer ID found',
-        text: 'Please log in first to view your shopping cart.',
+        title: 'Login not found',
       });
     }
   }
