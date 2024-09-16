@@ -25,10 +25,7 @@ export class ShoppingCartComponent implements OnInit {
     if (this.customerId) {
       this.loadCart();
     } else {
-      Swal.fire({
-        icon: 'error',
-        title: 'Login not found',
-      });
+      this.router.navigate(['/auth/signin']);
     }
   }
 

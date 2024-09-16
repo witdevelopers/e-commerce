@@ -1,6 +1,4 @@
-import { Component, OnInit, AfterViewInit, OnDestroy } from '@angular/core';
-import Swiper from 'swiper';
-import 'swiper/swiper-bundle.css';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { UserService } from 'src/app/user/services/user.service';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
@@ -12,19 +10,15 @@ import { Settings } from 'src/app/app-setting'; // Import the Settings class
   templateUrl: './product-slider.component.html',
   styleUrls: ['./product-slider.component.css']
 })
-export class ProductSliderComponent implements OnInit, AfterViewInit, OnDestroy {
+export class ProductSliderComponent implements OnInit, OnDestroy {
   homePageSectionProducts: any = {};
   private ngUnsubscribe = new Subject<void>();
+  addedProducts: Set<number> = new Set(); // Track added products
 
   constructor(private userService: UserService) { }
 
   ngOnInit(): void {
     this.loadHomeSectionProductsDetails();
-  }
-
-  ngAfterViewInit(): void {
-    // Initialize Swipers only after the view has been fully initialized and data is loaded
-    this.ngUnsubscribe.subscribe(() => this.initializeSwipers());
   }
 
   private loadHomeSectionProductsDetails(): void {
@@ -35,8 +29,6 @@ export class ProductSliderComponent implements OnInit, AfterViewInit, OnDestroy 
         next: (data) => {
           this.homePageSectionProducts = this.groupProductsBySection(data);
           console.log("Home Page Section Products:", this.homePageSectionProducts);
-          // Use setTimeout to ensure Swipers are initialized after data is available
-          setTimeout(() => this.initializeSwipers(), 0);
         },
         error: (err) => console.error('Failed to load home page section products:', err),
       });
@@ -67,55 +59,31 @@ export class ProductSliderComponent implements OnInit, AfterViewInit, OnDestroy 
       return sections;
     }, {});
   }
-  
 
-  addToCart(productDtId: number): void {
+  addToCart(productId: number, buttonElement: HTMLElement): void {
     const customerId = sessionStorage.getItem('memberId') || localStorage.getItem('memberId');
     if (!customerId) {
       Swal.fire({ icon: 'error', title: 'Customer ID is missing. Please log in again.' });
       return;
     }
 
-    if (!productDtId || isNaN(productDtId)) {
+    if (!productId || isNaN(productId)) {
       Swal.fire({ icon: 'error', title: 'Invalid Product ID.' });
       return;
     }
 
-    this.userService.addToCart(+customerId, productDtId, 1).subscribe(
-      () => Swal.fire({ icon: 'success', title: 'Product added to cart successfully.' }),
-      () => Swal.fire({ icon: 'error', title: 'Product already added.' })
+    this.userService.addToCart(+customerId, productId, 1).subscribe(
+      () => {
+        Swal.fire({ icon: 'success', title: 'added to cart' });
+        this.addedProducts.add(productId); // Mark product as added
+        buttonElement.classList.add('clicked');
+      },
+      () => Swal.fire({ icon: 'error', title: 'already added.' })
     );
   }
 
-  private initializeSwipers(): void {
-    Object.keys(this.homePageSectionProducts).forEach(sectionName => {
-      new Swiper(`#swiper-${sectionName}`, {
-        loop: true,
-        centeredSlides: true,
-        autoplay: {
-          delay: 3500,
-          disableOnInteraction: false,
-        },
-        navigation: {
-          nextEl: `.swiper-button-next[data-swiper-id="swiper-${sectionName}"]`,
-          prevEl: `.swiper-button-prev[data-swiper-id="swiper-${sectionName}"]`,
-        },
-        breakpoints: {
-          768: {
-            slidesPerView: 3,
-            spaceBetween: 30,
-          },
-          1024: {
-            slidesPerView: 4,
-            spaceBetween: 40,
-          },
-          1280: {
-            slidesPerView: 5,
-            spaceBetween: 50,
-          },
-        },
-      });
-    });
+  isProductAdded(productId: number): boolean {
+    return this.addedProducts.has(productId);
   }
 
   objectKeys = Object.keys;

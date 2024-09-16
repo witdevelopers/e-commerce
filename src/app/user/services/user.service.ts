@@ -189,7 +189,7 @@ export class UserService {
   }
 
   getProductById(productId: number): Observable<any> {
-    return this.http.get<any>(`${this.apiBaseUrl}api/Shop/getprodbyid/${productId}`);
+    return this.http.get<any>(`${this.apiBaseUrl}api/Shop/ProductDescription/${productId}`);
   }
 
   SearchProductByKeyword(keyword: string): Observable<any>{

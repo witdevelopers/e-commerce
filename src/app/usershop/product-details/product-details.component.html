@@ -6,37 +6,37 @@
         *ngFor="let image of singleProductImages"
         (click)="changeMainImage(image.imageUrl)"
       >
-        <img [src]="getImageUrl(image.imageUrl)" alt="thumbnail"/>
+        <img [src]="getImageUrl(image.imageUrl)" alt="thumbnail" />
       </div>
     </div>
 
     <div class="item-image-main">
       <!-- Display the main image -->
-      <div class="badge-area-2">
+      <div class="badge-area-2" *ngIf="singleProductDetails[0]?.discountPercentage">
         <div class="badge-product-sale">
           <span class="new">OFFER</span>
           <span class="percent">- {{ singleProductDetails[0]?.discountPercentage }}%</span>
         </div>
       </div>
-      <img [src]="mainImageUrl" alt="{{ singleProduct.productName }}" />
+      <img [src]="mainImageUrl" alt="{{ singleProduct?.productName }}" />
     </div>
   </div>
 
   <div class="item-info-parent">
     <!-- Main Info -->
     <div class="main-info">
-      <h4>{{ singleProduct.productName }}</h4>
+      <h4>{{ singleProduct?.productName }}</h4>
       <div style="display: flex; gap: 10px">
         <p>
           Price:
           <span id="price">₹ {{ singleProductDetails[0]?.discountPrice }}</span>
         </p>
-        <del
-          ><p>
+        <del *ngIf="singleProductDetails[0]?.price">
+          <p>
             Price:
             <span id="price">₹ {{ singleProductDetails[0]?.price }}</span>
-          </p></del
-        >
+          </p>
+        </del>
       </div>
 
       <!-- Add to Cart Button -->
@@ -53,7 +53,7 @@
       <div class="description">
         <ul>
           <li
-            [innerHTML]="singleProduct.description"
+            [innerHTML]="singleProduct?.description"
             style="position: relative; right: 20px"
           ></li>
         </ul>

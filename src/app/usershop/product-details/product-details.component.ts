@@ -159,7 +159,7 @@ export class ProductDetailsComponent implements OnInit {
         });
         // Redirect to checkout page after adding to cart
         setTimeout(() => {
-          this.router.navigate(['/checkout']);
+          this.router.navigate(['/usershop/checkout']);
         }, 1500); // Delay to let the user see the success message
       },
       (error) => {

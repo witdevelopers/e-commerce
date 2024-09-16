@@ -488,3 +488,40 @@ body::-webkit-scrollbar-thumb {
     background-color: rgb(183, 183, 183);
     border-radius: 50px;
 }
+/* General Container Styles */
+.container {
+    max-width: 100%;
+    margin: auto;
+    padding: 0 15px;
+}
+
+/* Responsive Container */
+@media (min-width: 576px) { /* Small devices (tablets) and up */
+    .container {
+        max-width: 540px;
+    }
+}
+
+@media (min-width: 768px) { /* Medium devices (desktops) and up */
+    .container {
+        max-width: 720px;
+    }
+}
+
+@media (min-width: 992px) { /* Large devices (large desktops) and up */
+    .container {
+        max-width: 960px;
+    }
+}
+
+@media (min-width: 1200px) { /* Extra large devices (extra large desktops) and up */
+    .container {
+        max-width: 1140px;
+    }
+}
+
+@media (min-width: 1400px) { /* Extra extra large devices (larger desktops) and up */
+    .container {
+        max-width: 1300px;
+    }
+}
