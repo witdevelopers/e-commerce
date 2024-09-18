@@ -20,6 +20,7 @@ export class OrderHistoryComponent implements OnInit {
         (data) => {
           console.log(data);
           this.orderHistory = data; // Bind the order history data
+          console.log("Order history wala data", data);
         },
         (error) => {
           console.error('Error fetching customer details:', error);

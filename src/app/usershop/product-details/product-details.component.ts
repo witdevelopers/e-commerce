@@ -49,11 +49,11 @@ export class ProductDetailsComponent implements OnInit {
     });
   }
 
-  // Load related products based on category ID
+  // Load related products based on category ID, excluding the current product
   loadRelatedProducts(categoryId: number): void {
     this.userService.getAllProductByCategoryId(categoryId).subscribe((response: any) => {
       if (response && response.table) {
-        this.relatedProducts = response.table; // Assign the table array to relatedProducts
+        this.relatedProducts = response.table.filter((product: any) => product.productId !== this.productId); // Exclude current product
       } else {
         this.relatedProducts = [];
       }
@@ -195,5 +195,5 @@ export class ProductDetailsComponent implements OnInit {
             this.router.navigate(['/product', productId]);
         });
     });
-}
+  }
 }
