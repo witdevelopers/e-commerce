@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { UserService } from 'src/app/user/services/user.service';
+import { EncryptionService } from '../encryption.service';
+
 
 @Component({
   selector: 'app-navbar',
@@ -17,7 +19,11 @@ export class NavbarComponent implements OnInit {
   productByKeyword: any[] = [];
   searchTerm: string = ''; // To track search input
 
-  constructor(private userService: UserService, private router: Router) {}
+  constructor(
+    private userService: UserService,
+    private router: Router,
+    private encryptionService: EncryptionService // Inject EncryptionService
+  ) {}
 
   ngOnInit(): void {
     this.getMainCategory();
@@ -48,7 +54,6 @@ export class NavbarComponent implements OnInit {
     });
   }
   
-
   getMainCategory(): void {
     this.userService.getMainCategory().subscribe(
       (res: any[]) => {
@@ -94,11 +99,9 @@ export class NavbarComponent implements OnInit {
   }
 
   navigateToProduct(productId: number): void {
-    // Force navigation to the same route with different parameters
-    this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
-      this.router.navigate(['/product', productId]);
-      this.clearSearch();
-    });
+    const encryptedId = this.encryptionService.encrypt(productId.toString());
+    console.log("Enct", encryptedId);
+    //this.router.navigate(['/product', encryptedId]);
   }
 
   onAddToCart(): void {
@@ -107,7 +110,6 @@ export class NavbarComponent implements OnInit {
       this.router.navigate(['/shopping-cart']);
     });
   }
-  
 
   clearSearch(): void {
     this.searchTerm = ''; // Clear search term

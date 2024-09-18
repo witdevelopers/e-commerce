@@ -4,6 +4,7 @@ import { UserService } from 'src/app/user/services/user.service';
 import { HttpClient } from '@angular/common/http';
 import Swal from 'sweetalert2';
 import { Settings } from 'src/app/app-setting'; // Adjust the import path as needed
+import { EncryptionService } from '../encryption.service';
 
 @Component({
   selector: 'app-product-details',
@@ -19,35 +20,82 @@ export class ProductDetailsComponent implements OnInit {
   mainImageUrl: string = 'assets/default-image.jpg'; // Default image URL
   quantity: number = 1; // Default quantity
 
+
+    // Zoom-related variables
+  isZooming: boolean = false;
+  backgroundPosition: string = '0% 0%';
+  backgroundSize: string = '250%'; // Zoom level (adjust as needed)
+
   constructor(
     private route: ActivatedRoute,
     private userService: UserService,
     private http: HttpClient,
-    private router: Router // Add Router for redirection
+    private router: Router, // Add Router for redirection
+    private encryptionService: EncryptionService,
   ) {
+    this.route.params.subscribe(params => {
+      const encryptedId = params['id'];
+      this.productId = +this.encryptionService.decrypt(encryptedId); // Decrypt and parse the ID
     this.productId = +this.route.snapshot.params['id'];
-  }
+  });
+}
 
   ngOnInit(): void {
     this.loadProductDetails(this.productId);
   }
 
+    onMouseMove(event: MouseEvent): void {
+    const container = event.target as HTMLElement;
+    const containerRect = container.getBoundingClientRect();
+
+    const x = event.clientX - containerRect.left;
+    const y = event.clientY - containerRect.top;
+
+    // Calculate background position for zoomed image
+    const xPercent = (x / containerRect.width) * 100;
+    const yPercent = (y / containerRect.height) * 100;
+
+    this.backgroundPosition = `${xPercent}% ${yPercent}%`;
+    this.isZooming = true; // Show the zoomed image when the mouse is inside
+  }
+
+  // Hide zoom result when the mouse leaves the image
+  onMouseLeave(): void {
+    this.isZooming = false;
+  }
   // Load product details by product ID
   loadProductDetails(id: number): void {
     this.userService.getProductById(id).subscribe((response: any) => {
       this.singleProduct = response.singleProduct;
       this.singleProductDetails = response.singleProductDetails;
       this.singleProductImages = response.singleProductImages;
-
-      // Set the main image URL to the first image if available
-      if (this.singleProductImages.length > 0) {
-        this.mainImageUrl = this.getImageUrl(this.singleProductImages[0].imageUrl);
+  
+      // Find the image with isMainImage set to true
+      const mainImage = this.singleProductImages.find(image => image.isMainImage);
+  
+      // Set the main image URL if a main image is found
+      if (mainImage) {
+        this.mainImageUrl = this.getImageUrl(mainImage.imageUrl);
+      } else {
+        // Fallback to the first image if no main image is found
+        if (this.singleProductImages.length > 0) {
+          this.mainImageUrl = this.getImageUrl(this.singleProductImages[0].imageUrl);
+        } else {
+          // Fallback to default image if no images are available
+          this.mainImageUrl = 'assets/default-image.jpg';
+        }
       }
-
+      
+      // Log the main image URL
+      console.log("Main image URL", this.mainImageUrl);
+  
       // Fetch related products by category ID
       this.loadRelatedProducts(this.singleProduct.categoryId);
+    }, (error) => {
+      console.error('Error loading product details:', error);
     });
   }
+  
 
   // Load related products based on category ID, excluding the current product
   loadRelatedProducts(categoryId: number): void {
@@ -124,10 +172,10 @@ export class ProductDetailsComponent implements OnInit {
       },
       (error) => {
         Swal.fire({
-          icon: 'error',
-          title: 'Error adding product to cart.',
+          icon: 'warning',
+          title: 'Product already added to cart.',
         });
-        console.log('Error adding product to cart:', error);
+        console.log('Product already added to cart:', error);
       }
     );
   }
@@ -168,20 +216,16 @@ export class ProductDetailsComponent implements OnInit {
 
     this.userService.addToCart(+customerId, productDtId, quantity).subscribe(
       (response) => {
-        Swal.fire({
-          icon: 'success',
-          title: 'Product added to cart. Redirecting to checkout...',
-        });
         setTimeout(() => {
           this.router.navigate(['/usershop/checkout']);
         }, 100);
       },
       (error) => {
         Swal.fire({
-          icon: 'error',
-          title: 'Error adding product to cart.',
+          icon: 'warning',
+          title: 'Product is already added in the cart go there and checkout.',
         });
-        console.log('Error adding product to cart:', error);
+        console.log('Product is already added in the cart go there and checkout:', error);
       }
     );
   }

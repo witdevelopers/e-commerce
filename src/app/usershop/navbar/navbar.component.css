@@ -118,6 +118,10 @@ form {
   display: block;
   width: 100%;
 }
+.submenuList a{
+  font-weight: 800;
+}
+
 
 .downloadHoverBtnContainer {
   position: absolute;

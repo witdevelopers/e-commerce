@@ -4,6 +4,7 @@ import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import Swal from 'sweetalert2';
 import { Settings } from 'src/app/app-setting'; // Import the Settings class
+import { Router } from '@angular/router'; // Import Router for navigation
 
 @Component({
   selector: 'app-product-slider',
@@ -15,7 +16,7 @@ export class ProductSliderComponent implements OnInit, OnDestroy {
   private ngUnsubscribe = new Subject<void>();
   addedProducts: Set<number> = new Set(); // Track added products
 
-  constructor(private userService: UserService) { }
+  constructor(private userService: UserService, private router: Router) { }
 
   ngOnInit(): void {
     this.loadHomeSectionProductsDetails();
@@ -62,11 +63,26 @@ export class ProductSliderComponent implements OnInit, OnDestroy {
 
   addToCart(productId: number, buttonElement: HTMLElement): void {
     const customerId = sessionStorage.getItem('memberId') || localStorage.getItem('memberId');
+    
+    // Add to local storage if user is not logged in
     if (!customerId) {
-      Swal.fire({ icon: 'error', title: 'Customer ID is missing. Please log in again.' });
+      const cart = JSON.parse(localStorage.getItem('cart') || '[]');
+      const existingProductIndex = cart.findIndex((item: any) => item.productId === productId);
+
+      if (existingProductIndex === -1) {
+        cart.push({ productId, quantity: 1 });
+        localStorage.setItem('cart', JSON.stringify(cart));
+        Swal.fire({ icon: 'success', title: 'Added to cart' });
+        this.addedProducts.add(productId); // Mark product as added
+        buttonElement.classList.add('clicked');
+      } else {
+        Swal.fire({ icon: 'error', title: 'Product already in cart' });
+        this.goToCart(); // Navigate to cart if already in cart
+      }
       return;
     }
 
+    // Add to backend if user is logged in
     if (!productId || isNaN(productId)) {
       Swal.fire({ icon: 'error', title: 'Invalid Product ID.' });
       return;
@@ -74,16 +90,21 @@ export class ProductSliderComponent implements OnInit, OnDestroy {
 
     this.userService.addToCart(+customerId, productId, 1).subscribe(
       () => {
-        Swal.fire({ icon: 'success', title: 'added to cart' });
+        Swal.fire({ icon: 'success', title: 'Added to cart' });
         this.addedProducts.add(productId); // Mark product as added
         buttonElement.classList.add('clicked');
       },
-      () => Swal.fire({ icon: 'error', title: 'already added.' })
+      () => Swal.fire({ icon: 'error', title: 'Error adding to cart.' })
     );
   }
 
   isProductAdded(productId: number): boolean {
     return this.addedProducts.has(productId);
+  }
+
+  // Navigate to the cart page
+  goToCart(): void {
+    this.router.navigate(['/cart']);
   }
 
   objectKeys = Object.keys;

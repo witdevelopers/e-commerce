@@ -10,14 +10,21 @@
       </div>
     </div>
 
-    <div class="item-image-main">
-      <div class="badge-area-2" *ngIf="singleProductDetails[0]?.discountPercentage">
-        <div class="badge-product-sale">
-          <span class="new">OFFER</span>
-          <span class="percent">- {{ singleProductDetails[0]?.discountPercentage }}%</span>
-        </div>
-      </div>
+    <div class="item-image-main" (mousemove)="onMouseMove($event)" (mouseleave)="onMouseLeave()">
       <img class="zoom-image" [src]="mainImageUrl" alt="{{ singleProduct?.productName }}" />
+    </div>
+    
+
+    <!-- Container to display the zoomed image, positioned to the right -->
+    <div class="zoom-result" *ngIf="isZooming">
+      <div
+        class="zoomed-image"
+        [ngStyle]="{
+          backgroundImage: 'url(' + mainImageUrl + ')',
+          backgroundPosition: backgroundPosition,
+          backgroundSize: backgroundSize
+        }"
+      ></div>
     </div>
   </div>
 
@@ -52,6 +59,7 @@
     </div>
   </div>
 </section>
+
 
 <!-- Related Products Section -->
 <section id="related-products" *ngIf="relatedProducts.length > 0">

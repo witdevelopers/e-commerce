@@ -60,6 +60,7 @@ import { CheckoutComponent } from './usershop/checkout/checkout.component';
 import { OrderHistoryComponent } from './usershop/order-history/order-history.component';
 import { CheckoutConfirmComponent } from './usershop/checkout-confirm/checkout-confirm.component';
 import { OrderInvoiceComponent } from './usershop/order-invoice/order-invoice.component';
+import { EncryptionService } from './usershop/encryption.service';
 
 
 @NgModule({
@@ -128,7 +129,7 @@ import { OrderInvoiceComponent } from './usershop/order-invoice/order-invoice.co
     
     
   ],
-  providers: [
+  providers: [EncryptionService,
     { provide: 'Window',  useValue: window },
     { provide: LocationStrategy, useClass: HashLocationStrategy },
     { provide: HTTP_INTERCEPTORS, useClass: HttpInterceptorService, multi: true },
