@@ -10,24 +10,30 @@ import { UserService } from 'src/app/user/services/user.service';
 export class NavbarComponent implements OnInit {
   isLoggedIn: boolean = false;
   userName: string = '';
-  cartQuantity: number = 0;
+  cartQuantity: number = 0; // To store the cart quantity
   mainCategory: any[] = [];
   subCategory: { [key: number]: any[] } = {};
   isSubCategoryVisible: { [key: number]: boolean } = {};
   productByKeyword: any[] = [];
-  searchTerm: string = ''; // Track search input
+  searchTerm: string = ''; // To track search input
 
   constructor(private userService: UserService, private router: Router) {}
 
   ngOnInit(): void {
     this.getMainCategory();
+
+    // Check if the user is logged in
     const userId = sessionStorage.getItem('memberId');
     if (userId) {
       this.isLoggedIn = true;
       this.userName = sessionStorage.getItem('userId') || 'Profile';
-      this.userService.cartQuantity$.subscribe(quantity => {
-        this.cartQuantity = quantity;
+
+      // Subscribe to cart quantity observable
+      this.userService.cartQuantity$.subscribe((quantity) => {
+        this.cartQuantity = quantity; // Automatically update the cart quantity
       });
+
+      // Initial cart quantity load
       this.userService.updateCartQuantity(Number(userId));
     }
   }
@@ -35,8 +41,13 @@ export class NavbarComponent implements OnInit {
   signOut(): void {
     sessionStorage.clear();
     this.isLoggedIn = false;
-    this.router.navigate(['/auth/signin']);
+  
+    // Forcefully reload the home page after sign out
+    this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+      this.router.navigate(['/home']);
+    });
   }
+  
 
   getMainCategory(): void {
     this.userService.getMainCategory().subscribe(
@@ -82,13 +93,21 @@ export class NavbarComponent implements OnInit {
     });
   }
 
-  navigateToProduct(productId: string): void {
-    this.router.navigate([`/usershop/product/${productId}`]);
+  navigateToProduct(productId: number): void {
+    // Force navigation to the same route with different parameters
+    this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+      this.router.navigate(['/product', productId]);
+      this.clearSearch();
+    });
   }
 
   onAddToCart(): void {
-    this.router.navigate(['/shopping-cart']);
+    // Forcefully reload the shopping cart route
+    this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+      this.router.navigate(['/shopping-cart']);
+    });
   }
+  
 
   clearSearch(): void {
     this.searchTerm = ''; // Clear search term

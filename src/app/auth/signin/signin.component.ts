@@ -51,8 +51,12 @@ export class SigninComponent implements OnInit {
           this.spinnerService.hide();
           
           Swal.fire("Login Successfully", '', 'success').then(() => {
-            this.router.navigate(['/home']);  // Redirect to home page
+            // Forcefully reload the home page route
+            this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+              this.router.navigate(['/home']);  // Redirect to home page
+            });
           });
+          
         } else {
           this.spinnerService.hide();
           Swal.fire(res.message, '', 'error');

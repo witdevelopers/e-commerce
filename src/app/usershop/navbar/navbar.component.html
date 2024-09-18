@@ -22,9 +22,10 @@
 
       <div class="searchRecentModal" *ngIf="productByKeyword.length > 0">
         <div class="listofRecent" *ngFor="let pbk of productByKeyword">
-          <h3 [routerLink]="['/usershop/product', pbk.productId]">
+          <h3 (click)="navigateToProduct(pbk.productId)">
             {{ pbk.productName }}
           </h3>
+          
         </div>
       </div>
     </div>
@@ -32,7 +33,7 @@
 
   <div class="headerRight">
     <div class="becomeSupplierContainer">
-      <p>Profile</p>
+      <p>Become a seller</p>
     </div>
 
     <div class="profileAndCart">

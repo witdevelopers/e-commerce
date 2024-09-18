@@ -174,7 +174,7 @@ export class ProductDetailsComponent implements OnInit {
         });
         setTimeout(() => {
           this.router.navigate(['/usershop/checkout']);
-        }, 1500);
+        }, 100);
       },
       (error) => {
         Swal.fire({
