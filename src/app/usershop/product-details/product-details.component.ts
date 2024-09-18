@@ -19,9 +19,9 @@ export class ProductDetailsComponent implements OnInit {
   productId: number;
   mainImageUrl: string = 'assets/default-image.jpg'; // Default image URL
   quantity: number = 1; // Default quantity
+  isProductInCartFlag: boolean = false;
 
-
-    // Zoom-related variables
+  // Zoom-related variables
   isZooming: boolean = false;
   backgroundPosition: string = '0% 0%';
   backgroundSize: string = '250%'; // Zoom level (adjust as needed)
@@ -36,15 +36,16 @@ export class ProductDetailsComponent implements OnInit {
     this.route.params.subscribe(params => {
       const encryptedId = params['id'];
       this.productId = +this.encryptionService.decrypt(encryptedId); // Decrypt and parse the ID
-    this.productId = +this.route.snapshot.params['id'];
-  });
-}
+      this.productId = +this.route.snapshot.params['id'];
+    });
+  }
 
   ngOnInit(): void {
     this.loadProductDetails(this.productId);
+    this.checkIfProductInCart(); 
   }
 
-    onMouseMove(event: MouseEvent): void {
+  onMouseMove(event: MouseEvent): void {
     const container = event.target as HTMLElement;
     const containerRect = container.getBoundingClientRect();
 
@@ -63,16 +64,35 @@ export class ProductDetailsComponent implements OnInit {
   onMouseLeave(): void {
     this.isZooming = false;
   }
+
+  checkIfProductInCart(): void {
+    let customerId = sessionStorage.getItem('memberId') || localStorage.getItem('memberId');
+    
+    if (customerId) {
+      // Fetch the cart items from the server or localStorage
+      this.userService.getCart(+customerId).subscribe((response: any) => {
+        // Check if the current product is in the cart
+        // console.log("Get cart" ,response);
+        this.isProductInCartFlag = response.items.some(item => item.productId === this.productId);
+        // console.log(this.isProductInCartFlag);
+        this.ngOnInit();
+       
+      }, (error) => {
+        console.error('Error fetching cart items:', error);
+        this.isProductInCartFlag = false;  // Default to "not in cart" if there's an error
+      });
+    }}
+
   // Load product details by product ID
   loadProductDetails(id: number): void {
     this.userService.getProductById(id).subscribe((response: any) => {
       this.singleProduct = response.singleProduct;
       this.singleProductDetails = response.singleProductDetails;
       this.singleProductImages = response.singleProductImages;
-  
+
       // Find the image with isMainImage set to true
       const mainImage = this.singleProductImages.find(image => image.isMainImage);
-  
+
       // Set the main image URL if a main image is found
       if (mainImage) {
         this.mainImageUrl = this.getImageUrl(mainImage.imageUrl);
@@ -87,15 +107,14 @@ export class ProductDetailsComponent implements OnInit {
       }
       
       // Log the main image URL
-      console.log("Main image URL", this.mainImageUrl);
-  
+      // console.log("Main image URL", this.mainImageUrl);
+
       // Fetch related products by category ID
       this.loadRelatedProducts(this.singleProduct.categoryId);
     }, (error) => {
-      console.error('Error loading product details:', error);
+      // console.error('Error loading product details:', error);
     });
   }
-  
 
   // Load related products based on category ID, excluding the current product
   loadRelatedProducts(categoryId: number): void {
@@ -105,9 +124,11 @@ export class ProductDetailsComponent implements OnInit {
       } else {
         this.relatedProducts = [];
       }
-      console.log("Related products:", this.relatedProducts);
+      // console.log("Related products:", this.relatedProducts);
     });
   }
+
+ 
 
   // Convert image path to a usable URL
   getImageUrl(imagePath: string): string {
@@ -138,29 +159,8 @@ export class ProductDetailsComponent implements OnInit {
     const productDtId = this.productId;
     const quantity = this.quantity;
 
-    if (!customerId) {
-      Swal.fire({
-        icon: 'error',
-        title: 'Customer ID is missing. Please log in again.',
-      });
-      return;
-    }
+  
 
-    if (!productDtId || isNaN(productDtId)) {
-      Swal.fire({
-        icon: 'error',
-        title: 'Invalid Product ID.',
-      });
-      return;
-    }
-
-    if (!quantity || isNaN(quantity)) {
-      Swal.fire({
-        icon: 'error',
-        title: 'Invalid quantity.',
-      });
-      return;
-    }
 
     this.userService.addToCart(+customerId, productDtId, quantity).subscribe(
       (response) => {
@@ -168,76 +168,33 @@ export class ProductDetailsComponent implements OnInit {
           icon: 'success',
           title: 'Product added to cart successfully.',
         });
-        console.log('Product added to cart successfully.', response);
+        // this.isProductInCartFlag = true;
+        // console.log('Product added to cart successfully.', response);
       },
-      (error) => {
-        Swal.fire({
-          icon: 'warning',
-          title: 'Product already added to cart.',
-        });
-        console.log('Product already added to cart:', error);
-      }
+     
     );
+  }
+
+  
+
+  // Go to the cart page
+  goToCart(): void {
+    this.router.navigate(['/shopping-cart']);
   }
 
   // Buy now functionality
   buyNow(): void {
-    let customerId = sessionStorage.getItem('memberId');
-    if (!customerId) {
-      customerId = localStorage.getItem('memberId');
-    }
-
-    const productDtId = this.productId;
-    const quantity = this.quantity;
-
-    if (!customerId) {
-      Swal.fire({
-        icon: 'error',
-        title: 'Customer ID is missing. Please log in again.',
-      });
-      return;
-    }
-
-    if (!productDtId || isNaN(productDtId)) {
-      Swal.fire({
-        icon: 'error',
-        title: 'Invalid Product ID.',
-      });
-      return;
-    }
-
-    if (!quantity || isNaN(quantity)) {
-      Swal.fire({
-        icon: 'error',
-        title: 'Invalid quantity.',
-      });
-      return;
-    }
-
-    this.userService.addToCart(+customerId, productDtId, quantity).subscribe(
-      (response) => {
-        setTimeout(() => {
-          this.router.navigate(['/usershop/checkout']);
-        }, 100);
-      },
-      (error) => {
-        Swal.fire({
-          icon: 'warning',
-          title: 'Product is already added in the cart go there and checkout.',
-        });
-        console.log('Product is already added in the cart go there and checkout:', error);
-      }
-    );
+    this.router.navigate(['/shopping-cart']);
   }
 
   // View related product's details
   viewProduct(productId: number): void {
     // Navigate to the product details route
     this.router.navigate(['/product', productId]).then(() => {
-        // Use `navigateByUrl` to force a reload
-        this.router.navigateByUrl('/product', { skipLocationChange: true }).then(() => {
-            this.router.navigate(['/product', productId]);
-        });
+      // Use `navigateByUrl` to force a reload
+      this.router.navigateByUrl('/product', { skipLocationChange: true }).then(() => {
+        this.router.navigate(['/product', productId]);
+      });
     });
   }
 }

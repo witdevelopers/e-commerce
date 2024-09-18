@@ -20,10 +20,10 @@
               <div class="price-info">
                 <P>Rs.{{ product.discountPrice }}</P> <del>Rs.{{ product.price }}</del>
               </div>
-              <button #cartButton class="cart-button clicked" (click)="addToCart(product.productId, cartButton)">
-                <span class="add-to-cart">
+              <button #cartButton class="cart-button" (click)="addToCart(product.productId, cartButton)">
+                <span class="add-to-cart" *ngIf="!isProductAdded(product.productId)">
                   <i class="ri-shopping-cart-2-line"></i> Add to cart</span>
-                <span class="added" *ngIf="isProductAdded(product.productId)">Added</span>
+                <span class="added" *ngIf="isProductAdded(product.productId)">Go to cart</span>
               </button>
             </div>
           </article>

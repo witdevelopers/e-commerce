@@ -109,6 +109,7 @@ export class NavbarComponent implements OnInit {
     this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
       this.router.navigate(['/shopping-cart']);
     });
+   
   }
 
   clearSearch(): void {

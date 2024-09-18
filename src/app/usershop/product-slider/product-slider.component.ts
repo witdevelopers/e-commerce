@@ -82,11 +82,7 @@ export class ProductSliderComponent implements OnInit, OnDestroy {
       return;
     }
 
-    // Add to backend if user is logged in
-    if (!productId || isNaN(productId)) {
-      Swal.fire({ icon: 'error', title: 'Invalid Product ID.' });
-      return;
-    }
+   
 
     this.userService.addToCart(+customerId, productId, 1).subscribe(
       () => {
@@ -94,7 +90,7 @@ export class ProductSliderComponent implements OnInit, OnDestroy {
         this.addedProducts.add(productId); // Mark product as added
         buttonElement.classList.add('clicked');
       },
-      () => Swal.fire({ icon: 'error', title: 'Error adding to cart.' })
+      () => Swal.fire({ icon: 'warning', title: 'Already added in cart.' })
     );
   }
 

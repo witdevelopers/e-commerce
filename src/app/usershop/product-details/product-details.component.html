@@ -43,11 +43,17 @@
       </div>
 
       <div style="display: flex; gap: 10px">
-        <button class="add-to-cart-btn" (click)="addToCart()">
+        <!-- Conditionally show the button based on if the product is in the cart -->
+        <button *ngIf="!isProductInCartFlag" class="add-to-cart-btn" (click)="addToCart()">
           <i class="ri-shopping-cart-2-line"></i> Add to Cart
         </button>
+        <button *ngIf="isProductInCartFlag" class="add-to-cart-btn" (click)="goToCart()">
+          <i class="ri-shopping-cart-2-line"></i> Go to Cart
+        </button>
+      
         <button class="add-to-cart-btn" (click)="buyNow()">Buy Now</button>
       </div>
+      
     </div>
 
     <div class="select-items">
