@@ -30,7 +30,7 @@
 .product-card {
     flex: 1 1 calc(16.666% - 20px); /* 6 cards per row with gap */
     max-width: calc(16.666% - 20px); /* Ensure correct width calculation */
-    min-height: 300px; /* Adjust height as needed */
+    min-height: 260px; /* Adjust height as needed */
     box-sizing: border-box;
     position: relative;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
@@ -64,7 +64,7 @@
     box-shadow: rgba(0, 0, 0, 0.04) 2px 2px 8px;
     border-radius: 8px;
     width: 100%;
-    height: 100%;
+    height: 250px;
     transition: all 0.3s ease;
 }
 
@@ -102,11 +102,12 @@
 /* Card Content */
 .card-content {
     padding: 8px; /* Adjust padding as needed */
-    text-align: center;
     flex: 1;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    text-align: center;
+    align-items: center;
 }
 
 /* Product Name */
@@ -142,7 +143,7 @@
 /* Cart Button Styles */
 .cart-button {
     padding: 8px 12px; /* Adjust padding as needed */
-    width: 100%;
+    width: 60%;
     border: 0;
     border-radius: 20px;
     background-color: #4834d4;
@@ -155,6 +156,7 @@
     font-size: 0.8rem; /* Adjust font size as needed */
     position: relative;
     overflow: hidden;
+    margin-left: 35px;
 }
 
 /* Cart Button Hover and Active States */
