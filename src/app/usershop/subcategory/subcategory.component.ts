@@ -86,17 +86,24 @@ export class SubcategoryComponent implements OnInit {
     });
   }
 
+
   addToCart(productDtId: number, quantity: number): void {
     const customerId = sessionStorage.getItem('memberId') || localStorage.getItem('TempUserId');
+
     if (!customerId) {
       Swal.fire({ icon: 'error', title: 'Please log in first.' });
       return;
     }
 
-    this.userService.addToCart(+customerId, productDtId, quantity).subscribe(response => {
-      Swal.fire({ icon: 'success', title: 'Added to cart successfully.' });
-      this.loadProductsInCart(+customerId); // Refresh cart items after adding
-    },);
+    this.userService.addToCart(+customerId, productDtId, quantity).subscribe(
+      response => {
+        Swal.fire({ icon: 'success', title: 'Added to cart successfully.' });
+        this.loadProductsInCart(+customerId); // Refresh cart items after adding
+      },
+      error => {
+        Swal.fire({ icon: 'error', title: 'Failed to add to cart.', text: error.message });
+      }
+    );
   }
 
   goToCart(): void {
@@ -113,7 +120,7 @@ export class SubcategoryComponent implements OnInit {
   }
 
   getProductByKeyword(keyword: string): void {
-    this.userService.SearchProductByKeyword(keyword).subscribe((data) => {
+    this.userService.SearchProductByKeyword(keyword).subscribe(data => {
       this.productByKeyword = data;
     });
   }
@@ -134,5 +141,10 @@ export class SubcategoryComponent implements OnInit {
   // Method to get button text
   getButtonText(productId: number): string {
     return this.productsInCart.has(productId) ? 'Go to Cart' : 'Add to Cart';
+  }
+
+  // Method to check if the product is in the cart
+  isProductInCart(productId: number): boolean {
+    return this.productsInCart.has(productId);
   }
 }

@@ -28,14 +28,14 @@
 
 /* Product Card Styles */
 .product-card {
-    flex: 1 1 calc(16.666% - 20px); /* 6 cards per row with gap */
-    max-width: calc(16.666% - 20px); /* Ensure correct width calculation */
-    min-height: 260px; /* Adjust height as needed */
+    flex: 1 1 calc(25% - 20px); /* Adjusts to 4 cards per row with gap */
+    max-width: 300px; /* Fixed maximum width for smaller cards */
+    min-height: 350px; /* Adjusted height for smaller cards */
     box-sizing: border-box;
     position: relative;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
-    opacity: 0;
-    animation: fadeIn 0.5s ease-in-out forwards;
+    opacity: 0; /* Initial opacity for animation */
+    animation: fadeIn 0.5s ease-in-out forwards; /* Fade-in effect */
 }
 
 /* Fade-in Animation */
@@ -52,29 +52,21 @@
 
 /* Card Styles */
 .card {
-    min-width: 100%;
-    gap: 0.125rem;
-    align-items: flex-start;
-    flex-direction: column;
-    display: flex;
-    position: relative;
-    cursor: pointer;
-    background-color: #fff;
-    border: 0.5px solid rgb(232, 232, 232);
-    box-shadow: rgba(0, 0, 0, 0.04) 2px 2px 8px;
-    border-radius: 8px;
     width: 100%;
-    height: 270px;
-    transition: all 0.3s ease;
+    height: 100%; /* Ensure full height of the card */
+    border-radius: 8px;
+    background-color: #fff;
+    overflow: hidden;
     display: flex;
-    align-items: center;
+    flex-direction: column;
+    transition: all 0.3s ease;
 }
 
 /* Hover effect for card */
 .card:hover {
-   
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
     transform: translateY(-5px);
-    animation: cardHover 0.3s ease;
+    animation: cardHover 0.3s ease; /* Card hover animation */
 }
 
 /* Card Hover Animation */
@@ -89,49 +81,52 @@
 
 /* Card Image */
 .card-image {
+    text-align: center;
     width: 60%;
-    height: 130px; /* Adjust height as needed */
+    height: 200px;
     object-fit: cover;
     transition: transform 0.3s ease;
-    border-radius: 12px;
-    margin-top: 10px;
+    margin: 0 0 0 60px;
 }
 
 /* Image zoom on hover */
 .card:hover .card-image {
-    border-radius: 12px;
+    transform: scale(1.1); /* Increased zoom on hover */
 }
 
 /* Card Content */
 .card-content {
-    padding: 8px; /* Adjust padding as needed */
-    flex: 1;
+    padding: 10px; /* Reduced padding */
+    text-align: center;
+    flex: 1; /* Ensures the content area takes up remaining space */
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    text-align: center;
-    align-items: center;
 }
 
 /* Product Name */
 .product-name {
+   /* Reduced font size */
     font-weight: 500;
+    /* margin-bottom: 8px; */
     color: #333;
     transition: color 0.3s ease;
+    margin: 0; /* Transition effect for color change */
+}
+p{
     margin: 0;
 }
-
 /* Price Info */
 .price-info {
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 8px; /* Adjust gap as needed */
+    gap: 10px; /* Reduced margin */
 }
 
 /* Discount Price */
 .discount-price {
-    font-size: 1rem; /* Adjust font size as needed */
+    font-size: 1.1rem; /* Reduced font size */
     color: #000;
     font-weight: 700;
 }
@@ -139,24 +134,24 @@
 /* Original Price */
 .original-price {
     color: #ff4d4d;
-    font-size: 0.9rem; /* Adjust font size as needed */
+    font-size: 1rem; /* Reduced font size */
     text-decoration: line-through;
 }
 
 /* Cart Button Styles */
 .cart-button {
-    padding: 8px 12px; /* Adjust padding as needed */
-    width: 60%;
+    padding: 10px 15px; /* Reduced padding */
+    width: 100%;
     border: 0;
     border-radius: 20px;
     background-color: #4834d4;
     color: #fff;
     cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.2s ease;
+    transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.2s ease; /* Added box-shadow transition */
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 0.8rem; /* Adjust font size as needed */
+    font-size: 0.9rem; /* Reduced font size */
     position: relative;
     overflow: hidden;
 }
@@ -164,7 +159,7 @@
 /* Cart Button Hover and Active States */
 .cart-button:hover {
     background-color: #35269b;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Added box-shadow on hover */
 }
 
 .cart-button:active {
@@ -177,31 +172,31 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    font-size: 0.9rem; /* Adjust font size as needed */
+    font-size: 1rem;
     font-weight: bold;
     color: #28a745;
-    opacity: 0;
+    opacity: 0; /* Hidden initially */
     transition: opacity 0.3s ease, transform 0.3s ease;
 }
 
 /* Show Added State */
 .cart-button.added-active .added {
-    opacity: 1;
-    transform: translate(-50%, -50%) scale(1.1);
+    opacity: 1; /* Show when active */
+    transform: translate(-50%, -50%) scale(1.1); /* Slight scale effect */
 }
 
 /* Badge Styles */
 .badge-area-2 {
     position: absolute;
-    top: 10px;
+    top: 10px; /* Adjusted position */
     left: 10px;
     z-index: 10;
     background: #000;
     color: #fff;
-    padding: 5px 8px; /* Adjust padding as needed */
+    padding: 5px 10px; /* Reduced padding */
     border-radius: 5px;
-    font-size: 10px; /* Adjust font size as needed */
-    transition: background-color 0.3s ease;
+    font-size: 12px; /* Smaller font size */
+    transition: background-color 0.3s ease; /* Transition effect for background color */
 }
 
 /* Badge Sale Styles */
@@ -213,48 +208,29 @@
 
 /* Badge Sale New and Percent */
 .badge-product-sale .new {
-    font-size: 10px; /* Adjust font size as needed */
+    font-size: 12px; /* Smaller font size */
 }
 
 .badge-product-sale .percent {
-    font-size: 14px; /* Adjust font size as needed */
+    font-size: 16px; /* Smaller font size */
     font-weight: bold;
 }
 
 /* Responsive Adjustments */
 @media (max-width: 1200px) {
     .product-card {
-        flex: 1 1 calc(33.333% - 20px); /* 3 cards per row with gap */
-        max-width: calc(33.333% - 20px); /* Ensure correct width calculation */
+        flex: 1 1 calc(33.333% - 20px); /* Adjusts to 3 cards per row with gap */
     }
 }
 
 @media (max-width: 768px) {
     .product-card {
-        flex: 1 1 calc(50% - 20px); /* 2 cards per row with gap */
-        max-width: calc(50% - 20px); /* Ensure correct width calculation */
+        flex: 1 1 calc(50% - 20px); /* Adjusts to 2 cards per row with gap */
     }
 }
 
 @media (max-width: 576px) {
     .product-card {
-        max-width: 100%; /* Ensure full width on smaller screens */
-        min-height: 250px; /* Reduced height for smaller screens */
+        flex: 1 1 100%; /* 1 card per row with gap */
     }
-    .price-info {
-        padding: 0;
-    }
-    p {
-        margin: 0;
-    }
-}
-p {
-    margin: 0;
-}
-.productimg{
-    width: 100%;
-    align-items: center;
-    display: flex;
-    justify-content: center;
-    text-align: center;
 }

@@ -456,6 +456,7 @@ main {
 
 body{
     color:var(--hoverTextColor);
+    cursor: pointer !important;
 }
 h1, h2, h3, h4, h5, h6 {
     color: var(--textColor);
@@ -468,22 +469,25 @@ body {
     color: #666;
     font-size: 12px;
     font-family: 'Okra', Helvetica;
+    cursor: pointer !important;
 }
 
 body::-webkit-scrollbar {
     background-color: rgb(255, 255, 255);
     width: 15px;
     border-radius: 50px;
-    cursor: pointer;
+    cursor: pointer !important;
 }
 
 body::-webkit-scrollbar-button {
     display: none;
+    cursor: pointer !important;
 }
 
 body::-webkit-scrollbar-thumb {
     background-color: rgb(183, 183, 183);
     border-radius: 50px;
+    cursor: pointer !important;
 }
 /* General Container Styles */
 .container {
