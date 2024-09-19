@@ -18,8 +18,9 @@
            
             <div class="card-content">
               <h5 class="product-name">{{ product.productName }}</h5>
+              <br>
               <div class="price-info">
-                <del>Rs.{{ product.price }}</del>  <P>Rs.{{ product.discountPrice }}</P> 
+                <del>Rs.{{ product.price }}</del>  <P style="font-weight: 700; color: black;">Rs.{{ product.discountPrice }}</P> 
               </div>
               
             </div>
@@ -27,7 +28,6 @@
               {{ isProductAdded(product.productId) ? 'Go to Cart' : 'Add to Cart' }}
             </button>
             <br>
-            
           </article>
         </div>
       </div>
