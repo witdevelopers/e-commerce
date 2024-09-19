@@ -99,17 +99,24 @@ export class NavbarComponent implements OnInit {
   }
 
   navigateToProduct(productId: number): void {
-    const encryptedId = this.encryptionService.encrypt(productId.toString());
-    console.log("Enct", encryptedId);
-    //this.router.navigate(['/product', encryptedId]);
-  }
+    // Encrypt the product ID if necessary
+     const encryptedId = this.encryptionService.encrypt(productId.toString());
+
+    // Force navigation to the same product page or a new one
+    this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+        this.router.navigate(['/product', productId]);
+    });
+
+    // Clear the search or any other logic as required
+    this.clearSearch();
+}
+
 
   onAddToCart(): void {
     // Forcefully reload the shopping cart route
     this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
       this.router.navigate(['/shopping-cart']);
     });
-   
   }
 
   clearSearch(): void {

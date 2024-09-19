@@ -21,7 +21,19 @@
               <div class="price-info">
                 <del>Rs.{{ product.price }}</del>  <P>Rs.{{ product.discountPrice }}</P> 
               </div>
+<<<<<<< HEAD
               
+=======
+              <!-- <button #cartButton class="cart-button" (click)="addToCart(product.productId, cartButton)">
+                <span class="add-to-cart" *ngIf="!isProductAdded(product.productId)">
+                  <i class="ri-shopping-cart-2-line"></i> Add to cart</span>
+                <span class="added" *ngIf="isProductAdded(product.productId)">Go to cart</span>
+              </button> -->
+
+              <button #cartButton class="cart-button" (click)="isProductAdded(product.productId) ? goToCart() : addToCart(product.productId, cartButton)">
+                {{ isProductAdded(product.productId) ? 'Go to Cart' : 'Add to Cart' }}
+              </button>
+>>>>>>> 44037605db1c2f40b791d270fa4cea6d189cef2e
             </div>
             <button #cartButton class="cart-button" (click)="addToCart(product.productId, cartButton)">
               <span class="add-to-cart" *ngIf="!isProductAdded(product.productId)">

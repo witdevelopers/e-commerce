@@ -20,6 +20,7 @@ export class ProductDetailsComponent implements OnInit {
   mainImageUrl: string = 'assets/default-image.jpg'; // Default image URL
   quantity: number = 1; // Default quantity
   isProductInCartFlag: boolean = false;
+  cartQuantity: number = 0; // Variable to track cart quantity
 
   // Zoom-related variables
   isZooming: boolean = false;
@@ -38,11 +39,27 @@ export class ProductDetailsComponent implements OnInit {
       this.productId = +this.encryptionService.decrypt(encryptedId); // Decrypt and parse the ID
       this.productId = +this.route.snapshot.params['id'];
     });
+    this.loadProductDetails(this.productId);
   }
 
   ngOnInit(): void {
-    this.loadProductDetails(this.productId);
     this.checkIfProductInCart(); 
+    this.updateCartQuantity();
+  }
+
+  // Subscribe to the cart quantity observable to track cart updates
+  updateCartQuantity(): void {
+    const userId = sessionStorage.getItem('memberId') || localStorage.getItem('memberId');
+    
+    // Subscribe to cart quantity observable
+    this.userService.cartQuantity$.subscribe((quantity) => {
+      this.cartQuantity = quantity; // Automatically update the cart quantity
+    });
+
+    // Initial load of cart quantity
+    if (userId) {
+      this.userService.updateCartQuantity(Number(userId));
+    }
   }
 
   onMouseMove(event: MouseEvent): void {
@@ -69,19 +86,14 @@ export class ProductDetailsComponent implements OnInit {
     let customerId = sessionStorage.getItem('memberId') || localStorage.getItem('memberId');
     
     if (customerId) {
-      // Fetch the cart items from the server or localStorage
       this.userService.getCart(+customerId).subscribe((response: any) => {
-        // Check if the current product is in the cart
-        // console.log("Get cart" ,response);
         this.isProductInCartFlag = response.items.some(item => item.productId === this.productId);
-        // console.log(this.isProductInCartFlag);
-        this.ngOnInit();
-       
       }, (error) => {
         console.error('Error fetching cart items:', error);
         this.isProductInCartFlag = false;  // Default to "not in cart" if there's an error
       });
-    }}
+    }
+  }
 
   // Load product details by product ID
   loadProductDetails(id: number): void {
@@ -90,29 +102,21 @@ export class ProductDetailsComponent implements OnInit {
       this.singleProductDetails = response.singleProductDetails;
       this.singleProductImages = response.singleProductImages;
 
-      // Find the image with isMainImage set to true
       const mainImage = this.singleProductImages.find(image => image.isMainImage);
 
-      // Set the main image URL if a main image is found
       if (mainImage) {
         this.mainImageUrl = this.getImageUrl(mainImage.imageUrl);
       } else {
-        // Fallback to the first image if no main image is found
         if (this.singleProductImages.length > 0) {
           this.mainImageUrl = this.getImageUrl(this.singleProductImages[0].imageUrl);
         } else {
-          // Fallback to default image if no images are available
           this.mainImageUrl = 'assets/default-image.jpg';
         }
       }
       
-      // Log the main image URL
-      // console.log("Main image URL", this.mainImageUrl);
-
-      // Fetch related products by category ID
       this.loadRelatedProducts(this.singleProduct.categoryId);
     }, (error) => {
-      // console.error('Error loading product details:', error);
+      console.error('Error loading product details:', error);
     });
   }
 
@@ -124,11 +128,8 @@ export class ProductDetailsComponent implements OnInit {
       } else {
         this.relatedProducts = [];
       }
-      // console.log("Related products:", this.relatedProducts);
     });
   }
-
- 
 
   // Convert image path to a usable URL
   getImageUrl(imagePath: string): string {
@@ -136,7 +137,6 @@ export class ProductDetailsComponent implements OnInit {
       return 'assets/default-image.jpg'; // Fallback to default image if no image path is provided
     }
 
-    // Replace tilde with base URL if present
     if (imagePath.includes('~/')) {
       imagePath = imagePath.replace('~/', Settings.imageBaseUrl);
     }
@@ -146,36 +146,36 @@ export class ProductDetailsComponent implements OnInit {
 
   // Change main image when selecting a different one
   changeMainImage(imageUrl: string): void {
-    this.mainImageUrl = this.getImageUrl(imageUrl);
+    this.mainImageUrl = this.getImageUrl(imageUrl); // Update the main image
   }
 
   // Add product to cart
   addToCart(): void {
-    let customerId = sessionStorage.getItem('memberId'); // Try to retrieve customer ID from sessionStorage
-    if (!customerId) {
-      customerId = localStorage.getItem('memberId'); // Fall back to localStorage if sessionStorage is empty
-    }
-
+    let customerId = sessionStorage.getItem('memberId') || localStorage.getItem('memberId');
     const productDtId = this.productId;
     const quantity = this.quantity;
 
-  
+    if (customerId) {
+      this.userService.addToCart(+customerId, productDtId, quantity).subscribe(
+        () => {
+          this.ngOnInit(); // Re-run the component initialization to update the cart status
+          Swal.fire({
+            icon: 'success',
+            title: 'Product added to cart successfully.',
+          });
 
-
-    this.userService.addToCart(+customerId, productDtId, quantity).subscribe(
-      (response) => {
-        Swal.fire({
-          icon: 'success',
-          title: 'Product added to cart successfully.',
-        });
-        // this.isProductInCartFlag = true;
-        // console.log('Product added to cart successfully.', response);
-      },
-     
-    );
+          // Update the cart quantity after adding to cart
+          this.userService.updateCartQuantity(+customerId);
+        },
+        () => {
+          Swal.fire({
+            icon: 'warning',
+            title: 'Product already in cart.',
+          });
+        }
+      );
+    }
   }
-
-  
 
   // Go to the cart page
   goToCart(): void {
@@ -189,9 +189,7 @@ export class ProductDetailsComponent implements OnInit {
 
   // View related product's details
   viewProduct(productId: number): void {
-    // Navigate to the product details route
     this.router.navigate(['/product', productId]).then(() => {
-      // Use `navigateByUrl` to force a reload
       this.router.navigateByUrl('/product', { skipLocationChange: true }).then(() => {
         this.router.navigate(['/product', productId]);
       });
