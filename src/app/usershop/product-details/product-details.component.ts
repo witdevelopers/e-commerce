@@ -38,10 +38,10 @@ export class ProductDetailsComponent implements OnInit {
       this.productId = +this.encryptionService.decrypt(encryptedId); // Decrypt and parse the ID
       this.productId = +this.route.snapshot.params['id'];
     });
+    this.loadProductDetails(this.productId);
   }
 
   ngOnInit(): void {
-    this.loadProductDetails(this.productId);
     this.checkIfProductInCart(); 
   }
 
@@ -75,7 +75,7 @@ export class ProductDetailsComponent implements OnInit {
         // console.log("Get cart" ,response);
         this.isProductInCartFlag = response.items.some(item => item.productId === this.productId);
         // console.log(this.isProductInCartFlag);
-        this.ngOnInit();
+       
        
       }, (error) => {
         console.error('Error fetching cart items:', error);
@@ -107,10 +107,10 @@ export class ProductDetailsComponent implements OnInit {
       }
       
       // Log the main image URL
-      // console.log("Main image URL", this.mainImageUrl);
+      //  console.log("Main image URL", this.mainImageUrl);
 
       // Fetch related products by category ID
-      this.loadRelatedProducts(this.singleProduct.categoryId);
+       this.loadRelatedProducts(this.singleProduct.categoryId);
     }, (error) => {
       // console.error('Error loading product details:', error);
     });
@@ -124,7 +124,7 @@ export class ProductDetailsComponent implements OnInit {
       } else {
         this.relatedProducts = [];
       }
-      // console.log("Related products:", this.relatedProducts);
+       console.log("Related products:", this.relatedProducts);
     });
   }
 
@@ -145,9 +145,10 @@ export class ProductDetailsComponent implements OnInit {
   }
 
   // Change main image when selecting a different one
-  changeMainImage(imageUrl: string): void {
-    this.mainImageUrl = this.getImageUrl(imageUrl);
-  }
+changeMainImage(imageUrl: string): void {
+  this.mainImageUrl = this.getImageUrl(imageUrl); // Update the main image
+}
+
 
   // Add product to cart
   addToCart(): void {
@@ -164,6 +165,7 @@ export class ProductDetailsComponent implements OnInit {
 
     this.userService.addToCart(+customerId, productDtId, quantity).subscribe(
       (response) => {
+        this.ngOnInit();
         Swal.fire({
           icon: 'success',
           title: 'Product added to cart successfully.',
