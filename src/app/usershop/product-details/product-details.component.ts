@@ -1,10 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UserService } from 'src/app/user/services/user.service';
-import { HttpClient } from '@angular/common/http';
 import Swal from 'sweetalert2';
 import { Settings } from 'src/app/app-setting'; // Adjust the import path as needed
-import { EncryptionService } from '../encryption.service';
+import { EncryptionService } from '../encryption.service'; // Adjust the import path as needed
 
 @Component({
   selector: 'app-product-details',
@@ -30,20 +29,21 @@ export class ProductDetailsComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private userService: UserService,
-    private http: HttpClient,
     private router: Router, // Add Router for redirection
     private encryptionService: EncryptionService,
-  ) {
-    this.route.params.subscribe(params => {
-      const encryptedId = params['id'];
-      this.productId = +this.encryptionService.decrypt(encryptedId); // Decrypt and parse the ID
-      this.productId = +this.route.snapshot.params['id'];
-    });
-    this.loadProductDetails(this.productId);
-  }
+  ) { }
 
   ngOnInit(): void {
-    this.checkIfProductInCart(); 
+    // Decrypt the product ID from the route parameters
+    this.route.paramMap.subscribe(params => {
+      const encryptedId = params.get('id');
+      if (encryptedId) {
+        this.productId = +this.encryptionService.decrypt(encryptedId);
+        this.loadProductDetails(this.productId);
+      }
+    });
+
+    this.checkIfProductInCart();
     this.updateCartQuantity();
   }
 
@@ -83,14 +83,14 @@ export class ProductDetailsComponent implements OnInit {
   }
 
   checkIfProductInCart(): void {
-    let customerId = sessionStorage.getItem('memberId') || localStorage.getItem('memberId');
+    const customerId = sessionStorage.getItem('memberId') || localStorage.getItem('memberId');
     
     if (customerId) {
       this.userService.getCart(+customerId).subscribe((response: any) => {
         this.isProductInCartFlag = response.items.some(item => item.productId === this.productId);
       }, (error) => {
         console.error('Error fetching cart items:', error);
-        this.isProductInCartFlag = false;  // Default to "not in cart" if there's an error
+        this.isProductInCartFlag = false; // Default to "not in cart" if there's an error
       });
     }
   }
@@ -151,7 +151,7 @@ export class ProductDetailsComponent implements OnInit {
 
   // Add product to cart
   addToCart(): void {
-    let customerId = sessionStorage.getItem('memberId') || localStorage.getItem('memberId');
+    const customerId = sessionStorage.getItem('memberId') || localStorage.getItem('TempUserId');
     const productDtId = this.productId;
     const quantity = this.quantity;
 
@@ -189,10 +189,9 @@ export class ProductDetailsComponent implements OnInit {
 
   // View related product's details
   viewProduct(productId: number): void {
-    this.router.navigate(['/product', productId]).then(() => {
-      this.router.navigateByUrl('/product', { skipLocationChange: true }).then(() => {
-        this.router.navigate(['/product', productId]);
-      });
+    const encryptedId = this.encryptionService.encrypt(productId.toString());
+    this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+      this.router.navigate(['/product', encryptedId]);
     });
   }
 }

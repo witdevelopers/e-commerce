@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from 'src/app/user/services/user.service';
+import Swal from 'sweetalert2';
 import { Router } from '@angular/router';
 import { Settings } from 'src/app/app-setting'; // Import the Settings class
 
@@ -20,12 +21,13 @@ export class ShoppingCartComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.customerId = Number(sessionStorage.getItem('memberId'));
+    this.customerId = Number(sessionStorage.getItem('memberId')) || Number(localStorage.getItem('TempUserId'));
     if (this.customerId) {
       this.loadCart();
-    } else {
-      this.router.navigate(['/auth/signin']);
-    }
+    } 
+    // else {
+    //   this.router.navigate(['/auth/signin']);
+    // }
   }
 
   loadCart(): void {
@@ -42,7 +44,11 @@ export class ShoppingCartComponent implements OnInit {
         };
       },
       (error) => {
-        // Handle error silently or with an alternative method
+        Swal.fire({
+          icon: 'error',
+          title: 'Error',
+          text: 'Failed to load cart data. Please try again later.',
+        });
       }
     );
   }
@@ -55,7 +61,11 @@ export class ShoppingCartComponent implements OnInit {
 
   updateCartItem(productDtId: number, quantity: number): void {
     if (quantity < 1) {
-      // Handle invalid quantity silently or with an alternative method
+      Swal.fire({
+        icon: 'warning',
+        title: 'Invalid Quantity',
+        text: 'Please enter a valid quantity.',
+      });
       return;
     }
 
@@ -67,11 +77,19 @@ export class ShoppingCartComponent implements OnInit {
 
     this.userService.updateCart(cartData).subscribe(
       () => {
-        // Handle success silently or with an alternative method
+        Swal.fire({
+          icon: 'success',
+          title: 'Cart Updated',
+          text: 'Your cart has been updated successfully!',
+        });
         this.loadCart();
       },
       (error) => {
-        // Handle error silently or with an alternative method
+        Swal.fire({
+          icon: 'error',
+          title: 'Update Failed',
+          text: 'Error updating cart. Please try again.',
+        });
       }
     );
   }
@@ -79,11 +97,19 @@ export class ShoppingCartComponent implements OnInit {
   removeCartItem(productDtId: number): void {
     this.userService.removeCartItem(this.customerId!, productDtId, false).subscribe(
       () => {
-        // Handle success silently or with an alternative method
+        Swal.fire({
+          icon: 'success',
+          title: 'Item Removed',
+          text: 'The item has been removed from your cart.',
+        });
         this.loadCart();
       },
       (error) => {
-        // Handle error silently or with an alternative method
+        Swal.fire({
+          icon: 'error',
+          title: 'Remove Failed',
+          text: 'Error removing item. Please try again.',
+        });
       }
     );
   }

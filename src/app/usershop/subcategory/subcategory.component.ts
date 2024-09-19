@@ -87,7 +87,7 @@ export class SubcategoryComponent implements OnInit {
   }
 
   addToCart(productDtId: number, quantity: number): void {
-    const customerId = sessionStorage.getItem('memberId') || localStorage.getItem('memberId');
+    const customerId = sessionStorage.getItem('memberId') || localStorage.getItem('TempUserId');
     if (!customerId) {
       Swal.fire({ icon: 'error', title: 'Please log in first.' });
       return;

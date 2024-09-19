@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { UserService } from 'src/app/user/services/user.service';
 import { EncryptionService } from '../encryption.service';
+import { v4 as uuidv4 } from 'uuid';
 
 
 @Component({
@@ -18,6 +19,8 @@ export class NavbarComponent implements OnInit {
   isSubCategoryVisible: { [key: number]: boolean } = {};
   productByKeyword: any[] = [];
   searchTerm: string = ''; // To track search input
+  // myId = uuidv4(); // --------> UUID
+  myId = Date.now() // --------> epoch time
 
   constructor(
     private userService: UserService,
@@ -27,6 +30,7 @@ export class NavbarComponent implements OnInit {
 
   ngOnInit(): void {
     this.getMainCategory();
+    this.createanonUser();
 
     // Check if the user is logged in
     const userId = sessionStorage.getItem('memberId');
@@ -43,6 +47,25 @@ export class NavbarComponent implements OnInit {
       this.userService.updateCartQuantity(Number(userId));
     }
   }
+  
+  createanonUser(): void{
+    const uid = localStorage.getItem('TempUserId')
+    if (uid) {
+      // Do nothing
+    } else {
+      localStorage.setItem('TempUserId', this.myId.toString());
+    }
+  }
+
+  // getUniqueId(parts: number): string {
+  //   const stringArr = [];
+  //   for(let i = 0; i< parts; i++){
+  //     // tslint:disable-next-line:no-bitwise
+  //     const S4 = (((1 + Math.random()) * 0x10000) | 0).toString(16).substring(1);
+  //     stringArr.push(S4);
+  //   }
+  //   return stringArr.join('-');
+  // }
 
   signOut(): void {
     sessionStorage.clear();
@@ -104,7 +127,7 @@ export class NavbarComponent implements OnInit {
 
     // Force navigation to the same product page or a new one
     this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
-        this.router.navigate(['/product', productId]);
+        this.router.navigate(['/product', encryptedId]);
     });
 
     // Clear the search or any other logic as required
@@ -117,6 +140,7 @@ export class NavbarComponent implements OnInit {
     this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
       this.router.navigate(['/shopping-cart']);
     });
+    
   }
 
   clearSearch(): void {

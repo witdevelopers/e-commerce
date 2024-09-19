@@ -63,7 +63,7 @@ export class ProductSliderComponent implements OnInit, OnDestroy {
   }
 
   private loadCartState(): void {
-    const customerId = sessionStorage.getItem('memberId') || localStorage.getItem('memberId');
+    const customerId = sessionStorage.getItem('memberId') || localStorage.getItem('TempUserId');
     if (customerId) {
       this.userService.getCart(+customerId).subscribe({
         next: (response: any) => {
@@ -90,7 +90,7 @@ export class ProductSliderComponent implements OnInit, OnDestroy {
   
 
   addToCart(productId: number, buttonElement: HTMLElement): void {
-    const customerId = sessionStorage.getItem('memberId') || localStorage.getItem('memberId');
+    const customerId = sessionStorage.getItem('memberId') || localStorage.getItem('TempUserId');
     
     if (!customerId) {
       const cart = JSON.parse(localStorage.getItem('cart') || '[]');
@@ -102,6 +102,7 @@ export class ProductSliderComponent implements OnInit, OnDestroy {
         Swal.fire({ icon: 'success', title: 'Added to cart' });
         this.addedProducts.add(productId); // Mark product as added
         buttonElement.classList.add('clicked');
+        this.userService.updateCartQuantity(Number(customerId));
       } else {
         Swal.fire({ icon: 'info', title: 'Product already in cart' });
         this.goToCart(); // Navigate to cart if already in cart
@@ -111,6 +112,7 @@ export class ProductSliderComponent implements OnInit, OnDestroy {
 
     this.userService.addToCart(+customerId, productId, 1).subscribe({
       next: () => {
+        
         Swal.fire({ icon: 'success', title: 'Added to cart' });
         this.addedProducts.add(productId); // Mark product as added
         buttonElement.classList.add('clicked');

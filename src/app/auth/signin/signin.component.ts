@@ -3,6 +3,7 @@ import { AuthService } from '../auth.service';
 import Swal from 'sweetalert2';
 import { Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { UserService } from 'src/app/user/services/user.service';
 
 @Component({
   selector: 'app-signin',
@@ -18,7 +19,8 @@ export class SigninComponent implements OnInit {
   constructor(
     private api: AuthService,
     private router: Router,
-    private spinnerService: NgxSpinnerService
+    private spinnerService: NgxSpinnerService,
+    private userservice: UserService
   ) {}
 
   ngOnInit(): void {
@@ -47,6 +49,38 @@ export class SigninComponent implements OnInit {
           localStorage.setItem('userId', this.userID);
           localStorage.setItem('memberId', res.data.table[0].memberId.toString());
           localStorage.setItem('token', res.token);
+
+          const uid = sessionStorage.getItem('memberId');
+          const Tuid  = localStorage.getItem('TempUserId');
+          this.userservice.updateCustomer(Number(Tuid), Number(uid)).subscribe((res) =>{
+            console.log(res);
+          });
+
+
+          // const cart = localStorage.getItem('cart') ? JSON.parse(localStorage.getItem('cart')) : [];
+          // console.log("Cart data: ", cart);
+
+          // for (let index = 0; index < cart.length; index++) {
+          //   const element = cart[index];
+          //   const productId = element.productId;
+          //   const quantity = element.quantity;
+          //   const customerId = Number(localStorage.getItem('memberId'))
+          //   // console.log(element.productId)
+          //   console.log(element.quantity)
+          //   console.log(localStorage.getItem('memberId'))
+          //   // this.userservice.addToCart(localStorage.getItem('memberId').toString(), productDtId, quantity)
+          //   this.userservice.addToCart(customerId, productId, quantity).subscribe((res) =>{
+          //     console.log(res)
+          //   })
+          // }
+          // // [{"productId":3,"quantity":1},{"productId":7,"quantity":1},{"productId":13,"quantity":1},{"productId":24,"quantity":1},{"productId":12,"quantity":1},{"productId":23,"quantity":1},{"productId":9,"quantity":1}]
+          
+          // // return cart
+          // // return cart ? JSON.parse(cart) : [];
+
+
+          // // this.cartItems = this.userService.loadAnonCart();
+          // // console.log("Cart data: ", this.cartItems);
           
           this.spinnerService.hide();
           

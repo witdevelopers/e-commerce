@@ -197,12 +197,20 @@ export class UserService {
   }
 
   addToCart(customerId: number, productDtId: number, quantity: number): Observable<any> {
+    console.log("i was called")
     const apiUrl = `${this.apiBaseUrl}api/Shop/shopping-cart/add?customerId=${customerId}&productDtId=${productDtId}&quantity=${quantity}`;
     return this.http.post<any>(apiUrl, {});
   }
 
   getCart(customerId: number): Observable<any> {
+    console.log("CART:  ", this.http.get(`${this.apiBaseUrl}api/Shop/Getshopping-cartDetails/${customerId}`)) // ADDED
     return this.http.get(`${this.apiBaseUrl}api/Shop/Getshopping-cartDetails/${customerId}`);
+  }
+  
+  loadAnonCart(): any {
+    const cart = localStorage.getItem('cart');
+    // return cart
+    return cart ? JSON.parse(cart) : [];
   }
 
   updateCart(cartData: { customerId: number; productDtId: number; quantity: number }): Observable<any> {
@@ -217,6 +225,7 @@ export class UserService {
   updateCartQuantity(customerId: number): void {
     this.getCart(customerId).subscribe(
       (data: any) => {
+        // console.log("Cart " ,data);
         const totalQuantity = data.items.reduce((total: number, item: any) => total + item.quantity, 0);
         this.cartSubject.next(totalQuantity);
       },
@@ -297,7 +306,23 @@ export class UserService {
     return this.http.get<any>(url);
   }
 
-  
+  updateCustomer(TempUserId: number, customerId: number): Observable<any> {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json-patch+json',
+      'Accept': '*/*'
+    });
+
+    const body = {
+      customerId: TempUserId,
+      customerId_NewMember: customerId
+    };
+
+    // Log the PUT request and its payload
+    console.log("Updating customer: ", body);
+
+    // Make the PUT request
+    return this.http.put(`${this.apiBaseUrl}api/Shop/shopping-cart-Customer/update`, body, { headers });
+  }
 
 
 }
