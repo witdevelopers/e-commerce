@@ -20,6 +20,7 @@ export class ProductSliderComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.loadHomeSectionProductsDetails();
+    this.loadCartState();
   }
 
   private loadHomeSectionProductsDetails(): void {
@@ -61,10 +62,36 @@ export class ProductSliderComponent implements OnInit, OnDestroy {
     }, {});
   }
 
+  private loadCartState(): void {
+    const customerId = sessionStorage.getItem('memberId') || localStorage.getItem('memberId');
+    if (customerId) {
+      this.userService.getCart(+customerId).subscribe({
+        next: (response: any) => {
+          // Check if response has 'items' property and it's an array
+          if (response && Array.isArray(response.items)) {
+            response.items.forEach(item => this.addedProducts.add(item.productId));
+          } else {
+            console.error('Unexpected response format from getCart:', response);
+          }
+        },
+        error: (error) => {
+          console.error('Failed to load cart items:', error);
+        }
+      });
+    } else {
+      const cart = JSON.parse(localStorage.getItem('cart') || '[]');
+      if (Array.isArray(cart)) {
+        cart.forEach((item: any) => this.addedProducts.add(item.productId));
+      } else {
+        console.error('Unexpected format in local storage cart:', cart);
+      }
+    }
+  }
+  
+
   addToCart(productId: number, buttonElement: HTMLElement): void {
     const customerId = sessionStorage.getItem('memberId') || localStorage.getItem('memberId');
     
-    // Add to local storage if user is not logged in
     if (!customerId) {
       const cart = JSON.parse(localStorage.getItem('cart') || '[]');
       const existingProductIndex = cart.findIndex((item: any) => item.productId === productId);
@@ -76,31 +103,31 @@ export class ProductSliderComponent implements OnInit, OnDestroy {
         this.addedProducts.add(productId); // Mark product as added
         buttonElement.classList.add('clicked');
       } else {
-        Swal.fire({ icon: 'error', title: 'Product already in cart' });
+        Swal.fire({ icon: 'info', title: 'Product already in cart' });
         this.goToCart(); // Navigate to cart if already in cart
       }
       return;
     }
 
-   
-
-    this.userService.addToCart(+customerId, productId, 1).subscribe(
-      () => {
+    this.userService.addToCart(+customerId, productId, 1).subscribe({
+      next: () => {
         Swal.fire({ icon: 'success', title: 'Added to cart' });
         this.addedProducts.add(productId); // Mark product as added
         buttonElement.classList.add('clicked');
       },
-      () => Swal.fire({ icon: 'warning', title: 'Already added in cart.' })
-    );
+      error: (error) => {
+        console.error('Failed to add to cart:', error);
+        Swal.fire({ icon: 'warning', title: 'Already added in cart.' });
+      }
+    });
   }
 
   isProductAdded(productId: number): boolean {
     return this.addedProducts.has(productId);
   }
 
-  // Navigate to the cart page
   goToCart(): void {
-    this.router.navigate(['/cart']);
+    this.router.navigate(['/shopping-cart']);
   }
 
   objectKeys = Object.keys;
