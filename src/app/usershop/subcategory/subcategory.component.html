@@ -1,39 +1,22 @@
-<div class="price-filter-container">
-  <label for="minPrice" class="price-label">Min Price:</label>
-  <input type="number" [(ngModel)]="minPrice" (input)="filterByPrice()" class="price-input" placeholder="Min Price">
-  
-  <label for="maxPrice" class="price-label">Max Price:</label>
-  <input type="number" [(ngModel)]="maxPrice" (input)="filterByPrice()" class="price-input" placeholder="Max Price">
-</div>
-
 <!-- Product List -->
-<main>
-  <div *ngIf="filteredSubcategoryDetails && filteredSubcategoryDetails.length > 0;" class="cards-container container flex" id="cardscontainer">
-    <div *ngFor="let product of filteredSubcategoryDetails" class="card">
-      <div>
-        <div class="card-header">
-          <img [src]="product.imageUrl ? product.imageUrl : 'https://www.mbp18k.com/Shop//'" alt="{{ product.productName }}" id="news-img" loading="lazy" [routerLink]="['/product', product.productId]">
-           <!-- <div class="badge-area-2">
-            <div class="badge-product-sale">
-              <span class="new">OFFER</span>
-              <span class="percent">- 50%</span>
-            </div>
-          </div> -->
-        </div>
-        <div class="card-content">
-          <h3 id="news-title">{{ product.productName }}</h3>
-          <h6 class="news-source" id="news-source">Rs: {{ product.discountPrice }}  <del style="color: red;">Rs. {{ product.price}}</del></h6>
-          <!-- Add to Cart or Go to Cart Button -->
-          <button class="cart-button" (click)="productsInCart.has(product.productId) ? goToCart() : addToCart(product.productId, 1)">
-            <span>{{ getButtonText(product.productId) }}</span>
-            <i class="fas" [ngClass]="productsInCart.has(product.productId) ? 'fa-box' : 'fa-shopping-cart'"></i>
-          </button>
-        </div>
-        <!-- Add to Cart or Go to Cart Button -->
-
-
+<div class="product-grid">
+  <div *ngIf="filteredSubcategoryDetails && filteredSubcategoryDetails.length > 0;" class="cards-container container">
+    <div class="card" *ngFor="let product of filteredSubcategoryDetails">
+      <div class="card-header productimg">
+        <img [src]="product.imageUrl ? product.imageUrl : 'https://www.mbp18k.com/Shop//'" alt="{{ product.productName }}" class="card-image" loading="lazy" [routerLink]="['/product', product.productId]">
       </div>
+      <div class="card-content">
+        <h5 class="product-name">{{ product.productName }}</h5>
+        <div class="price-info">
+          <del>Rs. {{ product.price}}</del>
+          <p>Rs: {{ product.discountPrice }}</p>
+        </div>
+      </div>
+      <button class="cart-button" (click)="productsInCart.has(product.productId) ? goToCart() : addToCart(product.productId, 1)">
+        <span>{{ getButtonText(product.productId) }}</span>
+        <i class="fas" [ngClass]="productsInCart.has(product.productId) ? 'fa-box' : 'fa-shopping-cart'"></i>
+      </button>
+      <br>
     </div>
   </div>
- 
-</main>
+</div>
