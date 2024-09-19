@@ -13,8 +13,9 @@
                 <span class="percent">- {{ product.discountPercentage }} %</span>
               </div>
             </div>
-            <img [src]="product.imageUrl" alt="{{ product.productName }}" loading="lazy"
-              [routerLink]="['/product', product.productId]" class="card-image" />
+            <div class="productimg"> <img [src]="product.imageUrl" alt="{{ product.productName }}" loading="lazy"
+              [routerLink]="['/product', product.productId]" class="card-image" /></div>
+           
             <div class="card-content">
               <h5 class="product-name">{{ product.productName }}</h5>
               <div class="price-info">
