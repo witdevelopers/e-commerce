@@ -15,6 +15,9 @@ export class ProductSliderComponent implements OnInit, OnDestroy {
   homePageSectionProducts: any = {};
   private ngUnsubscribe = new Subject<void>();
   addedProducts: Set<number> = new Set(); // Track added products
+  userName: string;
+  cartQuantity: number;
+  isLoggedIn: boolean;
 
   constructor(private userService: UserService, private router: Router) { }
 
@@ -87,6 +90,21 @@ export class ProductSliderComponent implements OnInit, OnDestroy {
       }
     }
   }
+
+  updateCartQuantity(){
+    const userId = sessionStorage.getItem('memberId') || localStorage.getItem('TempUserId');
+    if (userId) {
+      this.userName = sessionStorage.getItem('userId') || 'Profile';
+
+      // Subscribe to cart quantity observable
+      this.userService.cartQuantity$.subscribe((quantity) => {
+        this.cartQuantity = quantity; // Automatically update the cart quantity
+      });
+
+      // Initial cart quantity load
+      this.userService.updateCartQuantity(Number(userId));
+    }
+  }
   
 
   addToCart(productId: number, buttonElement: HTMLElement): void {
@@ -100,9 +118,10 @@ export class ProductSliderComponent implements OnInit, OnDestroy {
         cart.push({ productId, quantity: 1 });
         localStorage.setItem('cart', JSON.stringify(cart));
         Swal.fire({ icon: 'success', title: 'Added to cart' });
+        this.updateCartQuantity();
         this.addedProducts.add(productId); // Mark product as added
         buttonElement.classList.add('clicked');
-        this.userService.updateCartQuantity(Number(customerId));
+        // this.userService.updateCartQuantity(Number(customerId));
       } else {
         Swal.fire({ icon: 'info', title: 'Product already in cart' });
         this.goToCart(); // Navigate to cart if already in cart
@@ -114,6 +133,7 @@ export class ProductSliderComponent implements OnInit, OnDestroy {
       next: () => {
         
         Swal.fire({ icon: 'success', title: 'Added to cart' });
+        this.updateCartQuantity();
         this.addedProducts.add(productId); // Mark product as added
         buttonElement.classList.add('clicked');
       },

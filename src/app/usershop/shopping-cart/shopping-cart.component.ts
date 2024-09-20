@@ -15,6 +15,9 @@ export class ShoppingCartComponent implements OnInit {
   customerId: number | null = null;
   imageBaseUrl: string = Settings.imageBaseUrl; // Use dynamic base URL from Settings
   quantities: number[] = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+  userName: string;
+  cartQuantity: number;
+  isLoggedIn: boolean;
 
   constructor(private userService: UserService, private router: Router) {
     // No need to set imageBaseUrl in constructor, it's already set statically
@@ -25,11 +28,41 @@ export class ShoppingCartComponent implements OnInit {
     if (this.customerId) {
       this.loadCart();
     } 
-    // else {
-    //   this.router.navigate(['/auth/signin']);
-    // }
+    else {
+      this.router.navigate(['/auth/signin']);
+    }
   }
 
+  updateCartQuantity(): void {
+    const sessionUserId = sessionStorage.getItem('memberId');
+    const tempUserId = localStorage.getItem('TempUserId');
+    
+    if (sessionUserId) {
+      // If userId is found in sessionStorage, consider the user logged in
+      this.isLoggedIn = true;
+      this.userName = sessionStorage.getItem('userId') || 'Profile';
+      
+      // Subscribe to cart quantity observable
+      this.userService.cartQuantity$.subscribe((quantity) => {
+        this.cartQuantity = quantity; // Automatically update the cart quantity
+      });
+  
+      // Initial cart quantity load from sessionStorage userId
+      this.userService.updateCartQuantity(Number(sessionUserId));
+    } else if (tempUserId) {
+      // If userId is found only in localStorage (guest/anonymous user), set isLoggedIn to false
+      this.isLoggedIn = false;
+  
+      // Subscribe to cart quantity observable for anonymous user
+      this.userService.cartQuantity$.subscribe((quantity) => {
+        this.cartQuantity = quantity;
+      });
+  
+      // Initial cart quantity load from localStorage (anonymous userId)
+      this.userService.updateCartQuantity(Number(tempUserId));
+    } 
+  }
+  
   loadCart(): void {
     this.userService.getCart(this.customerId!).subscribe(
       (data) => {
@@ -83,6 +116,7 @@ export class ShoppingCartComponent implements OnInit {
           text: 'Your cart has been updated successfully!',
         });
         this.loadCart();
+        this.updateCartQuantity();
       },
       (error) => {
         Swal.fire({
@@ -103,6 +137,7 @@ export class ShoppingCartComponent implements OnInit {
           text: 'The item has been removed from your cart.',
         });
         this.loadCart();
+        this.updateCartQuantity();
       },
       (error) => {
         Swal.fire({

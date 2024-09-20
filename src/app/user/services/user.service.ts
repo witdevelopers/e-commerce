@@ -225,9 +225,10 @@ export class UserService {
   updateCartQuantity(customerId: number): void {
     this.getCart(customerId).subscribe(
       (data: any) => {
-        // console.log("Cart " ,data);
+         
         const totalQuantity = data.items.reduce((total: number, item: any) => total + item.quantity, 0);
         this.cartSubject.next(totalQuantity);
+        console.log("Cart " ,totalQuantity);
       },
       (error) => {
         console.error('Error fetching cart details', error);
@@ -318,7 +319,7 @@ export class UserService {
     };
 
     // Log the PUT request and its payload
-    console.log("Updating customer: ", body);
+   // console.log("Updating customer: ", body);
 
     // Make the PUT request
     return this.http.put(`${this.apiBaseUrl}api/Shop/shopping-cart-Customer/update`, body, { headers });

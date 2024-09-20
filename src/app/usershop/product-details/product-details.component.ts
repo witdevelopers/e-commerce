@@ -26,6 +26,8 @@ export class ProductDetailsComponent implements OnInit {
   isZooming: boolean = false;
   backgroundPosition: string = '0% 0%';
   backgroundSize: string = '250%'; // Zoom level (adjust as needed)
+  isLoggedIn: boolean;
+  userName: string;
 
   constructor(
     private route: ActivatedRoute,
@@ -44,23 +46,40 @@ export class ProductDetailsComponent implements OnInit {
 
   ngOnInit(): void {
     this.checkIfProductInCart(); 
-    this.updateCartQuantity();
+    
   }
 
   // Subscribe to the cart quantity observable to track cart updates
   updateCartQuantity(): void {
-    const userId = sessionStorage.getItem('memberId') || localStorage.getItem('TempUserId');
+    const sessionUserId = sessionStorage.getItem('memberId');
+    const tempUserId = localStorage.getItem('TempUserId');
     
-    // Subscribe to cart quantity observable
-    this.userService.cartQuantity$.subscribe((quantity) => {
-      this.cartQuantity = quantity; // Automatically update the cart quantity
-    });
-
-    // Initial load of cart quantity
-    if (userId) {
-      this.userService.updateCartQuantity(Number(userId));
-    }
+    if (sessionUserId) {
+      // If userId is found in sessionStorage, consider the user logged in
+      this.isLoggedIn = true;
+      this.userName = sessionStorage.getItem('userId') || 'Profile';
+      
+      // Subscribe to cart quantity observable
+      this.userService.cartQuantity$.subscribe((quantity) => {
+        this.cartQuantity = quantity; // Automatically update the cart quantity
+      });
+  
+      // Initial cart quantity load from sessionStorage userId
+      this.userService.updateCartQuantity(Number(sessionUserId));
+    } else if (tempUserId) {
+      // If userId is found only in localStorage (guest/anonymous user), set isLoggedIn to false
+      this.isLoggedIn = false;
+  
+      // Subscribe to cart quantity observable for anonymous user
+      this.userService.cartQuantity$.subscribe((quantity) => {
+        this.cartQuantity = quantity;
+      });
+  
+      // Initial cart quantity load from localStorage (anonymous userId)
+      this.userService.updateCartQuantity(Number(tempUserId));
+    } 
   }
+  
 
   onMouseMove(event: MouseEvent): void {
     const container = event.target as HTMLElement;
@@ -165,7 +184,7 @@ export class ProductDetailsComponent implements OnInit {
           });
 
           // Update the cart quantity after adding to cart
-          this.userService.updateCartQuantity(+customerId);
+          this.updateCartQuantity();
         },
         () => {
           Swal.fire({
@@ -180,15 +199,18 @@ export class ProductDetailsComponent implements OnInit {
   // Go to the cart page
   goToCart(): void {
     this.router.navigate(['/shopping-cart']);
+    this.updateCartQuantity();
   }
 
   // Buy now functionality
   buyNow(): void {
     this.router.navigate(['/shopping-cart']);
+    this.updateCartQuantity();
   }
 
   // View related product's details
   viewProduct(productId: number): void {
+    this.updateCartQuantity();
     this.router.navigate(['/product', productId]).then(() => {
       this.router.navigateByUrl('/product', { skipLocationChange: true }).then(() => {
         this.router.navigate(['/product', productId]);

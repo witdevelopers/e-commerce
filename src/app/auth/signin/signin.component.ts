@@ -15,6 +15,10 @@ export class SigninComponent implements OnInit {
   userID: string = '';
   password: string = '';
   isSignUp: boolean = false; // Flag to determine if the user is signing up
+  userName: string;
+  userService: any;
+  cartQuantity: any;
+  isLoggedIn: boolean = false;
 
   constructor(
     private api: AuthService,
@@ -26,6 +30,8 @@ export class SigninComponent implements OnInit {
   ngOnInit(): void {
     // Initialization logic, if needed
   }
+
+ 
 
   async onSubmit() {
     this.spinnerService.show();
@@ -45,6 +51,7 @@ export class SigninComponent implements OnInit {
           sessionStorage.setItem('userId', this.userID);
           sessionStorage.setItem('memberId', res.data.table[0].memberId.toString());
           sessionStorage.setItem('token', res.token);
+         
           
           localStorage.setItem('userId', this.userID);
           localStorage.setItem('memberId', res.data.table[0].memberId.toString());
@@ -54,6 +61,7 @@ export class SigninComponent implements OnInit {
           const Tuid  = localStorage.getItem('TempUserId');
           this.userservice.updateCustomer(Number(Tuid), Number(uid)).subscribe((res) =>{
             console.log(res);
+            
           });
 
 
@@ -83,13 +91,15 @@ export class SigninComponent implements OnInit {
           // // console.log("Cart data: ", this.cartItems);
           
           this.spinnerService.hide();
-          
+         
           Swal.fire("Login Successfully", '', 'success').then(() => {
             // Forcefully reload the home page route
+           
             this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
               this.router.navigate(['/home']);  // Redirect to home page
             });
           });
+          
           
         } else {
           this.spinnerService.hide();
@@ -104,6 +114,7 @@ export class SigninComponent implements OnInit {
       Swal.fire('Please fill in all fields.', '', 'warning');
     }
   }
+  
 
   toggleSignUp() {
     this.isSignUp = !this.isSignUp;
