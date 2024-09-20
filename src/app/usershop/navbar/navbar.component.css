@@ -106,7 +106,7 @@ form {
 /* Profile and Cart Section */
 .mobileIcon {
   width: 15px;
-  margin: 5px;
+  margin: 9px;
 }
 
 .downloadContainer {
@@ -516,7 +516,7 @@ form {
 /* Profile and Cart Section */
 .mobileIcon {
   width: 15px;
-  margin: 5px;
+  margin: 9px;
 }
 
 .downloadContainer {
@@ -532,7 +532,7 @@ form {
   font-size: 15px;
   line-height: 20px;
   border-radius: 4px;
-  color: #fff;
+  color: #000000;
   background: var(--hoverTextColor);
   border: none;
   padding: 12px;
@@ -542,7 +542,9 @@ form {
 }
 
 .downloadBtn:hover {
-  background: var(--hoverTextColorHover); /* Change color on hover */
+  border: 2px solid rgb(166, 166, 194);
+  color: black;
+  background: transparent; /* Change color on hover */
 }
 
 .submenuListnormal a {

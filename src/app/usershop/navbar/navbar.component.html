@@ -31,7 +31,7 @@
 
   <div class="headerRight">
     <div class="becomeSupplierContainer">
-      <p>Become a seller</p>
+      <p routerLink="/auth/signup">Ragister</p>
     </div>
 
     <div class="profileAndCart">
@@ -39,7 +39,7 @@
         <div class="mobileIcon top">
           <img src="assets/img/user.png" alt="User Icon" />
         </div>
-        <p>{{ isLoggedIn ? userName : 'Profile' }}</p>
+        <p style="font-weight: 500; font-size: 15px !important;">{{ isLoggedIn ? userName : 'Profile' }}</p>
         <div class="downloadHoverBtnContainer">
           <a *ngIf="!isLoggedIn" [routerLink]="'/auth/signin'">
             <button class="downloadBtn">Sign In</button>
