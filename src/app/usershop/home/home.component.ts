@@ -17,6 +17,9 @@ export class HomeComponent implements OnInit {
   baseUrl: string;
   currentSlide = 0;
   isDataFetched = false;
+  isLoggedIn: boolean = false;
+  userName: string;
+  cartQuantity: number;
 
   constructor(private userService: UserService) {
     // Set the baseUrl based on the development mode
@@ -25,7 +28,39 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadBanners();
+    this.updateCartQuantity();
   }
+
+  updateCartQuantity(): void {
+    const sessionUserId = sessionStorage.getItem('memberId');
+    const tempUserId = localStorage.getItem('TempUserId');
+    
+    if (sessionUserId) {
+      // If userId is found in sessionStorage, consider the user logged in
+      this.isLoggedIn = true;
+      // this.userName = sessionStorage.getItem('userId') || 'Profile';
+      
+      // Subscribe to cart quantity observable
+      this.userService.cartQuantity$.subscribe((quantity) => {
+        this.cartQuantity = quantity; // Automatically update the cart quantity
+      });
+  
+      // Initial cart quantity load from sessionStorage userId
+      this.userService.updateCartQuantity(Number(sessionUserId));
+    } else if (tempUserId) {
+      // If userId is found only in localStorage (guest/anonymous user), set isLoggedIn to false
+      this.isLoggedIn = false;
+  
+      // Subscribe to cart quantity observable for anonymous user
+      this.userService.cartQuantity$.subscribe((quantity) => {
+        this.cartQuantity = quantity;
+      });
+  
+      // Initial cart quantity load from localStorage (anonymous userId)
+      this.userService.updateCartQuantity(Number(tempUserId));
+    } 
+  }
+  
 
   loadBanners() {
     console.log('Starting to load banners...');

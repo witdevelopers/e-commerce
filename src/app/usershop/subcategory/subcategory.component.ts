@@ -50,8 +50,24 @@ export class SubcategoryComponent implements OnInit {
         this.cartQuantity = quantity;
       });
 
-      this.userService.updateCartQuantity(Number(userId));
+      
       this.loadProductsInCart(Number(userId)); // Load products in cart on init
+    }
+  }
+
+  updateCartQuantity(){
+    const userId = sessionStorage.getItem('memberId') || localStorage.getItem('TempUserId');
+    if (userId) {
+      // this.isLoggedIn = true;
+      this.userName = sessionStorage.getItem('userId') || 'Profile';
+
+      // Subscribe to cart quantity observable
+      this.userService.cartQuantity$.subscribe((quantity) => {
+        this.cartQuantity = quantity; // Automatically update the cart quantity
+      });
+
+      // Initial cart quantity load
+      this.userService.updateCartQuantity(Number(userId));
     }
   }
 
@@ -81,6 +97,7 @@ export class SubcategoryComponent implements OnInit {
   loadProductsInCart(customerId: number): void {
     this.userService.getCart(customerId).subscribe(response => {
       this.productsInCart = new Set(response.items.map(item => item.productId));
+      this.updateCartQuantity();
     }, error => {
       console.error('Error fetching cart items:', error);
     });

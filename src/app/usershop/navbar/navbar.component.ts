@@ -26,29 +26,49 @@ export class NavbarComponent implements OnInit {
     private userService: UserService,
     private router: Router,
     private encryptionService: EncryptionService // Inject EncryptionService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.getMainCategory();
     this.createanonUser();
-
+    this.updateCartQuantity();
     // Check if the user is logged in
-    const userId = sessionStorage.getItem('memberId');
-    if (userId) {
+   
+  }
+
+  updateCartQuantity(): void {
+    const sessionUserId = sessionStorage.getItem('memberId');
+    const tempUserId = localStorage.getItem('TempUserId');
+    
+    if (sessionUserId) {
+      // If userId is found in sessionStorage, consider the user logged in
       this.isLoggedIn = true;
       this.userName = sessionStorage.getItem('userId') || 'Profile';
-
+      
       // Subscribe to cart quantity observable
       this.userService.cartQuantity$.subscribe((quantity) => {
         this.cartQuantity = quantity; // Automatically update the cart quantity
       });
-
-      // Initial cart quantity load
-      this.userService.updateCartQuantity(Number(userId));
+  
+      // Initial cart quantity load from sessionStorage userId
+      this.userService.updateCartQuantity(Number(sessionUserId));
+    } else if (tempUserId) {
+      // If userId is found only in localStorage (guest/anonymous user), set isLoggedIn to false
+      this.isLoggedIn = false;
+  
+      // Subscribe to cart quantity observable for anonymous user
+      this.userService.cartQuantity$.subscribe((quantity) => {
+        this.cartQuantity = quantity;
+      });
+  
+      // Initial cart quantity load from localStorage (anonymous userId)
+      this.userService.updateCartQuantity(Number(tempUserId));
     }
   }
   
+  
   createanonUser(): void{
+    
     const uid = localStorage.getItem('TempUserId')
     if (uid) {
       // Do nothing
@@ -123,11 +143,11 @@ export class NavbarComponent implements OnInit {
 
   navigateToProduct(productId: number): void {
     // Encrypt the product ID if necessary
-     const encryptedId = this.encryptionService.encrypt(productId.toString());
+    //  const encryptedId = this.encryptionService.encrypt(productId.toString());
 
     // Force navigation to the same product page or a new one
     this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
-        this.router.navigate(['/product', encryptedId]);
+        this.router.navigate(['/product', productId]);
     });
 
     // Clear the search or any other logic as required
@@ -140,7 +160,7 @@ export class NavbarComponent implements OnInit {
     this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
       this.router.navigate(['/shopping-cart']);
     });
-    
+    this.updateCartQuantity();
   }
 
   clearSearch(): void {
@@ -148,3 +168,4 @@ export class NavbarComponent implements OnInit {
     this.productByKeyword = []; // Clear the search results
   }
 }
+  
