@@ -128,7 +128,7 @@ export class SubcategoryComponent implements OnInit {
   navigateToProduct(productId: number): void {
     const encryptedId = this.encryptionService.encrypt(productId.toString());
     this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
-      this.router.navigate(['/product', encryptedId]);
+      this.router.navigate(['/product', productId]);
     });
     this.clearSearch();
   }
