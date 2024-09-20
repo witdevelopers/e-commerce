@@ -19,13 +19,15 @@ export class SignupComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.signupForm = this.fb.group({
-      userId: ['', Validators.required],
-      name: ['', Validators.required],
-      email: ['', [Validators.required, Validators.email]],
-      password: ['', Validators.required],
-      confirmPassword: ['', Validators.required]
-    }, { validators: this.passwordMatchValidator }); // Correct usage of "validators"
+    this.signupForm = this.fb.group(
+      {
+        name: ['', Validators.required],
+        email: ['', [Validators.required, Validators.email]],
+        password: ['', [Validators.required, Validators.minLength(6)]],
+        confirmPassword: ['', Validators.required]
+      },
+      { validator: this.passwordMatchValidator }
+    );
   }
 
   private passwordMatchValidator(form: FormGroup) {
@@ -36,23 +38,22 @@ export class SignupComponent implements OnInit {
 
   async onSubmit() {
     if (this.signupForm.valid) {
-      const { userId, password, name, email } = this.signupForm.value;
-
-      try {
-        // Correct way to pass the required parameters to the registerMLM method
-        const res: any = await this.authService.registerMLM(userId, password, name, email);
-
-        if (res && res.status) {
+      const {  password, name, email } = this.signupForm.value;
+ const res: any = await this.authService.registerMLM(email, password, name, email);
+      
+        
+        if (res.status === "False") {
+          Swal.fire(res.message , '', 'warning');
+          // console.log("Up", res.status);
+        }         
+        else {        
+          // console.log(res.status);
           Swal.fire("Registered Successfully", '', 'success');
           this.router.navigate(['/auth/signin']);
-        } else {
-          Swal.fire(res.message || "Registration failed", '', 'error');
-        }
-      } catch (error) {
-        console.error("Error during registration:", error);
-        Swal.fire("Registration failed. Please try again.", '', 'error');
-      }
-    } else {
+        }   
+    } 
+    
+    else {
       Swal.fire("Please fill out the form correctly.", '', 'warning');
     }
   }

@@ -25,7 +25,6 @@
           <h3 (click)="navigateToProduct(pbk.productId)">
             {{ pbk.productName }}
           </h3>
-          
         </div>
       </div>
     </div>
@@ -41,10 +40,13 @@
         <div class="mobileIcon top">
           <img src="assets/img/user.png" alt="User Icon" />
         </div>
+        <!-- Show username if logged in, otherwise show "Profile" -->
         <p>{{ isLoggedIn ? userName : 'Profile' }}</p>
 
         <div class="downloadHoverBtnContainer">
+          <!-- If logged in, show username and sign-out button -->
           <p *ngIf="isLoggedIn">{{ userName }}</p>
+          <!-- If not logged in, prompt the user to sign in -->
           <p *ngIf="!isLoggedIn" style="font-size: 13px;">To access your account</p>
 
           <a *ngIf="!isLoggedIn" [routerLink]="'/auth/signin'">
@@ -53,7 +55,7 @@
           <a *ngIf="isLoggedIn" (click)="signOut()">
             <button class="downloadBtn">Sign Out</button>
           </a>
-          <hr>
+          <hr />
           <a [routerLink]="'/usershop/order-history'">
             <button class="downloadBtn">My Order</button>
           </a>
@@ -61,21 +63,27 @@
       </div>
     </div>
 
+    <!-- Cart section -->
     <div class="CartContainer" (click)="onAddToCart()" style="cursor: pointer;">
       <div class="CartIcon top">
         <img src="assets/img/cart.png" alt="Cart Icon" />
+        <!-- Show cart quantity only if greater than 0 -->
         <div *ngIf="cartQuantity > 0" class="cart-quantity">{{ cartQuantity }}</div>
       </div>
     </div>
   </div>
 </header>
 
-<!-- Navigation -->
+<!-- Navigation bar with categories and subcategories -->
 <nav>
   <ul>
-    <li *ngFor="let c of mainCategory" (mouseenter)="loadSubCategory(c.categoryID)"
-      (mouseleave)="hideSubCategory(c.categoryID)">
+    <!-- Main categories -->
+    <li *ngFor="let c of mainCategory" 
+        (mouseenter)="loadSubCategory(c.categoryID)"
+        (mouseleave)="hideSubCategory(c.categoryID)">
       {{ c.categoryName }}
+      
+      <!-- Subcategories dropdown -->
       <div class="subMenu" *ngIf="subCategory[c.categoryID] && isSubCategoryVisible[c.categoryID]">
         <div class="submenuList" *ngFor="let subcat of subCategory[c.categoryID]">
           <a [routerLink]="['/subcategory', subcat.categoryID]">{{ subcat.categoryName }}</a>
