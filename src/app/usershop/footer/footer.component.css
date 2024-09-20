@@ -108,9 +108,6 @@
     padding: 20px 50px;
 }
 
-.footer-col-accs {
-    width: 7em;
-}
 
 .footer-col-acc span a {
     color: black;
@@ -268,4 +265,97 @@ tr td span {
     color: white;
     text-decoration: none;
     margin: 0 1em;
+}
+.footer {
+    display: flex;
+    flex-direction: column; /* Ensure items stack in smaller devices */
+    align-items: center; /* Center items in the footer */
+    /* Add any other styles you need */
+}
+
+@media (max-width: 1024px) {
+    .footer-main-hidden-one,
+    .footer-main-hidden-two {
+        display: flex; /* Ensure at least one part of the footer is displayed */
+        flex-wrap: wrap;
+    }
+}
+.footer {
+    width: 100%;
+    display: flex;
+    flex-direction: column; /* Stack items vertically */
+    align-items: center; /* Center items */
+    background-color: whitesmoke; /* Background color */
+}
+
+/* Main footer for mobile */
+.footer-main {
+    width: 100%;
+    padding: 1em; /* Padding for mobile view */
+}
+
+/* Footer columns */
+.footer-col {
+    display: flex;
+    flex-direction: column; /* Stack columns vertically on smaller screens */
+    align-items: center; /* Center items */
+    width: 100%;
+}
+
+.footer-col-acc {
+    margin: 15px 0; /* Spacing between sections */
+    text-align: center; /* Center text for better appearance */
+}
+
+.col-acc-head {
+    font-weight: bold; /* Bold headings */
+}
+
+.photo-lag {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 1em 0; /* Padding for the language selector */
+}
+
+.photo-lag img {
+    width: 4.5em; /* Image width */
+    margin-right: 1em; /* Spacing between image and select */
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+    .footer-main {
+        padding: 0.5em; /* Reduced padding for smaller screens */
+    }
+
+    .footer-col {
+        flex-direction: column; /* Stack items in a column */
+        align-items: center; /* Center items */
+    }
+
+    .footer-col-acc {
+        margin: 10px 0; /* Less margin for better spacing */
+    }
+
+    .photo-lag select {
+        width: 80%; /* Adjust select width for mobile */
+        margin: 0.5em 0; /* Spacing around select */
+    }
+
+    .photo-lag img {
+        width: 3em; /* Adjust image size for mobile */
+    }
+}
+
+@media (min-width: 769px) {
+    .footer-col {
+        flex-direction: row; /* Align items horizontally */
+        justify-content: space-around; /* Space out columns */
+    }
+
+    .footer-col-acc {
+        margin: 0 20px; /* Margin for horizontal spacing */
+    }
 }

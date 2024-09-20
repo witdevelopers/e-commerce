@@ -140,8 +140,9 @@ form {
   height: 170px;
   padding: 10px;
   color: var(--textColor);
-  background: white;
+  background: #f7f7f7e0;
   z-index: 2;
+  right: -71px;
 }
 
 .downloadContainer:hover .downloadHoverBtnContainer {
