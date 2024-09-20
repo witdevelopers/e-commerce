@@ -1,31 +1,29 @@
-<header class="header">
+<header class="header" role="banner">
   <div class="headerLeft">
-    <div class="logoContainer" [routerLink]="'/home'">
-      <img src="assets/images/logo1.png" alt="Logo" />
+    <div class="logoContainer" [routerLink]="'/home'" role="link" aria-label="Home">
+      <img src="assets/images/logo1.png" alt="Company Logo" />
     </div>
-
+    <button class="sidebarToggle" (click)="toggleSidebar()" aria-label="Toggle Sidebar">
+      <i class="fa-solid fa-bars"></i>
+    </button>    
     <!-- Search box -->
-    <div class="searchInputContainer">
-      <div class="searchIcon">
-        <img src="assets/img/search.png" alt="Search Icon" />
-      </div>
+    <div class="searchInputContainer" role="search">
       <input 
         type="text" 
         [(ngModel)]="searchTerm" 
         (input)="onSearch($event)" 
-        placeholder="Search..."
-        aria-label="Search" 
+        placeholder="Search..." 
+        aria-label="Search products" 
       />
-      <div class="inputCloseSearch" *ngIf="searchTerm" (click)="clearSearch()">
-        <i class="fa-solid fa-xmark" id="closeSearch" aria-label="Close Search"></i>
+      <div class="inputCloseSearch" *ngIf="searchTerm" (click)="clearSearch()" aria-label="Clear Search">
+        <i class="fa-solid fa-xmark" aria-label="Close Search"></i>
       </div>
 
-      <div class="searchRecentModal" *ngIf="productByKeyword.length > 0">
+      <div class="searchRecentModal" *ngIf="productByKeyword.length > 0" aria-live="polite">
         <div class="listofRecent" *ngFor="let pbk of productByKeyword">
           <h3 (click)="navigateToProduct(pbk.productId)">
             {{ pbk.productName }}
           </h3>
-          
         </div>
       </div>
     </div>
@@ -42,18 +40,13 @@
           <img src="assets/img/user.png" alt="User Icon" />
         </div>
         <p>{{ isLoggedIn ? userName : 'Profile' }}</p>
-
         <div class="downloadHoverBtnContainer">
-          <p *ngIf="isLoggedIn">{{ userName }}</p>
-          <p *ngIf="!isLoggedIn" style="font-size: 13px;">To access your account</p>
-
           <a *ngIf="!isLoggedIn" [routerLink]="'/auth/signin'">
             <button class="downloadBtn">Sign In</button>
           </a>
           <a *ngIf="isLoggedIn" (click)="signOut()">
             <button class="downloadBtn">Sign Out</button>
           </a>
-          <hr>
           <a [routerLink]="'/usershop/order-history'">
             <button class="downloadBtn">My Order</button>
           </a>
@@ -70,14 +63,41 @@
   </div>
 </header>
 
-<!-- Navigation -->
-<nav>
-  <ul>
-    <li *ngFor="let c of mainCategory" (mouseenter)="loadSubCategory(c.categoryID)"
-      (mouseleave)="hideSubCategory(c.categoryID)">
+<!-- Sidebar Navigation -->
+<aside class="sidebar" [class.active]="isSidebarOpen" role="complementary">
+  <button class="closeSidebar" (click)="toggleSidebar()" aria-label="Close Sidebar">
+    <i class="fa-solid fa-xmark"></i>
+  </button>
+  <ul class="list-group">
+    <li class="headerName" *ngFor="let c of mainCategory" (click)="toggleSubCategory(c.categoryID)">
       {{ c.categoryName }}
-      <div class="subMenu" *ngIf="subCategory[c.categoryID] && isSubCategoryVisible[c.categoryID]">
-        <div class="submenuList" *ngFor="let subcat of subCategory[c.categoryID]">
+      <div class="subMenu" [class.show]="isSubCategoryVisible[c.categoryID]">
+        <div *ngFor="let subcat of subCategory[c.categoryID]">
+          <div class="submenuItem" (click)="toggleDropdown(subcat.categoryID); $event.stopPropagation()">
+            <a [routerLink]="['/subcategory', subcat.categoryID]">{{ subcat.categoryName }}</a>
+            
+            <!-- <span *ngIf="subcat.subSubCategories?.length">▼</span> -->
+          </div>
+          
+        </div>
+      </div>
+    </li>
+  </ul>
+</aside>
+
+
+
+
+
+
+
+<!-- Navigation -->
+<nav role="navigation">
+  <ul>
+    <li *ngFor="let c of mainCategory" (click)="toggleSubCategory(c.categoryID)">
+      {{ c.categoryName }}
+      <div class="subMenunormal" *ngIf="isSubCategoryVisible[c.categoryID]">
+        <div class="submenuListnormal" *ngFor="let subcat of subCategory[c.categoryID]">
           <a [routerLink]="['/subcategory', subcat.categoryID]">{{ subcat.categoryName }}</a>
         </div>
       </div>

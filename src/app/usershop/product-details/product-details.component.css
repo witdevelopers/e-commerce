@@ -59,14 +59,15 @@ p {
   flex: 1;
   max-width: 500px;
   position: relative;
+  display: flex;
+  justify-content: center;
 }
 
 .item-image-main img {
-  width: 78%;
-  height: 134%;
-  object-fit: cover;
-  border-radius: 10px;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  display: flex;
+  justify-content: center;
+  width: 70%;
+  height: 340px;
 }
 
 .item-info-parent {
@@ -94,7 +95,7 @@ p {
   font-size: 12px;
 }
 .price{
-  margin: 16px 0 20px 0;
+  margin: 16px 0 0 0;
   gap: 12px;
   display: flex;
   /* font-weight: 600; */
@@ -298,7 +299,7 @@ p {
   }
 
   .main-info p {
-    font-size: 1rem;
+    font-size: 12px;
   }
 
   .add-to-cart-btn {
@@ -550,6 +551,13 @@ p {
     flex: 1 1 calc(50% - 20px); /* 2 cards per row on tablets */
     max-width: calc(50% - 20px);
   }
+  /* .item-image-main img{
+    width: 30%;
+    height: 134%;
+    object-fit: cover;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+} */
 }
 
 @media (max-width: 576px) {

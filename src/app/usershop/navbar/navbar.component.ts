@@ -1,102 +1,95 @@
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Router, NavigationEnd } from '@angular/router';
 import { UserService } from 'src/app/user/services/user.service';
 import { EncryptionService } from '../encryption.service';
-import { v4 as uuidv4 } from 'uuid';
-
+import { Subject, Subscription } from 'rxjs';
+import { debounceTime, switchMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.css'],
 })
-export class NavbarComponent implements OnInit {
+export class NavbarComponent implements OnInit, OnDestroy {
   isLoggedIn: boolean = false;
   userName: string = '';
   cartQuantity: number = 0; // To store the cart quantity
   mainCategory: any[] = [];
   subCategory: { [key: number]: any[] } = {};
   isSubCategoryVisible: { [key: number]: boolean } = {};
+  isDropdownVisible: { [key: number]: boolean } = {}; // Dropdown visibility
   productByKeyword: any[] = [];
   searchTerm: string = ''; // To track search input
-  // myId = uuidv4(); // --------> UUID
-  myId = Date.now() // --------> epoch time
+  myId = Date.now(); // Epoch time
+  isSidebarOpen: boolean = false; // Sidebar state
+  private searchSubject = new Subject<string>();
+  private routerSubscription: Subscription;
 
   constructor(
     private userService: UserService,
     private router: Router,
     private encryptionService: EncryptionService // Inject EncryptionService
-  ) { }
+  ) {
+    this.routerSubscription = this.router.events.subscribe(event => {
+      if (event instanceof NavigationEnd) {
+        this.closeSidebar(); // Close sidebar on navigation
+      }
+    });
+  }
 
   ngOnInit(): void {
     this.getMainCategory();
     this.createanonUser();
     this.updateCartQuantity();
-    // Check if the user is logged in
-   
+
+    // Setup search subscription
+    this.searchSubject.pipe(
+      debounceTime(300),
+      switchMap((keyword) => this.userService.SearchProductByKeyword(keyword))
+    ).subscribe((data) => {
+      this.productByKeyword = data;
+    });
+  }
+
+  ngOnDestroy(): void {
+    this.routerSubscription.unsubscribe(); // Cleanup
   }
 
   updateCartQuantity(): void {
     const sessionUserId = sessionStorage.getItem('memberId');
     const tempUserId = localStorage.getItem('TempUserId');
-    
+
     if (sessionUserId) {
-      // If userId is found in sessionStorage, consider the user logged in
       this.isLoggedIn = true;
       this.userName = sessionStorage.getItem('userId') || 'Profile';
-      
-      // Subscribe to cart quantity observable
       this.userService.cartQuantity$.subscribe((quantity) => {
         this.cartQuantity = quantity; // Automatically update the cart quantity
       });
-  
-      // Initial cart quantity load from sessionStorage userId
       this.userService.updateCartQuantity(Number(sessionUserId));
     } else if (tempUserId) {
-      // If userId is found only in localStorage (guest/anonymous user), set isLoggedIn to false
       this.isLoggedIn = false;
-  
-      // Subscribe to cart quantity observable for anonymous user
       this.userService.cartQuantity$.subscribe((quantity) => {
         this.cartQuantity = quantity;
       });
-  
-      // Initial cart quantity load from localStorage (anonymous userId)
       this.userService.updateCartQuantity(Number(tempUserId));
     }
   }
-  
-  
-  createanonUser(): void{
-    
-    const uid = localStorage.getItem('TempUserId')
-    if (uid) {
-      // Do nothing
-    } else {
+
+  createanonUser(): void {
+    const uid = localStorage.getItem('TempUserId');
+    if (!uid) {
       localStorage.setItem('TempUserId', this.myId.toString());
     }
   }
 
-  // getUniqueId(parts: number): string {
-  //   const stringArr = [];
-  //   for(let i = 0; i< parts; i++){
-  //     // tslint:disable-next-line:no-bitwise
-  //     const S4 = (((1 + Math.random()) * 0x10000) | 0).toString(16).substring(1);
-  //     stringArr.push(S4);
-  //   }
-  //   return stringArr.join('-');
-  // }
-
   signOut(): void {
     sessionStorage.clear();
     this.isLoggedIn = false;
-  
-    // Forcefully reload the home page after sign out
     this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
       this.router.navigate(['/home']);
     });
   }
-  
+
   getMainCategory(): void {
     this.userService.getMainCategory().subscribe(
       (res: any[]) => {
@@ -113,50 +106,39 @@ export class NavbarComponent implements OnInit {
       this.userService.getSubCategory(parentCategoryId).subscribe(
         (res: any[]) => {
           this.subCategory[parentCategoryId] = res;
+          this.isSubCategoryVisible[parentCategoryId] = true; // Show subcategory after loading
         },
         (error) => {
           console.error('Error fetching subcategories', error);
         }
       );
+    } else {
+      // If already loaded, just toggle visibility
+      this.isSubCategoryVisible[parentCategoryId] = !this.isSubCategoryVisible[parentCategoryId];
     }
-    this.isSubCategoryVisible[parentCategoryId] = true;
   }
 
-  hideSubCategory(parentCategoryId: number): void {
-    this.isSubCategoryVisible[parentCategoryId] = false;
+  toggleDropdown(subCategoryId: number): void {
+    this.isDropdownVisible[subCategoryId] = !this.isDropdownVisible[subCategoryId];
   }
 
   onSearch(event: any): void {
     this.searchTerm = event.target.value; // Update search term
     if (this.searchTerm.length > 2) {
-      this.getProductByKeyword(this.searchTerm);
+      this.searchSubject.next(this.searchTerm); // Push to subject
     } else {
       this.clearSearch();
     }
   }
 
-  getProductByKeyword(keyword: string): void {
-    this.userService.SearchProductByKeyword(keyword).subscribe((data) => {
-      this.productByKeyword = data;
+  navigateToProduct(productId: number): void {
+    this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+      this.router.navigate(['/product', productId]);
     });
+    this.clearSearch();
   }
 
-  navigateToProduct(productId: number): void {
-    // Encrypt the product ID if necessary
-    //  const encryptedId = this.encryptionService.encrypt(productId.toString());
-
-    // Force navigation to the same product page or a new one
-    this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
-        this.router.navigate(['/product', productId]);
-    });
-
-    // Clear the search or any other logic as required
-    this.clearSearch();
-}
-
-
   onAddToCart(): void {
-    // Forcefully reload the shopping cart route
     this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
       this.router.navigate(['/shopping-cart']);
     });
@@ -167,5 +149,38 @@ export class NavbarComponent implements OnInit {
     this.searchTerm = ''; // Clear search term
     this.productByKeyword = []; // Clear the search results
   }
+
+  toggleSidebar(): void {
+    this.isSidebarOpen = !this.isSidebarOpen; // Toggle sidebar visibility
+  }
+
+  toggleSubCategory(parentCategoryId: number): void {
+    this.isSubCategoryVisible[parentCategoryId] = !this.isSubCategoryVisible[parentCategoryId];
+    // Load subcategories if they haven't been loaded yet
+    if (!this.subCategory[parentCategoryId]) {
+      this.loadSubCategory(parentCategoryId);
+    }
+  }
+
+  redirectToLogin(): void {
+    sessionStorage.clear();
+    this.router.navigate(['/login']); // Redirect to login page
+  }
+
+  updateUserName(): void {
+    this.userName = sessionStorage.getItem('userId') || 'Profile';
+  }
+
+  closeSidebar(): void {
+    this.isSidebarOpen = false; // Close the sidebar
+  }
+  isHovered: { [key: number]: boolean } = {};
+
+showSubCategory(categoryID: number) {
+  this.isHovered[categoryID] = true;
 }
-  
+
+hideSubCategory(categoryID: number) {
+  this.isHovered[categoryID] = false;
+}
+}
