@@ -64,12 +64,14 @@ export class NavbarComponent implements OnInit, OnDestroy {
       this.userName = sessionStorage.getItem('userId') || 'Profile';
       this.userService.cartQuantity$.subscribe((quantity) => {
         this.cartQuantity = quantity; // Automatically update the cart quantity
+       
       });
       this.userService.updateCartQuantity(Number(sessionUserId));
+      
     } else if (tempUserId) {
       this.isLoggedIn = false;
       this.userService.cartQuantity$.subscribe((quantity) => {
-        this.cartQuantity = quantity;
+        this.cartQuantity = quantity; // Update cart quantity for anonymous user
       });
       this.userService.updateCartQuantity(Number(tempUserId));
     }
@@ -90,15 +92,18 @@ export class NavbarComponent implements OnInit, OnDestroy {
     });
   }
 
+
   getMainCategory(): void {
     this.userService.getMainCategory().subscribe(
       (res: any[]) => {
+
         this.mainCategory = res;
       },
       (error) => {
         console.error('Error fetching main categories', error);
       }
     );
+    this.updateCartQuantity(); // Ensure cart quantity is updated after fetching categories
   }
 
   loadSubCategory(parentCategoryId: number): void {
@@ -134,6 +139,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
   navigateToProduct(productId: number): void {
     this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
       this.router.navigate(['/product', productId]);
+      this.router.navigate(['/product', productId]);
     });
     this.clearSearch();
   }
@@ -142,7 +148,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
     this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
       this.router.navigate(['/shopping-cart']);
     });
-    this.updateCartQuantity();
+    this.updateCartQuantity(); // Update cart quantity after adding to cart
   }
 
   clearSearch(): void {
@@ -184,3 +190,4 @@ hideSubCategory(categoryID: number) {
   this.isHovered[categoryID] = false;
 }
 }
+

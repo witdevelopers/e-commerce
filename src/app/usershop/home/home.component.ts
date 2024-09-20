@@ -34,33 +34,41 @@ export class HomeComponent implements OnInit {
   updateCartQuantity(): void {
     const sessionUserId = sessionStorage.getItem('memberId');
     const tempUserId = localStorage.getItem('TempUserId');
+    const hasReloaded = sessionStorage.getItem('hasReloaded'); // Get the reload flag
     
     if (sessionUserId) {
-      // If userId is found in sessionStorage, consider the user logged in
+      // User is logged in
       this.isLoggedIn = true;
-      // this.userName = sessionStorage.getItem('userId') || 'Profile';
-      
+      this.userName = sessionStorage.getItem('userId') || 'Profile';
+
       // Subscribe to cart quantity observable
-      this.userService.cartQuantity$.subscribe((quantity) => {
-        this.cartQuantity = quantity; // Automatically update the cart quantity
-      });
-  
-      // Initial cart quantity load from sessionStorage userId
-      this.userService.updateCartQuantity(Number(sessionUserId));
-    } else if (tempUserId) {
-      // If userId is found only in localStorage (guest/anonymous user), set isLoggedIn to false
-      this.isLoggedIn = false;
-  
-      // Subscribe to cart quantity observable for anonymous user
       this.userService.cartQuantity$.subscribe((quantity) => {
         this.cartQuantity = quantity;
       });
-  
-      // Initial cart quantity load from localStorage (anonymous userId)
+
+      // Initial cart quantity load for logged-in user
+      this.userService.updateCartQuantity(Number(sessionUserId));
+
+      // Check if the page has already been reloaded after login
+      if (!hasReloaded) {
+        // Set a flag to prevent the reload loop
+        sessionStorage.setItem('hasReloaded', 'true');
+        window.location.reload();  // Reload the page once after login
+      }
+
+    } else if (tempUserId) {
+      // Guest/Anonymous user
+      this.isLoggedIn = false;
+
+      // Subscribe to cart quantity observable for guest user
+      this.userService.cartQuantity$.subscribe((quantity) => {
+        this.cartQuantity = quantity;
+      });
+
+      // Initial cart quantity load for guest user
       this.userService.updateCartQuantity(Number(tempUserId));
-    } 
+    }
   }
-  
 
   loadBanners() {
     console.log('Starting to load banners...');
