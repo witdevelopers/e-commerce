@@ -931,12 +931,6 @@ header {
   }
 }
 
-@media (max-width: 768px) { /* Small tablets and large mobile devices */
-  .subMenu {
-    /* Inherits styles from the previous query */
-  }
-}
-
 @media (max-width: 480px) { /* Mobile devices */
   .subMenu {
     /* Inherits styles from the previous queries */
@@ -1058,4 +1052,95 @@ li:hover .subMenu,
 
 .headerName{
   background: none;
+}
+
+/* Search Input Container */
+.searchInputContainer {
+  width: 100%;
+  max-width: 400px;
+  height: 45px;
+  display: flex;
+  margin-left: 25px;
+  border-radius: 3px;
+  align-items: center;
+  position: relative;
+  border: 1px solid #ccc; /* Adjust border color */
+}
+
+.inputCloseSearch {
+  margin-right: 13px;
+  cursor: pointer;
+}
+
+.inputCloseSearch i {
+  font-size: 16px; /* Adjust icon size */
+}
+
+/* Search Input */
+input {
+  border: none;
+  width: 100%;
+  height: 100%;
+  border-radius: 3px;
+  padding: 0 10px; /* Add some padding */
+  font-size: 16px; /* Adjust font size */
+}
+
+input:focus {
+  outline: none;
+}
+
+/* Recent Search Results */
+.searchRecentModal {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background-color: white;
+  max-height: 300px;
+  overflow-y: auto;
+  border-radius: 4px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  z-index: 10;
+  display: none; /* Hidden by default */
+}
+
+.searchInputContainer:focus-within .searchRecentModal,
+.searchInputContainer .searchRecentModal {
+  display: block; /* Show on input focus or when results are present */
+}
+
+.listofRecent {
+  padding: 10px;
+  cursor: pointer;
+  border-bottom: 1px solid #eee;
+}
+
+.listofRecent h3 {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 100;
+  text-transform: lowercase;
+}
+
+.listofRecent:hover {
+  background-color: #f0f0f0; /* Highlight on hover */
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+  .searchInputContainer {
+    width: 100%;
+    margin-left: 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  .searchInputContainer {
+    height: 35px;
+  }
+
+  input {
+    font-size: 14px; /* Adjust font size for smaller screens */
+  }
 }

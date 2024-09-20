@@ -24,6 +24,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
   isSidebarOpen: boolean = false; // Sidebar state
   private searchSubject = new Subject<string>();
   private routerSubscription: Subscription;
+  isHovered: { [key: number]: boolean } = {}; // To track hover state for categories
 
   constructor(
     private userService: UserService,
@@ -64,10 +65,8 @@ export class NavbarComponent implements OnInit, OnDestroy {
       this.userName = sessionStorage.getItem('userId') || 'Profile';
       this.userService.cartQuantity$.subscribe((quantity) => {
         this.cartQuantity = quantity; // Automatically update the cart quantity
-       
       });
       this.userService.updateCartQuantity(Number(sessionUserId));
-      
     } else if (tempUserId) {
       this.isLoggedIn = false;
       this.userService.cartQuantity$.subscribe((quantity) => {
@@ -92,11 +91,9 @@ export class NavbarComponent implements OnInit, OnDestroy {
     });
   }
 
-
   getMainCategory(): void {
     this.userService.getMainCategory().subscribe(
       (res: any[]) => {
-
         this.mainCategory = res;
       },
       (error) => {
@@ -139,7 +136,6 @@ export class NavbarComponent implements OnInit, OnDestroy {
   navigateToProduct(productId: number): void {
     this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
       this.router.navigate(['/product', productId]);
-      this.router.navigate(['/product', productId]);
     });
     this.clearSearch();
   }
@@ -180,14 +176,12 @@ export class NavbarComponent implements OnInit, OnDestroy {
   closeSidebar(): void {
     this.isSidebarOpen = false; // Close the sidebar
   }
-  isHovered: { [key: number]: boolean } = {};
 
-showSubCategory(categoryID: number) {
-  this.isHovered[categoryID] = true;
-}
+  showSubCategory(categoryID: number) {
+    this.isHovered[categoryID] = true;
+  }
 
-hideSubCategory(categoryID: number) {
-  this.isHovered[categoryID] = false;
+  hideSubCategory(categoryID: number) {
+    this.isHovered[categoryID] = false;
+  }
 }
-}
-
