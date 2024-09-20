@@ -233,7 +233,7 @@ nav ul li:hover {
 
 .subMenunormal {
   position: absolute;
-  top: 125px;
+  top: 135px;
   left: 0;
   right: 0;
   background-color: white;
@@ -558,9 +558,9 @@ form {
 .downloadHoverBtnContainer {
   position: absolute;
   top: 40px;
-  width: 200px;
+  width: 140px;
   display: none;
-  height: 170px;
+  height: 93px;
   padding: 10px;
   color: var(--textColor);
   background: #f7f7f7e0;
