@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from 'src/app/user/services/user.service';
-
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-order-history',
@@ -15,12 +15,12 @@ export class OrderHistoryComponent implements OnInit {
 
   ngOnInit(): void {
     const customerId = sessionStorage.getItem('memberId');
+    
     if (customerId) {
       this.userService.getOrderDetails(customerId).subscribe(
         (data) => {
-          console.log(data);
+          console.log("Full order data: ", data); // Log the whole structure of the data
           this.orderHistory = data; // Bind the order history data
-          console.log("Order history wala data", data);
         },
         (error) => {
           console.error('Error fetching customer details:', error);
@@ -30,5 +30,40 @@ export class OrderHistoryComponent implements OnInit {
     } else {
       this.errorMessage = 'Please login to see your orders.';
     }
+  }
+
+  // Method to cancel an order
+  cancelOrder(orderId: number) {
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, cancel it!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.userService.cancelOrder(orderId).subscribe(
+          (response) => {
+            console.log('Order canceled:', response);
+            this.orderHistory = this.orderHistory.filter(order => order.id !== orderId);
+            Swal.fire(
+              'Canceled!',
+              'Your order has been canceled.',
+              'success'
+            );
+          },
+          (error) => {
+            console.error('Error canceling order:', error);
+            Swal.fire(
+              'Error!',
+              'Failed to cancel order. Please try again later.',
+              'error'
+            );
+          }
+        );
+      }
+    });
   }
 }

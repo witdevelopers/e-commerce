@@ -1,7 +1,6 @@
 <div *ngIf="!isCartEmpty;" class="container">
   <div class="payment_details">
     <h1>Payment Information</h1>
-    <!-- Address Form -->
     <div class="details_card">
       <div class="name_address">
         <div class="first_lastName">
@@ -23,7 +22,6 @@
             </option>
           </select>
           
-          <!-- State dropdown only appears when a country is selected -->
           <select *ngIf="states.length > 0" class="slct" [(ngModel)]="newAddress.stateId" required>
             <option value="" disabled>Select State</option>
             <option *ngFor="let state of states" [value]="state.id">
@@ -32,7 +30,6 @@
           </select>
         </div>
 
-        <!-- Address Type (Home, Office, Other) -->
         <div class="address_type_select">
           <label for="addressType">Address Type</label>
           <select class="slct" [(ngModel)]="newAddress.addressType" required>
@@ -55,6 +52,7 @@
 
       <br />
       <hr />
+      <br>
       <h1>Shipping Details</h1>
       <div *ngIf="addresses.length > 0" class="address_cards">
         <div *ngFor="let address of addresses" class="address-card" [class.selected]="selectedAddress === address">
@@ -87,31 +85,28 @@
   </div>
 
   <div class="order_summary">
-    <h1>Order Summary</h1>
     <div class="summary_card">
-      <div *ngFor="let item of cartDetails.items" class="card_item">
-        <div class="product_img">
-          <img [src]="item.imageUrl" alt="{{ item.productName }}" />
-        </div>
-        <div class="product_info">
-          <h1>{{ item.productName }}</h1>
-          <p>{{ item.description || 'No description available.' }}</p>
-          <div class="product_rate_info">
-            <span class="product_price">
-              <del>Rs. {{ item.price }}</del>
-            </span>
-            <span class="product_price">Rs. {{ item.discountPrice }}</span>
-            <span class="product_quantity">Quantity: {{ item.quantity }}</span>
-          </div>
-        </div>
-      </div>
-
+      <h1>Order Summary</h1>
       <div class="cart_totals">
-        <p>Total Price: Rs. {{ totalCartPrice }}</p>
-        <p>Total Discount Price: Rs. {{ totalDiscountPrice }}</p>
-        <p>Total Quantity: {{ totalQuantity }}</p>
+        <div class="sumrytotal">
+          <p>Items:</p>
+          <p>{{ totalQuantity }}</p>
+        </div>
+        <div class="sumrytotal">
+          <p>Total:</p>
+          <p>Rs. {{ totalCartPrice | number: '1.2-2' }}</p>
+        </div>
+        <div class="sumrytotal">
+          <p>Discount:</p>
+          <p>Rs. {{ (totalCartPrice - totalDiscountPrice) | number: '1.2-2' }}</p>
+        </div>
+        <br>
+        <hr>
+        <div class="sumrytotal">
+          <p>Order Total:</p>
+          <p>Rs. {{ totalDiscountPrice | number: '1.2-2' }}</p>
+        </div>
       </div>
     </div>
   </div>
 </div>
-

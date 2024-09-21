@@ -685,7 +685,9 @@ aside {
   .basket {
     width: 88%;
   }
-  
+  .empty1{
+    width:100% !important;
+  }
   .basket-product {
     flex-direction: column;
     align-items: flex-start;
@@ -751,4 +753,7 @@ aside {
 
 .shop-now-button:hover {
   background-color: #286482; /* Darker color on hover */
+}
+.empty1{
+  width:40%;
 }

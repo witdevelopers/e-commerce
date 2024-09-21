@@ -47,7 +47,7 @@ export class UserService {
       });
     });
   }
-  
+
   levelIncome() {
     return new Promise((resolve, reject) => {
       this.http.get(this.apiBaseUrl + "GetLevelIncome").subscribe((res: any) => {
@@ -80,120 +80,120 @@ export class UserService {
     });
   }
 
-  POIIncome(){
+  POIIncome() {
     return new Promise((resolve, reject) => {
       this.http.get(this.apiBaseUrl + "GetPOIIncome").subscribe((res: any) => {
         resolve(res);
       });
     });
   }
-  
-  VIPIncome(){
+
+  VIPIncome() {
     return new Promise((resolve, reject) => {
       this.http.get(this.apiBaseUrl + "GetVIPIncome").subscribe((res: any) => {
         resolve(res);
       });
     });
   }
-  
-  BoardIncome(){
-    return new Promise((resolve,rejects)=>{
+
+  BoardIncome() {
+    return new Promise((resolve, rejects) => {
       this.http.get(this.apiBaseUrl + "GetBoardIncome").subscribe((res: any) => {
         resolve(res);
       });
     });
   }
 
-  EORIncome(){
-    return new Promise((resolve,rejects)=>{
+  EORIncome() {
+    return new Promise((resolve, rejects) => {
       this.http.get(this.apiBaseUrl + "GetEORIncome").subscribe((res: any) => {
         resolve(res);
       });
     });
   }
-  
-  MiningIncome(){
-    return new Promise((resolve,rejects)=>{
+
+  MiningIncome() {
+    return new Promise((resolve, rejects) => {
       this.http.get(this.apiBaseUrl + "GetMiningIncome").subscribe((res: any) => {
         resolve(res);
       });
     });
   }
 
-  IncomeWithdawalHistory(){
-    return new Promise((resolve,rejects)=>{
+  IncomeWithdawalHistory() {
+    return new Promise((resolve, rejects) => {
       this.http.get(this.apiBaseUrl + "GetIncomeWithdrawal").subscribe((res: any) => {
         resolve(res);
       });
     });
   }
 
-  BoardPools(){
-    return new Promise((resolve,rejects)=>{
+  BoardPools() {
+    return new Promise((resolve, rejects) => {
       this.http.get(this.apiBaseUrl + "GetBoardPools").subscribe((res: any) => {
         resolve(res);
       });
     });
   }
 
-  BoardEntries(poolId:any){
-    return new Promise((resolve,rejects)=>{
-      this.http.get(this.apiBaseUrl + "GetBoardEntries?poolId=" +poolId).subscribe((res:any)=>{
+  BoardEntries(poolId: any) {
+    return new Promise((resolve, rejects) => {
+      this.http.get(this.apiBaseUrl + "GetBoardEntries?poolId=" + poolId).subscribe((res: any) => {
         console.log('poolId:', poolId);
       });
     });
   }
 
-  BoardCount(entryId:any,poolId:any){
-    return new Promise((resolve,rejects)=>{
-      this.http.get(this.apiBaseUrl + "GetBoardCount?entryId=" + entryId + "&poolId=" + poolId).subscribe((res:any)=>{
+  BoardCount(entryId: any, poolId: any) {
+    return new Promise((resolve, rejects) => {
+      this.http.get(this.apiBaseUrl + "GetBoardCount?entryId=" + entryId + "&poolId=" + poolId).subscribe((res: any) => {
         console.log('entryId:', entryId, 'poolId:', poolId);
       });
     });
   }
 
-  TopupDetails(){
-    return new Promise((resolve,rejects)=>{
+  TopupDetails() {
+    return new Promise((resolve, rejects) => {
       this.http.get(this.apiBaseUrl + "GetTopupDetails").subscribe((res: any) => {
         resolve(res);
       });
     });
   }
 
-  getBanners(){
-    return this.http.get(this.apiBaseUrl+"api/Shop/banners");
+  getBanners() {
+    return this.http.get(this.apiBaseUrl + "api/Shop/banners");
   }
 
-  getCategories(): Observable<Categories>{
-    return this.http.get<Categories>(this.apiBaseUrl+"api/Shop/allcategories_without_parentcategories");
+  getCategories(): Observable<Categories> {
+    return this.http.get<Categories>(this.apiBaseUrl + "api/Shop/allcategories_without_parentcategories");
   }
 
-  getProducts(){
-    return this.http.get(this.apiBaseUrl+"api/Shop/home-page/products");
+  getProducts() {
+    return this.http.get(this.apiBaseUrl + "api/Shop/home-page/products");
   }
 
-  getMainCategory(){
-    return this.http.get(this.apiBaseUrl+"api/Shop/allparentcategories");
+  getMainCategory() {
+    return this.http.get(this.apiBaseUrl + "api/Shop/allparentcategories");
   }
 
   getSubCategory(menuId: number): Observable<any[]> {
     return this.http.get<any[]>(`${this.apiBaseUrl}api/Shop/categories/${menuId}`);
   }
 
-  getHomePageSectionProduct(): Observable<any[]>{
-    return this.http.get<any[]>(this.apiBaseUrl+"api/Shop/home-page/products");
+  getHomePageSectionProduct(): Observable<any[]> {
+    return this.http.get<any[]>(this.apiBaseUrl + "api/Shop/home-page/products");
   }
 
-  getAllProductByCategoryId(categoryId: number): Observable<any>{
-    return this.http.get<any[]>(this.apiBaseUrl+"api/Shop/products-by-categoryid/"+categoryId);
+  getAllProductByCategoryId(categoryId: number): Observable<any> {
+    return this.http.get<any[]>(this.apiBaseUrl + "api/Shop/products-by-categoryid/" + categoryId);
   }
 
   getProductById(productId: number): Observable<any> {
     return this.http.get<any>(`${this.apiBaseUrl}api/Shop/ProductDescription/${productId}`);
   }
 
-  SearchProductByKeyword(keyword: string): Observable<any>{
-    return this.http.get<any>(this.apiBaseUrl+"api/Shop/searchbyKeyword?keyword="+keyword);
+  SearchProductByKeyword(keyword: string): Observable<any> {
+    return this.http.get<any>(this.apiBaseUrl + "api/Shop/searchbyKeyword?keyword=" + keyword);
   }
 
   addToCart(customerId: number, productDtId: number, quantity: number): Observable<any> {
@@ -206,7 +206,7 @@ export class UserService {
     console.log("CART:  ", this.http.get(`${this.apiBaseUrl}api/Shop/Getshopping-cartDetails/${customerId}`)) // ADDED
     return this.http.get(`${this.apiBaseUrl}api/Shop/Getshopping-cartDetails/${customerId}`);
   }
-  
+
   loadAnonCart(): any {
     const cart = localStorage.getItem('cart');
     // return cart
@@ -216,7 +216,7 @@ export class UserService {
   updateCart(cartData: { customerId: number; productDtId: number; quantity: number }): Observable<any> {
     return this.http.put(`${this.apiBaseUrl}api/Shop/shopping-cart/update`, cartData);
   }
-  
+
   removeCartItem(customerId: number, productDtId: number, removeAll: boolean): Observable<any> {
     const url = `${this.apiBaseUrl}api/Shop/shopping-cart/remove?customerId=${customerId}&productDtId=${productDtId}&removeAll=${removeAll}`;
     return this.http.delete(url);
@@ -225,17 +225,17 @@ export class UserService {
   updateCartQuantity(customerId: number): void {
     this.getCart(customerId).subscribe(
       (data: any) => {
-         
+
         const totalQuantity = data.items.reduce((total: number, item: any) => total + item.quantity, 0);
         this.cartSubject.next(totalQuantity);
-        console.log("Cart " ,totalQuantity);
+        console.log("Cart ", totalQuantity);
       },
       (error) => {
         console.error('Error fetching cart details', error);
       }
     );
   }
-  
+
   getAddressesByCustomerId(customerId: number): Observable<any> {
     const url = `${this.apiBaseUrl}api/Shop/GetCustomerId/addresses?customerId=${customerId}`;
     return this.http.get<any>(url);
@@ -260,8 +260,8 @@ export class UserService {
     return this.http.put(`${this.apiBaseUrl}api/Shop/UpdateAddress`, address, { headers });
   }
 
-  getCountries(): Observable<any[]>{
-    return this.http.get<any[]>(this.apiBaseUrl+"api/Shop/countrylist");
+  getCountries(): Observable<any[]> {
+    return this.http.get<any[]>(this.apiBaseUrl + "api/Shop/countrylist");
   }
 
   getStatesByCountry(countryId: number): Observable<any[]> {
@@ -282,17 +282,17 @@ export class UserService {
     return this.http.post<any>(`${this.apiBaseUrl}api/Shop/create-order`, orderPayload, { headers });
   }
 
-    // Set the selected address ID
-    setSelectedAddressId(addressId: number): void {
-      this.selectedAddressIdSubject.next(addressId);
-    }
-  
-    // Get the selected address ID synchronously
-    getSelectedAddressId(): number | null {
-      return this.selectedAddressIdSubject.getValue();
-    }
+  // Set the selected address ID
+  setSelectedAddressId(addressId: number): void {
+    this.selectedAddressIdSubject.next(addressId);
+  }
 
-     // Method to call the invoice API using orderId from session storage
+  // Get the selected address ID synchronously
+  getSelectedAddressId(): number | null {
+    return this.selectedAddressIdSubject.getValue();
+  }
+
+  // Method to call the invoice API using orderId from session storage
   getInvoiceByOrderNo(): Observable<any> {
     const orderId = sessionStorage.getItem('orderNo');  // Retrieve orderId from session storage
     if (!orderId) {
@@ -305,6 +305,10 @@ export class UserService {
   getOrderDetails(customerId: string): Observable<any> {
     const url = `${this.apiBaseUrl}api/Shop/customer/${customerId}`;
     return this.http.get<any>(url);
+  }
+  
+  cancelOrder(orderId: number): Observable<any> {
+    return this.http.post(`${this.apiBaseUrl}/cancelOrder/${orderId}`, {}); // Adjust if body is needed
   }
 
   updateCustomer(TempUserId: number, customerId: number): Observable<any> {
@@ -319,7 +323,7 @@ export class UserService {
     };
 
     // Log the PUT request and its payload
-   // console.log("Updating customer: ", body);
+    // console.log("Updating customer: ", body);
 
     // Make the PUT request
     return this.http.put(`${this.apiBaseUrl}api/Shop/shopping-cart-Customer/update`, body, { headers });

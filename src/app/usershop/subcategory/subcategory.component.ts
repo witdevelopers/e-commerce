@@ -80,7 +80,6 @@ export class SubcategoryComponent implements OnInit {
       }));
       this.filteredSubcategoryDetails = [...this.subcategoryDetails];
     }, error => {
-      console.error('Error fetching subcategory details:', error);
     });
   }
 
@@ -99,7 +98,6 @@ export class SubcategoryComponent implements OnInit {
       this.productsInCart = new Set(response.items.map(item => item.productId));
       this.updateCartQuantity();
     }, error => {
-      console.error('Error fetching cart items:', error);
     });
   }
 
@@ -108,17 +106,14 @@ export class SubcategoryComponent implements OnInit {
     const customerId = sessionStorage.getItem('memberId') || localStorage.getItem('TempUserId');
 
     if (!customerId) {
-      Swal.fire({ icon: 'error', title: 'Please log in first.' });
       return;
     }
 
     this.userService.addToCart(+customerId, productDtId, quantity).subscribe(
       response => {
-        Swal.fire({ icon: 'success', title: 'Added to cart successfully.' });
         this.loadProductsInCart(+customerId); // Refresh cart items after adding
       },
       error => {
-        Swal.fire({ icon: 'error', title: 'Failed to add to cart.', text: error.message });
       }
     );
   }

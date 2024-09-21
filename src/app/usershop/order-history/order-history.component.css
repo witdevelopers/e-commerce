@@ -151,4 +151,67 @@
       font-size: 0.9rem;
     }
   }
-  
+  /* order-history.component.css */
+
+.order-card {
+  border: 1px solid #ccc; /* Adjust as needed */
+  border-radius: 8px; /* Rounded corners */
+  padding: 16px; /* Spacing within the card */
+  margin-bottom: 16px; /* Spacing between cards */
+  background-color: #f9f9f9; /* Background color */
+}
+
+.order-header {
+  display: flex;
+  justify-content: space-between; /* Space between date and status */
+  margin-bottom: 10px; /* Spacing below header */
+}
+
+.order-date,
+.order-status {
+  font-size: 14px; /* Font size for date and status */
+  color: #555; /* Text color */
+}
+
+.order-details {
+  margin-bottom: 10px; /* Spacing below order details */
+}
+
+.order-item {
+  display: flex; /* Align image and info horizontally */
+  margin-bottom: 10px; /* Spacing between items */
+}
+
+.product-image {
+  width: 50px; /* Set a fixed width for images */
+  height: 50px; /* Set a fixed height for images */
+  margin-right: 10px; /* Spacing between image and text */
+}
+
+.item-info {
+  flex-grow: 1; /* Allow item info to take available space */
+}
+
+.order-total {
+  font-weight: bold; /* Bold total amount */
+  margin-bottom: 10px; /* Spacing below total */
+}
+
+button {
+  background-color: rgb(60, 126, 170); /* Button background color */
+  color: white; /* Text color */
+  border: none; /* Remove border */
+  border-radius: 5px; /* Rounded corners */
+  padding: 10px 15px; /* Padding */
+  cursor: pointer; /* Pointer cursor on hover */
+  transition: background-color 0.3s ease; /* Smooth transition */
+}
+
+button:hover {
+  background-color: rgb(45, 100, 130); /* Darker color on hover */
+}
+
+button:disabled {
+  background-color: #ccc; /* Grey color when disabled */
+  cursor: not-allowed; /* Not-allowed cursor */
+}

@@ -33,9 +33,10 @@ export class ProductSliderComponent implements OnInit, OnDestroy {
       .subscribe({
         next: (data) => {
           this.homePageSectionProducts = this.groupProductsBySection(data);
-          console.log("Home Page Section Products:", this.homePageSectionProducts);
         },
-        error: (err) => console.error('Failed to load home page section products:', err),
+        error: (err) => {
+          // Optionally handle the error without logging it
+        },
       });
   }
 
@@ -74,11 +75,9 @@ export class ProductSliderComponent implements OnInit, OnDestroy {
           if (response && Array.isArray(response.items)) {
             response.items.forEach(item => this.addedProducts.add(item.productId));
           } else {
-            console.error('Unexpected response format from getCart:', response);
           }
         },
         error: (error) => {
-          console.error('Failed to load cart items:', error);
         }
       });
     } else {
@@ -86,7 +85,6 @@ export class ProductSliderComponent implements OnInit, OnDestroy {
       if (Array.isArray(cart)) {
         cart.forEach((item: any) => this.addedProducts.add(item.productId));
       } else {
-        console.error('Unexpected format in local storage cart:', cart);
       }
     }
   }
@@ -117,13 +115,11 @@ export class ProductSliderComponent implements OnInit, OnDestroy {
       if (existingProductIndex === -1) {
         cart.push({ productId, quantity: 1 });
         localStorage.setItem('cart', JSON.stringify(cart));
-        Swal.fire({ icon: 'success', title: 'Added to cart' });
         this.updateCartQuantity();
         this.addedProducts.add(productId); // Mark product as added
         buttonElement.classList.add('clicked');
         // this.userService.updateCartQuantity(Number(customerId));
       } else {
-        Swal.fire({ icon: 'info', title: 'Product already in cart' });
         this.goToCart(); // Navigate to cart if already in cart
       }
       return;
@@ -132,14 +128,11 @@ export class ProductSliderComponent implements OnInit, OnDestroy {
     this.userService.addToCart(+customerId, productId, 1).subscribe({
       next: () => {
         
-        Swal.fire({ icon: 'success', title: 'Added to cart' });
         this.updateCartQuantity();
         this.addedProducts.add(productId); // Mark product as added
         buttonElement.classList.add('clicked');
       },
       error: (error) => {
-        console.error('Failed to add to cart:', error);
-        Swal.fire({ icon: 'warning', title: 'Already added in cart.' });
       }
     });
   }

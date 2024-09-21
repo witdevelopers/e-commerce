@@ -99,21 +99,13 @@ export class ShoppingCartComponent implements OnInit, OnDestroy {
 
     this.userService.updateCart(cartData).subscribe(
       () => {
-        Swal.fire({
-          icon: 'success',
-          title: 'Cart Updated',
-          text: 'Your cart has been updated successfully!',
-        });
+        
         this.loadCart();
         this.updateCartQuantity();
       },
       (error) => {
-        console.error(error); // Log error for debugging
-        Swal.fire({
-          icon: 'error',
-          title: 'Update Failed',
-          text: 'Error updating cart. Please try again.',
-        });
+        // Log error for debugging
+       
       }
     );
   }
@@ -121,21 +113,13 @@ export class ShoppingCartComponent implements OnInit, OnDestroy {
   removeCartItem(productDtId: number): void {
     this.userService.removeCartItem(this.customerId!, productDtId, false).subscribe(
       () => {
-        Swal.fire({
-          icon: 'success',
-          title: 'Item Removed',
-          text: 'The item has been removed from your cart.',
-        });
+        
         this.loadCart();
         this.updateCartQuantity();
       },
       (error) => {
         console.error(error); // Log error for debugging
-        Swal.fire({
-          icon: 'error',
-          title: 'Remove Failed',
-          text: 'Error removing item. Please try again.',
-        });
+      
       }
     );
   }

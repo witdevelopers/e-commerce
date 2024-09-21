@@ -75,7 +75,7 @@ export class HomeComponent implements OnInit {
 
     this.userService.getBanners().subscribe(
       (res: any[]) => {
-        console.log('Response received from server:', res);
+       
 
         if (res && res.length > 0) {
           this.banners = res.map((banner) => {
@@ -85,14 +85,12 @@ export class HomeComponent implements OnInit {
             return banner;
           });
           this.isDataFetched = true;
-          console.log('Dynamic banners set:', this.banners);
         } else {
           this.isDataFetched = false;
-          console.log('No data found, falling back to static images.');
+         
         }
       },
       (error) => {
-        console.error('Error fetching banners:', error);
         this.isDataFetched = false;
       }
     );
@@ -100,15 +98,11 @@ export class HomeComponent implements OnInit {
 
   nextSlide(): void {
     const length = this.isDataFetched ? this.banners.length : this.staticBanners.length;
-    console.log('Current slide before next:', this.currentSlide);
     this.currentSlide = (this.currentSlide + 1) % length;
-    console.log('Next slide:', this.currentSlide);
   }
 
   prevSlide(): void {
     const length = this.isDataFetched ? this.banners.length : this.staticBanners.length;
-    console.log('Current slide before previous:', this.currentSlide);
     this.currentSlide = (this.currentSlide - 1 + length) % length;
-    console.log('Previous slide:', this.currentSlide);
   }
 }

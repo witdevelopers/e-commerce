@@ -41,7 +41,7 @@
         <div class="mobileIcon top">
           <i class="fa-regular fa-user"></i> <!-- Profile Icon -->
         </div>
-        <p style="font-weight: 500; font-size: 15px;">{{ isLoggedIn ? userName : '' }}</p>
+        <!-- <p style="font-weight: 500; font-size: 15px;"></p> -->
         <div class="downloadHoverBtnContainer">
           <a *ngIf="!isLoggedIn" [routerLink]="'/auth/signin'">
             <button class="downloadBtn">Sign In</button>

@@ -7,7 +7,6 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: "Quicksand", sans-serif;
 }
 
 body {
@@ -17,7 +16,7 @@ body {
   /* min-height: 100vh; */
   width: 100%;
   /* background: #222431; */
-  padding: 40px 20px;
+  padding: 20px 0px;
 }
 
 /* Snow */
@@ -181,6 +180,7 @@ label {
   background-color: #f6f6f6;
   cursor: pointer;
   transition: all 0.5s;
+  color: #000;
 }
 
 .login-btn:hover {
@@ -221,7 +221,7 @@ a:hover {
   main {
     grid-template-columns: 1fr;
     width: 100%;
-    padding: 20px;
+    /* padding: 20px; */
   }
 
   .left-side {

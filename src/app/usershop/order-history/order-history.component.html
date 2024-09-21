@@ -1,34 +1,20 @@
-<div class="order-history-container">
-    <h1>Order History</h1>
-
-    <div *ngIf="errorMessage" class="error-message">
-        {{ errorMessage }}
+<div *ngFor="let order of orderHistory" class="order-card">
+    <div class="order-header">
+        <span class="order-date">Order Date: {{ order.orderDate }}</span>
+        <span class="order-status">Status: {{ order.status }}</span>
     </div>
-
-    <div *ngIf="!errorMessage && orderHistory.length > 0">
-        <div *ngFor="let order of orderHistory" class="order-card">
-            <div class="order-header">
-                <span class="order-date">Order Date: {{ order.orderDate }}</span>
-                <span class="order-status">Status: {{ order.status }}</span>
-            </div>
-            <div class="order-details">
-                <!-- Placeholder for items. You may need to fetch items separately if they are not part of this data structure -->
-                <div class="order-item">
-                    <!-- Use placeholder values as you may need to adjust this based on actual data structure -->
-                    <img src="path-to-item-image.jpg" alt="Item">
-                    <div class="item-info">
-                        <h3>Product Name</h3>
-                        <p>Price: {{ order.orderAmount | currency }}</p>
-                    </div>
-                </div>
-            </div>
-            <div class="order-total">
-                <span>Total: {{ order.orderAmount | currency }}</span>
+    <div class="order-details">
+        <div *ngFor="let item of order.items" class="order-item">
+            <img [src]="item.image || 'path-to-fallback-image.jpg'" alt="{{ item.productName }}" class="product-image">
+            <div class="item-info">
+                <h3>{{ item.productName || 'Product name not available' }}</h3>
+                <p>Price: {{ item.price | currency: 'INR' }}</p>
+                <p>Quantity: {{ item.quantity }}</p>
             </div>
         </div>
     </div>
-
-    <div *ngIf="!errorMessage && orderHistory.length === 0">
-        <p>No orders found.</p>
+    <div class="order-total">
+        <span>Total: {{ order.orderAmount | currency: 'INR' }}</span>
     </div>
+    <button (click)="cancelOrder(order.id)">Cancel Order</button>
 </div>
