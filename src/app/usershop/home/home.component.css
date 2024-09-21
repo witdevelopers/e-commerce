@@ -1,28 +1,79 @@
+@keyframes cart {
+    0% {
+        left: -10%
+    }
+
+    40%,60% {
+        left: 50%
+    }
+
+    to {
+        left: 110%
+    }
+}
+
+@keyframes box {
+    0%,40% {
+        top: -20%
+    }
+
+    60% {
+        top: 40%;
+        left: 52%
+    }
+
+    to {
+        top: 40%;
+        left: 112%
+    }
+}
+
+@keyframes txt1 {
+    0% {
+        opacity: 1
+    }
+
+    20%,to {
+        opacity: 0
+    }
+}
+
+@keyframes txt2 {
+    0%,80% {
+        opacity: 0
+    }
+
+    to {
+        opacity: 1
+    }
+}
+
 .carousel {
     position: relative;
     width: 100%;
     max-width: 100%;
-    margin: auto;
     overflow: hidden;
-    margin-top: 20px;
+    margin: 20px auto auto
 }
 
 .carousel-inner {
     display: flex;
-    transition: transform .5s ease-in-out;
+    transition: transform .5s ease-in-out
+}
+
+*,.carousel-item {
+    box-sizing: border-box
 }
 
 .carousel-item {
-    min-width: 100%;
-    box-sizing: border-box;
-    /* margin-top: 20px; */
+    min-width: 100%
 }
 
 .carousel-item img {
     width: 100%;
     height: 30vh;
     display: block;
-    border-radius: 25px;
+    border-radius: 25px
 }
 
 .carousel-control {
@@ -31,164 +82,129 @@
     transform: translateY(-50%);
     background: 0 0;
     color: #fff;
-    border: none;
+    border: 0;
     font-size: 2em;
     cursor: pointer;
     padding: 0 10px;
-    z-index: 1;
+    z-index: 1
 }
 
 .carousel-control.prev {
-    left: 10px;
+    left: 10px
 }
 
 .carousel-control.next {
-    right: 10px;
+    right: 10px
 }
 
 * {
     padding: 0;
-    margin: 0;
-    box-sizing: border-box;
+    margin: 0
 }
 
 body {
-    font-family: Poppins, sans-serif;
-    /* min-height: 100vh; */
-    background: #ebe8ff;
+    font-family: Poppins,sans-serif;
+    background: #ebe8ff
 }
 
-h3, h5, h6 {
-    color: #000;
+h3,h5,h6 {
+    color: #000
 }
 
 a {
-    text-decoration: none;
+    text-decoration: none
 }
 
 .container {
-    max-width: 1180px;
-    margin-inline: auto;
-}
-
-@keyframes cart {
-    0% { left: -10%; }
-    40%, 60% { left: 50%; }
-    100% { left: 110%; }
-}
-
-@keyframes box {
-    0%, 40% { top: -20%; }
-    60% { top: 40%; left: 52%; }
-    100% { top: 40%; left: 112%; }
-}
-
-@keyframes txt1 {
-    0% { opacity: 1; }
-    100%, 20% { opacity: 0; }
-}
-
-@keyframes txt2 {
-    0%, 80% { opacity: 0; }
-    100% { opacity: 1; }
+    margin-inline: auto
 }
 
 img {
-    width: 100%;
+    width: 100%
 }
 
 .lowestpriceContainer {
     display: flex;
     margin: 50px auto;
-    max-width: 1100px;
+    max-width: 1100px
 }
 
 .lowestpriceContainer h1 {
     font-size: 40px;
     margin: 0;
-    color: #241f1f;
-}
-
-.lowestPrice_text {
-    /* width: 50%; */
-    padding: 25px 0 0 25px;
+    color: #241f1f
 }
 
 .lowestPrice_image {
-    width: 50%;
+    width: 50%
 }
 
 .lowestPrice_icon {
     width: 30px;
     border-radius: 40px;
-    background-color: #d5ebff;
+    background-color: #d5ebff
 }
 
 .lowestPriceWhay {
     display: flex;
-    /* height: 50px; */
-    margin: 20px 0;
+    margin: 20px 0
 }
 
 .lowestPriceItem {
     padding: 0 20px;
     width: 100%;
     display: flex;
-    align-items: center;
+    align-items: center
 }
 
 .lowestPriceItem p {
-    padding-left: 10px;
+    padding-left: 10px
 }
 
 .topCategoriesFrom {
     width: 1100px;
-    margin: auto;
+    margin: auto
 }
 
 .topCategoriesHeading {
     display: flex;
-    align-items: center;
+    align-items: center
 }
 
 .horizontalLine {
     padding: 1px;
     background-color: var(--hoverTextColor);
-    width: 50%;
+    width: 50%
 }
 
 .topCategoriesHeading h1 {
-    width: max-content;
     width: 1050px;
     color: #080808;
     font-size: 38px;
-    margin: 0;
+    margin: 0
 }
 
 .topCategoreisImage {
     width: 100%;
-    /* height: 500px; */
     background-image: url(https://images.meesho.com/images/marketing/1649759774600.jpg);
     background-repeat: no-repeat;
     margin-top: 50px;
     display: flex;
-    align-items: flex-end;
+    align-items: flex-end
 }
 
 .topCategoreisImage img {
     max-width: 300px;
     margin: 10px;
-    bottom: 0;
+    bottom: 0
 }
 
-/* .topCategoreisImage img:first-child {
-    max-width: 400px;
-} */
 .container {
     max-width: 1180px;
-    margin: 0 auto; /* Centers the container */
-    padding: 0 15px; /* Adds some horizontal padding */
+    margin: 0 auto;
+    padding: 0 15px
 }
+
 .essentialContaienr {
     width: 100%;
     height: auto;
@@ -198,32 +214,31 @@ img {
     background-repeat: no-repeat;
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: space-between
 }
 
 .essentialContaienr img {
-    max-width: 180px;
+    max-width: 180px
 }
 
 .essential_item {
     max-width: 250px;
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: center
 }
 
 .essen-btn {
-    /* margin-left: 100px; */
-    margin-top: 20px;
+    margin-top: 20px
 }
 
 .becomesellerBanner_Container {
     margin: 50px 0;
-    position: relative;
+    position: relative
 }
 
 .becomesellerBanner_Container img {
-    width: 100%;
+    width: 100%
 }
 
 .becomeSeller_Content {
@@ -231,61 +246,59 @@ img {
     top: 0;
     right: 0;
     width: 100%;
-    padding: 40px 0;
+    padding: 40px 0
 }
 
 .becomeSeller_content_content {
     display: flex;
     flex-direction: column;
-    align-items: flex-end;
+    align-items: flex-end
 }
 
 .becomeSeller_content_content h2 {
     color: #5585f8;
     font-size: 30px;
-    margin-bottom: 0;
+    margin-bottom: 0
 }
 
 .becomeSeller_content_content h1 {
     color: var(--hoverTextColor);
     font-size: 50px;
     width: 60%;
-    text-align: right;
+    text-align: right
 }
 
 .meeesho_benifit_image {
     width: 20px;
-    margin-right: 10px;
+    margin-right: 10px
 }
 
 .meesho_supper_benifit {
     display: flex;
     align-items: center;
     padding: 0 40px;
-    border-right: 2px solid #fff;
-    /* height: 25px; */
+    border-right: 2px solid #fff
 }
 
 .meesho_supper_benifit:first-child {
-    padding: 0;
-    padding-right: 40px;
+    padding: 0 40px 0 0
 }
 
 .meesho-suppliear_benifit_container {
     display: flex;
     align-items: center;
-    margin: 40px 0;
+    margin: 40px 0
 }
 
 .meesho_supper_container {
-    position: relative;
+    position: relative
 }
 
 .meesho_supper_container_content {
     position: absolute;
     top: 0;
     padding: 20px 30px;
-    color: #fff;
+    color: #fff
 }
 
 .signup_btn_now {
@@ -296,283 +309,272 @@ img {
     padding: 15px 20px;
     box-sizing: border-box;
     text-decoration: none;
-    border-radius: 5px;
+    border-radius: 5px
 }
-/* .flex{
-    display: none;
-    flex-direction: row;
-    justify-content: flex-start;
-    width: 20%;
-    margin: -20px 0 0 0;
-    flex-wrap: wrap;
-} */
 
-/* Responsive styles */
-@media (max-width: 480px) {
+@media (max-width:480px) {
     .lowestpriceContainer {
         flex-direction: column;
-        align-items: center;
-        /* gap: 115px; */
-    }
-    
-    .lowestpriceContainer h1 {
-        font-size: 24px;
+        align-items: center
     }
 
-    .lowestPrice_text {
-        padding: 15px;
+    .lowestpriceContainer h1,.topCategoriesHeading h1 {
+        font-size: 24px
     }
 
     .lowestPrice_image {
-        width: 100%;
+        width: 100%
     }
 
     .lowestPriceWhay {
-        flex-direction: column;
-        align-items: center;
+        align-items: center
     }
 
     .lowestPriceItem {
-        margin: 10px 0;
-    }
-
-    .topCategoriesHeading h1 {
-        font-size: 24px;
+        margin: 10px 0
     }
 
     .topCategoreisImage {
-        height: auto;
+        height: auto
     }
 
     .topCategoreisImage img {
-        max-width: 180px;
+        max-width: 180px
     }
 
     .essentialContaienr {
         height: auto;
-        /* flex-direction: column; */
-        align-items: center;
+        align-items: center
     }
 
     .essential_item img {
-        max-width: 150px;
+        max-width: 150px
     }
 
     .becomeSeller_Content h1 {
-        font-size: 28px;
+        font-size: 28px
     }
 
     .becomeSeller_Content h2 {
-        font-size: 22px;
+        font-size: 22px
     }
 
     .signup_btn_now {
         font-size: 16px;
-        padding: 10px 15px;
+        padding: 10px 15px
     }
+
     .meesho_supper_container_content {
         position: unset;
         top: 0;
         padding: 20px 30px;
-        color: #fff;
+        color: #fff
     }
-    .becomeSeller_Content{
+
+    .becomeSeller_Content {
         position: absolute;
         top: 0;
-        right: 30px !important;
-        width: 160% !important;
-        /* padding: -8px 0; */
+        right: 30px!important;
+        width: 160%!important
     }
-    .topCategoreisImage{
-        display: flex !important;
-        align-items: flex-end !important ;
-        flex-direction: row !important;
-        flex-wrap: wrap !important;
-        /* justify-content: center; */
+
+    .topCategoreisImage {
+        display: flex!important;
+        align-items: flex-end!important;
+        flex-direction: row!important;
+        flex-wrap: wrap!important
     }
+
     .carousel-item img {
         width: 100%;
-        height: 15vh !important;
-        display: block;
+        height: 15vh!important;
+        display: block
     }
-    .flex{
+
+    .flex {
         display: flex;
         flex-direction: row;
         justify-content: flex-start;
         width: 20%;
-        margin: -20px 0 0 0;
-        flex-wrap: wrap;
-        
+        margin: -20px 0 0;
+        flex-wrap: wrap
     }
 }
 
-@media (min-width: 576px) {
+@media (min-width:576px) {
     .lowestpriceContainer h1 {
-        font-size: 28px;
+        font-size: 28px
     }
 
     .topCategoriesHeading h1 {
-        font-size: 30px;
+        font-size: 30px
     }
 
-    .topCategoreisImage {
-        height: auto;
+    .essentialContaienr,.topCategoreisImage {
+        height: auto
     }
 
     .topCategoreisImage img {
-        max-width: 250px;
-    }
-
-    .essentialContaienr {
-        height: auto;
+        max-width: 250px
     }
 
     .essential_item img {
-        max-width: 160px;
+        max-width: 160px
     }
 
     .becomeSeller_Content h1 {
-        font-size: 36px;
+        font-size: 36px
     }
 
     .becomeSeller_Content h2 {
-        font-size: 26px;
+        font-size: 26px
     }
 
     .signup_btn_now {
         font-size: 18px;
-        padding: 12px 18px;
+        padding: 12px 18px
     }
+
     .meesho_supper_container_content {
         position: unset;
         top: 0;
         padding: 20px 30px;
-        color: #fff;
+        color: #fff
     }
-    .becomeSeller_Content{
+
+    .becomeSeller_Content {
         position: absolute;
         top: 0;
-        right: 30px !important;
-        width: 160% !important;
-        /* padding: -8px 0; */
+        right: 30px!important;
+        width: 160%!important
     }
+
     .carousel-item img {
         width: 100%;
-        height: 25vh !important;
-        display: block;
-    }
-    .topCategoreisImage{
-        display: flex !important;
-        align-items: flex-end !important ;
-        flex-direction: row !important;
-        flex-wrap: wrap !important;
-    }
-    .flex{ 
-        display: flex !important;
-        flex-direction: row !important;
-        justify-content: space-between !important;
-        width: 100% !important;
-    }
-}
-
-@media (min-width: 768px) {
-    .lowestpriceContainer {
-        flex-direction: row;
-    }
-    .carousel-item img {
-        width: 100%;
-        height: 30vh !important;
-        display: block;
+        height: 25vh!important;
+        display: block
     }
 
-    .lowestpriceContainer h1 {
-        font-size: 32px;
-    }
-
-    .topCategoriesHeading h1 {
-        font-size: 34px;
+    .flex,.topCategoreisImage {
+        display: flex!important;
+        flex-direction: row!important
     }
 
     .topCategoreisImage {
-        height: auto;
+        align-items: flex-end!important;
+        flex-wrap: wrap!important
+    }
+
+    .flex {
+        justify-content: space-between!important;
+        width: 100%!important
+    }
+}
+
+@media (min-width:768px) {
+    .lowestpriceContainer {
+        flex-direction: row
+    }
+
+    .carousel-item img {
+        width: 100%;
+        height: 30vh!important;
+        display: block
+    }
+
+    .lowestpriceContainer h1 {
+        font-size: 32px
+    }
+
+    .topCategoriesHeading h1 {
+        font-size: 34px
+    }
+
+    .essentialContaienr,.topCategoreisImage {
+        height: auto
     }
 
     .topCategoreisImage img {
-        max-width: 275px;
-    }
-
-    .essentialContaienr {
-        height: auto;
+        max-width: 275px
     }
 
     .essential_item img {
-        max-width: 180px;
+        max-width: 180px
     }
 
     .becomeSeller_Content h1 {
-        font-size: 40px;
+        font-size: 40px
     }
 
     .becomeSeller_Content h2 {
-        font-size: 28px;
+        font-size: 28px
     }
 
     .signup_btn_now {
         font-size: 20px;
-        padding: 15px 20px;
+        padding: 15px 20px
     }
+
     .meesho_supper_container_content {
         position: unset;
         top: 0;
         padding: 20px 30px;
-        color: #fff;
+        color: #fff
     }
-    .becomeSeller_Content{
+
+    .becomeSeller_Content {
         position: absolute;
         top: 0;
-        right: 30px !important;
-        width: 160% !important;
-        /* padding: -8px 0; */
+        right: 30px!important;
+        width: 160%!important
     }
-    .topCategoreisImage{
-        display: flex !important;
-        align-items: flex-end !important ;
-        flex-direction: row !important;
-        flex-wrap: wrap !important;
+
+    .topCategoreisImage {
+        display: flex!important;
+        align-items: flex-end!important;
+        flex-direction: row!important;
+        flex-wrap: wrap!important
     }
-    .flex{
+
+    .flex {
         display: flex;
         flex-direction: row;
         justify-content: flex-start;
         width: 20%;
-        margin: -20px 0 0 0;
-        flex-wrap: wrap;
-    }
-}
-@media (max-width: 480px) {
-    .container {
-        max-width: 100%; /* Full width on small screens */
-        padding: 0 10px; /* Reduced padding */
+        margin: -20px 0 0;
+        flex-wrap: wrap
     }
 }
 
-@media (min-width: 481px) and (max-width: 768px) {
+@media (max-width:480px) {
     .container {
-        max-width: 90%; /* Slightly reduced width on medium screens */
-        padding: 0 20px; /* Increased padding for better spacing */
+        max-width: 100%;
+        padding: 0 10px
     }
 }
 
-@media (min-width: 769px) and (max-width: 1024px) {
+@media (min-width:481px) and (max-width:768px) {
     .container {
-        max-width: 85%; /* Reduced width on larger screens */
-        padding: 0 30px; /* Increased padding */
+        max-width: 90%;
+        padding: 0 20px
     }
 }
 
-@media (min-width: 1025px) {
+@media (min-width:769px) and (max-width:1024px) {
     .container {
-        max-width: 1180px; /* Standard maximum width */
-        padding: 0 40px; /* Ample padding for larger screens */
+        max-width: 85%;
+        padding: 0 30px
     }
+}
+
+@media (min-width:1025px) {
+    .container {
+        max-width: 1180px;
+        padding: 0 40px
+    }
+}
+.lowestPrice_text{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }

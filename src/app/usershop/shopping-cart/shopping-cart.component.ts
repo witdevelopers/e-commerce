@@ -1,66 +1,54 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { UserService } from 'src/app/user/services/user.service';
 import Swal from 'sweetalert2';
 import { Router } from '@angular/router';
-import { Settings } from 'src/app/app-setting'; // Import the Settings class
+import { Settings } from 'src/app/app-setting'; 
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'app-shopping-cart',
   templateUrl: './shopping-cart.component.html',
   styleUrls: ['./shopping-cart.component.css']
 })
-export class ShoppingCartComponent implements OnInit {
+export class ShoppingCartComponent implements OnInit, OnDestroy {
   cartItems: any[] = [];
   summary: any = {};
   customerId: number | null = null;
-  imageBaseUrl: string = Settings.imageBaseUrl; // Use dynamic base URL from Settings
-  quantities: number[] = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+  imageBaseUrl: string = Settings.imageBaseUrl;
   userName: string;
   cartQuantity: number;
   isLoggedIn: boolean;
+  private unsubscribe$ = new Subject<void>();
 
-  constructor(private userService: UserService, private router: Router) {
-    // No need to set imageBaseUrl in constructor, it's already set statically
-  }
+  constructor(private userService: UserService, private router: Router) {}
 
   ngOnInit(): void {
     this.customerId = Number(sessionStorage.getItem('memberId')) || Number(localStorage.getItem('TempUserId'));
     if (this.customerId) {
       this.loadCart();
-    } 
-    else {
+      this.updateCartQuantity();
+    } else {
       this.router.navigate(['/auth/signin']);
     }
   }
 
+  ngOnDestroy(): void {
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
+  }
+
   updateCartQuantity(): void {
-    const sessionUserId = sessionStorage.getItem('memberId');
-    const tempUserId = localStorage.getItem('TempUserId');
-    
-    if (sessionUserId) {
-      // If userId is found in sessionStorage, consider the user logged in
-      this.isLoggedIn = true;
-      this.userName = sessionStorage.getItem('userId') || 'Profile';
-      
-      // Subscribe to cart quantity observable
-      this.userService.cartQuantity$.subscribe((quantity) => {
-        this.cartQuantity = quantity; // Automatically update the cart quantity
-      });
-  
-      // Initial cart quantity load from sessionStorage userId
-      this.userService.updateCartQuantity(Number(sessionUserId));
-    } else if (tempUserId) {
-      // If userId is found only in localStorage (guest/anonymous user), set isLoggedIn to false
-      this.isLoggedIn = false;
-  
-      // Subscribe to cart quantity observable for anonymous user
-      this.userService.cartQuantity$.subscribe((quantity) => {
-        this.cartQuantity = quantity;
-      });
-  
-      // Initial cart quantity load from localStorage (anonymous userId)
-      this.userService.updateCartQuantity(Number(tempUserId));
-    } 
+    const userId = sessionStorage.getItem('memberId') || localStorage.getItem('TempUserId');
+    this.isLoggedIn = !!sessionStorage.getItem('memberId');
+
+    this.userService.cartQuantity$.pipe(takeUntil(this.unsubscribe$)).subscribe((quantity) => {
+      this.cartQuantity = quantity; // Automatically update the cart quantity
+    });
+
+    if (userId) {
+      this.userService.updateCartQuantity(Number(userId));
+    }
   }
   
   loadCart(): void {
@@ -68,7 +56,7 @@ export class ShoppingCartComponent implements OnInit {
       (data) => {
         this.cartItems = data.items?.map((item: any) => ({
           ...item,
-          imageUrl: this.getImageUrl(item.imageUrl), // Dynamically construct the image URL
+          imageUrl: this.getImageUrl(item.imageUrl),
         })) || [];
 
         this.summary = {
@@ -77,6 +65,7 @@ export class ShoppingCartComponent implements OnInit {
         };
       },
       (error) => {
+        console.error(error); // Log error for debugging
         Swal.fire({
           icon: 'error',
           title: 'Error',
@@ -88,8 +77,8 @@ export class ShoppingCartComponent implements OnInit {
 
   getImageUrl(imagePath: string): string {
     return imagePath
-      ? `${this.imageBaseUrl}${imagePath.replace('~/', '')}` // Construct the full URL using dynamic base URL
-      : 'assets/default-image.jpg'; // Fallback image URL
+      ? `${this.imageBaseUrl}${imagePath.replace('~/', '')}`
+      : 'assets/default-image.jpg'; 
   }
 
   updateCartItem(productDtId: number, quantity: number): void {
@@ -119,6 +108,7 @@ export class ShoppingCartComponent implements OnInit {
         this.updateCartQuantity();
       },
       (error) => {
+        console.error(error); // Log error for debugging
         Swal.fire({
           icon: 'error',
           title: 'Update Failed',
@@ -140,6 +130,7 @@ export class ShoppingCartComponent implements OnInit {
         this.updateCartQuantity();
       },
       (error) => {
+        console.error(error); // Log error for debugging
         Swal.fire({
           icon: 'error',
           title: 'Remove Failed',
@@ -149,12 +140,23 @@ export class ShoppingCartComponent implements OnInit {
     );
   }
 
-  onQuantityChange(event: Event, productDtId: number): void {
-    const selectElement = event.target as HTMLSelectElement;
-    const selectedQuantity = Number(selectElement.value);
-
-    if (selectedQuantity > 0) {
-      this.updateCartItem(productDtId, selectedQuantity);
+  incrementQuantity(item: any): void {
+    if (item.quantity < 9) { // Assuming the max quantity is 9
+      item.quantity++;
+      this.updateCartItem(item.productDtId, item.quantity);
     }
+  }
+
+  decrementQuantity(item: any): void {
+    if (item.quantity > 1) { // Assuming the minimum quantity is 1
+      item.quantity--;
+      this.updateCartItem(item.productDtId, item.quantity);
+    } else {
+      this.removeCartItem(item.productDtId); // Remove item if quantity reaches 0
+    }
+  }
+
+  getTotalItems(): number {
+    return this.cartItems.reduce((total, item) => total + item.quantity, 0);
   }
 }

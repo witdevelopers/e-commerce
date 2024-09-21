@@ -1,45 +1,47 @@
 <header class="header" role="banner">
   <div class="headerLeft">
+    <button class="sidebarToggle" (click)="toggleSidebar()" aria-label="Toggle Sidebar">
+      <i class="fa-solid fa-bars"></i>
+    </button>
     <div class="logoContainer" [routerLink]="'/home'" role="link" aria-label="Home">
       <img src="assets/images/logo1.png" alt="Company Logo" />
     </div>
-    <button class="sidebarToggle" (click)="toggleSidebar()" aria-label="Toggle Sidebar">
-      <i class="fa-solid fa-bars"></i>
-    </button>    
-    <!-- Search box -->
-    <div class="searchInputContainer" role="search">
+  </div>
+  <div id="searchInputContainer" class="searchInputContainer" role="search">
+    <div class="searchBox">
+      <i class="fa-solid fa-magnifying-glass searchIcon" aria-hidden="true"></i>
       <input 
         type="text" 
         [(ngModel)]="searchTerm" 
         (input)="onSearch($event)" 
-        placeholder="Search..." 
+        placeholder="Search for products, brands and more" 
         aria-label="Search products" 
       />
       <div class="inputCloseSearch" *ngIf="searchTerm" (click)="clearSearch()" aria-label="Clear Search">
         <i class="fa-solid fa-xmark" aria-label="Close Search"></i>
       </div>
-
-      <div class="searchRecentModal" *ngIf="productByKeyword.length > 0" aria-live="polite">
-        <div class="listofRecent" *ngFor="let pbk of productByKeyword">
-          <h3 (click)="navigateToProduct(pbk.productId)">
-            {{ pbk.productName }}
-          </h3>
-        </div>
+    </div>
+    
+    <div class="searchRecentModal" *ngIf="productByKeyword.length > 0" aria-live="polite">
+      <div class="listofRecent" *ngFor="let pbk of productByKeyword">
+        <h3 (click)="navigateToProduct(pbk.productId)">
+          {{ pbk.productName }}
+        </h3>
       </div>
     </div>
   </div>
 
   <div class="headerRight">
     <div class="becomeSupplierContainer">
-      <p routerLink="/auth/signup">Ragister</p>
+      <p routerLink="/auth/signup">Register</p>
     </div>
 
     <div class="profileAndCart">
       <div class="downloadContainer">
         <div class="mobileIcon top">
-          <img src="assets/img/user.png" alt="User Icon" />
+          <i class="fa-regular fa-user"></i> <!-- Profile Icon -->
         </div>
-        <p style="font-weight: 500; font-size: 15px !important;">{{ isLoggedIn ? userName : 'Profile' }}</p>
+        <p style="font-weight: 500; font-size: 15px;">{{ isLoggedIn ? userName : '' }}</p>
         <div class="downloadHoverBtnContainer">
           <a *ngIf="!isLoggedIn" [routerLink]="'/auth/signin'">
             <button class="downloadBtn">Sign In</button>
@@ -56,38 +58,70 @@
 
     <div class="CartContainer" (click)="onAddToCart()" style="cursor: pointer;">
       <div class="CartIcon top">
-        <img src="assets/img/cart.png" alt="Cart Icon" />
+        <i class="fa-solid fa-cart-arrow-down"></i><!-- Cart Icon -->
         <div *ngIf="cartQuantity > 0" class="cart-quantity">{{ cartQuantity }}</div>
       </div>
     </div>
   </div>
 </header>
 
+<!-- Search Box Positioned Below Navbar -->
+<div id="searchInputContainerSmaller" class="searchInputContainer" role="search">
+  <div class="searchBox">
+    <i class="fa-solid fa-magnifying-glass searchIcon" aria-hidden="true"></i>
+    <input 
+      type="text" 
+      [(ngModel)]="searchTerm" 
+      (input)="onSearch($event)" 
+      placeholder="Search for products, brands and more" 
+      aria-label="Search products" 
+    />
+    <div class="inputCloseSearch" *ngIf="searchTerm" (click)="clearSearch()" aria-label="Clear Search">
+      <i class="fa-solid fa-xmark" aria-label="Close Search"></i>
+    </div>
+  </div>
+  
+  <div class="searchRecentModal" *ngIf="productByKeyword.length > 0" aria-live="polite">
+    <div class="listofRecent" *ngFor="let pbk of productByKeyword">
+      <h3 (click)="navigateToProduct(pbk.productId)">
+        {{ pbk.productName }}
+      </h3>
+    </div>
+  </div>
+</div>
+
 <!-- Sidebar Navigation -->
 <aside class="sidebar" [class.active]="isSidebarOpen" role="complementary">
   <button class="closeSidebar" (click)="toggleSidebar()" aria-label="Close Sidebar">
     <i class="fa-solid fa-xmark"></i>
   </button>
+  
   <ul class="list-group">
+    <!-- Home link with icon -->
+    <li class="headerName">
+      <div class="menuItem">
+        
+        <span><a [routerLink]="['/home']">Home</a></span>
+        <i class="fa-solid fa-house"></i> <!-- Home icon -->
+      </div>
+    </li>
+
     <li class="headerName" *ngFor="let c of mainCategory" (click)="toggleSubCategory(c.categoryID)">
-      {{ c.categoryName }}
+      <div class="menuItem">
+        <span>{{ c.categoryName }}</span>
+        <i class="fa-solid fa-chevron-down" [class.rotate]="isSubCategoryVisible[c.categoryID]"></i>
+      </div>
+
       <div class="subMenu" [class.show]="isSubCategoryVisible[c.categoryID]">
         <div *ngFor="let subcat of subCategory[c.categoryID]">
           <div class="submenuItem" (click)="toggleDropdown(subcat.categoryID); $event.stopPropagation()">
             <a [routerLink]="['/subcategory', subcat.categoryID]">{{ subcat.categoryName }}</a>
-            
-            <!-- <span *ngIf="subcat.subSubCategories?.length">▼</span> -->
           </div>
-          
         </div>
       </div>
     </li>
   </ul>
 </aside>
-
-
-
-
 
 
 

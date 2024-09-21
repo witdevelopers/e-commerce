@@ -1,65 +1,62 @@
-<body>
-  <main>
-    <div class="basket">
-      <div class="basket-labels">
-        <ul>
-          <li class="item item-heading">Item</li>
-          <li class="price">Price</li>
-          <li class="quantity">Quantity</li>
-          <li class="subtotal">Subtotal</li>
-        </ul>
+<div class="basket" *ngIf="cartItems.length > 0; else emptyCart">
+  <header class="basket-labels">
+    <ul>
+      <li class="item item-heading">Item</li>
+      <li class="price">Price</li>
+      <li class="quantity">Quantity</li>
+      <li class="subtotal">Subtotal</li>
+    </ul>
+  </header>
+
+  <!-- Loop through cartItems to display each item -->
+  <ng-container *ngFor="let item of cartItems">
+    <div class="basket-product">
+      <div class="item">
+        <div class="product-image">
+          <img [src]="item.imageUrl" [alt]="item.productName" class="product-frame" loading="lazy">
+        </div>
+        <div class="product-details">
+          <h1>
+            <strong>
+              <span class="item-quantity">{{ item.quantity }}</span> x {{ item.productName }}
+            </strong>
+          </h1>
+          <p><strong>{{ item.productAttributes }}</strong></p>
+        </div>
       </div>
-      
-      <!-- Loop through cartItems to display each item -->
-      <div *ngFor="let item of cartItems" class="basket-product">
-        <div class="item">
-          <div class="product-image">
-            <!-- Use the loading="lazy" attribute to defer image loading -->
-            <img [src]="item.imageUrl" [alt]="item.productName" class="product-frame" loading="lazy">
-          </div>
-          <div class="product-details">
-            <h1><strong><span class="item-quantity">{{ item.quantity }}</span> x {{ item.productName }}</strong></h1>
-            <p><strong>{{ item.productAttributes }}</strong></p>
-            <!-- <p>Product Code - {{ item.productDtId }}</p> -->
-          </div>
-        </div>
-        <div class="price">
-          <div class="original-price">{{ item.discountPrice | currency:'INR' }}</div>
-          <div class="discounted-price"><del>{{ item.price | currency:'INR' }}</del></div>
-        </div>
-        <div class="quantity">
-          <!-- Dropdown for quantity selection -->
-          <select [value]="item.quantity" (change)="onQuantityChange($event, item.productDtId)">
-            <option *ngFor="let qty of quantities" [value]="qty">{{ qty }}</option>
-          </select>
-        </div>
-        <div class="subtotal">{{ (item.discountPrice * item.quantity) | currency:'INR' }}</div>
-        <div class="remove">
-          <button (click)="removeCartItem(item.productDtId)">Remove</button>
-        </div>
+      <div class="price">{{ item.discountPrice | currency:'INR' }}</div>
+      <div class="quantity">
+        <button (click)="decrementQuantity(item)" class="quantity-button">-</button>
+        <span class="quantity-value">{{ item.quantity }}</span>
+        <button (click)="incrementQuantity(item)" class="quantity-button">+</button>
+      </div>
+      <div class="subtotal">{{ (item.discountPrice * item.quantity) | currency:'INR' }}</div>
+      <div class="remove">
+        <button  (click)="removeCartItem(item.productDtId)" class="remove-button">Remove</button>
       </div>
     </div>
-    
-    <aside>
-      <div class="summary">
-        <div class="summary-total">
-          <div class="total-title">Total</div>
-          <div class="total-value final-value" id="basket-total">
-            {{ summary.total | currency:'INR' }}
-          </div>
-        </div>
-        
-        <div class="summary-subtotal">
-          <div class="subtotal-title">Subtotal</div>
-          <div class="subtotal-value final-value" id="basket-subtotal">
-            {{ summary.subTotal | currency:'INR' }}
-          </div>
-        </div>
-        
-        <div class="summary-checkout">
-          <button class="checkout-cta" routerLink="/usershop/checkout">Go to Secure Checkout</button>
-        </div>
-      </div>
-    </aside>
-  </main>
-</body>
+  </ng-container>
+</div>
+
+<ng-template #emptyCart>
+  <div class="empty-cart">
+    <img src="assets/Shopimg/empty-cart.png" alt="Empty Cart" class="empty-cart-image">
+    <h2>Your cart is empty!</h2>
+    <button style=width:40%; class="checkout-cta" routerLink="/home">Shop Now</button>
+  </div>
+</ng-template>
+
+<aside class="summary" *ngIf="cartItems.length > 0">
+  <h2 class="summary-title">Order Summary</h2>
+  <div class="summary-total">
+    <div class="total-title">Total</div>
+    <div class="total-value final-value" id="basket-total">{{ summary.total | currency:'INR' }}</div>
+  </div>
+  <div class="summary-subtotal">
+    <div class="subtotal-title">Subtotal</div>
+    <div class="subtotal-value final-value" id="basket-subtotal">{{ summary.subTotal | currency:'INR' }}</div>
+  </div>
+  <div class="summary-checkout">
+    <button class="checkout-cta" routerLink="/usershop/checkout">Go to Secure Checkout</button>
+  </div>
+</aside>

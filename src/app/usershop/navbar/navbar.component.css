@@ -1,560 +1,261 @@
-/* General Styles */
-img {
-  width: 100%;
-  margin-top: 7px;
-}
+@keyframes slideIn {
+  0% {
+      opacity: 0;
+      transform: translateY(-10px)
+  }
 
-.header {
-  height: 72px;
-  padding: 0 10px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  background-color: #fff; /* Background for header */
-}
-
-.headerLeft,
-.headerRight {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.logoContainer {
-  width: 155px;
-}
-
-.inputCloseSearch {
-  margin-right: 13px;
-}
-
-.searchInputContainer {
-  width: 100%;
-  max-width: 400px;
-  height: 45px;
-  display: flex;
-  border-radius: 3px;
-  align-items: center;
-  position: relative;
-  border: 1px solid #ddd; /* Soft border color */
-}
-
-nav {
-  display: none; /* Default: hide the nav */
-}
-
-@media (min-width: 769px) { /* Show on larger screens */
-  nav {
-    display: block; /* Show the nav */
+  to {
+      opacity: 1;
+      transform: translateY(0)
   }
 }
 
-.searchIcon {
-  width: 20px;
-  margin: 6px;
+@keyframes spin {
+  0% {
+      transform: rotate(0)
+  }
+
+  to {
+      transform: rotate(360deg)
+  }
 }
 
-form {
-  width: 100%;
+.inputCloseSearch {
+  bottom: 50%;
+  transform: translateY(50%)
 }
 
-.inputSearch {
-  width: 100%;
-  border: none;
-  outline: none;
-  font-size: 16px;
-  padding: 5px; /* Padding for input */
+form,img,input {
+  width: 100%
 }
 
-.searchRecentModal {
-  position: absolute;
-  top: 100%;
+input,input:focus {
+  background-color: transparent!important;
+  border: 1px solid #ccc;
+  outline: 0;
+  color: #333;
+  font-size: 16px
+}
+
+.downloadBtn,.sidebar ul li a,nav ul {
+  color: #000
+}
+
+.subMenu,.subMenunormal {
   left: 0;
-  right: 0;
-  background-color: white;
-  max-height: 300px;
-  overflow-y: auto;
-  border-radius: 4px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  z-index: 10;
-  display: none;
-  transition: opacity 0.3s ease, visibility 0.3s ease;
+  box-shadow: 1px 1px 3px rgba(0,0,0,.3)
 }
 
-.searchInputContainer:focus-within .searchRecentModal {
-  display: block;
-  animation: fadeIn 0.3s ease; /* Fade-in effect */
+nav ul li.active,nav ul li:hover {
+  border-bottom: 4px solid var(--hoverTextColor)
 }
 
-.listofRecent {
-  padding: 10px;
-  cursor: pointer;
-  border-bottom: 1px solid #eee;
+@media (min-width:768px) {
+  .header {
+      flex-direction: row
+  }
+
+  .searchInputContainer {
+      display: flex;
+      align-items: center;
+      margin-left: auto
+  }
+}
+
+@media (max-width:767px) {
+  .searchInputContainer {
+      margin-top: 10px;
+      width: 100%
+  }
+}
+
+img {
+  margin-top: 7px
 }
 
 .listofRecent h3 {
-  margin: 0;
-  font-size: 16px;
-  font-weight: 100;
-  text-transform: lowercase;
-}
-
-.listofRecent:hover {
-  background-color: #f0f0f0;
-}
-
-/* Profile and Cart Section */
-.mobileIcon {
-  width: 15px;
-  margin: 9px;
-}
-
-.downloadContainer {
-  height: 100%;
-  position: relative;
-  padding: 0 20px;
-  display: flex;
-}
-
-.downloadBtn {
-  margin-top: 5px;
-  cursor: pointer;
-  font-size: 15px;
-  line-height: 20px;
-  border-radius: 4px;
-  color: #fff;
-  background: var(--hoverTextColor);
-  border: none;
-  padding: 12px;
-  display: block;
-  width: 100%;
-  transition: background 0.3s ease; /* Smooth background transition */
+  text-transform: lowercase
 }
 
 .downloadBtn:hover {
-  background: var(--hoverTextColorHover); /* Change color on hover */
+  background: var(--hoverTextColorHover);
+  border: 2px solid #a6a6c2;
+  color: #000;
+  background: 0 0
 }
 
-.submenuList a {
+.submenuList a,.submenuListnormal a {
   font-size: 17px;
   font-weight: 300;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
-  padding: 10px 20px;
-}
-.submenuListnormal a {
-  font-size: 17px;
-  font-weight: 300;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: flex-start;
-  padding: 10px 20px;
+  padding: 10px 20px
 }
 
-.downloadHoverBtnContainer {
-  position: absolute;
-  top: 40px;
-  width: 200px;
-  display: none;
-  height: 170px;
-  padding: 10px;
-  color: var(--textColor);
-  background: #f7f7f7e0;
-  z-index: 2;
-  right: -71px;
+#searchInputContainer,#searchInputContainerSmaller,nav {
+  display: none
 }
 
-.downloadContainer:hover .downloadHoverBtnContainer {
-  display: block !important;
-  z-index: 10;
-}
-
-.profileAndCart {
+input,nav ul li {
   display: flex;
   align-items: center;
-}
-
-.profileIcon,
-.CartIcon {
-  width: 20px;
-}
-
-.profileContainer,
-.CartContainer {
-  padding: 0 20px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 4px;
-}
-
-.becomeSupplierContainer {
-  padding: 0 30px;
-  border-left: 1.5px solid #ccc;
-  border-right: 1.5px solid #ccc;
-  font-size: 17px;
-}
-
-/* Navigation Styles */
-nav {
-  width: 100%;
-  border-bottom: 1px solid #ccc;
-  height: 54px;
-  background-color: #fff; /* Background for navigation */
-}
-
-nav ul {
-  color: black;
-  padding: 0;
-  list-style: none;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0 10%;
-  height: 100%;
-  margin: 0;
+  height: 100%
 }
 
 nav ul li {
-  height: 100%;
-  display: flex;
-  align-items: center;
   margin: 0;
-  border-bottom: 2px solid transparent;
+  border-bottom: 2px solid transparent
 }
 
-nav ul li:hover {
-  color: var(--hoverTextColor);
-  border-bottom: 4px solid var(--hoverTextColor);
+.headerLeft a:hover,.headerRight a:hover,nav ul li.active,nav ul li:hover {
+  color: var(--hoverTextColor)
 }
 
 .subMenunormal {
   position: absolute;
-  top: 135px;
-  left: 0;
+  top: 113px;
   right: 0;
-  background-color: white;
+  background-color: #fff;
   display: none;
   margin: 0 120px;
-  box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
-  z-index: 999;
+  z-index: 999
 }
 
-nav ul li:hover .subMenunormal {
-  display: block;
-}
-
-/* Sidebar Styles */
-.sidebar {
-  position: fixed;
-  left: -250px; /* Hidden by default */
-  top: 0;
-  width: 250px;
-  height: 100%;
-  background: white;
-  transition: left 0.3s ease, opacity 0.3s ease; /* Added opacity transition */
-  z-index: 1000;
-  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.5);
-  opacity: 0; /* Hidden by default */
-}
-
-.sidebar.active {
-  left: 0; /* Show the sidebar */
-  opacity: 1; /* Make it fully visible */
-}
-
-.closeSidebar {
-  background: none;
-  border: none;
-  font-size: 24px;
-  margin: 10px;
+li:hover .subMenu,nav ul li:hover .subMenu,nav ul li:hover .subMenunormal {
+  display: block
 }
 
 .sidebar ul {
   list-style-type: none;
   padding: 0;
+  margin-top: 90px
 }
 
 .sidebar ul li {
-  padding: 15px;
-  transition: background-color 0.3s ease; /* Smooth background transition */
+  transition: background-color .3s
 }
 
-
-.sidebar ul li a {
-  text-decoration: none;
-  color: black;
-}
-
-/* Media query for smaller devices */
-@media (min-width: 769px) {
-  .sidebar {
-    display: none !important; /* Hide the sidebar on larger screens */
-  }
-}
-
-/* Responsive Styles */
-@media (max-width: 768px) {
+@media (max-width:768px) {
   .header {
-    flex-direction: row;
+      flex-direction: row
   }
 
   .logoContainer {
-    width: 120px;
+      width: 120px
   }
 
   .searchInputContainer {
-    width: 100%;
-    margin-left: 10px;
+      width: 100%;
+      margin-left: 10px
   }
 
-  .downloadContainer,
-  .profileAndCart,
-  .becomeSupplierContainer {
-    padding: 0;
-    width: 100%;
-    justify-content: space-between;
+  .becomeSupplierContainer,.downloadContainer,.profileAndCart {
+      padding: 0;
+      width: 100%;
+      justify-content: space-between
   }
 
-  .downloadContainer:hover .downloadHoverBtnContainer,
-  .downloadContainer:focus .downloadHoverBtnContainer {
-    left: -100px;
-  }
-
-  .profileAndCart {
-    justify-content: space-between;
+  .downloadContainer:focus .downloadHoverBtnContainer,.downloadContainer:hover .downloadHoverBtnContainer {
+      left: -100px
   }
 
   .becomeSupplierContainer p {
-    display: none;
+      display: none
   }
 
   nav ul {
-    font-size: 10px;
-    grid-gap: 18px;
-    gap: 8px;
-    text-align: center;
-    margin: 0 0 0 -36px;
+      font-size: 10px;
+      grid-gap: 18px;
+      gap: 8px;
+      text-align: center;
+      margin: 0 0 0-36px
   }
 }
 
-@media (max-width: 480px) {
-  .searchInputContainer {
-    height: 35px;
-    padding: 5px;
-  }
-  .downloadContainer p{
-    display: none;
-  }
-
-  .inputSearch {
-    font-size: 14px;
-  }
+.header {
+  padding: 0 10px
 }
 
-a {
-  text-decoration: none;
+.inputCloseSearch i,.inputSearch,input {
+  font-size: 16px
 }
 
-.CartIcon {
-  position: relative;
-}
-
-.cart-quantity {
-  position: absolute;
-  top: -4px;
-  right: -14px;
-  background-color: red;
-  color: white;
-  border-radius: 50%;
-  padding: 2px;
-  font-size: 12px;
-  width: 20px;
-  height: 20px;
-  text-align: center;
+.sidebar ul li a,a {
+  text-decoration: none
 }
 
 input {
-  border: none !important;
-  width: 100%;
-  height: 38px;
-  display: flex;
-  border-radius: 3px;
-  align-items: center;
+  border: 0!important;
   position: relative;
-  background-color: transparent !important;
-}
-
-input:focus {
-  background-color: transparent !important;
-  outline: none !important;
-  border: none !important; /* Optionally remove the border when focused */
+  border-radius: 3px
 }
 
 header {
   padding-left: 20px;
-  padding-right: 20px;
-}
-.sidebarToggle {
-  display: block; /* Default: show the toggle on smaller devices */
-  background-color: transparent;
-  border: none;
-  font-size: 17px;
-}
-
-@media (min-width: 769px) { /* Hide on larger screens */
-  .sidebarToggle {
-    display: none; /* Hide the toggle on screens larger than 768px */
-  }
-}
-/* General Styles */
-img {
-  width: 100%;
-  margin-top: 7px;
+  padding-right: 20px
 }
 
 .header {
-  height: 72px;
-  padding: 0 10px;
+  height: 50px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background-color: #fff; /* Background for header */
+  background-color: #fff
 }
 
-.headerLeft,
-.headerRight {
+.headerLeft,.headerRight {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 10px
 }
 
 .logoContainer {
-  width: 155px;
-}
-
-.inputCloseSearch {
-  margin-right: 13px;
-}
-
-.searchInputContainer {
-  height: 45px;
-  display: flex;
-  border-radius: 3px;
-  align-items: center;
-  position: relative;
-  border: 1px solid #ddd; /* Soft border color */
-}
-
-nav {
-  display: none; /* Default: hide the nav */
-}
-
-@media (min-width: 769px) { /* Show on larger screens */
-  nav {
-    display: block; /* Show the nav */
-  }
+  width: 155px
 }
 
 .searchIcon {
   width: 20px;
-  margin: 6px;
-}
-
-form {
-  width: 100%;
+  margin: 6px
 }
 
 .inputSearch {
   width: 100%;
-  border: none;
-  outline: none;
-  font-size: 16px;
-  padding: 5px; /* Padding for input */
-}
-
-.searchRecentModal {
-  position: absolute;
-  top: 100%;
-  left: 0;
-  right: 0;
-  background-color: white;
-  max-height: 300px;
-  overflow-y: auto;
-  border-radius: 4px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  z-index: 10;
-  display: none;
-  transition: opacity 0.3s ease, visibility 0.3s ease;
+  border: 0;
+  outline: 0;
+  padding: 5px
 }
 
 .searchInputContainer:focus-within .searchRecentModal {
-  display: block;
-  animation: fadeIn 0.3s ease; /* Fade-in effect */
+  animation: .3s fadeIn
 }
 
-.listofRecent {
-  padding: 10px;
-  cursor: pointer;
-  border-bottom: 1px solid #eee;
-}
-
-.listofRecent h3 {
-  margin: 0;
-  font-size: 16px;
-  font-weight: 100;
-  text-transform: lowercase;
-}
-
-.listofRecent:hover {
-  background-color: #f0f0f0;
-}
-
-/* Profile and Cart Section */
 .mobileIcon {
   width: 15px;
-  margin: 9px;
+  margin: 9px
 }
 
 .downloadContainer {
   height: 100%;
   position: relative;
   padding: 0 20px;
-  display: flex;
+  display: flex
+}
+
+.downloadBtn,button {
+  cursor: pointer;
+  border: 0
 }
 
 .downloadBtn {
   margin-top: 5px;
-  cursor: pointer;
-  font-size: 15px;
   line-height: 20px;
   border-radius: 4px;
-  color: #000000;
   background: var(--hoverTextColor);
-  border: none;
-  padding: 12px;
   display: block;
   width: 100%;
-  transition: background 0.3s ease; /* Smooth background transition */
-}
-
-.downloadBtn:hover {
-  border: 2px solid rgb(166, 166, 194);
-  color: black;
-  background: transparent; /* Change color on hover */
-}
-
-.submenuListnormal a {
-  font-size: 17px;
-  font-weight: 300;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: flex-start;
-  padding: 10px 20px;
+  transition: background .3s
 }
 
 .downloadHoverBtnContainer {
@@ -567,580 +268,568 @@ form {
   color: var(--textColor);
   background: #f7f7f7e0;
   z-index: 2;
-  right: -71px;
+  right: -47px
 }
 
 .downloadContainer:hover .downloadHoverBtnContainer {
-  display: block !important;
-  z-index: 10;
+  display: block!important;
+  z-index: 10
 }
 
-.profileAndCart {
+.profileAndCart,nav ul {
   display: flex;
-  align-items: center;
+  align-items: center
 }
 
-.profileIcon,
-.CartIcon {
-  width: 20px;
+.CartIcon,.profileIcon {
+  width: 20px
 }
 
-.profileContainer,
-.CartContainer {
-  padding: 0 20px;
+.CartContainer,.profileContainer {
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 4px;
+  gap: 4px
 }
 
 .becomeSupplierContainer {
   padding: 0 30px;
   border-left: 1.5px solid #ccc;
   border-right: 1.5px solid #ccc;
-  font-size: 17px;
+  font-size: 17px
 }
 
-/* Navigation Styles */
 nav {
+  background-color: #fff;
   width: 100%;
   border-bottom: 1px solid #ccc;
-  height: 54px;
-  background-color: #fff; /* Background for navigation */
+  height: 54px
 }
 
 nav ul {
-  color: black;
-  padding: 0;
   list-style: none;
-  display: flex;
   justify-content: space-between;
-  align-items: center;
   padding: 0 10%;
   height: 100%;
-  margin: 0;
-}
-
-nav ul li {
-  height: 100%;
-  display: flex;
-  align-items: center;
-  margin: 0;
-  border-bottom: 2px solid transparent;
-}
-
-nav ul li:hover {
-  color: var(--hoverTextColor);
-  border-bottom: 4px solid var(--hoverTextColor);
+  margin: 0
 }
 
 .subMenu {
   position: absolute;
   top: 125px;
-  left: 0;
   right: 0;
-  background-color: white;
-  display: none;
   margin: 0 120px;
-  box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
-  z-index: 999;
-}
-
-nav ul li:hover .subMenu {
-  display: block;
-}
-
-/* Sidebar Styles */
-.sidebar {
-  position: fixed;
-  left: -250px; /* Hidden by default */
-  top: 0;
-  width: 250px;
-  height: 100%;
-  background: white;
-  transition: left 0.3s ease, opacity 0.3s ease; /* Added opacity transition */
-  z-index: 1000;
-  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.5);
-  opacity: 0; /* Hidden by default */
-}
-
-.sidebar.active {
-  left: 0; /* Show the sidebar */
-  opacity: 1; /* Make it fully visible */
+  z-index: 999
 }
 
 .closeSidebar {
-  background: none;
-  border: none;
   font-size: 24px;
-  margin: 10px;
+  margin: 10px
 }
 
-.sidebar ul {
-  list-style-type: none;
-  padding: 0;
-}
-
-.sidebar ul li {
-  padding: 15px;
-  transition: background-color 0.3s ease; /* Smooth background transition */
-}
-
-
-
-.sidebar ul li a {
-  text-decoration: none;
-  color: black;
-}
-
-/* Media query for smaller devices */
-@media (min-width: 769px) {
-  .sidebar {
-    display: none !important; /* Hide the sidebar on larger screens */
-  }
-}
-
-/* Responsive Styles */
-@media (max-width: 768px) {
+@media (max-width:768px) {
   .header {
-    flex-direction: row;
+      flex-direction: row
   }
 
   .logoContainer {
-    width: 120px;
+      width: 120px
   }
 
   .searchInputContainer {
-    width: 100%;
-    margin-left: 10px;
+      width: 100%;
+      margin-left: 10px
   }
 
-  .downloadContainer,
-  .profileAndCart,
-  .becomeSupplierContainer {
-    padding: 0;
-    width: 100%;
-    justify-content: space-between;
+  .becomeSupplierContainer,.downloadContainer,.profileAndCart {
+      padding: 0;
+      width: 100%;
+      justify-content: space-between
   }
 
-  .downloadContainer:hover .downloadHoverBtnContainer,
-  .downloadContainer:focus .downloadHoverBtnContainer {
-    left: -100px;
+  .downloadContainer:focus .downloadHoverBtnContainer,.downloadContainer:hover .downloadHoverBtnContainer {
+      left: -85px
   }
 
-  .profileAndCart {
-    justify-content: space-between;
+  .becomeSupplierContainer p,nav ul {
+      display: none
   }
 
-  .becomeSupplierContainer p {
-    display: none;
+  nav {
+      width: unset;
+      border-bottom: none;
+      height: unset
   }
-
-  nav ul {
-    font-size: 10px;
-    grid-gap: 18px;
-    gap: 8px;
-    text-align: center;
-    margin: 0 0 0 -36px;
-  }
-}
-
-@media (max-width: 480px) {
-  .searchInputContainer {
-    height: 35px;
-    padding: 5px;
-  }
-  .downloadContainer p{
-    display: none;
-  }
-
-  .inputSearch {
-    font-size: 14px;
-  }
-}
-
-a {
-  text-decoration: none;
 }
 
 .CartIcon {
-  position: relative;
+  position: relative
 }
 
 .cart-quantity {
   position: absolute;
-  top: -4px;
-  right: -14px;
-  background-color: red;
-  color: white;
+  top: -10px;
+  right: -15px;
   border-radius: 50%;
   padding: 2px;
   font-size: 12px;
   width: 20px;
   height: 20px;
-  text-align: center;
+  text-align: center
 }
 
-input {
-  border: none !important;
-  width: 100%;
-  height: 38px;
-  display: flex;
-  border-radius: 3px;
-  align-items: center;
-  position: relative;
-  background-color: transparent !important;
-}
-
-input:focus {
-  background-color: transparent !important;
-  outline: none !important;
-  border: none !important; /* Optionally remove the border when focused */
-}
-
-header {
-  padding-left: 20px;
-  padding-right: 20px;
-}
 .sidebarToggle {
-  display: block; /* Default: show the toggle on smaller devices */
+  display: block;
   background-color: transparent;
-  border: none;
-  font-size: 17px;
+  border: 0;
+  font-size: 17px
 }
 
-@media (min-width: 769px) { /* Hide on larger screens */
-  .sidebarToggle {
-    display: none; /* Hide the toggle on screens larger than 768px */
-  }
-}
 .searchInputContainer {
-  width: 100% !important;       /* Default: fill the available width */
-  max-width: 710px !important;  /* Maximum width for larger screens */
+  width: 100%!important;
+  max-width: 710px!important
 }
 
-/* For smaller screens (mobile devices) */
-@media (max-width: 768px) {
+@media (max-width:768px) {
   .searchInputContainer {
-      width: 90% !important;     /* Set a smaller width for mobile */
-      max-width: 500px !important; /* Adjust max width for mobile */
+      width: 90%!important;
+      max-width: 500px!important
+  }
+
+  input[type=text] {
+      padding-left: 40px!important;
+      height: 36px!important
   }
 }
 
-/* For larger screens */
-@media (min-width: 769px) {
-  .searchInputContainer {
-      width: 710px !important;    /* Set width for larger screens */
-  }
-}
-
-
-
-.dropdown {
-  padding-left: 20px; /* Indentation for dropdown items */
-  display: none; /* Initially hidden */
-}
-
-.dropdown.show {
-  display: block; /* Show when active */
-}
-
-.submenuItem {
-  cursor: pointer;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.submenuItem:hover {
-  background-color: #f0f0f0; /* Optional hover effect */
-}
-/* Sidebar Styles */
 .sidebar {
-  position: fixed;
-  left: -250px; /* Hidden by default */
   top: 0;
-  width: 250px;
-  height: 100%;
-  background: white;
-  transition: left 0.3s ease, opacity 0.3s ease; /* Added opacity transition */
-  z-index: 1000;
-  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.5);
-  opacity: 0; /* Hidden by default */
+  background: #fff;
+  opacity: 0
+}
+
+.headerName,.subMenu.show {
+  background: 0 0
 }
 
 .sidebar.active {
-  left: 0; /* Show the sidebar */
-  opacity: 1; /* Make it fully visible */
+  opacity: 1
 }
 
-.sidebar ul {
-  list-style-type: none;
-  padding: 0;
-}
-
-.sidebar ul li {
-  padding: 15px;
-  transition: background-color 0.3s ease; /* Smooth background transition */
-}
-
-
-
-/* Submenu Styles */
-.subMenu {
-  padding-left: 20px; /* Indentation for subcategories */
-  display: none; /* Initially hidden */
-}
-
-.subMenu.show {
-  display: block; /* Show when active */
-}
-
-/* Dropdown Styles */
 .dropdown {
-  padding-left: 20px; /* Indentation for dropdown items */
-  display: none; /* Initially hidden */
+  padding-left: 20px;
+  display: none
 }
 
 .dropdown.show {
-  display: block; /* Show when active */
+  display: block;
+  animation: .3s slideIn
 }
 
 .submenuItem {
   cursor: pointer;
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: center
 }
 
-.submenuItem:hover {
-  background-color: #f0f0f0; /* Optional hover effect */
-}
-/* Styles for smaller devices */
-@media (max-width: 1024px) { /* Tablets and small laptops */
+@media (max-width:1024px) {
   .subMenu {
-    position: static; /* Change to static positioning */
-    width: 100%; /* Full width for better accessibility */
-    margin: 0; /* Remove side margins */
-    box-shadow: none; /* Optionally remove the shadow */
-    display: none; /* Keep hidden initially */
+      position: static;
+      width: 100%;
+      margin: 0;
+      box-shadow: none;
+      display: none
   }
 
   nav ul li:hover .subMenu {
-    display: block; /* Show on hover for smaller screens */
+      display: block
   }
 }
 
-@media (max-width: 480px) { /* Mobile devices */
+@media (max-width:480px) {
+  .searchInputContainer {
+      height: 35px;
+      padding: 5px
+  }
+
+  .downloadContainer p {
+      display: none
+  }
+
+  .inputSearch {
+      font-size: 14px
+  }
+
   .subMenu {
-    /* Inherits styles from the previous queries */
-    padding: 10px; /* Optional padding for touch targets */
+      padding: 10px
   }
 
   nav ul li:hover .subMenu {
-    display: block; /* Show on hover/tap for mobile */
+      display: block
   }
 }
 
 .subMenu {
-  padding-left: 20px; /* Indentation for subcategories */
-  display: none; /* Initially hidden */
-  opacity: 0; /* Start hidden */
-  transition: opacity 0.3s ease !important; /* Smooth fade-in and fade-out */
+  transition: opacity .3s!important
 }
 
 .subMenu.show {
-  display: block; /* Show when active */
-  opacity: 1; /* Make it fully visible */
-  background: none;
-  width: unset;
-}
-/* Add a hover effect for the header links */
-.headerLeft a, .headerRight a {
-  color: #333; /* Default link color */
-  transition: color 0.3s ease; /* Smooth transition for hover effect */
+  width: unset
 }
 
-.headerLeft a:hover, .headerRight a:hover {
-  color: var(--hoverTextColor); /* Change color on hover */
+.headerLeft a,.headerRight a {
+  color: #333;
+  transition: color .3s
 }
 
-/* Active state for navigation items */
-nav ul li.active {
-  color: var(--hoverTextColor); /* Highlight active navigation item */
-  border-bottom: 4px solid var(--hoverTextColor); /* Active border */
-}
-
-/* Dropdown transition effects */
-.dropdown.show {
-  animation: slideIn 0.3s ease; /* Slide-in effect for dropdown */
-}
-
-@keyframes slideIn {
-  from {
-    opacity: 0;
-    transform: translateY(-10px); /* Slide in from above */
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-/* Responsive adjustments for buttons */
 .downloadBtn {
-  font-size: 14px; /* Adjust font size for smaller screens */
-  padding: 10px; /* Reduce padding */
+  font-size: 14px;
+  padding: 10px
 }
 
-/* Add focus styles for accessibility */
-input:focus {
-  border: 1px solid var(--hoverTextColor); /* Border color on focus */
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2); /* Subtle shadow effect */
-}
-
-/* Modal background styles */
-.searchRecentModal {
-  background-color: rgba(255, 255, 255, 0.95); /* Slightly transparent background */
-}
-
-/* Submenu item styles */
 .submenuItem {
-  padding: 10px 15px; /* Add padding for touch targets */
-  border-radius: 3px; /* Rounded corners */
+  border-radius: 3px
 }
 
 .submenuItem:hover {
-  background-color: rgba(240, 240, 240, 0.8); /* Light hover background */
+  background-color: rgba(240,240,240,.8)
 }
 
-/* Sidebar close button styling */
-.closeSidebar {
-  color: #333; /* Button color */
-  cursor: pointer; /* Pointer cursor */
-}
-
-/* Loading spinner for AJAX calls */
 .loadingSpinner {
-  border: 4px solid #f3f3f3; /* Light background */
-  border-top: 4px solid #3498db; /* Blue spinner */
-  border-radius: 50%; /* Round shape */
-  width: 30px; /* Size */
-  height: 30px; /* Size */
-  animation: spin 1s linear infinite; /* Spin animation */
+  border: 4px solid #f3f3f3;
+  border-top: 4px solid #3498db;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  animation: 1s linear infinite spin
 }
 
-@keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
-}
-
-/* General button styles */
 button {
-  cursor: pointer; /* Pointer cursor for buttons */
-  border: none; /* Remove border */
-  outline: none; /* Remove outline */
-}
-.subMenu {
-  display: none; /* Default: hidden */
+  outline: 0
 }
 
-li:hover .subMenu,
-.subMenu.show {
-  display: block; /* Show on hover or when explicitly set to show */
-}
-
-.headerName{
-  background: none;
-}
-
-/* Search Input Container */
 .searchInputContainer {
-  width: 100%;
-  max-width: 400px;
   height: 45px;
-  display: flex;
   margin-left: 25px;
   border-radius: 3px;
-  align-items: center;
-  position: relative;
-  border: 1px solid #ccc; /* Adjust border color */
+  border: 1px solid #ccc
 }
 
 .inputCloseSearch {
-  margin-right: 13px;
-  cursor: pointer;
+  margin-right: 13px
 }
 
-.inputCloseSearch i {
-  font-size: 16px; /* Adjust icon size */
-}
-
-/* Search Input */
-input {
-  border: none;
-  width: 100%;
-  height: 100%;
-  border-radius: 3px;
-  padding: 0 10px; /* Add some padding */
-  font-size: 16px; /* Adjust font size */
-}
-
-input:focus {
-  outline: none;
-}
-
-/* Recent Search Results */
-.searchRecentModal {
-  position: absolute;
-  top: 100%;
-  left: 0;
-  right: 0;
-  background-color: white;
-  max-height: 300px;
-  overflow-y: auto;
-  border-radius: 4px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  z-index: 10;
-  display: none; /* Hidden by default */
-}
-
-.searchInputContainer:focus-within .searchRecentModal,
 .searchInputContainer .searchRecentModal {
-  display: block; /* Show on input focus or when results are present */
+  display: block
 }
 
 .listofRecent {
-  padding: 10px;
-  cursor: pointer;
-  border-bottom: 1px solid #eee;
+  border-bottom: 1px solid #eee
+}
+
+@media (max-width:480px) {
+  .searchInputContainer {
+      height: 35px
+  }
+
+  input {
+      font-size: 14px
+  }
+}
+
+@media (min-width:769px) {
+  #searchInputContainer,nav {
+      display: block
+  }
+
+  .sidebar {
+      display: none!important
+  }
+
+  .sidebarToggle {
+      display: none
+  }
+
+  .searchInputContainer {
+      width: 710px!important
+  }
+}
+
+@media (max-width:768px) {
+  .searchInputContainer {
+      margin-left: 10px;
+      width: 100%;
+      margin-top: 10px
+  }
+
+  .header {
+      flex-direction: row
+  }
+
+  #searchInputContainerSmaller,nav {
+      display: block;
+      border-radius: 20px
+  }
+
+  .searchRecentModal {
+      background-color: #fff;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0,0,0,.2);
+      max-height: 300px;
+      overflow-y: auto;
+      padding: 10px;
+      margin-top: 5px;
+      z-index: 1000
+  }
+
+  .listofRecent {
+      padding: 8px 10px;
+      cursor: pointer;
+      transition: background-color .3s
+  }
+
+  .listofRecent:hover {
+      background-color: #f0f0f0
+  }
+
+  .listofRecent h3 {
+      margin: 0;
+      font-size: 14px;
+      font-weight: 400
+  }
+}
+
+.searchInputContainer {
+  display: flex;
+  align-items: center
+}
+
+.inputCloseSearch {
+  position: absolute;
+  right: 10px;
+  cursor: pointer
+}
+
+.searchBox {
+  position: relative;
+  display: flex;
+  align-items: center
+}
+
+.searchIcon {
+  position: absolute;
+  left: 10px;
+  color: #2874f0
+}
+
+input[type=text] {
+  padding-left: 50px;
+  width: 100%;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  height: 45px
+}
+
+.listofRecent:hover {
+  background-color: #f0f0f0
 }
 
 .listofRecent h3 {
   margin: 0;
-  font-size: 16px;
-  font-weight: 100;
-  text-transform: lowercase;
+  font-size: 14px;
+  font-weight: 400
 }
 
-.listofRecent:hover {
-  background-color: #f0f0f0; /* Highlight on hover */
+.searchInputContainer {
+  position: relative
 }
 
-/* Responsive Styles */
-@media (max-width: 768px) {
-  .searchInputContainer {
-    width: 100%;
-    margin-left: 10px;
+.listofRecent {
+  padding: 8px 10px;
+  cursor: pointer;
+  transition: background-color .3s
+}
+
+@media (max-width:768px) {
+  #searchInputContainerSmaller .searchBox {
+      border-radius: 20px
   }
 }
 
-@media (max-width: 480px) {
-  .searchInputContainer {
-    height: 35px;
-  }
+.searchInputContainer.searchRecentModal,.searchInputContainer:focus-within .searchRecentModal {
+  display: block
+}
 
-  input {
-    font-size: 14px; /* Adjust font size for smaller screens */
+.searchRecentModal {
+  display: none;
+  background-color: #fff;
+  border-radius: 0 0 10px 10px;
+  box-shadow: 0 4px 8px rgba(0,0,0,.2);
+  max-height: 300px;
+  overflow-y: auto;
+  padding: 10px;
+  position: absolute;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  margin-top: 0;
+  top: 100%;
+  transition: opacity .3s,visibility .3s
+}
+
+@media (max-width:768px) {
+  .searchRecentModal {
+      border-radius: 10px;
+      margin-top: 5px
   }
+}
+
+.closeSidebar {
+  background: 0 0;
+  border: 0;
+  font-size: 1.5rem;
+  color: #333;
+  cursor: pointer;
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  padding: 5px;
+  transition: color .3s ease
+}
+
+.closeSidebar:hover {
+  color: #ff4d4d
+}
+
+.menuItem span {
+  flex: 1;
+  font-size: 1rem;
+  font-weight: 500;
+  color: #333
+}
+
+.menuItem i {
+  transition: transform .3s ease
+}
+
+.subMenu {
+  display: none;
+  background-color: #f9f9f9
+}
+
+.subMenu.show {
+  display: block
+}
+
+.submenuItem a {
+  color: #fff;
+  text-decoration: none;
+  font-size: .9rem;
+  transition: color .3s ease
+}
+
+.submenuItem a:hover {
+  color: #ffeb3b;
+  text-decoration: underline
+}
+
+.sidebar.active,.subMenu.show {
+  transition: all .3s ease
+}
+
+.menuItem {
+  justify-content: space-between;
+  padding: 15px 20px;
+  cursor: pointer;
+  transition: background-color .3s ease
+}
+
+.sidebar i {
+  color: #3c7eaa!important;
+  font-size: 17px!important
+}
+
+.menuItem:hover {
+  background-color: #e0ebf5
+}
+
+.CartIcon i,.mobileIcon i,.searchBox i {
+  font-size: 17px
+}
+
+.submenuItem {
+  padding: 12px 0
+}
+
+.fa-chevron-down.rotate {
+  transform: rotate(180deg)
+}
+
+.sidebar::-webkit-scrollbar {
+  width: 8px
+}
+
+.sidebar::-webkit-scrollbar-thumb {
+  background-color: #ccc;
+  border-radius: 10px
+}
+
+.sidebar::-webkit-scrollbar-thumb:hover {
+  background-color: #888
+}
+
+.sidebar {
+  width: 300px;
+  background-color: #fff;
+  box-shadow: 2px 0 5px rgba(0,0,0,.1);
+  position: fixed;
+  left: -300px;
+  height: 100%;
+  overflow-y: scroll;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  transition: left .3s ease;
+  z-index: 9999
+}
+
+.sidebar::-webkit-scrollbar {
+  display: none
+}
+
+.sidebar.active {
+  left: 0
+}
+
+.subMenu {
+  background: linear-gradient(135deg,#00c6ff,#0072ff);
+  padding-left: 20px;
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  visibility: hidden;
+  border-radius: 0 0 10px 10px
+}
+
+.subMenu.show {
+  max-height: 500px;
+  opacity: 1;
+  visibility: visible
+}
+
+.menuItem a {
+  color: #333;
+  text-decoration: none;
+  display: block;
+  transition: background-color .3s
+}
+
+.menuItem {
+  display: flex;
+  align-items: center
+}
+
+.menuItem i {
+  margin-right: 10px;
+  color: #333
 }
