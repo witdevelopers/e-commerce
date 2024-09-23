@@ -103,7 +103,7 @@ export class CheckoutConfirmComponent implements OnInit {
       Swal.fire('Error', 'Please select a payment method');
       return;
     }
-
+  
     switch (this.selectedPaymentMethod) {
       case 'wallet':
         this.handleWalletPayment();
@@ -112,20 +112,20 @@ export class CheckoutConfirmComponent implements OnInit {
         this.handleCardPayment();
         break;
       case 'cod':
-        this.placeOrder(3);
+        this.placeOrder(3); // COD
         break;
       default:
         Swal.fire('Error', 'Invalid payment method selected');
     }
   }
-
+  
   handleWalletPayment(): void {
     if (this.walletBalance >= this.totalDiscountPrice) {
       const userId = sessionStorage.getItem("userId");
       this.userService.debitWallet(userId.toString(), this.totalDiscountPrice).subscribe(
         (response: any) => {
           if (response.success) {
-            this.placeOrder(1);
+            this.placeOrder(1); // Wallet payment
           } else {
             Swal.fire('Failed', 'Failed to deduct from wallet. Please try again.', 'error');
           }
@@ -138,7 +138,7 @@ export class CheckoutConfirmComponent implements OnInit {
       Swal.fire('Insufficient Balance', 'Your wallet balance is insufficient');
     }
   }
-
+  
   handleCardPayment(): void {
     Swal.fire({
       title: 'Enter Card Details',
