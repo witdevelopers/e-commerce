@@ -97,7 +97,6 @@ export class NavbarComponent implements OnInit, OnDestroy {
         this.mainCategory = res;
       },
       (error) => {
-        console.error('Error fetching main categories', error);
       }
     );
     this.updateCartQuantity(); // Ensure cart quantity is updated after fetching categories
@@ -111,7 +110,6 @@ export class NavbarComponent implements OnInit, OnDestroy {
           this.isSubCategoryVisible[parentCategoryId] = true; // Show subcategory after loading
         },
         (error) => {
-          console.error('Error fetching subcategories', error);
         }
       );
     } else {

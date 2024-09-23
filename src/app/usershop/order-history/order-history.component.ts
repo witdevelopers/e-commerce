@@ -19,11 +19,9 @@ export class OrderHistoryComponent implements OnInit {
     if (customerId) {
       this.userService.getOrderDetails(customerId).subscribe(
         (data) => {
-          console.log("Full order data: ", data); // Log the whole structure of the data
           this.orderHistory = data; // Bind the order history data
         },
         (error) => {
-          console.error('Error fetching customer details:', error);
           this.errorMessage = 'Failed to load order history. Please try again later.';
         }
       );
@@ -37,7 +35,6 @@ export class OrderHistoryComponent implements OnInit {
     Swal.fire({
       title: 'Are you sure?',
       text: "You won't be able to revert this!",
-      icon: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
@@ -46,20 +43,18 @@ export class OrderHistoryComponent implements OnInit {
       if (result.isConfirmed) {
         this.userService.cancelOrder(orderId).subscribe(
           (response) => {
-            console.log('Order canceled:', response);
             this.orderHistory = this.orderHistory.filter(order => order.id !== orderId);
             Swal.fire(
+              
               'Canceled!',
               'Your order has been canceled.',
               'success'
-            );
+                        );
           },
           (error) => {
-            console.error('Error canceling order:', error);
             Swal.fire(
-              'Error!',
-              'Failed to cancel order. Please try again later.',
-              'error'
+              'Failed',
+              'Please try again later.',
             );
           }
         );

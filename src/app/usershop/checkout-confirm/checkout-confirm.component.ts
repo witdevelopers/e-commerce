@@ -32,14 +32,14 @@ export class CheckoutConfirmComponent implements OnInit {
       this.getWalletBalance(this.memberId); // Fetch wallet balance
       this.getCartDetails(); // Fetch cart details
     } else {
-      Swal.fire('Error', 'No member ID found. Please log in again.', 'error');
+      Swal.fire('Error', 'No member ID found. Please log in again.');
     }
   }
 
   private retrieveAddressId(): void {
     this.selectedAddressId = this.userService.getSelectedAddressId();
     if (!this.selectedAddressId) {
-      Swal.fire('Error', 'No selected address ID found.', 'error');
+      Swal.fire('Error', 'No selected address ID found.');
     }
   }
 
@@ -47,8 +47,7 @@ export class CheckoutConfirmComponent implements OnInit {
     this.userService.getWalletBalance(walletId).subscribe(
       (data: any) => this.walletBalance = data.balance,
       (error) => {
-        console.error('Error fetching wallet balance:', error);
-        Swal.fire('Error', 'There was an error fetching wallet balance. Please try again later.', 'error');
+        Swal.fire('Error', 'There was an error fetching wallet balance. Please try again later.');
       }
     );
   }
@@ -76,12 +75,11 @@ export class CheckoutConfirmComponent implements OnInit {
           }
         },
         error => {
-          console.error('Error fetching cart details:', error);
-          Swal.fire('Error', 'There was an error fetching cart details. Please try again later.', 'error');
+          Swal.fire('Error', 'There was an error fetching cart details. Please try again later.');
         }
       );
     } else {
-      Swal.fire('Error', 'Customer ID is missing. Please log in and try again.', 'error');
+      Swal.fire('Error', 'Please log in and try again.');
     }
   }
 
@@ -98,7 +96,7 @@ export class CheckoutConfirmComponent implements OnInit {
 
   confirmCheckout(): void {
     if (!this.selectedPaymentMethod) {
-      Swal.fire('Error', 'Please select a payment method', 'error');
+      Swal.fire('Error', 'Please select a payment method');
       return;
     }
 
@@ -113,7 +111,7 @@ export class CheckoutConfirmComponent implements OnInit {
         this.placeOrder(3);
         break;
       default:
-        Swal.fire('Error', 'Invalid payment method selected', 'error');
+        Swal.fire('Error', 'Invalid payment method selected');
     }
   }
 
@@ -121,7 +119,7 @@ export class CheckoutConfirmComponent implements OnInit {
     if (this.walletBalance >= this.totalDiscountPrice) {
       this.placeOrder(1);
     } else {
-      Swal.fire('Insufficient Balance', 'Your wallet balance is insufficient', 'error');
+      Swal.fire('Insufficient Balance', 'Your wallet balance is insufficient');
     }
   }
 
@@ -156,12 +154,12 @@ export class CheckoutConfirmComponent implements OnInit {
 
   placeOrder(paymentMethod: number): void {
     if (this.isCartEmpty) {
-      Swal.fire('Error', 'Your cart is empty. Please add items to your cart before proceeding.', 'error');
+      Swal.fire('Error', 'Your cart is empty. Please add items to your cart before proceeding.');
       return;
     }
 
     if (!this.memberId) {
-      Swal.fire('Error', 'Member ID is missing. Please log in and try again.', 'error');
+      Swal.fire('Error', 'Member ID is missing. Please log in and try again.' );
       return;
     }
 
@@ -187,8 +185,7 @@ export class CheckoutConfirmComponent implements OnInit {
         this.router.navigate(['/usershop/order-invoice']);
       },
       (error) => {
-        console.error('Error placing order:', error);
-        Swal.fire('Error', 'There was an error placing the order. Please try again later.', 'error');
+        Swal.fire('We Found Some issue', 'Please try again.');
       }
     );
   }

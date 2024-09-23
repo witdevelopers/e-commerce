@@ -48,7 +48,7 @@ export class CheckoutComponent implements OnInit {
   selectedAddressId: number | null = null;
 
   constructor(private userService: UserService, private router: Router) {
-    // No need to set imageBaseUrl in constructor as it's already set statically
+
   }
 
   ngOnInit(): void {
@@ -119,7 +119,6 @@ export class CheckoutComponent implements OnInit {
           }
         },
         error => {
-          console.error('Error fetching cart details:', error);
           alert('There was an error fetching cart details. Please try again later.');
         }
       );
@@ -139,11 +138,10 @@ export class CheckoutComponent implements OnInit {
           this.showAddressForm = this.addresses.length === 0;
         },
         (error) => {
-          console.error('Error loading addresses:', error);
         }
       );
     } else {
-      alert('Customer ID is missing. Please log in and try again.');
+      alert('Customer is missing. Please log in and try again.');
     }
   }
 
@@ -159,16 +157,14 @@ export class CheckoutComponent implements OnInit {
     if (customerId) {
       this.userService.createAddress(this.newAddress).subscribe(
         response => {
-          console.log('Address created successfully:', response);
           this.loadAddresses();
         },
         error => {
-          console.error('Error creating address:', error);
           alert('There was an error creating the address. Please try again later.');
         }
       );
     } else {
-      alert('Customer ID is missing. Please log in and try again.');
+      alert('Customer is missing. Please log in and try again.');
     }
   }
 
@@ -192,12 +188,11 @@ export class CheckoutComponent implements OnInit {
           this.showAddressForm = false;
         },
         error => {
-          console.error('Error updating address:', error);
           alert('There was an error updating the address. Please try again later.');
         }
       );
     } else {
-      alert('Customer ID is missing. Please log in and try again.');
+      alert('Customer is missing. Please log in and try again.');
     }
   }
 
@@ -206,11 +201,9 @@ export class CheckoutComponent implements OnInit {
     if (confirm('Are you sure you want to delete this address?')) {
       this.userService.deleteAddress(customerId, addressId).subscribe(
         response => {
-          console.log('Address deleted successfully:', response);
           this.loadAddresses();
         },
         error => {
-          console.error('Error deleting address:', error);
           alert('There was an error deleting the address. Please try again later.');
         }
       );
@@ -238,7 +231,6 @@ export class CheckoutComponent implements OnInit {
         this.countries = countries;
       },
       error => {
-        console.error('Error fetching countries:', error);
         alert('There was an error fetching the country list. Please try again later.');
       }
     );

@@ -24,10 +24,8 @@ export class OrderInvoiceComponent implements OnInit {
     this.userService.getInvoiceByOrderNo().subscribe(
       (response) => {
         this.invoiceData = response;
-        console.log('Invoice data:', this.invoiceData);
       },
       (error) => {
-        console.error('Error fetching invoice:', error);
       }
     );
   }

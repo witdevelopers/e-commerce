@@ -65,12 +65,7 @@ export class ShoppingCartComponent implements OnInit, OnDestroy {
         };
       },
       (error) => {
-        console.error(error); // Log error for debugging
-        Swal.fire({
-          icon: 'error',
-          title: 'Error',
-          text: 'Failed to load cart data. Please try again later.',
-        });
+        
       }
     );
   }
@@ -83,11 +78,7 @@ export class ShoppingCartComponent implements OnInit, OnDestroy {
 
   updateCartItem(productDtId: number, quantity: number): void {
     if (quantity < 1) {
-      Swal.fire({
-        icon: 'warning',
-        title: 'Invalid Quantity',
-        text: 'Please enter a valid quantity.',
-      });
+     
       return;
     }
 

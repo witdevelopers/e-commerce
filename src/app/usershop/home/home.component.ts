@@ -71,8 +71,6 @@ export class HomeComponent implements OnInit {
   }
 
   loadBanners() {
-    console.log('Starting to load banners...');
-
     this.userService.getBanners().subscribe(
       (res: any[]) => {
        

@@ -108,7 +108,6 @@ export class ProductDetailsComponent implements OnInit {
       this.userService.getCart(+customerId).subscribe((response: any) => {
         this.isProductInCartFlag = response.items.some(item => item.productId === this.productId);
       }, (error) => {
-        console.error('Error fetching cart items:', error);
         this.isProductInCartFlag = false;  // Default to "not in cart" if there's an error
       });
     }
@@ -135,7 +134,6 @@ export class ProductDetailsComponent implements OnInit {
       
       this.loadRelatedProducts(this.singleProduct.categoryId);
     }, (error) => {
-      console.error('Error loading product details:', error);
     });
   }
 
@@ -178,19 +176,11 @@ export class ProductDetailsComponent implements OnInit {
       this.userService.addToCart(+customerId, productDtId, quantity).subscribe(
         () => {
           this.ngOnInit(); // Re-run the component initialization to update the cart status
-          Swal.fire({
-            icon: 'success',
-            title: 'Product added to cart successfully.',
-          });
-
           // Update the cart quantity after adding to cart
           this.updateCartQuantity();
         },
         () => {
-          Swal.fire({
-            icon: 'warning',
-            title: 'Product already in cart.',
-          });
+          
         }
       );
     }
