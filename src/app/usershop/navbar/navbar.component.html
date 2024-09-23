@@ -128,7 +128,7 @@
 <!-- Navigation -->
 <nav role="navigation">
   <ul>
-    <li *ngFor="let c of mainCategory" (click)="toggleSubCategory(c.categoryID)">
+    <li class="submenustyle" *ngFor="let c of mainCategory" (click)="toggleSubCategory(c.categoryID)">
       {{ c.categoryName }}
       <div class="subMenunormal" *ngIf="isSubCategoryVisible[c.categoryID]">
         <div class="submenuListnormal" *ngFor="let subcat of subCategory[c.categoryID]">

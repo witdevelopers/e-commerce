@@ -114,10 +114,7 @@ aside.filters h2 {
   align-items: center;
 }
 
-.card:hover {
-  transform: translateY(-10px); /* Slight lift on hover */
-  box-shadow: 0 8px 12px rgba(0, 0, 0, 0.15);
-}
+
 
 .card-image {
   width: 60%;

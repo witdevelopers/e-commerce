@@ -38,12 +38,15 @@ input,input:focus {
 }
 
 .downloadBtn,.sidebar ul li a,nav ul {
-  color: #000
+  color: #0d0d0dc4;
 }
-
+.submenustyle{
+  font-size: 1rem; 
+  font-weight: 500;
+}
 .subMenu,.subMenunormal {
   left: 0;
-  box-shadow: 1px 1px 3px rgba(0,0,0,.3)
+  box-shadow: 0 1px 2px 1px rgba(0,0,0,.16);
 }
 
 nav ul li.active,nav ul li:hover {
@@ -85,13 +88,19 @@ img {
 }
 
 .submenuList a,.submenuListnormal a {
-  font-size: 17px;
+  font-size: 15px;
   font-weight: 300;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
-  padding: 10px 20px
+  padding: 5px 38px
+}
+
+submenuListnormal a {
+  line-height: 1.45;
+  color: #878787 !important;
+
 }
 
 #searchInputContainer,#searchInputContainerSmaller,nav {
@@ -119,8 +128,8 @@ nav ul li {
   right: 0;
   background-color: #fff;
   display: none;
-  margin: 0 120px;
-  z-index: 999
+  margin: 0 80px;
+  z-index: 999;
 }
 
 li:hover .subMenu,nav ul li:hover .subMenu,nav ul li:hover .subMenunormal {
@@ -303,13 +312,14 @@ nav {
   background-color: #fff;
   width: 100%;
   border-bottom: 1px solid #ccc;
-  height: 54px
+  height: 54px;
+  padding: 0 5%;
 }
 
 nav ul {
   list-style: none;
   justify-content: space-between;
-  padding: 0 10%;
+  /* padding: 0 10%; */
   height: 100%;
   margin: 0
 }

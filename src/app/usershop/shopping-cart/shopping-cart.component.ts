@@ -50,7 +50,7 @@ export class ShoppingCartComponent implements OnInit, OnDestroy {
       this.userService.updateCartQuantity(Number(userId));
     }
   }
-  
+
   loadCart(): void {
     this.userService.getCart(this.customerId!).subscribe(
       (data) => {
@@ -65,7 +65,7 @@ export class ShoppingCartComponent implements OnInit, OnDestroy {
         };
       },
       (error) => {
-        
+        console.error(error); // Log error for debugging
       }
     );
   }
@@ -78,7 +78,6 @@ export class ShoppingCartComponent implements OnInit, OnDestroy {
 
   updateCartItem(productDtId: number, quantity: number): void {
     if (quantity < 1) {
-     
       return;
     }
 
@@ -90,13 +89,11 @@ export class ShoppingCartComponent implements OnInit, OnDestroy {
 
     this.userService.updateCart(cartData).subscribe(
       () => {
-        
         this.loadCart();
         this.updateCartQuantity();
       },
       (error) => {
-        // Log error for debugging
-       
+        console.error(error); // Log error for debugging
       }
     );
   }
@@ -104,13 +101,11 @@ export class ShoppingCartComponent implements OnInit, OnDestroy {
   removeCartItem(productDtId: number): void {
     this.userService.removeCartItem(this.customerId!, productDtId, false).subscribe(
       () => {
-        
         this.loadCart();
         this.updateCartQuantity();
       },
       (error) => {
         console.error(error); // Log error for debugging
-      
       }
     );
   }
@@ -133,5 +128,10 @@ export class ShoppingCartComponent implements OnInit, OnDestroy {
 
   getTotalItems(): number {
     return this.cartItems.reduce((total, item) => total + item.quantity, 0);
+  }
+
+  // Method to navigate to product details page
+  goToProductDetails(productId: number): void {
+    this.router.navigate(['/product', productId]); // Adjust the route as needed
   }
 }
