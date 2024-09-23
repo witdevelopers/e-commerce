@@ -1,10 +1,11 @@
 <div class="basket" *ngIf="cartItems.length > 0; else emptyCart">
   <header class="basket-labels">
     <ul>
-      <li class="item item-heading">Item</li>
-      <li class="price">Price</li>
-      <li class="quantity">Quantity</li>
-      <li class="subtotal">Subtotal</li>
+      <p class="item item-heading">Item</p>
+      <p class="quantity">Quantity</p>
+      <p class="price">Price</p>
+      <p class="subtotal">Subtotal</p>
+      <p class="quantity">Remove</p>
     </ul>
   </header>
 
@@ -24,15 +25,16 @@
           <p><strong>{{ item.productAttributes }}</strong></p>
         </div>
       </div>
-      <div class="price">{{ item.discountPrice | currency:'INR' }}</div>
       <div class="quantity">
         <button (click)="decrementQuantity(item)" class="quantity-button">-</button>
         <span class="quantity-value">{{ item.quantity }}</span>
         <button (click)="incrementQuantity(item)" class="quantity-button">+</button>
       </div>
+      <div class="price">{{ item.discountPrice | currency:'INR' }}</div>
       <div class="subtotal">{{ (item.discountPrice * item.quantity) | currency:'INR' }}</div>
+      
       <div class="remove">
-        <button (click)="removeCartItem(item.productDtId)" class="remove-button">Remove</button>
+        <button (click)="removeCartItem(item.productDtId)" class="remove-button"><i class="fa-solid fa-trash"></i></button>
       </div>
     </div>
   </ng-container>

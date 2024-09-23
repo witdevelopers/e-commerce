@@ -29,11 +29,11 @@
   border: 1px solid #f5c6cb;
 }
 
-.alert-info {
+/* .alert-info {
   background-color: #d1ecf1;
   color: #0c5460;
   border: 1px solid #bee5eb;
-}
+} */
 
 /* Order Card Styles */
 .order-card {
@@ -119,15 +119,16 @@
 
 .empty-cart {
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 20px;
-  text-align: center;
-  background-color: #f8f9fa; /* Light background color */
-  border: 1px solid #dee2e6; /* Light border */
-  border-radius: 8px; /* Rounded corners */
-  margin: 20px;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    padding: 7rem;
+    margin: 2rem auto;
+    max-width: 1000px;
 }
 
 .empty-cart-image {
