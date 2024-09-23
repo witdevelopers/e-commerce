@@ -70,22 +70,8 @@
     align-items: center;
 }
 
-/* Hover effect for card */
-.card:hover {
-   
-    transform: translateY(-5px);
-    animation: cardHover 0.3s ease;
-}
 
-/* Card Hover Animation */
-@keyframes cardHover {
-    from {
-        transform: translateY(-5px);
-    }
-    to {
-        transform: translateY(-10px);
-    }
-}
+
 
 /* Card Image */
 .card-image {
