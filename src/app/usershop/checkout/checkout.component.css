@@ -525,6 +525,9 @@ button:hover {
   .product_info h1 {
       font-size: 1rem
   }
+  .margin1{
+    margin: 0 0 0 -136px !important;
+  }
 }
 .proceed-payment {
   background-color: #6347c7; /* Same color as navbar */
@@ -601,4 +604,7 @@ button:hover {
   background-color: #e0e0e0; /* Disabled background */
   color: #a1a1a1; /* Disabled text color */
   cursor: not-allowed; /* Not-allowed cursor */
+}
+.margin1{
+  margin: 0 0 10px -265px;
 }
