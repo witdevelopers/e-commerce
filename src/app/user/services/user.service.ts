@@ -348,4 +348,22 @@ export class UserService {
     return this.http.post(`${this.apiBaseUrl}api/Shop/UpdateOrderStatus`, body);
   }
 
+  debitWallet(userId: string, amount: number): Observable<any> {
+    const requestBody = {
+      userId: userId,
+      walletType: 1,
+      type: 'Debit',
+      amount: amount,
+      remarks: 'order placed',
+      byAdminId: 0
+    };
+
+    return this.http.post(`${this.apiBaseUrl}api/Shop/CreditDebitWallet`, requestBody, {
+      headers: new HttpHeaders({
+        'Accept': '*/*',
+        'Content-Type': 'application/json-patch+json'
+      })
+    });
+  }
+
 }

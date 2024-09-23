@@ -54,7 +54,7 @@ export class CheckoutConfirmComponent implements OnInit {
         console.error('Error fetching wallet balance:', error); // Log the error for debugging
       }
     );
-}
+  }
 
   getCartDetails(): void {
     if (this.memberId) {
@@ -121,7 +121,19 @@ export class CheckoutConfirmComponent implements OnInit {
 
   handleWalletPayment(): void {
     if (this.walletBalance >= this.totalDiscountPrice) {
-      this.placeOrder(1);
+      const userId = sessionStorage.getItem("userId");
+      this.userService.debitWallet(userId.toString(), this.totalDiscountPrice).subscribe(
+        (response: any) => {
+          if (response.success) {
+            this.placeOrder(1);
+          } else {
+            Swal.fire('Failed', 'Failed to deduct from wallet. Please try again.', 'error');
+          }
+        },
+        (error) => {
+          Swal.fire('Error', 'An error occurred while processing your wallet deduction. Please try again.', 'error');
+        }
+      );
     } else {
       Swal.fire('Insufficient Balance', 'Your wallet balance is insufficient');
     }

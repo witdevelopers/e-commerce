@@ -116,3 +116,43 @@
     margin-bottom: 10px;
   }
 }
+
+.empty-cart {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  text-align: center;
+  background-color: #f8f9fa; /* Light background color */
+  border: 1px solid #dee2e6; /* Light border */
+  border-radius: 8px; /* Rounded corners */
+  margin: 20px;
+}
+
+.empty-cart-image {
+  width: 150px; /* Adjust size as needed */
+  height: auto;
+  margin-bottom: 20px; /* Space between image and text */
+}
+
+h2 {
+  font-size: 24px; /* Adjust font size as needed */
+  color: #343a40; /* Dark text color */
+  margin-bottom: 15px; /* Space between heading and button */
+}
+
+.checkout-cta.empty1 {
+  padding: 10px 20px; /* Button padding */
+  font-size: 16px; /* Font size */
+  color: #fff; /* White text color */
+  background-color: #007bff; /* Primary color */
+  border: none; /* Remove default border */
+  border-radius: 5px; /* Rounded corners */
+  cursor: pointer; /* Pointer on hover */
+  transition: background-color 0.3s; /* Smooth transition */
+}
+
+.checkout-cta.empty1:hover {
+  background-color: #0056b3; /* Darker shade on hover */
+}
