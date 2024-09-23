@@ -13,9 +13,9 @@
     <div class="basket-product">
       <div class="item">
         <div class="product-image">
-          <img [src]="item.imageUrl" [alt]="item.productName" class="product-frame" loading="lazy">
+          <img [src]="item.imageUrl" [alt]="item.productName" class="product-frame" loading="lazy" (click)="goToProductDetails(item.productDtId)">
         </div>
-        <div class="product-details">
+        <div class="product-details" (click)="goToProductDetails(item.productDtId)">
           <h1>
             <strong>
               <span class="item-quantity">{{ item.quantity }}</span> x {{ item.productName }}
@@ -32,7 +32,7 @@
       </div>
       <div class="subtotal">{{ (item.discountPrice * item.quantity) | currency:'INR' }}</div>
       <div class="remove">
-        <button  (click)="removeCartItem(item.productDtId)" class="remove-button">Remove</button>
+        <button (click)="removeCartItem(item.productDtId)" class="remove-button">Remove</button>
       </div>
     </div>
   </ng-container>

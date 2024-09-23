@@ -45,11 +45,8 @@ export class CheckoutComponent implements OnInit {
     Office: 2,
     Other: 3
   };
-  selectedAddressId: number | null = null;
 
-  constructor(private userService: UserService, private router: Router) {
-
-  }
+  constructor(private userService: UserService, private router: Router) { }
 
   ngOnInit(): void {
     this.getCartDetails();
@@ -104,11 +101,10 @@ export class CheckoutComponent implements OnInit {
           this.isCartEmpty = !this.cartDetails || this.cartDetails.items.length === 0;
   
           if (!this.isCartEmpty) {
-            this.cartDetails.items = this.cartDetails.items.map((item: any) => {
+            this.cartDetails.items.forEach((item: any) => {
               if (item.imageUrl && item.imageUrl.startsWith('~/')) {
                 item.imageUrl = this.getImageUrl(item.imageUrl); // Dynamically construct image URL
               }
-              return item;
             });
   
             this.totalCartPrice = this.cartDetails.items.reduce((sum: number, item: any) => sum + item.price * item.quantity, 0);
@@ -133,21 +129,16 @@ export class CheckoutComponent implements OnInit {
       this.userService.getAddressesByCustomerId(customerId).subscribe(
         (data: any[]) => {
           this.addresses = data;
-          this.selectedAddressId = null;
           this.isAddressSelected = false;
           this.showAddressForm = this.addresses.length === 0;
         },
         (error) => {
+          alert('There was an error fetching addresses. Please try again later.');
         }
       );
     } else {
       alert('Customer is missing. Please log in and try again.');
     }
-  }
-
-  onAddressTypeChange(event: any): void {
-    const addressType = event.target.value;
-    this.newAddress.addressType = this.addressTypeMapping[addressType] || 0;
   }
 
   createAddress(): void {
@@ -158,6 +149,7 @@ export class CheckoutComponent implements OnInit {
       this.userService.createAddress(this.newAddress).subscribe(
         response => {
           this.loadAddresses();
+          this.showAddressForm = false; // Hide form after creation
         },
         error => {
           alert('There was an error creating the address. Please try again later.');
@@ -181,7 +173,6 @@ export class CheckoutComponent implements OnInit {
     if (customerId) {
       this.userService.updateAddress(this.newAddress).subscribe(
         response => {
-          console.log('Address updated successfully:', response);
           this.loadAddresses();
           this.resetNewAddress();
           this.isEditMode = false;
@@ -219,7 +210,7 @@ export class CheckoutComponent implements OnInit {
   checkout(): void {
     if (this.selectedAddress) {
       console.log('Proceeding with checkout. Selected Address:', this.selectedAddress);
-      this.router.navigate(['/usershop/confirm']);
+      this.router.navigate(['/usershop/confirm']); // Adjust this path based on your routing setup
     } else {
       alert('Please select an address to proceed with checkout.');
     }
@@ -242,4 +233,10 @@ export class CheckoutComponent implements OnInit {
       ? `${this.imageBaseUrl}${imagePath.replace('~/', '')}`  // Construct full image URL using dynamic base URL
       : 'assets/default-image.jpg';  // Fallback image URL
   }
+  goToProductDetails(productId: number): void {
+    this.router.navigate(['/product', productId]).catch(err => {
+      console.error('Navigation error:', err);
+    });
+  }
+  
 }
