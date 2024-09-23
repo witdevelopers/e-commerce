@@ -329,5 +329,8 @@ export class UserService {
     return this.http.put(`${this.apiBaseUrl}api/Shop/shopping-cart-Customer/update`, body, { headers });
   }
 
+  getOrderdetailsByOrderid(orderId: string): Observable<any>{
+    return this.http.get(`${this.apiBaseUrl}api/Shop/invoicebyorderno?orderId=${orderId}`);
+  }
 
 }

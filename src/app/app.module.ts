@@ -61,6 +61,8 @@ import { OrderHistoryComponent } from './usershop/order-history/order-history.co
 import { CheckoutConfirmComponent } from './usershop/checkout-confirm/checkout-confirm.component';
 import { OrderInvoiceComponent } from './usershop/order-invoice/order-invoice.component';
 import { EncryptionService } from './usershop/encryption.service';
+import { OrderDetailsComponent } from './usershop/order-details/order-details.component';
+
 
 
 @NgModule({
@@ -109,8 +111,9 @@ import { EncryptionService } from './usershop/encryption.service';
     CheckoutComponent,
     OrderHistoryComponent,
     CheckoutConfirmComponent,
-    OrderInvoiceComponent
-
+    OrderInvoiceComponent,
+    OrderDetailsComponent,
+   
 
 
   ],

@@ -1,20 +1,20 @@
-<div *ngFor="let order of orderHistory" class="order-card">
-    <div class="order-header">
-        <span class="order-date">Order Date: {{ order.orderDate }}</span>
-        <span class="order-status">Status: {{ order.status }}</span>
+<div *ngFor="let order of orderHistory" class="order-card" (click)="showOrderDetails(order.id)">
+  <div class="order-header">
+    <span class="order-date">Order Date: {{ order.orderDate }}</span>
+    <span class="order-status">Status: {{ order.status }}</span>
+  </div>
+  <div class="order-details">
+    <div class="order-item">
+      <img [src]="order.imageUrl" alt="{{ order.productName }}" class="product-image">
+      <div class="item-info">
+        <h3>{{ order.productName }}</h3>
+        <p>Price: {{ order.orderAmount | currency: 'INR' }}</p>
+        <p>Payment Method: {{ order.paymentMethod }}</p>
+      </div>
     </div>
-    <div class="order-details">
-        <div *ngFor="let item of order.items" class="order-item">
-            <img [src]="item.image || 'path-to-fallback-image.jpg'" alt="{{ item.productName }}" class="product-image">
-            <div class="item-info">
-                <h3>{{ item.productName || 'Product name not available' }}</h3>
-                <p>Price: {{ item.price | currency: 'INR' }}</p>
-                <p>Quantity: {{ item.quantity }}</p>
-            </div>
-        </div>
-    </div>
-    <div class="order-total">
-        <span>Total: {{ order.orderAmount | currency: 'INR' }}</span>
-    </div>
-    <button (click)="cancelOrder(order.id)">Cancel Order</button>
+  </div>
+  <div class="order-total">
+    <span>Total: {{ order.orderAmount | currency: 'INR' }}</span>
+  </div>
+  <button (click)="cancelOrder(order.id)">Cancel Order</button>
 </div>

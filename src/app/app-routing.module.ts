@@ -304,6 +304,8 @@ import { OrderHistoryComponent } from './usershop/order-history/order-history.co
 import { CheckoutConfirmComponent } from './usershop/checkout-confirm/checkout-confirm.component';
 import { OrderInvoiceComponent } from './usershop/order-invoice/order-invoice.component';
 import { AuthGuard } from './usershop/auth.guard';
+import { OrderDetailsComponent } from './usershop/order-details/order-details.component';
+
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -322,6 +324,9 @@ const routes: Routes = [
       { path: 'confirm', component: CheckoutConfirmComponent },
       { path: 'order-invoice', component: OrderInvoiceComponent },
       { path: 'order-history', component: OrderHistoryComponent },
+      { path: 'order-details/:orderId', component: OrderDetailsComponent }
+
+      
     ],
   },
   {

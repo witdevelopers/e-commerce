@@ -29,7 +29,7 @@ export class CheckoutConfirmComponent implements OnInit {
     const memberId = sessionStorage.getItem('memberId'); // Retrieve memberId from sessionStorage
     if (memberId) {
       this.memberId = +memberId;
-      this.getWalletBalance(this.memberId); // Fetch wallet balance
+      this.getWalletBalance(1); // Fetch wallet balance
       this.getCartDetails(); // Fetch cart details
     } else {
       Swal.fire('Error', 'No member ID found. Please log in again.');
@@ -45,12 +45,16 @@ export class CheckoutConfirmComponent implements OnInit {
 
   getWalletBalance(walletId: number): void {
     this.userService.getWalletBalance(walletId).subscribe(
-      (data: any) => this.walletBalance = data.balance,
+      (data: any) => {
+        this.walletBalance = data.balance;
+        console.log('Fetched wallet balance:', this.walletBalance); // Log the fetched balance
+      },
       (error) => {
         Swal.fire('Error', 'There was an error fetching wallet balance. Please try again later.');
+        console.error('Error fetching wallet balance:', error); // Log the error for debugging
       }
     );
-  }
+}
 
   getCartDetails(): void {
     if (this.memberId) {
