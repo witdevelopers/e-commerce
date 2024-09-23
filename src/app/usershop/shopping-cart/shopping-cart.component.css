@@ -278,7 +278,7 @@ button:focus,button:hover {
 aside {
   padding: 0 1rem;
   float: right;
-  width: 20%
+  /* width: 20% */
 }
 
 .basket-labels {

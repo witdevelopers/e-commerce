@@ -57,7 +57,7 @@
       <div *ngIf="addresses.length > 0" class="address_cards">
         <div *ngFor="let address of addresses" class="address-card" [class.selected]="selectedAddress === address">
           <div class="address-details">
-            <input type="radio" name="address" [checked]="selectedAddress === address" (change)="selectAddress(address.addressId)">
+            <input class="margin1" type="radio" name="address" [checked]="selectedAddress === address" (change)="selectAddress(address.addressId)">
             <h5 class="addr">Saved Addresses</h5>
             <p class="addr">Name: {{ address.fullName }}</p>
             <p class="addr">Address: {{ address.addressType }}, {{ address.address1 }}, {{ address.cityName }}, {{ address.postalCode }}</p>

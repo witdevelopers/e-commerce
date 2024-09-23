@@ -38,15 +38,17 @@ input,input:focus {
 }
 
 .downloadBtn,.sidebar ul li a,nav ul {
-  color: #0d0d0dc4;
+  color: #0d0d0dc4
 }
-.submenustyle{
-  font-size: 1rem; 
-  font-weight: 500;
+
+.submenustyle {
+  font-size: 1rem;
+  font-weight: 500
 }
+
 .subMenu,.subMenunormal {
   left: 0;
-  box-shadow: 0 1px 2px 1px rgba(0,0,0,.16);
+  box-shadow: 0 1px 2px 1px rgba(0,0,0,.16)
 }
 
 nav ul li.active,nav ul li:hover {
@@ -99,8 +101,7 @@ img {
 
 submenuListnormal a {
   line-height: 1.45;
-  color: #878787 !important;
-
+  color: #878787!important
 }
 
 #searchInputContainer,#searchInputContainerSmaller,nav {
@@ -129,7 +130,7 @@ nav ul li {
   background-color: #fff;
   display: none;
   margin: 0 80px;
-  z-index: 999;
+  z-index: 999
 }
 
 li:hover .subMenu,nav ul li:hover .subMenu,nav ul li:hover .subMenunormal {
@@ -313,13 +314,12 @@ nav {
   width: 100%;
   border-bottom: 1px solid #ccc;
   height: 54px;
-  padding: 0 5%;
+  padding: 0 5%
 }
 
 nav ul {
   list-style: none;
   justify-content: space-between;
-  /* padding: 0 10%; */
   height: 100%;
   margin: 0
 }
@@ -539,9 +539,9 @@ button {
 }
 
 @media (max-width:480px) {
-  .searchInputContainer {
+  /* .searchInputContainer {
       height: 35px
-  }
+  } */
 
   input {
       font-size: 14px
@@ -568,9 +568,9 @@ button {
 
 @media (max-width:768px) {
   .searchInputContainer {
-      margin-left: 10px;
+      /* margin-left: 10px; */
       width: 100%;
-      margin-top: 10px
+      /* margin-top: 10px */
   }
 
   .header {
