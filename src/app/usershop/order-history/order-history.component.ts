@@ -2,7 +2,18 @@ import { Component, OnInit } from '@angular/core';
 import { UserService } from 'src/app/user/services/user.service';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
-import { Settings } from 'src/app/app-setting'; // Assuming Settings is your config for image URLs
+import { Settings } from 'src/app/app-setting';
+
+interface Order {
+  status: null;
+  id: number;
+  orderNo: string;
+  orderDate: string;
+  orderStatus: string;
+  orderAmount: number;
+  imageUrl: string;
+  // Add other properties as needed
+}
 
 @Component({
   selector: 'app-order-history',
@@ -10,50 +21,57 @@ import { Settings } from 'src/app/app-setting'; // Assuming Settings is your con
   styleUrls: ['./order-history.component.css']
 })
 export class OrderHistoryComponent implements OnInit {
-  orderHistory: any[] = [];
+  orderHistory: Order[] = [];
   errorMessage: string | null = null;
 
   constructor(private userService: UserService, private router: Router) {}
 
   ngOnInit(): void {
     const customerId = sessionStorage.getItem('memberId');
-    
+
     if (customerId) {
-      this.userService.getOrderDetails(customerId).subscribe(
-        (data) => {
-          this.orderHistory = data.map(order => ({
-            ...order,
-            imageUrl: this.processImageUrl(order.imageUrl)
-          }));
-          console.log("Order history data", this.orderHistory);
-        },
-        (error) => {
-          this.errorMessage = 'Failed to load order history. Please try again later.';
-        }
-      );
+      this.loadOrderHistory(customerId);
     } else {
       this.errorMessage = 'Please login to see your orders.';
     }
   }
 
-  processImageUrl(imageUrl: string): string {
-    return imageUrl
-      ? imageUrl.includes('~/')
-        ? imageUrl.replace('~/', Settings.imageBaseUrl)
-        : imageUrl.startsWith('http')
-          ? imageUrl
-          : `${Settings.imageBaseUrl}${imageUrl}`
-      : 'assets/default-image.jpg';
-  }
-
-  // Navigate to order details page
-  showOrderDetails(id: string) {
-    console.log("Navigating to order details for orderNo:", id);
-    this.router.navigate(['/usershop/order-details', id]); // Pass the actual orderNo here
+  private loadOrderHistory(customerId: string): void {
+    this.userService.getOrderDetails(customerId).subscribe(
+      (data: Order[]) => {
+        this.orderHistory = data
+          .filter(order => order.status !== 'Canceled' && order.status !== null) // Use 'status' instead of 'orderStatus'
+          .map(order => ({
+            ...order,
+            imageUrl: this.processImageUrl(order.imageUrl)
+          }));
+        console.log("Order history data", this.orderHistory);
+      },
+      () => {
+        this.errorMessage = 'Failed to load order history. Please try again later.';
+      }
+    );
   }
   
+  
+  
 
-  cancelOrder(id: number) {
+  private processImageUrl(imageUrl: string): string {
+    if (!imageUrl) {
+      return 'assets/default-image.jpg';
+    }
+    if (imageUrl.includes('~/')) {
+      return imageUrl.replace('~/', Settings.imageBaseUrl);
+    }
+    return imageUrl.startsWith('http') ? imageUrl : `${Settings.imageBaseUrl}${imageUrl}`;
+  }
+
+  showOrderDetails(id: number): void {
+    console.log("Navigating to order details for orderNo:", id);
+    this.router.navigate(['/usershop/order-details', id]);
+  }
+
+  cancelOrder(id: number): void {
     Swal.fire({
       title: 'Are you sure?',
       text: "You won't be able to revert this!",
@@ -63,21 +81,31 @@ export class OrderHistoryComponent implements OnInit {
       confirmButtonText: 'Yes, cancel it!'
     }).then((result) => {
       if (result.isConfirmed) {
-        this.userService.cancelOrder(id).subscribe(
-          (response) => {
-            this.orderHistory = this.orderHistory.filter(order => order.id !== id);
-            Swal.fire(
-              'Canceled!',
-              'Your order has been canceled.',
-              'success'
-            );
-          },
-          (error) => {
-            Swal.fire('Failed', 'Please try again later.');
-          }
-        );
+        this.performCancellation(id);
       }
     });
   }
-  
+
+  private performCancellation(orderId: number): void {
+    const orderStatus = 0; // Canceled order status
+    const modifiedBy = +sessionStorage.getItem('memberId');
+
+    this.userService.updateOrderStatus(orderId, orderStatus, modifiedBy).subscribe(
+      (response) => {
+        console.log('API Response:', response);
+
+        if (response.status === true) {
+          this.orderHistory = this.orderHistory.filter(order => order.id !== orderId);
+          Swal.fire('Canceled!', 'Your order has been canceled.', 'success');
+          const customerId = sessionStorage.getItem('memberId');
+          this.loadOrderHistory(customerId);
+        } else {
+          Swal.fire('Failed', 'Failed to cancel the order. Please try again.', 'error');
+        }
+      },
+      () => {
+        Swal.fire('Failed', 'Please try again later.', 'error');
+      }
+    );
+  }
 }

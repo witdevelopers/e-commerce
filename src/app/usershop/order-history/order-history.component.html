@@ -1,20 +1,23 @@
-<div *ngFor="let order of orderHistory" class="order-card" (click)="showOrderDetails(order.id)">
-  <div class="order-header">
-    <span class="order-date">Order Date: {{ order.orderDate }}</span>
-    <span class="order-status">Status: {{ order.status }}</span>
+<div class="order-history">
+  <h2>Your Order History</h2>
+  
+  <div *ngIf="errorMessage" class="alert alert-danger">
+    {{ errorMessage }}
   </div>
-  <div class="order-details">
-    <div class="order-item">
-      <img [src]="order.imageUrl" alt="{{ order.productName }}" class="product-image">
-      <div class="item-info">
-        <h3>{{ order.productName }}</h3>
-        <p>Price: {{ order.orderAmount | currency: 'INR' }}</p>
-        <p>Payment Method: {{ order.paymentMethod }}</p>
-      </div>
+
+  <div *ngIf="!errorMessage && orderHistory.length === 0" class="alert alert-info">
+    No orders found.
+  </div>
+
+  <div *ngFor="let order of orderHistory" class="order-card">
+    <img [src]="order.imageUrl" alt="Order Image" class="order-image" />
+    <div class="order-details">
+      <h3>Order No: {{ order.orderNo }}</h3>
+      <p>Order Date: {{ order.orderDate }}</p>
+      <p>Status: {{ order.orderStatus }}</p>
+      <p>Amount: ${{ order.orderAmount }}</p>
+      <button (click)="showOrderDetails(order.id)" class="btn btn-primary">View Details</button>
+      <button (click)="cancelOrder(order.id)" class="btn btn-danger">Cancel Order</button>
     </div>
   </div>
-  <div class="order-total">
-    <span>Total: {{ order.orderAmount | currency: 'INR' }}</span>
-  </div>
-  <button (click)="cancelOrder(order.id)">Cancel Order</button>
 </div>
