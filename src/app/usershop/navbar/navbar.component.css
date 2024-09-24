@@ -19,7 +19,9 @@
       transform: rotate(360deg)
   }
 }
-
+:host {
+  font-family: 'Inter', -apple-system, Helvetica, Arial, sans-serif;
+}
 .inputCloseSearch {
   bottom: 50%;
   transform: translateY(50%)
@@ -133,7 +135,7 @@ nav ul li {
   z-index: 999
 }
 
-li:hover .subMenu,nav ul li:hover .subMenu,nav ul li:hover .subMenunormal {
+li .subMenu,nav ul li .subMenu,nav ul li .subMenunormal {
   display: block
 }
 
@@ -756,8 +758,7 @@ input[type=text] {
 }
 
 .sidebar i {
-  color: #3c7eaa!important;
-  font-size: 17px!important
+  color: #27292bb4!important;
 }
 
 .menuItem:hover {
@@ -791,8 +792,8 @@ input[type=text] {
 
 .sidebar {
   width: 300px;
-  background-color: #fff;
-  box-shadow: 2px 0 5px rgba(0,0,0,.1);
+  background-color: #f2f6ff;
+  /* box-shadow: 2px 0 5px rgba(0,0,0,.1); */
   position: fixed;
   left: -300px;
   height: 100%;
@@ -842,4 +843,14 @@ input[type=text] {
 .menuItem i {
   margin-right: 10px;
   color: #333
+}
+.submenustyle i {
+  font-size: 9px;   /* Adjust the size of the icon */
+  color: #666;       /* Set the color of the icon */
+  margin: 2px 0 0 5px; /* Adds some space between the text and the icon */
+  transition: transform 0.3s ease; /* Smooth transition for rotation */
+}
+
+.submenustyle.open i {
+  transform: rotate(180deg) !important; /* Rotate the icon when submenu is open */
 }

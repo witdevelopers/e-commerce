@@ -1,11 +1,12 @@
 /* General Styles */
 body {
-    font-family: Arial, sans-serif;
     margin: 0;
     padding: 20px;
     background-color: #f9f9f9;
 }
-
+:host {
+    font-family: 'Inter', -apple-system, Helvetica, Arial, sans-serif;
+  }
 /* Container for the order details */
 .order-summary {
     background-color: #ffffff;

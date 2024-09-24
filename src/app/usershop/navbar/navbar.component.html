@@ -10,18 +10,13 @@
   <div id="searchInputContainer" class="searchInputContainer" role="search">
     <div class="searchBox">
       <i class="fa-solid fa-magnifying-glass searchIcon" aria-hidden="true"></i>
-      <input 
-        type="text" 
-        [(ngModel)]="searchTerm" 
-        (input)="onSearch($event)" 
-        placeholder="Search for products, brands and more" 
-        aria-label="Search products" 
-      />
+      <input type="text" [(ngModel)]="searchTerm" (input)="onSearch($event)"
+        placeholder="Search for products, brands and more" aria-label="Search products" />
       <div class="inputCloseSearch" *ngIf="searchTerm" (click)="clearSearch()" aria-label="Clear Search">
         <i class="fa-solid fa-xmark" aria-label="Close Search"></i>
       </div>
     </div>
-    
+
     <div class="searchRecentModal" *ngIf="productByKeyword.length > 0" aria-live="polite">
       <div class="listofRecent" *ngFor="let pbk of productByKeyword">
         <h3 (click)="navigateToProduct(pbk.productId)">
@@ -69,18 +64,13 @@
 <div id="searchInputContainerSmaller" class="searchInputContainer" role="search">
   <div class="searchBox">
     <i class="fa-solid fa-magnifying-glass searchIcon" aria-hidden="true"></i>
-    <input 
-      type="text" 
-      [(ngModel)]="searchTerm" 
-      (input)="onSearch($event)" 
-      placeholder="Search for products, brands and more" 
-      aria-label="Search products" 
-    />
+    <input type="text" [(ngModel)]="searchTerm" (input)="onSearch($event)"
+      placeholder="Search for products, brands and more" aria-label="Search products" />
     <div class="inputCloseSearch" *ngIf="searchTerm" (click)="clearSearch()" aria-label="Clear Search">
       <i class="fa-solid fa-xmark" aria-label="Close Search"></i>
     </div>
   </div>
-  
+
   <div class="searchRecentModal" *ngIf="productByKeyword.length > 0" aria-live="polite">
     <div class="listofRecent" *ngFor="let pbk of productByKeyword">
       <h3 (click)="navigateToProduct(pbk.productId)">
@@ -95,12 +85,12 @@
   <button class="closeSidebar" (click)="toggleSidebar()" aria-label="Close Sidebar">
     <i class="fa-solid fa-xmark"></i>
   </button>
-  
+
   <ul class="list-group">
     <!-- Home link with icon -->
     <li class="headerName">
       <div class="menuItem">
-        
+
         <span><a [routerLink]="['/home']">Home</a></span>
         <i class="fa-solid fa-house"></i> <!-- Home icon -->
       </div>
@@ -128,8 +118,9 @@
 <!-- Navigation -->
 <nav role="navigation">
   <ul>
-    <li class="submenustyle" *ngFor="let c of mainCategory" (click)="toggleSubCategory(c.categoryID)">
-      {{ c.categoryName }}
+    <li class="submenustyle" *ngFor="let c of mainCategory"  (click)="toggleSubCategory(c.categoryID)"
+      [ngClass]="{ 'open': isSubCategoryVisible[c.categoryID] }">
+      {{ c.categoryName }} <i class="fa-solid fa-angle-down"></i>
       <div class="subMenunormal" *ngIf="isSubCategoryVisible[c.categoryID]">
         <div class="submenuListnormal" *ngFor="let subcat of subCategory[c.categoryID]">
           <a [routerLink]="['/subcategory', subcat.categoryID]">{{ subcat.categoryName }}</a>

@@ -608,3 +608,6 @@ button:hover {
 .margin1{
   margin: 0 0 10px -265px;
 }
+:host {
+  font-family: 'Inter', -apple-system, Helvetica, Arial, sans-serif;
+}

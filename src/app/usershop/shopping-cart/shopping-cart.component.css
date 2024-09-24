@@ -786,7 +786,9 @@ aside {
       display: flex;
       justify-content: center
   }
-
+  :host {
+    font-family: 'Inter', -apple-system, Helvetica, Arial, sans-serif;
+  }
   .summary {
       width: 100%;
       margin-top: 1.5rem;

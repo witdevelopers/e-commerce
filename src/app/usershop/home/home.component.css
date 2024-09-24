@@ -11,6 +11,9 @@
         left: 110%
     }
 }
+:host {
+    font-family: 'Inter', -apple-system, Helvetica, Arial, sans-serif;
+  }
 
 @keyframes box {
     0%,40% {

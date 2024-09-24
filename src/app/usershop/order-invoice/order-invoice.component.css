@@ -10,7 +10,9 @@
     font-family: 'Arial', sans-serif;
     color: #333;
   }
-  
+  :host {
+    font-family: 'Inter', -apple-system, Helvetica, Arial, sans-serif;
+  }
   /* Headings */
   h2 {
     font-size: 28px;
