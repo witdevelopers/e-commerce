@@ -79,18 +79,5 @@ body {
     border-radius: 5px;
     cursor: pointer;
   }
-  
-  .faqs {
-    background-color: #fff;
-    padding: 20px;
-    border-radius: 5px;
-  }
-  
-  .faqs h3 {
-    margin-top: 0;
-  }
-  
-  .faqs p {
-    margin-bottom: 10px;
-  }
+
   

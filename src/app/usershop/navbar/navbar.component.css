@@ -45,7 +45,7 @@ input,input:focus {
 
 .submenustyle {
   font-size: 1rem;
-  font-weight: 500
+  font-weight: 700
 }
 
 .subMenu,.subMenunormal {
@@ -92,18 +92,19 @@ img {
 }
 
 .submenuList a,.submenuListnormal a {
-  font-size: 15px;
-  font-weight: 300;
+  font-size: 13px;
+  font-weight: 700;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
   padding: 5px 38px
+  
 }
 
 submenuListnormal a {
   line-height: 1.45;
-  color: #878787!important
+  color: #000000!important
 }
 
 #searchInputContainer,#searchInputContainerSmaller,nav {

@@ -317,6 +317,10 @@ const routes: Routes = [
   { path: 'product/:id', component: ProductDetailsComponent },
   { path: 'shopping-cart', component: ShoppingCartComponent },
   {
+     path: 'directs',
+     component: DirectsComponent,
+   },
+  {
     path: 'usershop',
     canActivate: [AuthGuard],
     children: [

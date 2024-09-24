@@ -34,7 +34,7 @@ export class UserService {
 
   directs() {
     return new Promise((resolve, reject) => {
-      this.http.get(this.apiBaseUrl + "DirectDetails").subscribe((res: any) => {
+      this.http.get(this.apiBaseUrl + "UserHome/DirectDetails").subscribe((res: any) => {
         resolve(res);
       });
     });
