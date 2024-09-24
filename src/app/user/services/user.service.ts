@@ -294,7 +294,7 @@ export class UserService {
 
   // Method to call the invoice API using orderId from session storage
   getInvoiceByOrderNo(): Observable<any> {
-    const orderId = sessionStorage.getItem('orderNo');  // Retrieve orderId from session storage
+    const orderId = sessionStorage.getItem('orderId');  // Retrieve orderId from session storage
     if (!orderId) {
       throw new Error('Order ID not found in session storage.');
     }

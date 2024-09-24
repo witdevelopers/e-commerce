@@ -187,14 +187,27 @@ export class CheckoutConfirmComponent implements OnInit {
     this.userService.createOrder(orderPayload).subscribe(
       (response: any) => {
         console.log("Create order response:", response);
-        Swal.fire('Order Placed', 'Your order has been placed successfully', 'success');
-        sessionStorage.setItem('orderNo', response.orderId);
-        this.router.navigate(['/usershop/order-invoice']);
+    
+        // Extract orderId from the response
+        const orderId = response?.response?.orderId;
+        console.log("Order ID from response", orderId);
+    
+        if (orderId) {
+          // Store the orderId in sessionStorage
+          sessionStorage.setItem('orderId', orderId);
+    
+          // Show a success message and navigate to the invoice page
+          Swal.fire('Order Placed', 'Your order has been placed successfully', 'success');
+          this.router.navigate(['/usershop/order-invoice']);
+        } else {
+          Swal.fire('Error', 'Order ID not found in the response', 'error');
+        }
       },
       (error) => {
         Swal.fire('We Found Some issue', 'Please try again.');
       }
     );
+    
   }
   
 
