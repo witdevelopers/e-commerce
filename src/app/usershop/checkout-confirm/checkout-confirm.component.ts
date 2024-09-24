@@ -106,13 +106,13 @@ export class CheckoutConfirmComponent implements OnInit {
   
     switch (this.selectedPaymentMethod) {
       case 'wallet':
-        this.handleWalletPayment();
+        this.handleWalletPayment();  // Wallet Payment with ID 1
         break;
       case 'credit-card':
-        this.handleCardPayment();
+        this.handleCardPayment();  // Credit Card Payment with ID 2
         break;
       case 'cod':
-        this.placeOrder(3); // COD
+        this.placeOrder(3);  // COD with ID 3
         break;
       default:
         Swal.fire('Error', 'Invalid payment method selected');
@@ -125,7 +125,7 @@ export class CheckoutConfirmComponent implements OnInit {
       this.userService.debitWallet(userId.toString(), this.totalDiscountPrice).subscribe(
         (response: any) => {
           if (response.success) {
-            this.placeOrder(1); // Wallet payment
+            this.placeOrder(1); // Wallet Payment Method ID is 1
           } else {
             Swal.fire('Failed', 'Failed to deduct from wallet. Please try again.', 'error');
           }
@@ -138,6 +138,7 @@ export class CheckoutConfirmComponent implements OnInit {
       Swal.fire('Insufficient Balance', 'Your wallet balance is insufficient');
     }
   }
+  
   
   handleCardPayment(): void {
     Swal.fire({
@@ -153,32 +154,33 @@ export class CheckoutConfirmComponent implements OnInit {
         const cardNumber = (document.getElementById('cardNumber') as HTMLInputElement).value;
         const expiryDate = (document.getElementById('expiryDate') as HTMLInputElement).value;
         const cvv = (document.getElementById('cvv') as HTMLInputElement).value;
-
+  
         if (!cardNumber || !expiryDate || !cvv) {
           Swal.showValidationMessage('Please enter all card details');
           return null;
         }
-
+  
         return { cardNumber, expiryDate, cvv };
       }
     }).then((result) => {
       if (result.isConfirmed) {
-        this.placeOrder(2);
+        this.placeOrder(2);  // Credit Card Payment Method ID is 2
       }
     });
   }
+  
 
   placeOrder(paymentMethod: number): void {
     if (this.isCartEmpty) {
       Swal.fire('Error', 'Your cart is empty. Please add items to your cart before proceeding.');
       return;
     }
-
+  
     if (!this.memberId) {
-      Swal.fire('Error', 'Member ID is missing. Please log in and try again.' );
+      Swal.fire('Error', 'Member ID is missing. Please log in and try again.');
       return;
     }
-
+  
     const orderPayload = {
       customerId: this.memberId,
       addressId: this.selectedAddressId,
@@ -187,13 +189,13 @@ export class CheckoutConfirmComponent implements OnInit {
         {
           orderNo: this.generateOrderId(),
           transactionId: new Date().getTime().toString(),
-          paymentMethodId: paymentMethod,
+          paymentMethodId: paymentMethod,  // Payment method ID passed dynamically
           amountPaid: this.totalDiscountPrice,
           onDate: new Date().toISOString()
         }
       ]
     };
-
+  
     this.userService.createOrder(orderPayload).subscribe(
       (response: any) => {
         Swal.fire('Order Placed', 'Your order has been placed successfully', 'success');
@@ -205,6 +207,7 @@ export class CheckoutConfirmComponent implements OnInit {
       }
     );
   }
+  
 
   generateOrderId(): string {
     return Math.floor(1000000000 + Math.random() * 9000000000).toString(); // Generates a 10-digit random number

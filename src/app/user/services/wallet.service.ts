@@ -23,7 +23,6 @@ export class WalletService {
 
   getBalance(walletId) {
     return new Promise((resolve, reject) => {
-
       this.http.get(this.apiBaseUrl + "getBalance?walletId="+walletId).subscribe((res: any) => {
         resolve(res);
       });
