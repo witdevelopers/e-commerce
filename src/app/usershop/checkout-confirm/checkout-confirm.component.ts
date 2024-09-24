@@ -112,45 +112,20 @@ export class CheckoutConfirmComponent implements OnInit {
         this.handleCardPayment();  // Credit Card Payment with ID 2
         break;
       case 'cod':
-        this.placeOrder(3);  // COD with ID 3
+        this.placeOrder(1);  // COD with ID 3
         break;
       default:
         Swal.fire('Error', 'Invalid payment method selected');
     }
   }
   
-  
   handleWalletPayment(): void {
     if (this.walletBalance >= this.totalDiscountPrice) {
-      const userId = sessionStorage.getItem("userId");
-  
-      // First, try placing the order, and then deduct from the wallet
-      this.placeOrder(1).then((orderResponse) => {
-        // Only after the order is placed successfully, deduct the wallet amount
-        if (orderResponse.success) {
-          this.userService.debitWallet(userId.toString(), this.totalDiscountPrice).subscribe(
-            (response: any) => {
-              if (response.success) {
-                Swal.fire('Success', 'Order placed and wallet debited successfully.', 'success');
-              } else {
-                Swal.fire('Failed', 'Failed to deduct from wallet. Please try again.', 'error');
-              }
-            },
-            (error) => {
-              Swal.fire('Error', 'An error occurred while processing your wallet deduction. Please try again.', 'error');
-            }
-          );
-        } else {
-          Swal.fire('Error', 'Order could not be placed. Wallet was not debited.', 'error');
-        }
-      }).catch((error) => {
-        Swal.fire('Error', 'Failed to place order. Wallet was not debited.', 'error');
-      });
+      this.placeOrder(2);
     } else {
       Swal.fire('Insufficient Balance', 'Your wallet balance is insufficient');
     }
   }
-  
   
   
   handleCardPayment(): void {
@@ -177,60 +152,52 @@ export class CheckoutConfirmComponent implements OnInit {
       }
     }).then((result) => {
       if (result.isConfirmed) {
-        this.placeOrder(2);  // Credit Card Payment Method ID is 2
+        this.placeOrder(3);  // Credit Card Payment Method ID is 2
       }
     });
   }
   
 
-  placeOrder(paymentMethod: number): Promise<any> {
-    return new Promise((resolve, reject) => {
-      if (this.isCartEmpty) {
-        Swal.fire('Error', 'Your cart is empty. Please add items to your cart before proceeding.');
-        reject({ success: false });
-        return;
-      }
+  placeOrder(paymentMethod: number): void {
+    if (this.isCartEmpty) {
+      Swal.fire('Error', 'Your cart is empty. Please add items to your cart before proceeding.');
+      return;
+    }
   
-      if (!this.memberId) {
-        Swal.fire('Error', 'Member ID is missing. Please log in and try again.');
-        reject({ success: false });
-        return;
-      }
+    if (!this.memberId) {
+      Swal.fire('Error', 'Member ID is missing. Please log in and try again.');
+      return;
+    }
   
-      const orderPayload = {
-        customerId: this.memberId,
-        addressId: this.selectedAddressId,
-        remarks: 'order',
-        orderPayments: [
-          {
-            orderNo: this.generateOrderId(),
-            transactionId: new Date().getTime().toString(),
-            paymentMethodId: paymentMethod,  // Payment method ID passed dynamically
-            amountPaid: this.totalDiscountPrice,
-            onDate: new Date().toISOString()
-          }
-        ]
-      };
-  
-      this.userService.createOrder(orderPayload).subscribe(
-        (response: any) => {
-          console.log("Create order response: ", response);
-          if (response.orderId) {
-            sessionStorage.setItem('orderNo', response.orderId);
-            resolve({ success: true, orderId: response.orderId });
-          } else {
-            reject({ success: false });
-          }
-        },
-        (error) => {
-          Swal.fire('We Found Some issue', 'Please try again.');
-          reject({ success: false });
+    const orderPayload = {
+      customerId: this.memberId,
+      addressId: this.selectedAddressId,
+      remarks: 'order',
+      orderPayments: [
+        {
+          orderNo: this.generateOrderId(),
+          transactionId: new Date().getTime().toString(),
+          paymentMethodId: paymentMethod,  // Payment method ID passed dynamically
+          amountPaid: this.totalDiscountPrice,
+          onDate: new Date().toISOString()
         }
-      );
-    });
+      ]
+    };
+  
+    this.userService.createOrder(orderPayload).subscribe(
+      (response: any) => {
+        console.log("Create order response:", response);
+        Swal.fire('Order Placed', 'Your order has been placed successfully', 'success');
+        sessionStorage.setItem('orderNo', response.orderId);
+        this.router.navigate(['/usershop/order-invoice']);
+      },
+      (error) => {
+        Swal.fire('We Found Some issue', 'Please try again.');
+      }
+    );
   }
   
-  
+
   generateOrderId(): string {
     return Math.floor(1000000000 + Math.random() * 9000000000).toString(); // Generates a 10-digit random number
   }
