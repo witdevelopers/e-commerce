@@ -1,1 +1,69 @@
-<p>shopping-profile works!</p>
+<div class="container">
+    <div class="sidebar">
+      <h3>Account Settings</h3>
+      <ul>
+        <li><a (click)="showSection('profile-info')">Profile Information</a></li>
+        <li><a (click)="showSection('manage-addresses')">Manage Addresses</a></li>
+        <li><a (click)="showSection('payments')">Payments</a></li>
+        <li><a href="#">Logout</a></li>
+      </ul>
+    </div>
+  
+    <div class="content">
+      <div id="profile-info" class="profile-info" [class.active]="activeSection === 'profile-info'">
+        <h1>Personal Information</h1>
+        <div>
+          <label for="firstName">First Name:</label>
+          <input type="text" id="firstName" value="Vikas">
+        </div>
+        <div>
+          <label for="lastName">Last Name:</label>
+          <input type="text" id="lastName" value="Vishwakarma">
+        </div>
+        <div>
+          <label>Gender:</label>
+          <input type="radio" id="male" name="gender" value="male">
+          <label for="male">Male</label>
+          <input type="radio" id="female" name="gender" value="female">
+          <label for="female">Female</label>
+        </div>
+        <div>
+          <label for="email">Email Address:</label>
+          <input type="email" id="email" value="rbsruss@gmail.com">
+        </div>
+        <div>
+          <label for="mobile">Mobile Number:</label>
+          <input type="tel" id="mobile" value="1234567890">
+        </div>
+        <button class="edit-button">Edit</button>
+      </div>
+  
+      <div id="manage-addresses" class="manage-addresses" [class.active]="activeSection === 'manage-addresses'">
+        <h1>Manage Addresses</h1>
+        <p>Your address management options go here.</p>
+      </div>
+  
+      <div id="pan-card" class="pan-card" [class.active]="activeSection === 'pan-card'">
+        <h1>PAN Card Information</h1>
+        <p>Your PAN card information goes here.</p>
+      </div>
+  
+      <div id="payments" class="payments" [class.active]="activeSection === 'payments'">
+        <h1>Payments</h1>
+        <p>Your payment details go here.</p>
+      </div>
+  
+      <div id="my-stuff" class="my-stuff" [class.active]="activeSection === 'my-stuff'">
+        <h1>My Stuff</h1>
+        <p>Details about your saved items go here.</p>
+      </div>
+  
+      <div class="faqs">
+        <h3>Frequently Asked Questions</h3>
+        <p>What is Lorem Ipsum?</p>
+        <p>Why do we use it?</p>
+        <p>How can I get some?</p>
+      </div>
+    </div>
+  </div>
+  

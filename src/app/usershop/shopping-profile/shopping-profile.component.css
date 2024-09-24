@@ -1,0 +1,96 @@
+/* Basic styling - customize as needed */
+body {
+    font-family: sans-serif;
+    margin: 0;
+  }
+  
+  .container {
+    display: flex;
+  }
+  
+  .sidebar {
+    width: 250px;
+    background-color: #f1f1f1;
+    padding: 20px;
+    border-right: 1px solid #ddd;
+  }
+  
+  .sidebar h3 {
+    margin-top: 0;
+  }
+  
+  .sidebar ul {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .sidebar li {
+    margin-bottom: 10px;
+  }
+  
+  .sidebar a {
+    text-decoration: none;
+    color: #333;
+    cursor: pointer;
+  }
+  
+  .content {
+    padding: 20px;
+    flex: 1;
+  }
+  
+  .profile-info, .manage-addresses, .pan-card, .payments, .my-stuff {
+    display: none; /* Hide all sections initially */
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+  }
+  
+  .active {
+    display: block; /* Show active section */
+  }
+  
+  .profile-info h2, .manage-addresses h2, .pan-card h2, .payments h2, .my-stuff h2 {
+    margin-top: 0;
+  }
+  
+  .profile-info input[type="text"],
+  .profile-info input[type="email"],
+  .profile-info input[type="tel"] {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+    margin-bottom: 10px;
+  }
+  
+  .profile-info label {
+    display: block;
+    margin-bottom: 5px;
+  }
+  
+  .profile-info .edit-button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .faqs {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 5px;
+  }
+  
+  .faqs h3 {
+    margin-top: 0;
+  }
+  
+  .faqs p {
+    margin-bottom: 10px;
+  }
+  

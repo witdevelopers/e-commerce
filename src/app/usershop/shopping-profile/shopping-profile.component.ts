@@ -6,10 +6,14 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./shopping-profile.component.css']
 })
 export class ShoppingProfileComponent implements OnInit {
+  activeSection = 'profile-info'; // Default active section
 
   constructor() { }
 
   ngOnInit(): void {
   }
 
+  showSection(sectionId: string) {
+    this.activeSection = sectionId; // Set the active section
+  }
 }
