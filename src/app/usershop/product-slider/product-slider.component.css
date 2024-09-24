@@ -12,7 +12,9 @@
     border-bottom: 2px solid #ddd;
     margin-bottom: 20px;
 }
-
+:host {
+    font-family: 'Inter', -apple-system, Helvetica, Arial, sans-serif;
+  }
 /* Product Grid */
 .product-grid {
     display: flex;

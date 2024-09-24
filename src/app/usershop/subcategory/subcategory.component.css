@@ -124,7 +124,9 @@ aside.filters h2 {
   border-radius: 12px;
   margin-top: 10px;
 }
-
+:host {
+  font-family: 'Inter', -apple-system, Helvetica, Arial, sans-serif;
+}
 /* Card Content */
 .card-content {
   padding: 5px;

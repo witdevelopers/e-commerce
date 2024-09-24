@@ -1,3 +1,6 @@
+:host {
+  font-family: 'Inter', -apple-system, Helvetica, Arial, sans-serif;
+}
 /* Container Styles */
 .order-history {
   padding: 20px;
