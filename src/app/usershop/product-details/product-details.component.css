@@ -610,19 +610,6 @@ p {
   
 }
 
-@media (max-width:1024px) {
-  .related-products-container {
-      
-  }
-}
-
-@media (max-width:768px) {
-  .related-products-container {
-      
-  }
-  
-}
-
 @media (max-width:480px) {
   .related-products-container {
       

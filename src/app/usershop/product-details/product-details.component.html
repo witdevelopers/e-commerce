@@ -29,8 +29,14 @@
         <br>
         <hr>
         <br>
-        <div class="price"> MRP:<p id="price">₹ {{ singleProductDetails[0]?.discountPrice }}</p>
+        <div class="price">
+          MRP: <p id="price">₹ {{ singleProductDetails[0]?.discountPrice }}</p> 
+          <del><p id="price">₹ {{ singleProductDetails[0]?.price }}</p></del>
+          <p *ngIf="singleProductDetails[0]?.price && singleProductDetails[0]?.discountPrice">
+            ({{ calculateDiscountPercentage(singleProductDetails[0]?.price, singleProductDetails[0]?.discountPrice) }}% OFF)
+          </p>
         </div>
+        
         <p>(Inclusive of all taxes)</p>
 
         <div class="cart-button-gap">
@@ -43,8 +49,6 @@
           <button class="cart-button" (click)="buyNow()">Buy Now</button>
         </div>
       </div>
-
-
     </div>
   </section>
   <div class="select-items">

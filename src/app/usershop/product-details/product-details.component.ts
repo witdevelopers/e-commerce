@@ -207,4 +207,12 @@ export class ProductDetailsComponent implements OnInit {
       });
     });
   }
+
+  calculateDiscountPercentage(price: number, discountPrice: number): number {
+    if (price && discountPrice && price > discountPrice) {
+      return Math.round(((price - discountPrice) / price) * 100);
+    }
+    return 0; // Return 0 if there's no discount
+  }
+  
 }
