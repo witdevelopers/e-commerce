@@ -64,7 +64,6 @@ import { EncryptionService } from './usershop/encryption.service';
 import { OrderDetailsComponent } from './usershop/order-details/order-details.component';
 
 
-
 @NgModule({
   declarations: [
     AppComponent,
@@ -113,6 +112,7 @@ import { OrderDetailsComponent } from './usershop/order-details/order-details.co
     CheckoutConfirmComponent,
     OrderInvoiceComponent,
     OrderDetailsComponent,
+
    
 
 

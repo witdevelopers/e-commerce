@@ -1,3 +1,5 @@
+<body>
+
 <div *ngIf="orderDetails; else noData">
   <h2>Order Details for Order No: {{ orderDetails?.order?.orderNo }}</h2>
 
@@ -41,3 +43,5 @@
 <ng-template #noData>
   <p *ngIf="errorMessage">{{ errorMessage }}</p>
 </ng-template>
+  
+</body>

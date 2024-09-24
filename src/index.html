@@ -1,11 +1,11 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
-  <meta charset="utf-8">
+  <meta charset="utf-8" />
   <title>WIT</title>
-  <base href="/">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <base href="/" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <!-- <link rel="icon" type="image/x-icon" href="favicon.ico">
   <link rel="preconnect" href="https://fonts.gstatic.com">
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
@@ -35,47 +35,44 @@
     crossorigin="anonymous" referrerpolicy="no-referrer" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
   <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet"> -->
-<!-- In index.html -->
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+  <!-- In index.html -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet" />
   <!-- ===========================================Shoping project ================================================= -->
-  <link rel="stylesheet"href="https://unpkg.com/swiper@8/swiper-bundle.min.css"/>
+  <link rel="stylesheet" href="https://unpkg.com/swiper@8/swiper-bundle.min.css" />
   <script src="https://unpkg.com/swiper@8/swiper-bundle.min.js"></script>
   <!-- ===========================================Swiper=========================================================== -->
-  <link rel="icon" type="image/x-icon" href="assets/Shopimg/wit.png">
+  <link rel="icon" type="image/x-icon" href="assets/Shopimg/wit.png" />
   <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
-  crossorigin="anonymous"></script>
-<script src="https://code.jquery.com/ui/1.13.0/jquery-ui.js"
-  integrity="sha256-xH4q8N0pEzrZMaRmd7gQVcTZiFei+HfRTBPJ1OGXC0k=" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"
-  integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns"
-  crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/latest/TweenMax.min.js"></script>
+    crossorigin="anonymous"></script>
+  <script src="https://code.jquery.com/ui/1.13.0/jquery-ui.js"
+    integrity="sha256-xH4q8N0pEzrZMaRmd7gQVcTZiFei+HfRTBPJ1OGXC0k=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns"
+    crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/latest/TweenMax.min.js"></script>
 
-  <link rel="shortcut icon" href="./assest/fabicon.png" type="image/x-icon">
+  <link rel="shortcut icon" href="./assest/fabicon.png" type="image/x-icon" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
     integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
     crossorigin="anonymous" referrerpolicy="no-referrer" />
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Mukta:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet"
-    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@48,400,0,0" />
-
-
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Mukta:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@48,400,0,0" />
 
   <script>
-
     function CopyToClipboard(containerid) {
       if (window.getSelection) {
-        if (window.getSelection().empty) { // Chrome
+        if (window.getSelection().empty) {
+          // Chrome
           window.getSelection().empty();
-        }
-        else if (window.getSelection().removeAllRanges) { // Firefox
+        } else if (window.getSelection().removeAllRanges) {
+          // Firefox
           window.getSelection().removeAllRanges();
         }
-      }
-      else if (document.selection) { // IE?
+      } else if (document.selection) {
+        // IE?
         document.selection.empty();
       }
 
@@ -84,38 +81,33 @@
         range.moveToElementText(document.getElementById(containerid));
         range.select().createTextRange();
         document.execCommand("copy");
-      }
-      else if (window.getSelection) {
+      } else if (window.getSelection) {
         var range = document.createRange();
         range.selectNode(document.getElementById(containerid));
         window.getSelection().addRange(range);
         document.execCommand("copy");
       }
 
-      toastr.success('Copied!');
+      toastr.success("Copied!");
 
       if (window.getSelection) {
-        if (window.getSelection().empty) { // Chrome
+        if (window.getSelection().empty) {
+          // Chrome
           window.getSelection().empty();
-        }
-        else if (window.getSelection().removeAllRanges) { // Firefox
+        } else if (window.getSelection().removeAllRanges) {
+          // Firefox
           window.getSelection().removeAllRanges();
         }
-      }
-      else if (document.selection) { // IE?
+      } else if (document.selection) {
+        // IE?
         document.selection.empty();
       }
     }
-    
-
   </script>
-
 </head>
 
 <body>
   <app-root></app-root>
-  
-
 </body>
 
 </html>
