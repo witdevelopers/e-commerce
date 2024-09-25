@@ -12,6 +12,7 @@ interface Order {
   orderStatus: string;
   orderAmount: number;
   imageUrl: string;
+  productDtId: number; // Add productDtId to the Order interface
   // Add other properties as needed
 }
 
@@ -52,9 +53,6 @@ export class OrderHistoryComponent implements OnInit {
       }
     );
   }
-  
-  
-  
 
   private processImageUrl(imageUrl: string): string {
     if (!imageUrl) {
@@ -71,7 +69,7 @@ export class OrderHistoryComponent implements OnInit {
     this.router.navigate(['/usershop/order-details', id]);
   }
 
-  cancelOrder(id: number): void {
+  cancelOrder(id: number, productDtId: number): void {
     Swal.fire({
       title: 'Are you sure?',
       text: "You won't be able to revert this!",
@@ -81,16 +79,16 @@ export class OrderHistoryComponent implements OnInit {
       confirmButtonText: 'Yes, cancel it!'
     }).then((result) => {
       if (result.isConfirmed) {
-        this.performCancellation(id);
+        this.performCancellation(id, productDtId);
       }
     });
   }
 
-  private performCancellation(orderId: number): void {
+  private performCancellation(orderId: number, productDtId: number): void {
     const orderStatus = 0; // Canceled order status
     const modifiedBy = +sessionStorage.getItem('memberId');
 
-    this.userService.updateOrderStatus(orderId, orderStatus, modifiedBy).subscribe(
+    this.userService.updateOrderStatus(orderId, productDtId, orderStatus, modifiedBy).subscribe(
       (response) => {
         console.log('API Response:', response);
 

@@ -31,29 +31,32 @@
       <p routerLink="/usershop/profile">Profile</p>
     </div>
 
-    <div class="profileAndCart">
-      <div class="downloadContainer">
-        <div class="mobileIcon top">
-          <i class="fa-regular fa-user"></i> <!-- Profile Icon -->
-        </div>
-        <!-- <p style="font-weight: 500; font-size: 15px;"></p> -->
-        <div class="downloadHoverBtnContainer">
-          <a *ngIf="!isLoggedIn" [routerLink]="'/auth/signin'">
-            <button class="downloadBtn">Sign In</button>
-          </a>
-          <a *ngIf="isLoggedIn" (click)="signOut()">
-            <button class="downloadBtn">Sign Out</button>
-          </a>
-          <a [routerLink]="'/usershop/order-history'">
-            <button class="downloadBtn">My Order</button>
-          </a>
-          <a *ngIf="isLoggedIn" [routerLink]="'/usershop/change-password'">
-            <button class="downloadBtn">Change Password</button>
-          </a>
-          
-        </div>
-      </div>
+   <!-- Popup container -->
+<div class="profileAndCart">
+  <div class="downloadContainer">
+    <!-- Profile Icon remains visible -->
+    <div class="mobileIcon top" (click)="togglePopup()">
+      <i class="fa-regular fa-user"></i> <!-- Profile Icon -->
     </div>
+
+    <!-- Buttons inside the popup - visibility controlled by Angular -->
+    <div class="downloadHoverBtnContainer" *ngIf="isPopupVisible">
+      <a *ngIf="!isLoggedIn" [routerLink]="'/auth/signin'" (click)="closePopup()">
+        <button class="downloadBtn">Sign In</button>
+      </a>
+      <a *ngIf="isLoggedIn" (click)="signOut(); closePopup()">
+        <button class="downloadBtn">Sign Out</button>
+      </a>
+      <a [routerLink]="'/usershop/order-history'" (click)="closePopup()">
+        <button class="downloadBtn">My Order</button>
+      </a>
+      <a *ngIf="isLoggedIn" [routerLink]="'/usershop/change-password'" (click)="closePopup()">
+        <button class="downloadBtn">Change Password</button>
+      </a>
+    </div>
+  </div>
+</div>
+
 
     <div class="CartContainer" (click)="onAddToCart()" style="cursor: pointer;">
       <div class="CartIcon top">
