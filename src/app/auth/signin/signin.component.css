@@ -232,4 +232,9 @@ a:hover {
     padding: 20px;
     width: 100%;
   }
+
+  .right-side button{
+    background-color: rgb(0, 0, 0);
+    color: white;
+  }
 }

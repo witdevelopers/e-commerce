@@ -4,6 +4,7 @@ import { Settings } from '../../app-setting';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { Categories } from 'src/app/usershop/interface';
 
+
 @Injectable({
   providedIn: 'root'
 })
@@ -366,4 +367,20 @@ export class UserService {
     });
   }
 
+  changePassword(payload: any): Observable<any> {
+    const url = `${this.apiBaseUrl}api/Shop/ChangePassword`;
+
+    // Set headers
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json-patch+json',
+      'Accept': '*/*'
+    });
+
+    // Make the POST request with payload and headers
+    return this.http.post<any>(url, payload, { headers });
+  }
+
+
+  
 }
+

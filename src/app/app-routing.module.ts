@@ -306,6 +306,8 @@ import { OrderInvoiceComponent } from './usershop/order-invoice/order-invoice.co
 import { AuthGuard } from './usershop/auth.guard';
 import { OrderDetailsComponent } from './usershop/order-details/order-details.component';
 import { ShoppingProfileComponent } from './usershop/shopping-profile/shopping-profile.component';
+import { ChangePasswordComponent } from './usershop/change-password/change-password.component';
+import { ForgotPasswordComponent } from './usershop/forgot-password/forgot-password.component';
 
 
 const routes: Routes = [
@@ -316,6 +318,7 @@ const routes: Routes = [
   { path: 'subcategory/:id', component: SubcategoryComponent },
   { path: 'product/:id', component: ProductDetailsComponent },
   { path: 'shopping-cart', component: ShoppingCartComponent },
+  { path: 'forgot-password', component: ForgotPasswordComponent },
   {
      path: 'directs',
      component: DirectsComponent,
@@ -331,6 +334,9 @@ const routes: Routes = [
       { path: 'order-history', component: OrderHistoryComponent },
       { path: 'order-details/:orderId', component: OrderDetailsComponent },
       { path: 'profile', component: ShoppingProfileComponent },
+      { path: 'change-password', component: ChangePasswordComponent },
+      
+      
       
     ],
   },

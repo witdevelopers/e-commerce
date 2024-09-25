@@ -102,7 +102,7 @@ img {
   
 }
 
-submenuListnormal a {
+.submenuListnormal a {
   line-height: 1.45;
   color: #000000!important
 }
@@ -276,7 +276,7 @@ header {
   top: 30px;
   width: 140px;
   display: none;
-  height: 93px;
+  height: auto;
   padding: 10px;
   color: var(--textColor);
   background: #f7f7f7e0;

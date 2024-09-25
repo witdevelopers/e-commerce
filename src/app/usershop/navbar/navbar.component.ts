@@ -31,7 +31,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
     private router: Router,
     private encryptionService: EncryptionService // Inject EncryptionService
   ) {
-    this.routerSubscription = this.router.events.subscribe(event => {
+    this.routerSubscription = this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
         this.closeSidebar(); // Close sidebar on navigation
       }
@@ -41,19 +41,32 @@ export class NavbarComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.getMainCategory();
     this.createanonUser();
+    this.checkUserLoggedIn();
     this.updateCartQuantity();
 
     // Setup search subscription
-    this.searchSubject.pipe(
-      debounceTime(300),
-      switchMap((keyword) => this.userService.SearchProductByKeyword(keyword))
-    ).subscribe((data) => {
-      this.productByKeyword = data;
-    });
+    this.searchSubject
+      .pipe(
+        debounceTime(300),
+        switchMap((keyword) => this.userService.SearchProductByKeyword(keyword))
+      )
+      .subscribe((data) => {
+        this.productByKeyword = data;
+      });
   }
 
   ngOnDestroy(): void {
     this.routerSubscription.unsubscribe(); // Cleanup
+  }
+
+  checkUserLoggedIn(): void {
+    const sessionUserId = sessionStorage.getItem('userId'); // Change to sessionUserId
+    if (sessionUserId) {
+      this.isLoggedIn = true;
+      this.userName = sessionUserId; // Set the userName from session storage
+    } else {
+      this.isLoggedIn = false;
+    }
   }
 
   updateCartQuantity(): void {
@@ -62,7 +75,6 @@ export class NavbarComponent implements OnInit, OnDestroy {
 
     if (sessionUserId) {
       this.isLoggedIn = true;
-      this.userName = sessionStorage.getItem('userId') || 'Profile';
       this.userService.cartQuantity$.subscribe((quantity) => {
         this.cartQuantity = quantity; // Automatically update the cart quantity
       });
@@ -96,8 +108,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
       (res: any[]) => {
         this.mainCategory = res;
       },
-      (error) => {
-      }
+      (error) => {}
     );
     this.updateCartQuantity(); // Ensure cart quantity is updated after fetching categories
   }
@@ -109,17 +120,18 @@ export class NavbarComponent implements OnInit, OnDestroy {
           this.subCategory[parentCategoryId] = res;
           this.isSubCategoryVisible[parentCategoryId] = true; // Show subcategory after loading
         },
-        (error) => {
-        }
+        (error) => {}
       );
     } else {
       // If already loaded, just toggle visibility
-      this.isSubCategoryVisible[parentCategoryId] = !this.isSubCategoryVisible[parentCategoryId];
+      this.isSubCategoryVisible[parentCategoryId] =
+        !this.isSubCategoryVisible[parentCategoryId];
     }
   }
 
   toggleDropdown(subCategoryId: number): void {
-    this.isDropdownVisible[subCategoryId] = !this.isDropdownVisible[subCategoryId];
+    this.isDropdownVisible[subCategoryId] =
+      !this.isDropdownVisible[subCategoryId];
   }
 
   onSearch(event: any): void {
@@ -155,7 +167,8 @@ export class NavbarComponent implements OnInit, OnDestroy {
   }
 
   toggleSubCategory(parentCategoryId: number): void {
-    this.isSubCategoryVisible[parentCategoryId] = !this.isSubCategoryVisible[parentCategoryId];
+    this.isSubCategoryVisible[parentCategoryId] =
+      !this.isSubCategoryVisible[parentCategoryId];
     // Load subcategories if they haven't been loaded yet
     if (!this.subCategory[parentCategoryId]) {
       this.loadSubCategory(parentCategoryId);
@@ -165,10 +178,6 @@ export class NavbarComponent implements OnInit, OnDestroy {
   redirectToLogin(): void {
     sessionStorage.clear();
     this.router.navigate(['/login']); // Redirect to login page
-  }
-
-  updateUserName(): void {
-    this.userName = sessionStorage.getItem('userId') || 'Profile';
   }
 
   closeSidebar(): void {

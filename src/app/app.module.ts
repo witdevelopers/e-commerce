@@ -62,6 +62,8 @@ import { CheckoutConfirmComponent } from './usershop/checkout-confirm/checkout-c
 import { OrderInvoiceComponent } from './usershop/order-invoice/order-invoice.component';
 import { EncryptionService } from './usershop/encryption.service';
 import { OrderDetailsComponent } from './usershop/order-details/order-details.component';
+import { ChangePasswordComponent } from './usershop/change-password/change-password.component';
+import { ForgotPasswordComponent } from './usershop/forgot-password/forgot-password.component';
 
 
 @NgModule({
@@ -112,6 +114,8 @@ import { OrderDetailsComponent } from './usershop/order-details/order-details.co
     CheckoutConfirmComponent,
     OrderInvoiceComponent,
     OrderDetailsComponent,
+    ChangePasswordComponent,
+    ForgotPasswordComponent,
 
    
 

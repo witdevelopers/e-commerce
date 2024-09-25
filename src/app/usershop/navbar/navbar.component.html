@@ -47,6 +47,10 @@
           <a [routerLink]="'/usershop/order-history'">
             <button class="downloadBtn">My Order</button>
           </a>
+          <a *ngIf="isLoggedIn" [routerLink]="'/usershop/change-password'">
+            <button class="downloadBtn">Change Password</button>
+          </a>
+          
         </div>
       </div>
     </div>
