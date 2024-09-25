@@ -25,6 +25,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
   private searchSubject = new Subject<string>();
   private routerSubscription: Subscription;
   isHovered: { [key: number]: boolean } = {}; // To track hover state for categories
+  isPopupVisible = false;
 
   constructor(
     private userService: UserService,
@@ -94,6 +95,16 @@ export class NavbarComponent implements OnInit, OnDestroy {
       localStorage.setItem('TempUserId', this.myId.toString());
     }
   }
+  togglePopup(): void {
+    this.isPopupVisible = !this.isPopupVisible;
+  }
+
+  // Close the popup when a button is clicked
+  closePopup(): void {
+    this.isPopupVisible = false;
+  }
+  
+  
 
   signOut(): void {
     sessionStorage.clear();

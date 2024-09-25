@@ -39,7 +39,7 @@ export class SignupComponent implements OnInit {
   async onSubmit() {
     if (this.signupForm.valid) {
       const {  password, name, email } = this.signupForm.value;
- const res: any = await this.authService.registerMLM(email, password, name, email);
+      const res: any = await this.authService.registerMLM(email, password, name, email);
       
         
         if (res.status === "False") {

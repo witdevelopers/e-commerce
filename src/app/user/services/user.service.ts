@@ -334,19 +334,25 @@ export class UserService {
     return this.http.get(`${this.apiBaseUrl}api/Shop/invoicebyorderno?orderId=${orderId}`);
   }
 
-  // Update order status
-  updateOrderStatus(orderId: number, orderStatus: number, modifiedBy: number): Observable<any> {
+  updateOrderStatus(orderId: number, productDtId: number, orderStatus: number, modifiedBy: number): Observable<any> {
     const memberId = sessionStorage.getItem('memberId'); // Retrieve memberId from sessionStorage
 
     const body = {
       status: true,
       message: 'Order canceled',
       orderId: orderId,
+      productDtId: productDtId, // Added productDtId as per the API requirements
       memberId: +memberId, // Ensure it's a number
       orderStatus: orderStatus, // Pass the order status (e.g., 0 for canceled)
-      modifiedBy: +memberId // Use the same memberId for modifiedBy
+      modifiedBy: modifiedBy // Pass the modifiedBy (same as memberId in your case)
     };
-    return this.http.post(`${this.apiBaseUrl}api/Shop/UpdateOrderStatus`, body);
+
+    return this.http.post(`${this.apiBaseUrl}api/Shop/UpdateOrderStatus`, body, {
+      headers: { 
+        'Content-Type': 'application/json-patch+json',
+        'Accept': '*/*'
+      }
+    });
   }
 
   debitWallet(userId: string, amount: number): Observable<any> {
