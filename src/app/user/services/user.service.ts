@@ -380,7 +380,9 @@ export class UserService {
     return this.http.post<any>(url, payload, { headers });
   }
 
-
+  sendResetLink(email: string): Observable<any> {
+    return this.http.post(`${this.apiBaseUrl}/forgot-password`, { email });
+  }
   
 }
 
