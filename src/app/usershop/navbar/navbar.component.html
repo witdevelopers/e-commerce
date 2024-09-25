@@ -94,7 +94,6 @@
     <!-- Home link with icon -->
     <li class="headerName">
       <div class="menuItem">
-
         <span><a [routerLink]="['/home']">Home</a></span>
         <i class="fa-solid fa-house"></i> <!-- Home icon -->
       </div>
@@ -122,8 +121,11 @@
 <!-- Navigation -->
 <nav role="navigation">
   <ul>
-    <li class="submenustyle" *ngFor="let c of mainCategory"  (click)="toggleSubCategory(c.categoryID)"
-      [ngClass]="{ 'open': isSubCategoryVisible[c.categoryID] }">
+    <li class="submenustyle" *ngFor="let c of mainCategory"
+        (mouseenter)="showSubCategory(c.categoryID)"
+        (mouseleave)="hideSubCategory(c.categoryID)"
+        (click)="toggleSubCategory(c.categoryID)"
+        [ngClass]="{ 'open': isSubCategoryVisible[c.categoryID] }">
       {{ c.categoryName }} <i class="fa-solid fa-angle-down"></i>
       <div class="subMenunormal" *ngIf="isSubCategoryVisible[c.categoryID]">
         <div class="submenuListnormal" *ngFor="let subcat of subCategory[c.categoryID]">

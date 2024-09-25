@@ -497,7 +497,7 @@ nav ul {
 }
 
 .downloadBtn {
-  font-size: 14px;
+  font-size: 10px;
   padding: 10px
 }
 
@@ -855,3 +855,12 @@ input[type=text] {
 .submenustyle.open i {
   transform: rotate(180deg) !important; /* Rotate the icon when submenu is open */
 }
+.downloadBtn:hover {
+  background: var(--hoverTextColorHover);
+  border: 2px solid #a6a6c2;
+  color: #000;
+  background: 0 0;
+  transition: background .3s ease, color .3s ease;
+}
+
+

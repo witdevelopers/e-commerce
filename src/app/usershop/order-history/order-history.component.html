@@ -20,8 +20,11 @@
       <p>Order Date: {{ order.orderDate }}</p>
       <p>Status: {{ order.status }}</p>
       <p>Amount: Rs. {{ order.orderAmount }}</p>
-      <button (click)="showOrderDetails(order.id)" class="btn btn-primary">View Details</button>
-      <button (click)="cancelOrder(order.id)" class="btn btn-danger">Cancel Order</button>
+      <div class="buttons">
+        <button (click)="showOrderDetails(order.id)" class="btn btn-primary">View Details</button>
+        <button (click)="cancelOrder(order.id)" class="btn btn-danger">Cancel Order</button>
+      </div>
+      
     </div>
   </div>
 </div>

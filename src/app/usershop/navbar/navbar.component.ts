@@ -167,8 +167,17 @@ export class NavbarComponent implements OnInit, OnDestroy {
   }
 
   toggleSubCategory(parentCategoryId: number): void {
+    // Close all other subcategories
+    for (const key in this.isSubCategoryVisible) {
+      if (key != parentCategoryId.toString()) {
+        this.isSubCategoryVisible[key] = false; // Close other submenus
+      }
+    }
+
+    // Toggle the clicked submenu
     this.isSubCategoryVisible[parentCategoryId] =
       !this.isSubCategoryVisible[parentCategoryId];
+
     // Load subcategories if they haven't been loaded yet
     if (!this.subCategory[parentCategoryId]) {
       this.loadSubCategory(parentCategoryId);
@@ -191,4 +200,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
   hideSubCategory(categoryID: number) {
     this.isHovered[categoryID] = false;
   }
+
+  
+  
 }
