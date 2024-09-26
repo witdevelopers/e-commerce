@@ -5,6 +5,8 @@ import Swal from 'sweetalert2';
 import { Settings } from 'src/app/app-setting';
 
 interface Order {
+  singleProductOrderStatus: any;
+  singleProductOrderPrice: any;
   status: null;
   id: number;
   orderNo: string;

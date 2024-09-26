@@ -304,7 +304,7 @@ export class UserService {
   }
 
   getOrderDetails(customerId: string): Observable<any> {
-    const url = `${this.apiBaseUrl}api/Shop/customer/${customerId}`;
+    const url = `${this.apiBaseUrl}api/Shop/GetCustomerOrders/${customerId}`;
     return this.http.get<any>(url);
   }
   
