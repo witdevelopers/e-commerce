@@ -40,19 +40,18 @@ export class SignupComponent implements OnInit {
     if (this.signupForm.valid) {
       const {  password, name, email } = this.signupForm.value;
       const res: any = await this.authService.registerMLM(email, password, name, email);
-      
+      console.log("Register MLM ka response", res);
         
-        if (res.status === "False") {
-          Swal.fire(res.message , '', 'warning');
+        if (res.status===true) {
+          Swal.fire("Registered Successfully", '', 'success');
+          this.router.navigate(['/auth/signin']);
           // console.log("Up", res.status);
         }         
         else {        
-          // console.log(res.status);
-          Swal.fire("Registered Successfully", '', 'success');
-          this.router.navigate(['/auth/signin']);
+           console.log(res.status);
+          Swal.fire(res.message , '', 'warning');
         }   
-    } 
-    
+    }     
     else {
       Swal.fire("Please fill out the form correctly.", '', 'warning');
     }
