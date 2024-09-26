@@ -387,7 +387,10 @@ export class UserService {
   }
 
   sendResetLink(email: string): Observable<any> {
-    return this.http.post(`${this.apiBaseUrl}/forgot-password`, { email });
+    const headers = { 'Content-Type': 'application/json-patch+json' };
+    const body = { emailId: email };
+
+    return this.http.post(`${this.apiBaseUrl}api/Shop/Forget-Password/SendPasswordThroughEmailID`, body, { headers });
   }
   
 }

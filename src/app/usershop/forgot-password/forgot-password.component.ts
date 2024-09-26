@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import Swal from 'sweetalert2';
-import { UserService } from 'src/app/user/services/user.service'; // Adjust the path as necessary
+import { FormBuilder, FormGroup, Validators } from '@angular/forms'; // For form validation
+import Swal from 'sweetalert2'; // Import SweetAlert2
+import { UserService } from 'src/app/user/services/user.service';
 
 @Component({
   selector: 'app-forgot-password',
@@ -10,9 +10,11 @@ import { UserService } from 'src/app/user/services/user.service'; // Adjust the 
 })
 export class ForgotPasswordComponent implements OnInit {
   forgotPasswordForm: FormGroup;
-  isLoading = false;
+  loading: boolean = false; // Loading state
+  message: string = '';
+  error: string = '';
 
-  constructor(private fb: FormBuilder, private userService: UserService) {
+  constructor(private userService: UserService, private fb: FormBuilder) {
     this.forgotPasswordForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]]
     });
@@ -22,30 +24,40 @@ export class ForgotPasswordComponent implements OnInit {
 
   onSubmit(): void {
     if (this.forgotPasswordForm.valid) {
-      this.isLoading = true;
-      const email = this.forgotPasswordForm.value.email;
+      const email = this.forgotPasswordForm.get('email')?.value;
+      this.loading = true; // Set loading to true
 
       this.userService.sendResetLink(email).subscribe(
-        response => {
+        (response) => {
+          this.loading = false; // Reset loading to false
+          console.log("Reset password response", response);
+          // Show success message with SweetAlert2
           Swal.fire({
-            title: 'Success!',
-            text: 'Reset link sent successfully!',
             icon: 'success',
+            title: 'Success!',
+            text: 'Password reset link sent successfully. Please check your email.',
             confirmButtonText: 'OK'
           });
-          this.isLoading = false;
-          this.forgotPasswordForm.reset(); // Reset form after success
         },
-        error => {
+        (error) => {
+          this.loading = false; // Reset loading to false
+          // Show error message with SweetAlert2
           Swal.fire({
-            title: 'Error!',
-            text: 'Failed to send reset link. Please try again.',
             icon: 'error',
+            title: 'Error!',
+            text: 'There was an issue sending the reset link. Please try again later.',
             confirmButtonText: 'OK'
           });
-          this.isLoading = false;
         }
       );
+    } else {
+      // Show validation error message with SweetAlert2
+      Swal.fire({
+        icon: 'warning',
+        title: 'Warning!',
+        text: 'Please enter a valid email address.',
+        confirmButtonText: 'OK'
+      });
     }
   }
 }
