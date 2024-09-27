@@ -8,8 +8,11 @@
           <th class="item item-heading">Item</th>
           <th class="quantity">Product Name</th>
           <th class="price">Quantity</th>
-          <th class="subtotal">DiscountPrice</th>
-          <th class="remove">Remove</th>
+           <th  style="
+           margin: 0 0 0 -23px;
+       " class="subtotal">Discount Price</th>
+         <th  style="
+    margin: 0 0 0 -149px;" class="remove">Sub-total</th>
         </tr>
       </thead>
       <tbody>
@@ -32,7 +35,7 @@
               <span class="quantity-value">{{ item.quantity }}</span>
               <button (click)="incrementQuantity(item)" class="quantity-button">+</button>
             </td>
-            <td class="price"><del>Rs.{{ item.price }}</del> {{ item.discountPrice | currency : 'INR' }}</td>
+            <td class="price"><p style="color: darkblue;">Save:{{ (item.discountPrice - item.price) | currency: 'INR' }} </p> {{ item.discountPrice | currency : 'INR' }}</td>
             <td class="remove">
               <button (click)="removeCartItem(item.productDtId)" class="remove-button">
                 <i class="fa-solid fa-trash"></i> Remove
@@ -43,7 +46,7 @@
       </tbody>
     </table>
   </div>
-
+  <!-- <del>Rs.{{ item.price }}</del> -->
   <!-- Mobile View -->
   <div class="basket-mobile-items mobile-view">
     <ng-container *ngFor="let item of cartItems">
@@ -54,9 +57,12 @@
         <div class="mobile-product-details" (click)="goToProductDetails(item.productDtId)">
           <p>
             <span class="item-quantity">{{ item.quantity }}</span> x
-            {{ item.productName | slice: 0: 20 }}
+            {{ item.productName.length > 20 ? (item.productName | slice: 0: 20) + '...' : item.productName }}
+            <b style="color: darkblue;">Save:{{ (item.discountPrice - item.price) | currency: 'INR' }} </b>
+            
           </p>
-          <p>{{ item.productAttributes | slice: 0: 20 }}</p>
+          
+          <!-- <p>{{ item.productAttributes | slice: 0: 20 }}</p> -->
         </div>
         <div class="mobile-quantity">
           <button (click)="decrementQuantity(item)" class="quantity-button">-</button>

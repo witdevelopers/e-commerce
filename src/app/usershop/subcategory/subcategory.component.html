@@ -50,6 +50,12 @@
             <p>Rs: {{ product.discountPrice }}</p>
           </div>
         </div>
+        <div class="badge-area-2">
+          <div class="badge-product-sale">
+            <span class="new">SAVE</span>
+            <span class="percent">Rs. {{ product.price- product.discountPrice }} </span>
+          </div>
+        </div>
         <button class="cart-button" (click)="productsInCart.has(product.productId) ? goToCart() : addToCart(product.productId, 1)">
           <span>{{ getButtonText(product.productId) }}</span>
           <i class="fas" [ngClass]="productsInCart.has(product.productId) ? 'fa-box' : 'fa-shopping-cart'"></i>

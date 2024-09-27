@@ -438,3 +438,33 @@ aside.filters h2 {
     font-size: 0.85em !important;
 }
 
+/* Badge Styles */
+.badge-area-2 {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  z-index: 10;
+  background: #000;
+  color: #e2ff91;
+  padding: 5px 8px; /* Adjust padding as needed */
+  border-radius: 5px;
+  font-size: 10px; /* Adjust font size as needed */
+  transition: background-color 0.3s ease;
+}
+
+/* Badge Sale Styles */
+.badge-product-sale {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Badge Sale New and Percent */
+.badge-product-sale .new {
+  font-size: 10px; /* Adjust font size as needed */
+}
+
+.badge-product-sale .percent {
+  font-size: 14px; /* Adjust font size as needed */
+  font-weight: bold;
+}

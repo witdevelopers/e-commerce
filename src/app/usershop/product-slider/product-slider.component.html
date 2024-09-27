@@ -9,15 +9,15 @@
           <article class="my-card">
             <div class="badge-area-2">
               <div class="badge-product-sale">
-                <span class="new">OFFER</span>
-                <span class="percent">- {{ product.discountPercentage }} %</span>
+                <span class="new">SAVE</span>
+                <span class="percent">Rs. {{ product.price- product.discountPrice }} </span>
               </div>
             </div>
             <div class="productimg"> <img [src]="product.imageUrl" alt="{{ product.productName }}" loading="lazy"
               [routerLink]="['/product', product.productId]" class="card-image" /></div>
            
             <div class="my-card-content">
-              <h5 class="my-product-name">            {{ product.productName.length > 30 ? (product.productName | slice:0:30) + '...' : product.productName }}
+              <h5 class="my-product-name">{{ product.productName.length > 30 ? (product.productName | slice:0:30) + '...' : product.productName }}
               </h5>
               <br>
               <div class="price-info">
