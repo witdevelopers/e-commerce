@@ -432,3 +432,8 @@ aside.filters h2 {
 .container1{
   display: flex;
 }
+  
+  h5 {
+    font-size: 0.85em !important;
+}
+
