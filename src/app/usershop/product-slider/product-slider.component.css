@@ -4,6 +4,10 @@
     margin: 20px 0;
 }
 
+h5 {
+    font-size: 0.83em !important
+}
+
 .section-title {
     font-size: 2rem;
     font-weight: 700;
@@ -47,7 +51,7 @@
 }
 
 /* Card Styles */
-.card {
+.my-card {
     min-width: 100%;
     gap: 0.125rem;
     align-items: flex-start;
@@ -80,12 +84,12 @@
 }
 
 /* Image zoom on hover */
-.card:hover .card-image {
+.my-card:hover .card-image {
     border-radius: 12px;
 }
 
 /* Card Content */
-.card-content {
+.my-card-content {
     padding: 8px; /* Adjust padding as needed */
     flex: 1;
     display: flex;
@@ -96,7 +100,7 @@
 }
 
 /* Product Name */
-.product-name {
+.my-product-name {
     font-weight: 500;
     color: #333;
     transition: color 0.3s ease;
@@ -130,6 +134,8 @@
     padding: 8px 12px; /* Adjust padding as needed */
     width: 60%;
     border: 0;
+    min-width: 150px; /* Set a minimum width */
+    min-height: 40px; /* Set a minimum height */
     border-radius: 20px;
     background-color: #4834d4;
     color: #fff;
