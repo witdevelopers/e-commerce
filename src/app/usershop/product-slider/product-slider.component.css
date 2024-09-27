@@ -30,12 +30,14 @@ h5 {
 .product-card {
     flex: 1 1 calc(16.666% - 20px); /* 6 cards per row with gap */
     max-width: calc(16.666% - 20px); /* Ensure correct width calculation */
-    min-height: 260px; /* Adjust height as needed */
+    min-height: 320px; /* Increased to accommodate button placement */
     box-sizing: border-box;
     position: relative;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     opacity: 0;
     animation: fadeIn 0.5s ease-in-out forwards;
+    display: flex;
+    flex-direction: column;
 }
 
 /* Fade-in Animation */
@@ -91,12 +93,13 @@ h5 {
 /* Card Content */
 .my-card-content {
     padding: 8px; /* Adjust padding as needed */
-    flex: 1;
+    flex-grow: 1; /* Ensures content takes up available space */
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: flex-start;
     text-align: center;
     align-items: center;
+    position: relative; /* Necessary for absolute positioning of button */
 }
 
 /* Product Name */
@@ -131,11 +134,11 @@ h5 {
 
 /* Cart Button Styles */
 .cart-button {
-    padding: 8px 12px; /* Adjust padding as needed */
+    padding: 8px 12px;
     width: 60%;
     border: 0;
-    min-width: 150px; /* Set a minimum width */
-    min-height: 40px; /* Set a minimum height */
+    min-width: 150px;
+    min-height: 40px;
     border-radius: 20px;
     background-color: #4834d4;
     color: #fff;
@@ -144,9 +147,11 @@ h5 {
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 0.8rem; /* Adjust font size as needed */
-    position: relative;
-    overflow: hidden;
+    font-size: 0.8rem;
+    position: absolute;
+    bottom: 10px; /* Position the button 10px from the bottom */
+    left: 50%; 
+    transform: translateX(-50%); /* Center the button horizontally */
 }
 
 /* Cart Button Hover and Active States */
