@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { UserService } from 'src/app/user/services/user.service';
 import Swal from 'sweetalert2';
 import { Settings } from 'src/app/app-setting';
-import { EncryptionService } from '../encryption.service'; // Assuming encryption service is needed
+import { EncryptionService } from '../encryption.service';
 
 @Component({
   selector: 'app-subcategory',
@@ -24,6 +24,8 @@ export class SubcategoryComponent implements OnInit {
   // Price filter properties
   minPrice: number = 0;
   maxPrice: number = 10000;
+  categories: string[] = ['Electronics', 'Clothing', 'Books', 'Home Appliances']; // Add more categories as needed
+  selectedCategory: string = ''; // To hold the selected category
 
   // To keep track of products in cart
   productsInCart: Set<number> = new Set<number>();
@@ -32,7 +34,7 @@ export class SubcategoryComponent implements OnInit {
     private route: ActivatedRoute,
     private userService: UserService,
     private router: Router,
-    private encryptionService: EncryptionService // Inject encryption service
+    private encryptionService: EncryptionService
   ) {}
 
   ngOnInit(): void {
@@ -50,24 +52,7 @@ export class SubcategoryComponent implements OnInit {
         this.cartQuantity = quantity;
       });
 
-      
-      this.loadProductsInCart(Number(userId)); // Load products in cart on init
-    }
-  }
-
-  updateCartQuantity(){
-    const userId = sessionStorage.getItem('memberId') || localStorage.getItem('TempUserId');
-    if (userId) {
-      // this.isLoggedIn = true;
-      this.userName = sessionStorage.getItem('userId') || 'Profile';
-
-      // Subscribe to cart quantity observable
-      this.userService.cartQuantity$.subscribe((quantity) => {
-        this.cartQuantity = quantity; // Automatically update the cart quantity
-      });
-
-      // Initial cart quantity load
-      this.userService.updateCartQuantity(Number(userId));
+      this.loadProductsInCart(Number(userId));
     }
   }
 
@@ -78,9 +63,8 @@ export class SubcategoryComponent implements OnInit {
         ...product,
         imageUrl: this.getImageUrl(product.imageUrl)
       }));
-      this.filteredSubcategoryDetails = [...this.subcategoryDetails];
-    }, error => {
-    });
+      this.filteredSubcategoryDetails = [...this.subcategoryDetails]; // Initialize with all products
+    }, error => {});
   }
 
   getImageUrl(imagePath: string): string {
@@ -93,14 +77,26 @@ export class SubcategoryComponent implements OnInit {
     );
   }
 
+  filterByCategory(): void {
+    // If a category is selected, filter products by category
+    if (this.selectedCategory) {
+      this.filteredSubcategoryDetails = this.subcategoryDetails.filter(product => product.category === this.selectedCategory);
+    } else {
+      this.filteredSubcategoryDetails = [...this.subcategoryDetails]; // Reset to all products if no category is selected
+    }
+  }
+
+  applyFilters(): void {
+    // Apply both price and category filters
+    this.filterByPrice();
+    this.filterByCategory();
+  }
+
   loadProductsInCart(customerId: number): void {
     this.userService.getCart(customerId).subscribe(response => {
       this.productsInCart = new Set(response.items.map(item => item.productId));
-      this.updateCartQuantity();
-    }, error => {
-    });
+    }, error => {});
   }
-
 
   addToCart(productDtId: number, quantity: number): void {
     const customerId = sessionStorage.getItem('memberId') || localStorage.getItem('TempUserId');
@@ -111,10 +107,9 @@ export class SubcategoryComponent implements OnInit {
 
     this.userService.addToCart(+customerId, productDtId, quantity).subscribe(
       response => {
-        this.loadProductsInCart(+customerId); // Refresh cart items after adding
+        this.loadProductsInCart(+customerId);
       },
-      error => {
-      }
+      error => {}
     );
   }
 
@@ -122,41 +117,24 @@ export class SubcategoryComponent implements OnInit {
     this.router.navigate(['/shopping-cart']);
   }
 
-  onSearch(event: any): void {
-    this.searchTerm = event.target.value;
-    if (this.searchTerm.length > 2) {
-      this.getProductByKeyword(this.searchTerm);
-    } else {
-      this.clearSearch();
-    }
-  }
-
-  getProductByKeyword(keyword: string): void {
-    this.userService.SearchProductByKeyword(keyword).subscribe(data => {
-      this.productByKeyword = data;
-    });
-  }
-
-  navigateToProduct(productId: number): void {
-    const encryptedId = this.encryptionService.encrypt(productId.toString());
-    this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
-      this.router.navigate(['/product', productId]);
-    });
-    this.clearSearch();
-  }
-
-  clearSearch(): void {
-    this.searchTerm = '';
-    this.productByKeyword = [];
-  }
-
-  // Method to get button text
   getButtonText(productId: number): string {
     return this.productsInCart.has(productId) ? 'Go to Cart' : 'Add to Cart';
   }
 
-  // Method to check if the product is in the cart
   isProductInCart(productId: number): boolean {
     return this.productsInCart.has(productId);
+  }
+  clearFilters(): void {
+    this.minPrice = 0;
+    this.maxPrice = 10000;
+    this.selectedCategory = '';
+    this.filteredSubcategoryDetails = [...this.subcategoryDetails]; // Reset to original product list
+  }
+
+  isFiltersOpen: boolean = false;
+  // Method to toggle filter visibility
+  
+  toggleFilters() {
+    this.isFiltersOpen = !this.isFiltersOpen; // Toggle the state
   }
 }
