@@ -117,7 +117,7 @@ aside.filters h2 {
 
 
 .card-image {
-  width: 60%;
+  width: 90%;
   height: 130px; /* Adjust height as needed */
   object-fit: cover;
   transition: transform 0.3s ease;
@@ -153,6 +153,7 @@ aside.filters h2 {
   justify-content: center;
   align-items: center;
   gap: 8px;
+  margin-bottom: 23%;
 }
 
 .discount-price {
@@ -416,8 +417,8 @@ aside.filters h2 {
     cursor: pointer;
     font-size: 16px;
     position: fixed;
-    top: 93%;
-    left: 77%;
+    top: 85%;
+    left: 75%;
     z-index: 1000;
   }
 

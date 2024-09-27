@@ -44,7 +44,7 @@
           <img [src]="product.imageUrl ? product.imageUrl : 'https://www.mbp18k.com/Shop//'" alt="{{ product.productName }}" class="card-image" loading="lazy" [routerLink]="['/product', product.productId]">
         </div>
         <div class="card-content">
-          <h5 class="product-name">{{ product.productName }}</h5>
+          <h5 class="product-name">{{ product.productName.length > 20 ? (product.productName | slice:0:20) + '...' : product.productName }}</h5>
           <div class="price-info">
             <del>Rs. {{ product.price }}</del>
             <p>Rs: {{ product.discountPrice }}</p>

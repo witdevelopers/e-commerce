@@ -85,7 +85,7 @@ p {
 
 .main-info p {
   color: #666;
-  margin-bottom: 10px
+  margin-bottom: 10px !important;
 }
 
 #price,.main-info h4 {

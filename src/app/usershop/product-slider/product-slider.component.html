@@ -17,7 +17,8 @@
               [routerLink]="['/product', product.productId]" class="card-image" /></div>
            
             <div class="my-card-content">
-              <h5 class="my-product-name">{{ product.productName }}</h5>
+              <h5 class="my-product-name">            {{ product.productName.length > 30 ? (product.productName | slice:0:30) + '...' : product.productName }}
+              </h5>
               <br>
               <div class="price-info">
                 <del>Rs.{{ product.price }}</del>  <P style="font-weight: 700; color: black;">Rs.{{ product.discountPrice }}</P> 
